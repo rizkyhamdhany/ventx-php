@@ -27,7 +27,7 @@ var Login = function() {
                 }
             },
 
-            invalidHandler: function(event, validator) { //display error alert on form submit   
+            invalidHandler: function(event, validator) { //display error alert on form submit
                 $('.alert-danger', $('.login-form')).show();
             },
 
@@ -90,10 +90,10 @@ var Login = function() {
 
             // init background slide images
             $('.login-bg').backstretch([
-                    "assets/pages/img/bg-teddy.png"
+                "assets/pages/img/bg-teddy.png"
                 ], {
-                    fade: 1000,
-                    duration: 8000
+                  fade: 1000,
+                  duration: 8000
                 }
             );
 

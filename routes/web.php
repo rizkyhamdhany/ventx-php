@@ -15,7 +15,10 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/smilemotion', 'LandingController@index')->name('welcome');
+Route::prefix('/smilemotion')->group(function () {
+    Route::get('/', 'LandingController@index')->name('welcome');
+    Route::get('/input_payment_code', 'PaymentController@inputPaymentCode')->name('payment.input.code');
+});
 
 Route::prefix('tickets')->group(function () {
     Route::get('/', 'HomeController@listTicket')->name('tickets');
