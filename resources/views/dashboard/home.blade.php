@@ -12,7 +12,7 @@
                         <i class="fa fa-shopping-cart fa-icon-medium font-blue no-opacity"></i>
                     </div>
                     <div class="details">
-                        <div class="number font-blue"> 4579 </div>
+                        <div class="number font-blue"> 0 </div>
                         <div class="desc font-blue"> Total Tiket Sold </div>
                     </div>
                     <a class="more blue" href="{{route('tickets')}}" style="background-color: #3598dc; color:#fff;"> View Details
@@ -26,7 +26,7 @@
                         <i class="fa fa-briefcase fa-icon-medium font-red no-opacity"></i>
                     </div>
                     <div class="details">
-                        <div class="number font-red"> 50 </div>
+                        <div class="number font-red"> 0 </div>
                         <div class="desc font-red"> Request Payment Confirmation </div>
                     </div>
                     <a class="more" href="#" style="background-color: #e7505a; color:#fff;"> Confirm Payment
@@ -40,7 +40,7 @@
                         <i class="fa fa-group fa-icon-medium font-yellow-lemon no-opacity"></i>
                     </div>
                     <div class="details">
-                        <div class="number font-yellow-lemon"> 20 </div>
+                        <div class="number font-yellow-lemon"> 0 </div>
                         <div class="desc font-yellow-lemon"> Customer Complains </div>
                     </div>
                     <a class="more" href="#" style="background-color: #f7ca18; color:#fff;"> View more
