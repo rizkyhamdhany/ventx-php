@@ -31,11 +31,11 @@
                                         <div class="col-md-4">
                                             <select class="form-control" name="ticket_class">
                                                 <option value="Reguler">Reguler</option>
-                                                {{--<option value="VIP I">VIP I</option>--}}
-                                                {{--<option value="VIP H">VIP H</option>--}}
-                                                {{--<option value="VIP E">VIP E</option>--}}
-                                                {{--<option value="VIP D">VIP D</option>--}}
-                                                {{--<option value="VVIP">VVIP</option>--}}
+                                                <option value="VIP I">VIP I</option>
+                                                <option value="VIP H">VIP H</option>
+                                                <option value="VIP E">VIP E</option>
+                                                <option value="VIP D">VIP D</option>
+                                                <option value="VVIP">VVIP</option>
                                             </select>
                                         </div>
                                     </div>

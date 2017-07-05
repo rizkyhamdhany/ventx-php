@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Seat;
+use App\Models\Seat;
 
 class SeatTableSeeder extends Seeder
 {

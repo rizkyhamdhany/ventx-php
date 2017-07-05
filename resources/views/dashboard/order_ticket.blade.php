@@ -11,7 +11,7 @@
                 <div class="portlet light bordered" id="form_wizard_1">
                     <div class="portlet-title">
                         <div class="caption">
-                            <span class="caption-subject font-dark sbold uppercase">Booking {{$ticket_period}}</span>
+                            <span class="caption-subject font-dark sbold uppercase">Booking {{$ticket_period}}, {{$ticket_class}}, for {{$ammount}} tickets</span>
                         </div>
                     </div>
                     <div class="portlet-body form">
@@ -23,7 +23,7 @@
                             <div class="form-body">
                                 <h3 class="form-section">Contact Information</h3>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <div class="form-group">
                                             <label class="control-label">Full Name</label>
                                             <input name="contact_fullname" type="text" id="firstName" class="form-control" placeholder="Don Jon" required>
@@ -64,7 +64,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Full Name</label>
                                             <input name="ticket_name[]" type="text" id="firstName" class="form-control" placeholder="Don Jon" required>
@@ -90,6 +90,18 @@
                                                 <input name="ticket_email[]" type="email" class="form-control" placeholder="Email Address" required> </div>
                                         </div>
                                     </div>
+                                    @if(!$seat_available->isEmpty())
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label class="control-label">Seat</label>
+                                            <select class="form-control" name="seat[]">
+                                                @foreach($seat_available as $seat)
+                                                <option value="{{$seat->id}}">{{$seat->no}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    @endif
                                 </div>
                                 @endfor
                             </div>
