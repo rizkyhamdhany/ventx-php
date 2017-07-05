@@ -11,10 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::prefix('tickets')->group(function () {
+    Route::get('/', 'HomeController@listTicket')->name('tickets');
+    Route::get('/choose', 'HomeController@chooseTicket')->name('ticket.choose');
+    Route::post('/order', 'HomeController@orderTicket')->name('ticket.choose.submit');
+    Route::post('/order/submit', 'HomeController@orderTicketSubmit')->name('ticket.order.submit');
+    Route::get('/invoice', 'HomeController@viewInvoice')->name('ticket.invoice');
+//    Route::get('/order', 'HomeController@orderTicket')->name('ticket.order');
+});

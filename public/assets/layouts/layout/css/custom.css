@@ -1,0 +1,28 @@
+/* here you can put your own css to customize and override the theme */
+.widget-with-right-menu{
+    float: left;
+}
+.float-right{
+    float:right !important;
+}
+.margin-0{
+    margin: 0px !important;
+}
+.dashboard-chart{
+    height: 400px;
+}
+.no-opacity{
+    opacity: 1 !important;
+}
+
+@media print
+{
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
+.kop-invoice{
+    width: 100%;
+}

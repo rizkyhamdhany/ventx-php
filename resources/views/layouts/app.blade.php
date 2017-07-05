@@ -1,80 +1,64 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
+    <title>Ventex | Dashboard</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="Ventex - Nalar Event Experience " name="description"/>
+    <meta content="Nalar" name="author"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+    @yield('page_style')
+    <link href="{{URL('/')}}/assets/global/css/components.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="{{URL('/')}}/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/layouts/layout/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" /> </head>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        @yield('content')
+<body class="page-container-bg-solid">
+@include('layouts.header')
+<div class="clearfix"> </div>
+<div class="page-container page-content-inner page-container-bg-solid">
+    @yield('content')
+</div>
+<div class="page-footer hidden-print">
+    <div class="page-footer-inner container-fluid container-lf-space">
+        <p class="page-footer-copyright font-white"> 2016 &copy; Ventex By Nalar
+            <a target="_blank" class="font-yellow-soft" href="http://nalar.id">Nalar Creative</a>
+        </p>
     </div>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <div class="go2top">
+        <i class="icon-arrow-up"></i>
+    </div>
+</div>
+<!--[if lt IE 9]>
+<script src="{{URL('/')}}/assets/global/plugins/respond.min.js"></script>
+<script src="{{URL('/')}}/assets/global/plugins/excanvas.min.js"></script>
+<script src="{{URL('/')}}/assets/global/plugins/ie8.fix.min.js"></script>
+<![endif]-->
+<script src="{{URL('/')}}/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="{{URL('/')}}/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="{{URL('/')}}/assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+<script src="{{URL('/')}}/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="{{URL('/')}}/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="{{URL('/')}}/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+@yield('page_js_plugins')
+<script src="{{URL('/')}}/assets/global/scripts/app.js" type="text/javascript"></script>
+@yield('page_js')
+<script src="{{URL('/')}}/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+<script src="{{URL('/')}}/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+<script src="{{URL('/')}}/assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
 </body>
+
 </html>
