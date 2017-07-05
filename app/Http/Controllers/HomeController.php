@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
 use Webpatser\Uuid\Uuid;
+use App\Models\Seat;
+use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
 
 class HomeController extends Controller
@@ -51,20 +53,22 @@ class HomeController extends Controller
     {
         $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
         $input = $request->input();
+        $seat_available = Seat::where('ticket_class', $request->input('ticket_class'))->where('status', 'active')->get();
         return view('dashboard.order_ticket')
             ->with('ticket_period', $request->input('ticket_period'))
             ->with('ticket_class', $request->input('ticket_class'))
-            ->with('ammount', $request->input('amount'));
+            ->with('ammount', $request->input('amount'))
+            ->with('seat_available', $seat_available);
     }
 
     public function orderTicketSubmit(Request $request){
         $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
         //create order
+        $ammount = $request->input('ammount');
         $uuid = Uuid::generate();
         $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
         $order = new Order();
         $order->order_code = 'SMO'.$code;
-        $order->title = $request->input('ammount');
         $order->name = $request->input('contact_fullname');
         $order->phonenumber = $request->input('contact_phone');
         $order->email = $request->input('contact_email');
@@ -74,7 +78,6 @@ class HomeController extends Controller
         $order->payment_status = 'COMPLETE';
         $order->payment_code = 'test';
         $order->save();
-
         $i = 0;
         foreach ($request->input('ticket_title') as $title_ticket) {
             $ticket = new Ticket();
@@ -85,11 +88,27 @@ class HomeController extends Controller
             $ticket->name = $request->input('ticket_name')[$i];
             $ticket->phonenumber = $request->input('ticket_phone')[$i];
             $ticket->email = $request->input('ticket_email')[$i];
-            $ticket->seat_no = $request->input('ticket_title')[$i];
             $ticket->ticket_period = $request->input('ticket_period');
             $ticket->ticket_class = $request->input('ticket_class');
+            $seatupdate = null;
+            if ($request->input('ticket_class') != "Reguler"){
+                if ($ammount > 1){
+                    $seatupdate = Seat::find($request->input('seat')[$i]);
+                    $ticket->seat_no = $seatupdate->no;
+                }
+                else {
+                    $seatupdate = Seat::find($request->input('seat'));
+                    $ticket->seat_no = $seatupdate->no;
+                }
+
+            }
             $ticket->save();
             $ticket->order()->attach($order);
+
+            if ($seatupdate != null){
+                $seatupdate->status = 'unavailable';
+                $seatupdate->save();
+            }
             $i++;
         }
         $request->session()->flash('alert-success', 'Ticket was successful added!');
