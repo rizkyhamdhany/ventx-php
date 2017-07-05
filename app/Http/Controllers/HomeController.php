@@ -102,4 +102,8 @@ class HomeController extends Controller
         $pdf = \PDF::loadView('dashboard.view_invoice');
         return $pdf->download('invoice.pdf');
     }
+
+    public function welcome(){
+        return view('welcome');
+    }
 }

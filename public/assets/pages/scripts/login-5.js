@@ -79,8 +79,8 @@ var Login = function() {
         });
     }
 
- 
-  
+
+
 
     return {
         //main function to initiate the module
@@ -90,12 +90,10 @@ var Login = function() {
 
             // init background slide images
             $('.login-bg').backstretch([
-                "../assets/pages/img/login/bg1.jpg",
-                "../assets/pages/img/login/bg2.jpg",
-                "../assets/pages/img/login/bg3.jpg"
+                    "assets/pages/img/bg-teddy.png"
                 ], {
-                  fade: 1000,
-                  duration: 8000
+                    fade: 1000,
+                    duration: 8000
                 }
             );
 

@@ -15,6 +15,8 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::get('/smilemotion', 'HomeController@welcome')->name('welcome');
+
 Route::prefix('tickets')->group(function () {
     Route::get('/', 'HomeController@listTicket')->name('tickets');
     Route::get('/choose', 'HomeController@chooseTicket')->name('ticket.choose');
