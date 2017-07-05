@@ -34,7 +34,7 @@
 </div>
 <div class="page-footer hidden-print">
     <div class="page-footer-inner container-fluid container-lf-space">
-        <p class="page-footer-copyright font-white"> 2016 &copy; Ventex By Nalar
+        <p class="page-footer-copyright font-white"> 2017 &copy; Ventex By
             <a target="_blank" class="font-yellow-soft" href="http://nalar.id">Nalar Creative</a>
         </p>
     </div>
