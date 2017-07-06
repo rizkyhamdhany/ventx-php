@@ -138,7 +138,7 @@ class OrderController extends Controller
             $data = array();
             $data['order'] = $order;
             $data['ticket_price'] = $ticket_price;
-            $pdf = \PDF::loadView('dashboard.view_invoice', compact('data'));
+            $pdf = \PDF::loadView('dashboard.view_invoice', compact('data'))->setPaper('A4', 'portrait');
             $output = $pdf->output();
             $invoice_url = 'uploads/invoice/invoice_'.$order->order_code.'.pdf';
             file_put_contents($invoice_url, $output);
