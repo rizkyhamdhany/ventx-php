@@ -9,76 +9,78 @@
     <div class="container-fluid container-lf-space margin-top-30">
         <div class="row">
             <div class="col-md-12">
-                @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                    @if(Session::has('alert-' . $msg))
-                        <div class="note note-{{ $msg }}">
-                            <p>{{ Session::get('alert-' . $msg) }}</p>
-                        </div>
-                    @endif
-                @endforeach
                 <div class="portlet light portlet-fit portlet-datatable bordered">
                     <div class="portlet-title">
                         <div class="caption">
-                            <a href="{{route('home')}}">
+                            <a href="{{route('tickets')}}">
                                 <i class="fa fa-chevron-left font-dark"></i>
-                                <span class="caption-subject font-dark sbold uppercase">List Ticket</span>
+                                <span class="caption-subject font-dark sbold uppercase">Order Details</span>
                             </a>
                         </div>
                         <div class="actions">
                             <div class="btn-group btn-group-devided">
-                                <a href="{{route('ticket.choose')}}" class="btn red">
-                                    <i class="fa fa-plus"></i> Add New Ticket
+                                <a target="_blank" href="{{route('ticket.order.invoice', ['id' => $order->id])}}" class="btn red">
+                                    Download Invoice
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="portlet-body">
+                        <h3 class="form-section">Contact Information</h3>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h4>Order Code</h4>
+                                <h4><strong>{{$order->order_code}}</strong></h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h4>Fullname</h4>
+                                <h4><strong>{{$order->name}}</strong></h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h4>Phone</h4>
+                                <h4><strong>{{$order->phonenumber}}</strong></h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h4>Email</h4>
+                                <h4><strong>{{$order->email}}</strong></h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h4>Ticket Period</h4>
+                                <h4><strong>Presale 1</strong></h4>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <h3 class="form-section">Ticket Details</h3>
                         <div class="table-container">
                             <div class="table-actions-wrapper">
-                                <span> </span>
-                                <select class="table-group-action-input form-control input-inline input-small input-sm">
-                                    <option value="">Select...</option>
-                                    <option value="Cancel">Cancel</option>
-                                    <option value="Cancel">Hold</option>
-                                    <option value="Cancel">On Hold</option>
-                                    <option value="Close">Close</option>
-                                </select>
-                                <button class="btn btn-sm green table-group-action-submit">
-                                    <i class="fa fa-check"></i> Submit
-                                </button>
                             </div>
                             <table class="table table-striped table-bordered table-hover" id="sample_1">
                                 <thead>
                                 <tr>
-                                    <th> Order Code </th>
+                                    <th> Ticket Code </th>
                                     <th> Name </th>
                                     <th> Email </th>
                                     <th> Phone </th>
                                     <th> Ticket Period </th>
                                     <th> Ticket Class </th>
-                                    <th> Payment Status </th>
+                                    <th> Seat </th>
                                     <td>  </td>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($orders as $order)
+                                    @foreach($order->tickets as $ticket)
                                     <tr>
-                                        <td> {{$order->order_code}} </td>
-                                        <td> {{$order->name}} </td>
-                                        <td> {{$order->email}} </td>
-                                        <td> {{$order->phonenumber}} </td>
-                                        <td> {{$order->ticket_period}} </td>
-                                        <td> {{$order->ticket_class}} </td>
-                                        <td> {{$order->payment_status}} </td>
-                                        <td>
-                                            <div class="clearfix">
-                                                <div class="btn-group btn-group-solid">
-                                                    <a href="{{route("ticket.order.detail", ['id' => $order->id])}}" class="btn green">View Details</a>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td>{{$ticket->ticket_code}}</td>
+                                        <td>{{$ticket->name}}</td>
+                                        <td>{{$ticket->email}}</td>
+                                        <td>{{$ticket->phonenumber}}</td>
+                                        <td>{{$ticket->ticket_class}}</td>
+                                        <td>{{$ticket->ticket_period}}</td>
+                                        <td>{{$ticket->seat_no}}</td>
+                                        <td><a target="_blank" href="{{route('ticket.download', ['id' => $ticket->id])}}" class="btn green">Download Ticket</a></td>
                                     </tr>
-                                @endforeach
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

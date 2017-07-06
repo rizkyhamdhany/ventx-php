@@ -20,11 +20,14 @@ Route::prefix('/smilemotion')->group(function () {
     Route::get('/input_payment_code', 'PaymentController@inputPaymentCode')->name('payment.input.code');
 });
 
-Route::prefix('tickets')->group(function () {
-    Route::get('/', 'HomeController@listTicket')->name('tickets');
-    Route::get('/choose', 'HomeController@chooseTicket')->name('ticket.choose');
-    Route::post('/order', 'HomeController@orderTicket')->name('ticket.choose.submit');
-    Route::post('/order/submit', 'HomeController@orderTicketSubmit')->name('ticket.order.submit');
-    Route::get('/invoice', 'HomeController@viewInvoice')->name('ticket.invoice');
-//    Route::get('/order', 'HomeController@orderTicket')->name('ticket.order');
+Route::prefix('/tickets')->group(function () {
+    Route::get('/', 'TicketController@listTicket')->name('tickets');
+    Route::get('/choose', 'OrderController@chooseTicket')->name('ticket.choose');
+    Route::get('/download/{id}', 'TicketController@downloadTicket')->name('ticket.download');
+    Route::prefix('/order')->group(function () {
+        Route::post('/', 'OrderController@orderTicket')->name('ticket.choose.submit');
+        Route::post('/submit', 'OrderController@orderTicketSubmit')->name('ticket.order.submit');
+        Route::get('/detail/{id}', 'OrderController@viewOrderDetail')->name('ticket.order.detail');
+        Route::get('/invoice/{id}', 'OrderController@viewInvoice')->name('ticket.order.invoice');
+    });
 });

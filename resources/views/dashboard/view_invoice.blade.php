@@ -5,6 +5,8 @@
         html,body{
             height:275mm;
             width:185mm;
+            margin:0px;
+            padding:0px
         }
         .container{
             position: relative;
@@ -42,6 +44,12 @@
         tr.border_bottom td {
             border-bottom:1pt solid black;
         }
+        .text-bold{
+            font-weight: bold;
+        }
+        .color-grand-total{
+            color:#514F9D;
+        }
     </style>
 </head>
 <body>
@@ -51,18 +59,18 @@
         <tr>
             <td>Order Number</td>
             <td class="tbl_contact_space"> : </td>
-            <td>SMO1ASDNMASN90</td>
+            <td>{{$data['order']->order_code}}</td>
             <td>Phone Number</td>
             <td class="tbl_contact_space"> : </td>
-            <td>+628112032606</td>
+            <td>{{$data['order']->phonenumber}}</td>
         </tr>
         <tr>
             <td>Billed to</td>
             <td class="tbl_contact_space"> : </td>
-            <td>Rizky Hamdhany Wijaya</td>
+            <td>{{$data['order']->name}}</td>
             <td>Email</td>
             <td class="tbl_contact_space"> : </td>
-            <td>hamdhanywijaya@gmail.com</td>
+            <td>{{$data['order']->email}}</td>
         </tr>
     </table>
     <table class="tbl_order_item" cellspacing="0">
@@ -75,17 +83,31 @@
         </tr>
         <tr class="border_bottom">
             <td class="tbl_order_item_space_vertical"></td>
-            <td>Reguler</td>
-            <td>2</td>
-            <td>IDR 70.000</td>
-            <td>IDR 140.000</td>
+            <td>{{$data['order']->ticket_class}}</td>
+            <td>{{$data['order']->ticket_ammount}}</td>
+            <td>IDR {{number_format( $data['ticket_price'] , 0 , '' , '.' )}}</td>
+            <td>IDR {{number_format( $data['ticket_price'] * $data['order']->ticket_ammount , 0 , '' , '.' )}}</td>
         </tr>
-        <tr class="border_bottom">
+        <tr>
             <td class="tbl_order_item_space_vertical"></td>
-            <td>Reguler</td>
-            <td>2</td>
-            <td>IDR 70.000</td>
-            <td>IDR 140.000</td>
+            <td></td>
+            <td></td>
+            <td class="text-bold">Total</td>
+            <td class="text-bold">IDR {{number_format( $data['ticket_price'] * $data['order']->ticket_ammount , 0 , '' , '.' )}}</td>
+        </tr>
+        <tr>
+            <td class="tbl_order_item_space_vertical"></td>
+            <td></td>
+            <td></td>
+            <td class="text-bold">Tax (10%)</td>
+            <td class="text-bold">IDR {{number_format( $data['ticket_price'] * $data['order']->ticket_ammount * 0.1 , 0 , '' , '.' )}}</td>
+        </tr>
+        <tr>
+            <td class="tbl_order_item_space_vertical"></td>
+            <td></td>
+            <td></td>
+            <td class="text-bold color-grand-total">Grand Total</td>
+            <td class="text-bold color-grand-total">DR {{number_format( ($data['ticket_price'] * $data['order']->ticket_ammount * 0.1 ) + ($data['ticket_price'] * $data['order']->ticket_ammount), 0 , '' , '.' )}}</td>
         </tr>
     </table>
 </div>
