@@ -5,8 +5,6 @@
         html,body{
             height:275mm;
             width:185mm;
-            margin:0px;
-            padding:0px
         }
         .container{
             position: relative;
