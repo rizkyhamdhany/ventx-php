@@ -19,7 +19,7 @@
         .barcode{
             position: absolute;
             top: 320px;
-            left: 176px;
+            left: 193px;
 
         }
         .scan_code_text{
@@ -27,12 +27,12 @@
             font-family: 'Work Sans', sans-serif;
             color:#514F9D;
             top: 500px;
-            left: 160px;
+            left: 180px;
         }
         .ticket_class{
             font-family: 'Work Sans', sans-serif;
             color:#514F9D;
-            font-size: 45px;
+            font-size: 20px;
             font-weight: bold;
         }
         .circle_reguler {
@@ -44,7 +44,6 @@
         .ticket_class_container{
             top: 580px;
             position: absolute;
-            left: -50px;
             right: 0;
             margin: 0 auto;
             text-align: center;
@@ -60,12 +59,12 @@
             color:#514F9D;
         }
         .ticket_info{
-            top: 670px;
+            top: 683px;
             position:absolute;
-            left: 380px;
+            left: 0px;
             margin: 0 auto;
             text-align: center;
-            font-size: 14px;
+            font-size: 8px;
         }
         .align-right{
             text-align: right;
@@ -74,6 +73,13 @@
             font-family: 'Work Sans', sans-serif;
             color:#514F9D;
             font-size: 30px;
+        }
+        .ticket_info_text{
+            font-family: 'Work Sans', sans-serif;
+            color:#514F9D;
+            text-align: right;
+            padding-right: 85px;
+            line-height: 95%;
         }
     </style>
 </head>
@@ -85,11 +91,11 @@
     <div class="ticket_class_container">
         <table class="table-center">
             <tr>
-                <td>
+                <td style="padding-right: 10px">
                     @if($ticket->ticket_class === 'Reguler')
-                        <img style="margin-top: 5px; margin-right: 20px" src="{{URL('/')}}/assets/pages/img/circle_reguler.png">
+                        <img style="margin-top: 0px; margin-right: 40px" src="{{URL('/')}}/assets/pages/img/circle_reguler.png">
                     @else
-                        <img style="margin-top: 5px; margin-right: 20px" src="{{URL('/')}}/assets/pages/img/circle_vip.png">
+                        <img style="margin-top: 5px; margin-right: 40px" src="{{URL('/')}}/assets/pages/img/circle_vip.png">
                     @endif
                 </td>
                 <td style="vertical-align: middle" class="ticket_class">{{$ticket->ticket_class}}{{$ticket->seat_no != '' ? ' Seat '.$ticket->seat_no : ' Ticket'}}</td>
@@ -97,20 +103,15 @@
         </table>
     </div>
     <div class="ticket_info">
-        <table class="table-center">
-            <tr>
-                <td class="align-right">{{$ticket->ticket_code}}</td>
-            </tr>
-            <tr>
-                <td class="align-right">{{$ticket->name}}</td>
-            </tr>
-            <tr>
-                <td class="align-right">(+62){{$ticket->phonenumber}}</td>
-            </tr>
-            <tr>
-                <td class="align-right">{{$ticket->email}}</td>
-            </tr>
-        </table>
+        <p class="ticket_info_text">
+            {{$ticket->ticket_code}}
+            <br>
+            {{$ticket->name}}
+            <br>
+            (+62){{$ticket->phonenumber}}
+            <br>
+            {{$ticket->email}}
+        </p>
     </div>
 </div>
 </body>
