@@ -124,9 +124,9 @@ class OrderController extends Controller
     public function viewInvoice(Request $request, $id){
         $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
         $order = Order::find($id);
-//        if ($order->url_invoice != ""){
-//            return redirect()->to(url('/').'/'.$order->url_invoice);
-//        } else {
+        if ($order->url_invoice != ""){
+            return redirect()->to(url('/').'/'.$order->url_invoice);
+        } else {
             $ticket_price = 0;
             if ($order->ticket_class == 'Reguler'){
                 $ticket_price = 70000;
@@ -145,7 +145,7 @@ class OrderController extends Controller
             $order->url_invoice = $invoice_url;
             $order->save();
             return redirect()->to(url('/').'/'.$invoice_url);
-//        }
+        }
     }
 
     public function viewOrderDetail(Request $request, $id){
