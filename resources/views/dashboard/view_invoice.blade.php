@@ -3,7 +3,7 @@
     <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
     <style>
         html,body{
-            height:275mm;
+            height:550mm;
             width:185mm;
         }
         .container{
@@ -24,7 +24,7 @@
             padding-left: 4mm;
             padding-right: 4mm;
         }
-        .tbl_order_item{
+        .tbl_order_item, .tbl_order_item_2{
             z-index: 99;
             margin-top: 130mm;
             position: absolute;
@@ -47,6 +47,13 @@
         }
         .color-grand-total{
             color:#514F9D;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        .page_2{
+            height: 50%;
+            width: 100%;
         }
     </style>
 </head>
@@ -93,21 +100,12 @@
             <td class="text-bold">Total</td>
             <td class="text-bold">IDR {{number_format( $data['ticket_price'] * $data['order']->ticket_ammount , 0 , '' , '.' )}}</td>
         </tr>
-        <tr>
-            <td class="tbl_order_item_space_vertical"></td>
-            <td></td>
-            <td></td>
-            <td class="text-bold">Tax (10%)</td>
-            <td class="text-bold">IDR {{number_format( $data['ticket_price'] * $data['order']->ticket_ammount * 0.1 , 0 , '' , '.' )}}</td>
-        </tr>
-        <tr>
-            <td class="tbl_order_item_space_vertical"></td>
-            <td></td>
-            <td></td>
-            <td class="text-bold color-grand-total">Grand Total</td>
-            <td class="text-bold color-grand-total">DR {{number_format( ($data['ticket_price'] * $data['order']->ticket_ammount * 0.1 ) + ($data['ticket_price'] * $data['order']->ticket_ammount), 0 , '' , '.' )}}</td>
-        </tr>
     </table>
+    <div class="page-break"></div>
+    <div class="page_2">
+        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/invoice_template_2.jpg" style="width: 100%;">
+        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/t&c.jpg" style="width: 100%; top: 50mm;">
+    </div>
 </div>
 </body>
 </html>
