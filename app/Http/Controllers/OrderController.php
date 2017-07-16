@@ -50,19 +50,8 @@ class OrderController extends Controller
         $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
         //create order
         $ammount = $request->input('ammount');
-        $uuid = Uuid::generate();
-        $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
         $order = new Order();
-        $order->order_code = 'SMO'.$code;
-        $order->name = $request->input('contact_fullname');
-        $order->phonenumber = $request->input('contact_phone');
-        $order->email = $request->input('contact_email');
-        $order->ticket_period = $request->input('ticket_period');
-        $order->ticket_class = $request->input('ticket_class');
-        $order->ticket_ammount = $request->input('ammount');
-        $order->payment_status = 'COMPLETE';
-        $order->payment_code = 'test';
-        $order->save();
+        $order->createOrder($request);
         $i = 0;
         foreach ($request->input('ticket_title') as $title_ticket) {
             $ticket = new Ticket();

@@ -9,6 +9,7 @@ use Webpatser\Uuid\Uuid;
 use App\Models\Seat;
 use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
+use App\Models\DailyOrderStatistic;
 
 class TicketController extends Controller
 {
@@ -19,6 +20,8 @@ class TicketController extends Controller
 
     public function listTicket(Request $request)
     {
+//        $dailyOrderStat = new DailyOrderStatistic();
+//        $dailyOrderStat->addDailyCounter(0);exit;
         $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
         $orders = Order::all();
         return view('dashboard.tickets')->with('orders', $orders);

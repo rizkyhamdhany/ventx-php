@@ -106,6 +106,11 @@
         <img class="bg_template" src="{{URL('/')}}/assets/pages/img/invoice_template_2.jpg" style="width: 100%;">
         <img class="bg_template" src="{{URL('/')}}/assets/pages/img/t&c.jpg" style="width: 100%; top: 50mm;">
     </div>
+    <div class="page-break"></div>
+    <div class="page_2">
+        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/invoice_template_2.jpg" style="width: 100%;">
+        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/t&c_2.jpg" style="width: 100%; top: 50mm;">
+    </div>
 </div>
 </body>
 </html>
