@@ -11,7 +11,7 @@ use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
 use App\Models\DailyOrderStatistic;
 
-class TicketController extends Controller
+class TicketDashboardController extends Controller
 {
     public function __construct()
     {

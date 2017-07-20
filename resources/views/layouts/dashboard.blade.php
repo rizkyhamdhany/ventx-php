@@ -8,7 +8,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>{{$event_name}} | Ventex</title>
+    <title>Ventex | Dashboard</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <meta content="Ventex - Nalar Event Experience " name="description"/>
@@ -22,25 +22,20 @@
     @yield('page_style')
     <link href="{{URL('/')}}/assets/global/css/components.css" rel="stylesheet" id="style_components" type="text/css" />
     <link href="{{URL('/')}}/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
-    <link href="{{URL('/')}}/assets/layouts/layout/css/app/layout.css" rel="stylesheet" type="text/css" />
-    <link href="{{URL('/')}}/assets/layouts/layout/css/app/custom.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/layouts/layout/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" href="favicon.ico" /> </head>
 
 <body class="page-container-bg-solid">
-@include('layouts.app_header')
+@include('layouts.header')
 <div class="clearfix"> </div>
 <div class="page-container page-content-inner page-container-bg-solid">
     @yield('content')
 </div>
-<div class="clearfix"> </div>
-<div class="page-footer hidden-print" style="background-image: url('{{URL('/')}}/assets/pages/img/footer_pattern_smilemotion.png')">
-    <div class="page-footer-inner container-fluid container-lf-space pull-right">
-        <div class="pull-right org-logo">
-            <img src="{{URL('/')}}/assets/pages/img/yppcbl.png">
-            <img src="{{URL('/')}}/assets/pages/img/bem.png">
-        </div>
-        <div class="clearfix"> </div>
-        <p class="page-footer-copyright font-white"> &copy; <a target="_blank" class="font-yellow-soft" href="http://nalar.id"> Nalar Creative Solution</a> 2017.
+<div class="page-footer hidden-print">
+    <div class="page-footer-inner container-fluid container-lf-space">
+        <p class="page-footer-copyright font-white"> 2017 &copy; Ventex By
+            <a target="_blank" class="font-yellow-soft" href="http://nalar.id">Nalar Creative</a>
         </p>
     </div>
     <div class="go2top">
