@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{route('app.ticket.book')}}" class="btn sm-button btn-block">Button</a>
+                        <a href="{{route('app.ticket.book')}}" class="btn sm-button btn-block">Buy</a>
                     </div>
                 </div>
             </div>

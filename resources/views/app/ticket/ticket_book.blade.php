@@ -31,14 +31,6 @@
                             <h3 class="sm-font">Fill Your Identity</h3>
                         </div>
                         <div class="portlet light bordered">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <span class="caption-subject sm-font-accent bold uppercase">Sort by</span>
-                                </div>
-                                <div class="tools">
-                                    <span class="caption-subject sm-font-accent bold uppercase">Ticket Type</span>
-                                </div>
-                            </div>
                             <div class="portlet-body">
 
                             </div>
@@ -62,7 +54,7 @@
 
                             </div>
                         </div>
-                        <button class="btn sm-button btn-block">Button</button>
+                        <button class="btn sm-button btn-block">Buy</button>
                     </div>
                 </div>
             </div>
