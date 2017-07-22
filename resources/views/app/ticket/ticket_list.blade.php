@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('page_style_libs')
+@endsection
 @section('page_style')
 @endsection
 @section('content')
@@ -32,6 +34,10 @@
                             <span>Presale 1</span>
                             <span>Reguler</span>
                         </div>
+                        <form class="horizontal-form"  action="{{route('app.ticket.book.post')}}" method="POST">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="ticket_type" value="Reguler">
+                            <input type="hidden" name="ticket_period" value="Presale 1">
                         <div class="portlet light bordered">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -59,7 +65,7 @@
                                             <td> IDR 700.000 </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <select class="form-control">
+                                                    <select class="form-control" name="ticket_ammount">
                                                         <option>1</option>
                                                         <option>2</option>
                                                         <option>3</option>
@@ -74,7 +80,8 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{route('app.ticket.book')}}" class="btn sm-button btn-block">Buy</a>
+                        <button type="submit" href="{{route('app.ticket.book')}}" class="btn sm-button btn-block">Buy Ticket</button>
+                        </form>
                     </div>
                 </div>
             </div>

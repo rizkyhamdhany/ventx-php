@@ -1,4 +1,6 @@
 @extends('layouts.app')
+@section('page_style_libs')
+@endsection
 @section('page_style')
 @endsection
 @section('content')

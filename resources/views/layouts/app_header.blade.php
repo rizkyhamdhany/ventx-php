@@ -1,7 +1,7 @@
 <div class="page-header navbar-fixed-top hidden-print">
     <div class="clearfix">
         <div class="page-logo">
-            <a href="{{$url_event}}">
+            <a href="{{route('welcome')}}">
                 <img src="{{URL('/')}}/assets/pages/img/{{$logo}}" alt="logo" class="logo-default" /> </a>
         </div>
         <div class="top-menu">
@@ -19,6 +19,11 @@
                 <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
                     <span class="dropdown-toggle {{$page_state == 'pay' ? 'active' : ''}}">
                         &#9679; 3 Payment Method
+                    </span>
+                </li>
+                <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                    <span class="dropdown-toggle {{$page_state == 'proceed' ? 'active' : ''}}">
+                        &#9679; 4 Proceed
                     </span>
                 </li>
             </ul>

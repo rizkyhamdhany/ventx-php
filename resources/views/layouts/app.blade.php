@@ -19,11 +19,12 @@
     <link href="{{URL('/')}}/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
-    @yield('page_style')
+    @yield('page_style_libs')
     <link href="{{URL('/')}}/assets/global/css/components.css" rel="stylesheet" id="style_components" type="text/css" />
     <link href="{{URL('/')}}/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/layouts/layout/css/app/layout.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/layouts/layout/css/app/custom.css" rel="stylesheet" type="text/css" />
+    @yield('page_style')
     <link rel="shortcut icon" href="favicon.ico" /> </head>
 
 <body class="page-container-bg-solid">
