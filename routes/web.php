@@ -30,6 +30,7 @@ Route::prefix('/tickets')->group(function () {
 Route::prefix('/smilemotion')->group(function () {
     Route::get('/', 'LandingController@index')->name('welcome');
     Route::get('/input_payment_code', 'PaymentController@inputPaymentCode')->name('payment.input.code');
+    Route::get('/svg', 'LandingController@svgTest')->name('svg');
 });
 
 Route::prefix('/dashboard')->group(function () {
