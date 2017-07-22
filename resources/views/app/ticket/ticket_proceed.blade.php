@@ -59,7 +59,7 @@
                                     We have sent step-by-step payment guide to your email address. Kindly check your inbox.
                                 </p>
                             </div>
-                            <a href="{{route('payment.input.code')}}" class="btn sm-button btn-block">Confrim My Purchase</a>
+                            <a href="{{route('payment.input.code')}}" class="btn sm-button btn-block">Confirm My Purchase</a>
                         </div>
                     </div>
                     <div class="col-md-5">
