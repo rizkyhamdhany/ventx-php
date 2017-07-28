@@ -1,6 +1,6 @@
-<form class="horizontal-form"  action="{{route('app.ticket.book.post')}}" method="POST">
+<form class="horizontal-form"  action="{{route('app.ticket.book.post')}}" method="POST" onsubmit="document.getElementById('ticket_ammount').disabled = false;">
     {{ csrf_field() }}
-    <input type="hidden" name="ticket_type" value="Reguler">
+    <input type="hidden" name="ticket_type" value="Reguler" id="ticket_type">
     <input type="hidden" name="ticket_period" value="Presale 1">
 <div class="form-action">
     <div class="table-scrollable">

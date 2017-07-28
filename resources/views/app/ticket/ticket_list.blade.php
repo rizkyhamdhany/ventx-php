@@ -31,53 +31,80 @@
         <div class="page-content-wrapper">
             <div class="page-content">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div>
                         <div class="ticket-period-container">
-                            <span class="btn btn-circle">Presale 1</span>
-                            <span>Presale 1</span>
-                            <span>Reguler</span>
+                            <h3 class="sm-font">Select Your Seat</h3>
                         </div>
                         <div class="portlet light bordered">
-                            <div class="portlet-title tabbable-line">
-                                <div class="caption">
-                                    <span class="caption-subject sm-font-accent bold uppercase">Select Your Seat</span>
-                                </div>
-                            </div>
                             <div class="portlet-body padding-bottom-30">
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="seat-map">
-                                        @include('app.ticket.ticket_seat_svg')
-                                    </div>
-                                    <div class="tab-pane" id="ticket-list-reguler">
-                                        @include('app.ticket.ticket_list_reguler')
-                                    </div>
-                                    <div class="tab-pane" id="portlet_comments_3">
-                                        <h4>Sorry this feature isn't available right now, please try again later</h4>
-                                    </div>
-                                    <div class="tab-pane" id="portlet_comments_4">
-                                        <h4>Sorry this feature isn't available right now, please try again later</h4>
+                                <div class="col-md-6 sm-border-right">
+                                    @include('app.ticket.ticket_seat_svg')
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="tab-content">
+                                        @php($is_first = true)
+                                        @php($alphabet = range('A', 'Z'))
+                                        @foreach($ticket_class as $area)
+                                            <div class="tab-pane seats {{$is_first ? 'active' : ' '}} @php($is_first = false)" id="seat-map-{{$area->id}}">
+                                                @if($area->have_seat)
+                                                    <button class="btn btn-circle sm-button-small margin-bottom-10">{{$area->name}} - Available Seat</button>
+                                                    @for ($i = 0; $i < $area->row; $i++)
+                                                        @if($i == 0)
+                                                            <div class="seat-row">
+                                                                <div class="seat-col">&nbsp </div>
+                                                                @for ($j = 0; $j < $area->col; $j++)
+                                                                    <div class="seat-col">{{$j < 10 ? '&nbsp;'.$j : $j }}</div>
+                                                                @endfor
+                                                            </div>
+                                                        @endif
+                                                        <div class="seat-row">
+                                                            @php($row = $alphabet[($area->row - $i) - 1])
+                                                            <div class="seat-col">{{$row}}</div>
+                                                            @for ($j = 0; $j < $area->col; $j++)
+                                                                <div class="seat-col {{isset($seat[$area->name][$row.($j+1)]) ? 'seat-ava' : 'seat-una'}}"
+                                                                     onclick="{{isset($seat[$area->name][$row.($j+1)]) ? 'selectSeat('.$seat[$area->name][$row.($j+1)].')' : ''}}"
+                                                                     id="{{isset($seat[$area->name][$row.($j+1)]) ? 'seat_'.$seat[$area->name][$row.($j+1)] : ''}}">
+                                                                    &nbsp;
+                                                                </div>
+                                                            @endfor
+                                                        </div>
+                                                    @endfor
+                                                    <div class="seat-info-container">
+
+                                                        <div class="seat-info-item">
+                                                            <div class="seat-info-item seat-col seat-info-sel"></div>
+                                                            <p>Selected</p>
+                                                        </div>
+                                                        <div class="seat-info-item">
+                                                            <div class="seat-info-item seat-col seat-info-ava"></div>
+                                                            <p>Available</p>
+                                                        </div>
+                                                        <div class="seat-info-item">
+                                                            <div class="seat-info-item seat-col seat-info-una"></div>
+                                                            <p>Sold</p>
+                                                        </div>
+                                                        <div style="clear: both"></div>
+                                                    </div>
+                                                @else
+                                                    <p style="text-align: center">Selecting Seat Only Available for VVIP & VIP</p>
+                                                @endif
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="ticket-period-container-list">
-                            <h3 class="sm-font">&nbsp;</h3>
+                </div>
+                <div class="row">
+                    <div>
+                        <div class="ticket-period-container">
+                            <h3 class="sm-font">Selected Seat</h3>
                         </div>
-                        <div class="portlet light bordered sm-bg-color" style="background-image: url('{{URL('/')}}/assets/pages/img/smilemo-theme.png'); background-repeat: no-repeat">
-                            <div class="portlet-body ticket-summary">
-                                <div class="pull-right">
-                                    <h4 class="font-white"></h4>
-                                </div>
-                                <div class="event-details">
-                                    <h1 class="font-white">Smilemotion 2017</h1>
-                                    <p class="font-white">
-                                        Sabtu, 9 Desember 2017
-                                        <br>Sasana Budaya Ganesha
-                                        <br>11.00 a.m. - 10.00 p.m.</p>
-                                </div>
-                                <div class="clearfix"></div>
+                        <div class="portlet light bordered">
+                            <div class="portlet-body no-padding-bottom">
+                                @include('app.ticket.ticket_list_reguler')
                             </div>
                         </div>
                     </div>
@@ -87,31 +114,101 @@
     </div>
 @endsection
 @section('page_js_plugins')
+    <script src="{{URL('/')}}/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js" type="text/javascript"></script>
 @endsection
 @section('page_js')
+    <script src="{{URL('/')}}/assets/pages/scripts/form-wizard.min.js" type="text/javascript"></script>
+    <style>
+        #REG:hover, #VIP_E:hover, #VIP_D:hover, #VIP_I:hover, #VIP_H:hover, #VVIP:hover{
+            background-color: #000000;
+            opacity: 0.3;
+            cursor: pointer;
+        }
+    </style>
     <script>
+        var seats = [];
         $( "#REG" ).click(function() {
-            $('#seat-map').hide();
-            $('#ticket-list-reguler').show();
+            $('.seats').hide();
+            $('#seat-map-13').show();
+            $('#ticket-class').text('Reguler');
+            $('#ticket_type').val('Reguler');
+            $('#ticket-price').text('IDR 70.000');
+            $('#ticket_ammount').prop("disabled", false);
+            resetSeat();
         });
         $( "#VVIP" ).click(function() {
-            alert( "VVIP" );
+            $('.seats').hide();
+            $('#seat-map-18').show();
+            $('#ticket-class').text('VVIP');
+            $('#ticket_type').val('VVIP');
+            $('#ticket-price').text('IDR 400.000');
+            $('#ticket_ammount').prop("disabled", true);
+            resetSeat();
         });
         $( "#VIP_E" ).click(function() {
-            alert( "VIP_E" );
+            $('.seats').hide();
+            $('#seat-map-14').show();
+            $('#ticket-class').text('VIP E');
+            $('#ticket_type').val('VIP E');
+            $('#ticket-price').text('IDR 200.000');
+            $('#ticket_ammount').prop("disabled", true);
+            resetSeat();
         });
         $( "#VIP_D" ).click(function() {
-            alert( "VIP_D" );
+            $('.seats').hide();
+            $('#seat-map-15').show();
+            $('#ticket-class').text('VIP D');
+            $('#ticket_type').val('VIP D');
+            $('#ticket-price').text('IDR 200.000');
+            $('#ticket_ammount').prop("disabled", true);
+            resetSeat();
         });
         $( "#VIP_I" ).click(function() {
-            alert( "VIP_I" );
+            $('.seats').hide();
+            $('#seat-map-16').show();
+            $('#ticket-class').text('VIP I');
+            $('#ticket_type').val('VIP I');
+            $('#ticket-price').text('IDR 200.000');
+            $('#ticket_ammount').prop("disabled", true);
+            resetSeat();
         });
         $( "#VIP_H" ).click(function() {
-            alert( "VIP_H" );
+            $('.seats').hide();
+            $('#seat-map-17').show();
+            $('#ticket-class').text('VIP H');
+            $('#ticket_type').val('VIP H');
+            $('#ticket-price').text('IDR 200.000');
+            $('#ticket_ammount').prop("disabled", true);
+            resetSeat();
         });
-        $('#reg-cancel').click(function(){
-            $('#ticket-list-reguler').hide();
-            $('#seat-map').show();
-        });
+        function selectSeat($i) {
+            if ( $.inArray($i, seats) > -1 ) {
+                $('#seat_'+$i).removeClass('seat-sel');
+                seats = jQuery.grep(seats, function(value) {
+                    return value != $i;
+                });
+                $('#ticket_ammount').val(seats.length.toString());
+            } else {
+                if (seats.length < 4){
+                    seats.push($i);
+                    $('#seat_'+$i).addClass('seat-sel');
+                    $('#ticket_ammount').val(seats.length.toString());
+                }
+            }
+
+            console.log(seats);
+        }
+
+        function resetSeat(){
+            for (var i = 0; i < seats.length; i++) {
+                $('#seat_'+seats[i]).removeClass('seat-sel');
+            }
+            seats = [];
+            $('#ticket_ammount').val('0');
+            console.log(seats);
+        }
     </script>
 @endsection

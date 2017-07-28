@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
 use App\Models\TicketClass;
+use App\Models\Seat;
 use Webpatser\Uuid\Uuid;
 use Milon\Barcode\DNS2D;
 use View;
-use App\Models\Seat;
 use Illuminate\Support\Facades\Redis;
 
 class LandingController extends Controller

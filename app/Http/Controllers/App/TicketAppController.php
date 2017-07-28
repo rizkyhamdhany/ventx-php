@@ -13,6 +13,7 @@ use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
 use App\Models\DailyOrderStatistic;
 use View;
+use Illuminate\Support\Facades\Redis;
 
 class TicketAppController extends Controller
 {
@@ -24,8 +25,21 @@ class TicketAppController extends Controller
     }
     public function listTicket(Request $request)
     {
+        if (!Redis::exists("seat-VVIP")){
+            $this->cachingSeatData();
+        }
         View::share( 'page_state', 'pick_seat' );
-        return view('app.ticket.ticket_list');
+        $ticket_class = TicketClass::all();
+        $seat = array();
+        $seat['VVIP'] = Redis::hgetall('seat-VVIP');
+        $seat['VIP E'] = Redis::hgetall('seat-VIP E');
+        $seat['VIP D'] = Redis::hgetall('seat-VIP D');
+        $seat['VIP I'] = Redis::hgetall('seat-VIP I');
+        $seat['VIP H'] = Redis::hgetall('seat-VIP H');
+
+        View::share( 'page_state', 'pick_seat' );
+        return view('app.ticket.ticket_list')->with('ticket_class', $ticket_class)
+            ->with('seat', $seat);
     }
     public function bookTicket(Request $request)
     {
@@ -83,7 +97,7 @@ class TicketAppController extends Controller
         if ($ticket->ticket_type == 'Reguler'){
             $ticket->price_item = 70000;
             $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
-        } else if ($ticket->ticket_type == 'VIP'){
+        } else if ($ticket->ticket_type == 'VIP I' || $ticket->ticket_type == 'VIP H' || $ticket->ticket_type == 'VIP E' || $ticket->ticket_type == 'VIP D'){
             $ticket->price_item = 200000;
             $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
         } else if ($ticket->ticket_type == 'VVIP'){
@@ -91,5 +105,14 @@ class TicketAppController extends Controller
             $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
         }
         return $ticket;
+    }
+
+    public function cachingSeatData(){
+        $seats = Seat::all();
+        foreach ($seats as $seat){
+            if ($seat->status = 'active' || $seat->status = 'booked'){
+                Redis::hset("seat-".$seat->ticket_class, $seat->no, $seat->id);
+            }
+        }
     }
 }
