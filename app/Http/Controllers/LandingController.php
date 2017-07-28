@@ -31,6 +31,8 @@ class LandingController extends Controller
 
     public function svgTest(){
         Redis::set('name', 'Taylor');
+        $user = Redis::get('name');
+        echo $user; exit;
         View::share( 'page_state', 'pick_seat' );
         $ticket_class = TicketClass::all();
         return view('app.svg_test')->with('ticket_class', $ticket_class);
