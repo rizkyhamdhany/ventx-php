@@ -24,6 +24,9 @@ body {
 .padding-bottom-30{
     padding-bottom: 30px !important;
 }
+.no-padding-bottom{
+    padding-bottom: 0px !important;
+}
 .no-padding-left{
     padding-left: 0px !important;
 }
@@ -1230,4 +1233,11 @@ Page Quick Sidebar
     border-color: #524EA2;
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+.sm-button-small{
+    color: #97D7BF;
+    background-color: #524EA2;
+    border-color: #524EA2;
+    font-size: 12px;
 }

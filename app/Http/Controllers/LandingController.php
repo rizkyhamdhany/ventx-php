@@ -9,6 +9,7 @@ use App\Models\TicketClass;
 use Webpatser\Uuid\Uuid;
 use Milon\Barcode\DNS2D;
 use View;
+use App\Models\Seat;
 use Illuminate\Support\Facades\Redis;
 
 class LandingController extends Controller
@@ -30,11 +31,28 @@ class LandingController extends Controller
     }
 
     public function svgTest(){
-        Redis::set('name', 'Taylor');
-        $user = Redis::get('name');
-        echo $user; exit;
+        if (!Redis::exists("seat-VVIP")){
+            $this->cachingSeatData();
+        }
         View::share( 'page_state', 'pick_seat' );
         $ticket_class = TicketClass::all();
-        return view('app.svg_test')->with('ticket_class', $ticket_class);
+        $seat = array();
+        $seat['VVIP'] = Redis::hgetall('seat-VVIP');
+        $seat['VIP E'] = Redis::hgetall('seat-VIP E');
+        $seat['VIP D'] = Redis::hgetall('seat-VIP D');
+        $seat['VIP I'] = Redis::hgetall('seat-VIP I');
+        $seat['VIP H'] = Redis::hgetall('seat-VIP H');
+
+        return view('app.svg_test')->with('ticket_class', $ticket_class)
+            ->with('seat', $seat);
+    }
+
+    public function cachingSeatData(){
+        $seats = Seat::all();
+        foreach ($seats as $seat){
+            if ($seat->status = 'active' || $seat->status = 'booked'){
+                Redis::hset("seat-".$seat->ticket_class, $seat->no, $seat->id);
+            }
+        }
     }
 }

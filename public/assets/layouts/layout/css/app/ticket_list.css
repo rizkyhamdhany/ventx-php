@@ -61,6 +61,8 @@
     width: 18px;
     height: 18px;
     margin : 5px 3px;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 12px;
 }
 .seat-row{
     width: 100%;
@@ -70,8 +72,26 @@
 .seat-ava{
     background-color: #D8D8D8;
 }
+.seat-una{
+    background-color: #9E9E9E;
+}
+.seat-sel{
+    background-color: #BFF1E6 !important;
+}
 .seat-ava:hover{
     background-color : #BFF1E6;
+    cursor: pointer;
+}
+.seat-info-ava{
+    background-color: #D8D8D8;
+}
+.seat-info-una{
+    background-color: #9E9E9E;
+}
+.seat-info-sel{
+    background-color: #BFF1E6;
+}
+.seat-una:hover{
     cursor: pointer;
 }
 .seat-info-container{
@@ -82,4 +102,7 @@
 
 .seat-info-item{
     display: inline-block;
+    margin: 0px 10px;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 12px;
 }

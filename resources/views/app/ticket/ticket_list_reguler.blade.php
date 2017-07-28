@@ -8,23 +8,22 @@
             <thead>
             <tr>
                 <th> Ticket Type </th>
-                <th> Availability </th>
                 <th> Price </th>
                 <th> Quantity </th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td> Reguler </td>
-                <td> 700 </td>
-                <td> IDR 700.000 </td>
+                <td id="ticket-class"> Reguler </td>
+                <td id="ticket-price"> IDR 70.000 </td>
                 <td>
                     <div class="form-group">
-                        <select class="form-control" name="ticket_ammount">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
+                        <select class="form-control" name="ticket_ammount" id="ticket_ammount">
+                            <option value="0">-----</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
                         </select>
                     </div>
                 </td>
@@ -36,10 +35,7 @@
 </div>
 <div class="form-actions">
     <div class="row">
-        <div class="col-md-offset-2 col-md-8 margin-top-30">
-            <button type="button" class="btn grey-salsa btn-outline" id="reg-cancel">Cancel</button>
-            <button type="submit" class="btn green">Continue</button>
-        </div>
+        <button type="submit" class="btn sm-button btn-block">Proceed</button>
     </div>
 </div>
 </form>
