@@ -4,11 +4,11 @@
                             <defs>
                                 <style type="text/css">
                                     <![CDATA[
-                            .fil6 {fill:#36315E}
-                                    .fil3 {fill:#514F9D}
-                                    .fil1 {fill:#79555C}
-                                    .fil4 {fill:#94D3BE}
-                                    .fil0 {fill:#F9ACBC}
+                                    .fil3 {fill:#E39477}
+                                    .fil4 {fill:#BACF76}
+                                    .fil0 {fill:#535098}
+                                    .fil6 {fill:#36315E}
+                                    .fil1 {fill:#2F2A50}
                                     .fil5 {fill:black;fill-rule:nonzero}
                                     .fil2 {fill:white;fill-rule:nonzero}
                                     ]]>

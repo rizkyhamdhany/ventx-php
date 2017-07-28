@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('page_style_libs')
+    <link href="{{URL('/')}}/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
 @endsection
 @section('page_style')
     <link href="{{URL('/')}}/assets/layouts/layout/css/app/ticket_list.css" rel="stylesheet" type="text/css" />
@@ -29,76 +31,62 @@
         <div class="page-content-wrapper">
             <div class="page-content">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="ticket-period-container-list">
+                    <div>
+                        <div class="ticket-period-container">
                             <h3 class="sm-font">Select Your Seat</h3>
                         </div>
                         <div class="portlet light bordered">
-                            <div class="portlet-title tabbable-line">
-                                <div class="caption">
-                                    <span class="caption-subject sm-font-accent bold uppercase">Choose Area</span>
+                            <div class="portlet-body padding-bottom-30">
+                                <div class="col-md-6 sm-border-right">
+                                    @include('app.ticket.ticket_seat_svg')
                                 </div>
-                            </div>
-                            <div class="portlet-body">
-                                @include('app.ticket.ticket_seat_svg')
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="ticket-period-container">
-                            <span class="btn btn-circle">Presale 1</span>
-                            <span>Presale 1</span>
-                            <span>Reguler</span>
-                        </div>
-                        <form class="horizontal-form"  action="{{route('app.ticket.book.post')}}" method="POST">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="ticket_type" value="Reguler">
-                            <input type="hidden" name="ticket_period" value="Presale 1">
-                            <div class="portlet light bordered">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <span class="caption-subject sm-font-accent bold uppercase">Sort by</span>
-                                    </div>
-                                    <div class="tools">
-                                        <span class="caption-subject sm-font-accent bold uppercase">Ticket Type</span>
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <div class="table-scrollable">
-                                        <table class="table table-ticket table-striped table-hover">
-                                            <thead>
-                                            <tr>
-                                                <th> Ticket Type </th>
-                                                <th> Availability </th>
-                                                <th> Price </th>
-                                                <th> Quantity </th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td> Reguler </td>
-                                                <td> 700 </td>
-                                                <td> IDR 700.000 </td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <select class="form-control" name="ticket_ammount">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                            <option>4</option>
-                                                        </select>
+                                <div class="col-md-6">
+                                    <div class="tab-content">
+                                        @php($is_first = true)
+                                        @php($alphabet = range('A', 'Z'))
+                                        @foreach($ticket_class as $area)
+                                            <div class="tab-pane seats {{$is_first ? 'active' : ' '}} @php($is_first = false)" id="seat-map-{{$area->id}}">
+                                                @if($area->have_seat)
+                                                    @for ($i = 0; $i < $area->row; $i++)
+                                                        @if($i == 0)
+                                                            <div class="seat-row">
+                                                                <div class="seat-col">&nbsp </div>
+                                                                @for ($j = 0; $j < $area->col; $j++)
+                                                                    <div class="seat-col">{{$j < 10 ? '&nbsp;'.$j : $j }}</div>
+                                                                @endfor
+                                                            </div>
+                                                        @endif
+                                                        <div class="seat-row">
+                                                            <div class="seat-col">{{$alphabet[($area->row - $i) - 1]}}</div>
+                                                            @for ($j = 0; $j < $area->col; $j++)
+                                                                <div class="seat-col seat-ava">&nbsp;</div>
+                                                            @endfor
+                                                        </div>
+                                                    @endfor
+                                                    <div class="seat-info-container">
+                                                        <div class="seat-info-item">{{$area->name}}</div>
+                                                        <div style="clear: both"></div>
                                                     </div>
-                                                </td>
-
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                                @endif
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <button type="submit" href="{{route('app.ticket.book')}}" class="btn sm-button btn-block">Buy Ticket</button>
-                        </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <div class="ticket-period-container">
+                            <h3 class="sm-font">Selected Seat</h3>
+                        </div>
+                        <div class="portlet light bordered">
+                            <div class="portlet-body padding-bottom-30">
+                                @include('app.ticket.ticket_list_reguler')
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -106,8 +94,13 @@
     </div>
 @endsection
 @section('page_js_plugins')
+    <script src="{{URL('/')}}/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js" type="text/javascript"></script>
 @endsection
 @section('page_js')
+    <script src="{{URL('/')}}/assets/pages/scripts/form-wizard.min.js" type="text/javascript"></script>
     <style>
         #REG:hover, #VIP_E:hover, #VIP_D:hover, #VIP_I:hover, #VIP_H:hover, #VVIP:hover{
             background-color: #000000;
@@ -117,22 +110,28 @@
     </style>
     <script>
         $( "#REG" ).click(function() {
-            alert( "Rguler" );
+            $('.seats').hide();
+            $('#seat-map-13').show();
         });
         $( "#VVIP" ).click(function() {
-            alert( "VVIP" );
+            $('.seats').hide();
+            $('#seat-map-18').show();
         });
         $( "#VIP_E" ).click(function() {
-            alert( "VIP_E" );
+            $('.seats').hide();
+            $('#seat-map-14').show();
         });
         $( "#VIP_D" ).click(function() {
-            alert( "VIP_D" );
+            $('.seats').hide();
+            $('#seat-map-15').show();
         });
         $( "#VIP_I" ).click(function() {
-            alert( "VIP_I" );
+            $('.seats').hide();
+            $('#seat-map-16').show();
         });
         $( "#VIP_H" ).click(function() {
-            alert( "VIP_H" );
+            $('.seats').hide();
+            $('#seat-map-17').show();
         });
     </script>
 @endsection

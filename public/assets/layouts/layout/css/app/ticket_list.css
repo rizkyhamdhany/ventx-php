@@ -1,3 +1,85 @@
 .ticket-period-container-list{
     padding: 12px 0 27px 0;
 }
+.ticket-summary{
+    padding: 20px;
+}
+.ticket-summary .event-details{
+    padding-top: 147px;
+}
+.ticket-item-container .ticket-table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+}
+.ticket-table tr{
+}
+
+.ticket-table td{
+    background-color: #fff;
+    padding: 20px 5px;
+    text-align: center;
+}
+.circle {
+    width: 25px;
+    height: 25px;
+    -webkit-border-radius: 12.5px;
+    -moz-border-radius: 12.5px;
+    border-radius: 12.5px;
+    margin: 0 auto;
+}
+.circle-reguler {
+    background-color:#F9ACBC;
+}
+.circle-vip{
+    background-color:#94D3BE;
+}
+.bank-name{
+    margin-left: 20px;
+}
+.list-bank{
+    border: solid 1px;
+    padding: 5px;
+}
+.table-bank{
+    margin: 50px 0;
+}
+#REG:hover, #VIP_E:hover, #VIP_D:hover, #VIP_I:hover, #VIP_H:hover, #VVIP:hover{
+    background-color: #000000;
+    opacity: 0.3;
+    cursor: pointer;
+}
+#seat-map{
+}
+.tbl-seat{
+    width: 100%;
+    text-align: center;
+}
+.seat-col{
+    display: inline-block;
+    font-size: 15px;
+    width: 18px;
+    height: 18px;
+    margin : 5px 3px;
+}
+.seat-row{
+    width: 100%;
+    text-align: center;
+}
+
+.seat-ava{
+    background-color: #D8D8D8;
+}
+.seat-ava:hover{
+    background-color : #BFF1E6;
+    cursor: pointer;
+}
+.seat-info-container{
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.seat-info-item{
+    display: inline-block;
+}

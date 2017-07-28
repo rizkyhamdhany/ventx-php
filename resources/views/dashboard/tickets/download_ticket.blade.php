@@ -93,9 +93,9 @@
             <tr>
                 <td style="padding-right: 10px">
                     @if($ticket->ticket_class === 'Reguler')
-                        <img style="margin-top: 0px; margin-right: 40px" src="{{URL('/')}}/assets/pages/img/circle_reguler.png">
+                        <img style="margin-top: 0px; margin-right: 40px" src="{{URL('/')}}/assets/pages/img/circle_vip.png">
                     @else
-                        <img style="margin-top: 5px; margin-right: 40px" src="{{URL('/')}}/assets/pages/img/circle_vip.png">
+                        <img style="margin-top: 5px; margin-right: 40px" src="{{URL('/')}}/assets/pages/img/circle_reguler.png">
                     @endif
                 </td>
                 <td style="vertical-align: middle" class="ticket_class">{{$ticket->ticket_class}}{{$ticket->seat_no != '' ? ' Seat '.$ticket->seat_no : ' Ticket'}}</td>

@@ -46,6 +46,11 @@ body {
     background-color: #524EA2 !important;
 }
 
+.sm-border-right{
+    border-right: solid 1px;
+    border-color: #524EA2;
+}
+
 .pull-left{
     float: left !important;
 }
@@ -1207,6 +1212,10 @@ Page Quick Sidebar
     border-color: #524EA2;
     padding-left: 30px;
     padding-right: 30px;
+}
+
+.ticket-period-container h3{
+    font-family: 'Varela Round', sans-serif;
 }
 
 .table-ticket td{
