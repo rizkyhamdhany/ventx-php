@@ -38,7 +38,7 @@ class TicketDashboardController extends Controller
             $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
             $output = $pdf->output();
 
-            $ticket_url = 'uploads/ticket/ticket_'.$ticket->ticket_code.'.pdf';
+            $ticket_url = 'ventex/ticket/ticket_'.$ticket->ticket_code.'.pdf';
             $s3 = \Storage::disk('s3');
             $s3->put($ticket_url, $output, 'public');
 
@@ -46,7 +46,7 @@ class TicketDashboardController extends Controller
 //            file_put_contents($ticket_url, $output);
             $ticket->url_ticket = $ticket_url;
             $ticket->save();
-            return redirect()->to(url('/').'/'.$ticket_url);
+            return redirect()->to($s3->url($ticket->url_ticket));
         }
     }
 }

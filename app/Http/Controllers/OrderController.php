@@ -140,7 +140,7 @@ class OrderController extends Controller
             $s3->put($invoice_url, $output, 'public');
             $order->url_invoice = $invoice_url;
             $order->save();
-            return redirect()->to(url('/').'/'.$invoice_url);
+            return redirect()->to($s3->url($order->url_invoice));
         }
     }
 
