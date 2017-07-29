@@ -9,7 +9,7 @@
         "barryvdh/laravel-dompdf": "^0.8.0",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "league/flysystem-aws-s3-v2": "^1.0",
+        "league/flysystem-aws-s3-v3": "~1.0",
         "milon/barcode": "^5.3",
         "predis/predis": "^1.1",
         "prettus/l5-repository": "^2.6",

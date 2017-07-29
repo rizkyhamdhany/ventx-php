@@ -32,12 +32,18 @@ class TicketDashboardController extends Controller
         $ticket = Ticket::find($id);
 //        return view('dashboard.tickets.download_ticket')->with('ticket', $ticket);
         if ($ticket->url_ticket != ""){
-            return redirect()->to(url('/').'/'.$ticket->url_ticket);
+            $s3 = \Storage::disk('s3');
+            return redirect()->to($s3->url($ticket->url_ticket));
         } else {
             $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
             $output = $pdf->output();
+
             $ticket_url = 'uploads/ticket/ticket_'.$ticket->ticket_code.'.pdf';
-            file_put_contents($ticket_url, $output);
+            $s3 = \Storage::disk('s3');
+            $s3->put($ticket_url, $output, 'public');
+
+//            $ticket_url = 'uploads/ticket/ticket_'.$ticket->ticket_code.'.pdf';
+//            file_put_contents($ticket_url, $output);
             $ticket->url_ticket = $ticket_url;
             $ticket->save();
             return redirect()->to(url('/').'/'.$ticket_url);
