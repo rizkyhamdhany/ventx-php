@@ -45,4 +45,25 @@ Route::prefix('/dashboard')->group(function () {
             Route::get('/invoice/{id}', 'OrderController@viewInvoice')->name('ticket.order.invoice');
         });
     });
+
+    //DASHBOARD PAYMENTS
+    Route::prefix('/payments')->group(function(){
+        Route::get('/','TransactionController@listPayment')->name('payments');
+        //Route::get('/add' , 'PaymentController@addTransaction')->name('payment.add');//AddTransaction
+        Route::prefix('/add')->group(function(){
+            Route::get('/','TransactionController@addTransaction')->name('payment.add');
+            Route::get('/submit','TransactionController@addTransactionSubmit')->name('payment.add.submit');
+        });
+        Route::prefix('/confirm')->group(function(){
+            //Route::get('/','TransactionController@orderTicket')->name('ticket.choose.submit');//orderView);
+            Route::get('/detail/{id}','TransactionController@viewOrderDetail')->name('payment.confirm.detail');//orderView);
+        });
+    });
+
+
+    Route::prefix('/complains')->group(function(){
+        Route::get('/','ComplainController@listComplain')->name('complains');//viewList
+        Route::prefix('/followUp')->group(function(){
+        });
+    });
 });
