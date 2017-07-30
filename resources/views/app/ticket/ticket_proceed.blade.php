@@ -66,7 +66,7 @@
                         <div class="ticket-period-container">
                             <h3 class="sm-font">&nbsp;</h3>
                         </div>
-                        <div class="portlet light bordered sm-bg-color" style="background-image: url('{{URL('/')}}/assets/pages/img/smilemo-theme.png'); background-repeat: no-repeat">
+                        <div class="portlet light bordered sm-bg-color" style="background-image: url('{{URL('/')}}/assets/pages/img/smilemo-theme.png'); background-repeat: no-repeat;     background-repeat: no-repeat;background-position: center top;background-size: 100% auto;">
                             <div class="portlet-body ticket-summary">
                                 <div class="pull-right">
                                     <h4 class="font-white">Ticket Summary</h4>
