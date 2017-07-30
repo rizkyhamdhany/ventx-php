@@ -106,3 +106,21 @@
     font-family: 'Varela Round', sans-serif;
     font-size: 12px;
 }
+
+@media (min-width: 992px){
+    .seat-col{
+        width: 15px;
+        height: 15px;
+        margin: 5px 2px;
+    }
+}
+@media (max-width: 767px) {
+    .seat-ava:hover{
+        background-color : #D8D8D8;
+        cursor: pointer;
+    }
+    .name-container{
+        padding-left: 15px !important;
+    }
+}
+

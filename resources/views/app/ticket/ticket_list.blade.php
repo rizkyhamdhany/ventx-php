@@ -86,8 +86,9 @@
                                                         <div style="clear: both"></div>
                                                     </div>
                                                 @else
-                                                    <p style="text-align: center">Selecting Seat Only Available for VVIP & VIP</p>
+                                                    <p class="no-seat-text">Selecting Seat Only Available for VVIP & VIP</p>
                                                 @endif
+                                                <div class="clearfix"></div>
                                             </div>
                                         @endforeach
                                     </div>

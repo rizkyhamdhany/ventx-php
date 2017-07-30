@@ -73,7 +73,7 @@
                                         <div class="form-group">
                                             <label class="control-label">Email</label>
                                             <div class="input-group">
-                                                <span class="input-group-addon">
+                                                <span class="input-group-addon addon-email">
                                                     <i class="fa fa-envelope"></i>
                                                 </span>
                                                 <input name="contact_email" type="email" class="form-control" placeholder="Email Address" required> </div>
@@ -88,11 +88,11 @@
                                     </span>
                                     <span class="sm-font-accent">Ticket Delivery</span>
                                 </div>
-                                @for($i = 0; $i < $ticket->ticket_ammount; $i++)
+                                @for($i = 1; $i < ($ticket->ticket_ammount + 1); $i++)
                                 <div>
                                     <h4 class="margin-top-30">Person {{$i}}</h4>
                                     <div class="margin-top-10">
-                                        <div class="col-md-2 padding-right-10">
+                                        <div class="col-md-2 padding-right-10 title-container">
                                             <div class="form-group">
                                                 <label class="control-label">Title</label>
                                                 <select name="ticket_title[]" class="form-control">
@@ -102,7 +102,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-10 no-padding-left">
+                                        <div class="col-md-10 no-padding-left name-container">
                                             <label class="control-label">Full Name</label>
                                             <input name="ticket_name[]" type="text" id="firstName" class="form-control" placeholder="Don Jon" required>
                                         </div>
@@ -123,7 +123,7 @@
                                             <div class="form-group">
                                                 <label class="control-label">Email</label>
                                                 <div class="input-group">
-                                                <span class="input-group-addon">
+                                                <span class="input-group-addon addon-email">
                                                     <i class="fa fa-envelope"></i>
                                                 </span>
                                                     <input name="ticket_email[]" type="email" class="form-control" placeholder="Email Address" required> </div>

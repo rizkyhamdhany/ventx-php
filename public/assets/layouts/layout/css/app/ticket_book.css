@@ -41,3 +41,22 @@
 .table-bank{
     margin: 50px 0;
 }
+.addon-email{
+    padding: 6px 17px;
+}
+
+@media (max-width: 767px) {
+    .name-container{
+        padding-left: 15px !important;
+    }
+    .title-container{
+        padding-right: 15px !important;
+    }
+    .portlet.light > .portlet-title > .nav-tabs > li > a {
+        padding: 12px 5px 13px 5px;
+        font-size: 10px;
+    }
+    .tab-pane {
+        width: 100%;
+    }
+}
