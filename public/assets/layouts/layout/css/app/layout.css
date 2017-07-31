@@ -38,6 +38,10 @@ body {
 }
 .page-container-bg-solid {
 }
+.row{
+    margin-left: 0px;
+    margin-right : 0px;
+}
 
 .sm-font {
     color: #524EA2;
@@ -124,7 +128,7 @@ Page Header
     border-bottom: 1px solid #dce0ec !important;
     border: 0px;
     margin: 0;
-    padding: 0px 140px 0 150px;
+    padding: 0px 140px 0 140px;
     box-shadow: none;
     filter: none;
     /* Burger Trigger */
@@ -434,7 +438,7 @@ Page footer
 
 
 .page-content {
-    padding-top: 90px; }
+    }
 
 .page-content-inner {
     padding-top: 70px; }
