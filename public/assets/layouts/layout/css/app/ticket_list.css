@@ -115,6 +115,11 @@
     }
 }
 @media (max-width: 767px) {
+    .seat-col{
+        width: 17px;
+        height: 17px;
+        margin: 5px 2px;
+    }
     .seat-ava:hover{
         background-color : #D8D8D8;
         cursor: pointer;
