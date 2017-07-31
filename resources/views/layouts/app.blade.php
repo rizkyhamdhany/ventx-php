@@ -37,7 +37,7 @@
 <div class="clearfix"> </div>
 <div class="page-footer hidden-print" style="background-image: url('{{URL('/')}}/assets/pages/img/footer_pattern_smilemotion.png')">
     <div class="page-footer-inner container-fluid container-lf-space pull-right">
-        <div class="pull-right org-logo">
+        <div class="pull-right org-logo">test
             <img src="{{URL('/')}}/assets/pages/img/kema.png">
             <img src="{{URL('/')}}/assets/pages/img/yppcbl.png">
             <img src="{{URL('/')}}/assets/pages/img/bem.png">
