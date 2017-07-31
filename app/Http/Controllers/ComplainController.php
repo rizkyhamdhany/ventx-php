@@ -27,4 +27,5 @@ class ComplainController extends Controller
         $orders = Order::all();
         return view('dashboard.cs.complains')->with('orders', $orders);
     }
+
 }

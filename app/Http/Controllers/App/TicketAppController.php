@@ -14,6 +14,8 @@ use Milon\Barcode\DNS2D;
 use App\Models\DailyOrderStatistic;
 use View;
 use Illuminate\Support\Facades\Redis;
+use App\Models\Preticket;
+use App\Models\Preorder;
 
 class TicketAppController extends Controller
 {
@@ -112,6 +114,15 @@ class TicketAppController extends Controller
         foreach ($seats as $seat){
             if ($seat->status = 'active' || $seat->status = 'booked'){
                 Redis::hset("seat-".$seat->ticket_class, $seat->no, $seat->id);
+            }
+        }
+    }
+
+    public function submitBooking(){
+        $preorders = Preorder::all();
+        foreach ($preorders as $preorder){
+            foreach ($preorder->tickets as $ticket){
+                echo '<pre>'; print_r($ticket->title);
             }
         }
     }

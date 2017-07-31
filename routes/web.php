@@ -24,6 +24,7 @@ Route::prefix('/tickets')->group(function () {
         Route::get('/proceed', 'App\TicketAppController@proceedBookTicket')->name('app.ticket.proceed');
         Route::post('/proceed', 'App\TicketAppController@proceedBookTicketPost')->name('app.ticket.proceed.post');
         Route::get('/success', 'App\TicketAppController@successBookTicket')->name('app.ticket.success');
+        Route::get('/test','App\TicketAppController@submitBooking')->name('app.booking.submit');
     });
 });
 
@@ -49,6 +50,7 @@ Route::prefix('/dashboard')->group(function () {
     //DASHBOARD PAYMENTS
     Route::prefix('/payments')->group(function(){
         Route::get('/','TransactionController@listPayment')->name('payments');
+
         //Route::get('/add' , 'PaymentController@addTransaction')->name('payment.add');//AddTransaction
         Route::prefix('/add')->group(function(){
             Route::get('/','TransactionController@addTransaction')->name('payment.add');
