@@ -76,7 +76,7 @@
                                     <p class="font-white">
                                         Sabtu, 9 Desember 2017
                                         <br>Sasana Budaya Ganesha
-                                        <br>11.00 a.m. - 10.00 p.m.</p>
+                                        <br>&nbsp;</p>
                                 </div>
                                 <div class="ticket-item-container">
                                     <table class="ticket-table">
