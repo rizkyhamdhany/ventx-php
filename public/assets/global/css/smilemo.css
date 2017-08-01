@@ -1,6 +1,7 @@
 #landing-page .conf-payment-container {
   margin-top: 0;
-  text-align: center; }
+  text-align: center;
+  z-index: 99}
 #landing-page .top-button {
   margin-top: 20px; }
 #landing-page .circle-date {

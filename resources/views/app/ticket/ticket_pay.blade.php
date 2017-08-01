@@ -34,12 +34,17 @@
                     <div class="col-md-7">
                         <div class="ticket-period-container">
                             <h3 class="sm-font">Choose Your Payment Method</h3>
+                            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                                @if(Session::has('alert-' . $msg))
+                                    <div class="alert  alert-{{ $msg }}">
+                                        <strong>Something went wrong !</strong> {{ Session::get('alert-' . $msg) }}
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                         <form class="horizontal-form"  action="{{route('app.ticket.proceed.post')}}" method="POST">
                             {{ csrf_field() }}
-                            <input type="hidden" name="ticket_period" value="{{$ticket->ticket_period}}">
-                            <input type="hidden" name="ticket_type" value="{{$ticket->ticket_type}}">
-                            <input type="hidden" name="ticket_ammount" value="{{$ticket->ticket_ammount}}">
+                            <input type="hidden" name="book" value="{{$book}}">
                         <div class="portlet light bordered">
                             <div class="portlet-title tabbable-line">
                                 <ul class="nav nav-tabs pull-left">

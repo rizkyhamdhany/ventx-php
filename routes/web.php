@@ -17,14 +17,10 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::prefix('/tickets')->group(function () {
     Route::prefix('/smilemotion')->group(function () {
         Route::get('/', 'App\TicketAppController@listTicket')->name('app.ticket.list');
-        Route::get('/book', 'App\TicketAppController@bookTicket')->name('app.ticket.book');
         Route::post('/book', 'App\TicketAppController@bookTicketPost')->name('app.ticket.book.post');
-        Route::get('/pay', 'App\TicketAppController@payTicket')->name('app.ticket.pay');
         Route::post('/pay', 'App\TicketAppController@payTicketPost')->name('app.ticket.pay.post');
-        Route::get('/proceed', 'App\TicketAppController@proceedBookTicket')->name('app.ticket.proceed');
         Route::post('/proceed', 'App\TicketAppController@proceedBookTicketPost')->name('app.ticket.proceed.post');
         Route::get('/success', 'App\TicketAppController@successBookTicket')->name('app.ticket.success');
-        Route::get('/test','App\TicketAppController@submitBooking')->name('app.booking.submit');
     });
 });
 

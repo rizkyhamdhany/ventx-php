@@ -34,6 +34,15 @@
                     <div>
                         <div class="ticket-period-container">
                             <h3 class="sm-font">Select Your Seat</h3>
+                            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                                @if(Session::has('alert-' . $msg))
+                                    <div class="alert  alert-{{ $msg }}">
+                                        <strong>Something went wrong !</strong> {{ Session::get('alert-' . $msg) }}
+                                    </div>
+                                @endif
+                            @endforeach
+
+
                         </div>
                         <div class="portlet light bordered">
                             <div class="portlet-body padding-bottom-30">
@@ -52,7 +61,7 @@
                                                         @if($i == 0)
                                                             <div class="seat-row">
                                                                 <div class="seat-col">&nbsp </div>
-                                                                @for ($j = 0; $j < $area->col; $j++)
+                                                                @for ($j = 1; $j < ($area->col + 1); $j++)
                                                                     <div class="seat-col">{{$j < 10 ? '&nbsp;'.$j : $j }}</div>
                                                                 @endfor
                                                             </div>
@@ -95,6 +104,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
+                            <div class="clearfix"></div>
                         </div>
                     </div>
                 </div>
@@ -113,6 +123,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="refreshed" value="no">
 @endsection
 @section('page_js_plugins')
     <script src="{{URL('/')}}/assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
@@ -131,6 +142,12 @@
     </style>
     <script>
         var seats = [];
+        var book = new Object();
+        book.step = 'book';
+        book.ticket_type = 'Reguler';
+        book.ticket_period = 'Presale 1';
+        book.ticket_ammount = '0';
+        $('#book').val(JSON.stringify(book));
         $( "#REG" ).click(function() {
             $('.seats').hide();
             $('#seat-map-13').show();
@@ -138,6 +155,7 @@
             $('#ticket_type').val('Reguler');
             $('#ticket-price').text('IDR 70.000');
             $('#ticket_ammount').prop("disabled", false);
+            book.ticket_type = 'Reguler';
             resetSeat();
         });
         $( "#VVIP" ).click(function() {
@@ -147,6 +165,7 @@
             $('#ticket_type').val('VVIP');
             $('#ticket-price').text('IDR 400.000');
             $('#ticket_ammount').prop("disabled", true);
+            book.ticket_type = 'VVIP';
             resetSeat();
         });
         $( "#VIP_E" ).click(function() {
@@ -156,6 +175,7 @@
             $('#ticket_type').val('VIP E');
             $('#ticket-price').text('IDR 200.000');
             $('#ticket_ammount').prop("disabled", true);
+            book.ticket_type = 'VIP E';
             resetSeat();
         });
         $( "#VIP_D" ).click(function() {
@@ -165,6 +185,7 @@
             $('#ticket_type').val('VIP D');
             $('#ticket-price').text('IDR 200.000');
             $('#ticket_ammount').prop("disabled", true);
+            book.ticket_type = 'VIP D';
             resetSeat();
         });
         $( "#VIP_I" ).click(function() {
@@ -174,6 +195,7 @@
             $('#ticket_type').val('VIP I');
             $('#ticket-price').text('IDR 200.000');
             $('#ticket_ammount').prop("disabled", true);
+            book.ticket_type = 'VIP I';
             resetSeat();
         });
         $( "#VIP_H" ).click(function() {
@@ -183,6 +205,7 @@
             $('#ticket_type').val('VIP H');
             $('#ticket-price').text('IDR 200.000');
             $('#ticket_ammount').prop("disabled", true);
+            book.ticket_type = 'VIP H';
             resetSeat();
         });
         function selectSeat($i) {
@@ -199,8 +222,9 @@
                     $('#ticket_ammount').val(seats.length.toString());
                 }
             }
-
-            console.log(seats);
+            book.ticket = seats;
+            book.ticket_ammount = seats.length.toString();
+            $('#book').val(JSON.stringify(book));
         }
 
         function resetSeat(){
@@ -208,8 +232,21 @@
                 $('#seat_'+seats[i]).removeClass('seat-sel');
             }
             seats = [];
+            book.ticket = seats;
+            book.ticket_ammount = seats.length.toString();
             $('#ticket_ammount').val('0');
-            console.log(seats);
+            $('#book').val(JSON.stringify(book));
+        }
+
+        $( "#ticket_ammount" ).change(function() {
+            book.ticket_ammount = $( this ).val();
+            $('#book').val(JSON.stringify(book));
+        });
+
+        onload=function(){
+            var e=document.getElementById("refreshed");
+            if(e.value=="no")e.value="yes";
+            else{e.value="no";location.reload();}
         }
     </script>
 @endsection
