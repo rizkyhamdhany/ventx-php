@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Preticket;
+use App\Models\Preseat;
+use App\Models\Seat;
+use App\Constants;
 
 class Preorder extends Model
 {
@@ -25,11 +28,28 @@ class Preorder extends Model
             $preticket->phonenumber = $item->ticket_phone;
             $preticket->email = $item->ticket_email;
             $preticket->ticket_period  = $ticket->ticket_period;
-            $preticket->ticket_class = $ticket->ticket_type;;
-            $preticket->seat_no = $item->seat;
+            $preticket->ticket_class = $ticket->ticket_type;
+
+            $seat = Seat::find($item->seat);
+
+            $preticket->seat_no = $seat->no;
             $preticket->save();
             $preticket->order()->attach($this);
+
+            $preseat = new Preseat();
+            $preseat->preticket_id = $preticket->id;
+            $preseat->seat_id = $seat->id;
+            $preseat->seat_no = $seat->no;
+            $preseat->ticket_class = $ticket->ticket_type;
+            $preseat->expire_time = 259200;
+            $preseat->expire_at = \Carbon\Carbon::now()->addSeconds($preseat->expire_time);
+            $preseat->status = 'BOOKED';
+            $preseat->save();
+
+            $seat->status = 'unavailable';
+            $seat->save();
         }
+        return $ticket;
     }
     public function tickets()
     {

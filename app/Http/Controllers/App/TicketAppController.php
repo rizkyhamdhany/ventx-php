@@ -14,12 +14,14 @@ use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
 use App\Models\DailyOrderStatistic;
 use View;
-use Illuminate\Support\Facades\Redis;
 use App\Models\Preticket;
 use App\Models\Preorder;
+use Illuminate\Support\Facades\Redis;
+use App\Models\RedisModel;
 
 class TicketAppController extends Controller
 {
+
     public function __construct()
     {
         View::share( 'event_name', 'Smilemotion 2017' );
@@ -29,7 +31,7 @@ class TicketAppController extends Controller
     public function listTicket()
     {
         if (!Redis::exists("seat-VVIP")){
-            $this->cachingSeatData();
+            RedisModel::cachingSeatData();
         }
         View::share( 'page_state', 'pick_seat' );
         $ticket_class = TicketClass::all();
@@ -217,15 +219,6 @@ class TicketAppController extends Controller
             }
         }
         return true;
-    }
-
-    public function cachingSeatData(){
-        $seats = Seat::all();
-        foreach ($seats as $seat){
-            if ($seat->status = 'active' || $seat->status = 'booked'){
-                Redis::hset("seat-".$seat->ticket_class, $seat->no, $seat->id);
-            }
-        }
     }
 
     public function submitBooking(){
