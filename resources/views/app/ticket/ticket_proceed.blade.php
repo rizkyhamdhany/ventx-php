@@ -39,7 +39,7 @@
                             <div class="portlet-body">
                                 <p>Reservation Code</p>
                                 <div class="note note-default note-bordered">
-                                    <p> SMO12371283</p>
+                                    <p> {{$ticket->order_code}}</p>
                                 </div>
                                 <p>
                                     Congratulations, your booking has been recorded!
