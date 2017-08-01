@@ -16,11 +16,9 @@ class RedisModel
         $seats = Seat::all();
         foreach ($seats as $seat){
             if ($seat->status = 'active' || $seat->status = 'booked'){
-                echo $seat->no.'<br>';
-//                Redis::hset("seat-".$seat->ticket_class, $seat->no, $seat->id);
-//                Redis::expireat("seat-".$seat->ticket_class, strtotime("+1 day"));
+                Redis::hset("seat-".$seat->ticket_class, $seat->no, $seat->id);
+                Redis::expireat("seat-".$seat->ticket_class, strtotime("+1 day"));
             }
         }
-        exit;
     }
 }
