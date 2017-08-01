@@ -15,7 +15,7 @@ class RedisModel
     public static function cachingSeatData(){
         $seats = Seat::all();
         foreach ($seats as $seat){
-            if ($seat->status = 'active' || $seat->status = 'booked'){
+            if ($seat->status == 'active'){
                 Redis::hset("seat-".$seat->ticket_class, $seat->no, $seat->id);
                 Redis::expireat("seat-".$seat->ticket_class, strtotime("+1 day"));
             }
