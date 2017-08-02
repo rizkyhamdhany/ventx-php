@@ -22,7 +22,7 @@
                             <div class="btn-group btn-group-devided">
                               <select class="form-control" name="inputTransaction">
                                 @foreach($transactions as $transaction)
-                                  <option value="">{{$transaction->bankData->name}} - {{$transaction->account_holder}}- {{$transaction->total}}</option>
+                                  <option value="">{{$transaction->bank->name}} - {{$transaction->account_holder}}- {{$transaction->total}}</option>
                                 @endforeach
                               </select>
                             </div>
@@ -33,7 +33,7 @@
                         <h3 class="form-section">Transaction Information</h3>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4>Invoice Number</h4>
+                                <h4>Order Code</h4>
                                 <h4><strong>{{$order->order_code}}</strong></h4>
                             </div>
                             <div class="col-md-3">
@@ -56,12 +56,16 @@
                                 <h4><strong>{{$order->email}}</strong></h4>
                             </div>
                             <div class="col-md-3">
-                                <h4>Date</h4>
+                                <h4>Transfer Date</h4>
                                 <h4><strong>14 July 2017</strong></h4>
                             </div>
                             <div class="col-md-3">
                                 <h4>Total</h4>
                                 <h4><strong>Rp1.000.000,00</strong></h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h4>Status</h4>
+                                <h4><strong>UNVERIFIED</strong></h4>
                             </div>
                         </div>
                         <br>

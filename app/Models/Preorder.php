@@ -57,4 +57,8 @@ class Preorder extends Model
             ->belongsToMany('App\Models\Preticket')
             ->withTimestamps();
     }
+
+    public function preorderConf(){
+      return $this->hasOne('App\PreorderConf');
+    }
 }

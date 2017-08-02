@@ -10,6 +10,10 @@ class Bank extends Model
       return $this->hasMany('App\Transaction','bank','id');
     }
 
+    public function preorderConf(){
+      return $this->hasOne('App\PreorderConf');
+    }
+
     public function insertBank($input){
       $this->name = $input->input('bankName');
       $this->account_name = $input->input('bankAccountName');
