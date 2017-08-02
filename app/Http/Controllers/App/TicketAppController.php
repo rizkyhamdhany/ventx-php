@@ -18,6 +18,7 @@ use App\Models\Preticket;
 use App\Models\Preorder;
 use Illuminate\Support\Facades\Redis;
 use App\Models\RedisModel;
+use App\Models\Preseat;
 
 class TicketAppController extends Controller
 {
@@ -28,8 +29,13 @@ class TicketAppController extends Controller
         View::share( 'logo', 'logo_smilemotion.png' );
         View::share( 'url_event', 'http://smilemotion.org' );
     }
+
     public function listTicket()
     {
+//        echo '<pre>'; print_r(Redis::mget(Redis::keys("smilemotion:seat_booked:*"))); exit;
+
+        $seat_booked = Redis::mget(Redis::keys("smilemotion:seat_booked:*"));
+        RedisModel::cachingBookedSeat();
         if (!Redis::exists("seat-VVIP")){
             RedisModel::cachingSeatData();
         }
@@ -44,7 +50,8 @@ class TicketAppController extends Controller
 
         View::share( 'page_state', 'pick_seat' );
         return view('app.ticket.ticket_list')->with('ticket_class', $ticket_class)
-            ->with('seat', $seat);
+            ->with('seat', $seat)
+            ->with('seat_booked', $seat_booked);
     }
 
     public function bookTicketPost(Request $request)

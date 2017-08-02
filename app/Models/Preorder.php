@@ -7,6 +7,8 @@ use App\Models\Preticket;
 use App\Models\Preseat;
 use App\Models\Seat;
 use App\Constants;
+use App\CC;
+use Illuminate\Support\Facades\Redis;
 
 class Preorder extends Model
 {
@@ -46,8 +48,8 @@ class Preorder extends Model
             $preseat->status = 'BOOKED';
             $preseat->save();
 
-            $seat->status = 'unavailable';
-            $seat->save();
+            Redis::set(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED.":".$preseat->ticket_class.":".$preseat->seat_no, $preseat->seat_id);
+            Redis::expireat(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED.":".$preseat->ticket_class.":".$preseat->seat_no, strtotime($preseat->expire_at));
         }
         return $ticket;
     }

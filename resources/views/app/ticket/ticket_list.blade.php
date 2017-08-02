@@ -70,9 +70,9 @@
                                                             @php($row = $alphabet[($area->row - $i) - 1])
                                                             <div class="seat-col">{{$row}}</div>
                                                             @for ($j = 0; $j < $area->col; $j++)
-                                                                <div class="seat-col {{isset($seat[$area->name][$row.($j+1)]) ? 'seat-ava' : 'seat-una'}}"
-                                                                     onclick="{{isset($seat[$area->name][$row.($j+1)]) ? 'selectSeat('.$seat[$area->name][$row.($j+1)].')' : ''}}"
-                                                                     id="{{isset($seat[$area->name][$row.($j+1)]) ? 'seat_'.$seat[$area->name][$row.($j+1)] : ''}}">
+                                                                <div class="seat-col {{isset($seat[$area->name][$row.($j+1)]) && !in_array($seat[$area->name][$row.($j+1)], $seat_booked)  ? 'seat-ava' : 'seat-una'}}"
+                                                                     onclick="{{isset($seat[$area->name][$row.($j+1)]) && !in_array($seat[$area->name][$row.($j+1)], $seat_booked)  ? 'selectSeat('.$seat[$area->name][$row.($j+1)].')' : ''}}"
+                                                                     id="{{isset($seat[$area->name][$row.($j+1)]) && !in_array($seat[$area->name][$row.($j+1)], $seat_booked) ? 'seat_'.$seat[$area->name][$row.($j+1)] : ''}}">
                                                                     &nbsp;
                                                                 </div>
                                                             @endfor
