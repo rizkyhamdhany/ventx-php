@@ -56,6 +56,8 @@ Route::prefix('/dashboard')->group(function () {
             //Route::get('/','TransactionController@orderTicket')->name('ticket.choose.submit');//orderView);
             Route::get('/detail/{id}','TransactionController@viewOrderDetail')->name('payment.confirm.detail');//orderView);
         });
+        Route::get('/test','TestInsertController@testView')->name('payment.testView');
+        Route::post('/testInsert','TestInsertController@testInsert')->name('payment.testInsert');
     });
 
 
