@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 @section('page_style')
     <link href="{{URL('/')}}/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/global/plugins/mapplic/mapplic/mapplic.css" rel="stylesheet" type="text/css" />
@@ -29,7 +29,7 @@
                         <div class="number font-red"> 0 </div>
                         <div class="desc font-red"> Request Payment Confirmation </div>
                     </div>
-                    <a class="more" href="#" style="background-color: #e7505a; color:#fff;"> Confirm Payment
+                    <a class="more" href="{{route('payments')}}" style="background-color: #e7505a; color:#fff;"> Confirm Payment
                         <i class="m-icon-swapright m-icon-white"></i>
                     </a>
                 </div>

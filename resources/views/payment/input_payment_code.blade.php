@@ -26,7 +26,7 @@
 
                 <div class="col-md-12 aligner">
                     <div class="enter-code col-md-10">
-                        <p>Enter Your Payment Code</p>
+                        <p>Input Your Reservation Code</p>
                         <input type="text" class="code">
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                 <div class="login-footer">
                     <div class="row bs-reset">
                         <div class="col-xs-12 bs-reset">
-                            <a href="#" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Enter</strong></h4></a>
+                            <a href="#" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Submit</strong></h4></a>
                         </div>
                     </div>
                 </div>

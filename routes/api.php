@@ -16,3 +16,17 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/api/v1/products/{id?}', ['middleware' => 'auth.basic', function($id = null) {
+    if ($id == null) {
+        $products = App\Product::all(array('id', 'name', 'price'));
+    } else {
+        $products = App\Product::find($id, array('id', 'name', 'price'));
+    }
+    return Response::json(array(
+        'error' => false,
+        'products' => $products,
+        'status_code' => 200
+    ));
+}]);
+

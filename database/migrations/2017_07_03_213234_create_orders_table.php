@@ -25,6 +25,7 @@ class CreateOrdersTable extends Migration
             $table->string('payment_status', 20);
             $table->string('payment_code', 20);
             $table->integer('ticket_ammount');
+            $table->text('url_ticket');
             $table->timestamps();
         });
     }

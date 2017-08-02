@@ -50,19 +50,8 @@ class OrderController extends Controller
         $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
         //create order
         $ammount = $request->input('ammount');
-        $uuid = Uuid::generate();
-        $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
         $order = new Order();
-        $order->order_code = 'SMO'.$code;
-        $order->name = $request->input('contact_fullname');
-        $order->phonenumber = $request->input('contact_phone');
-        $order->email = $request->input('contact_email');
-        $order->ticket_period = $request->input('ticket_period');
-        $order->ticket_class = $request->input('ticket_class');
-        $order->ticket_ammount = $request->input('ammount');
-        $order->payment_status = 'COMPLETE';
-        $order->payment_code = 'test';
-        $order->save();
+        $order->createOrder($request);
         $i = 0;
         foreach ($request->input('ticket_title') as $title_ticket) {
             $ticket = new Ticket();
@@ -114,8 +103,13 @@ class OrderController extends Controller
         $data['ticket_price'] = $ticket_price;
         $pdf = \PDF::loadView('dashboard.view_invoice', compact('data'));
         $output = $pdf->output();
-        $invoice_url = 'uploads/invoice/invoice_'.$order->order_code.'.pdf';
-        file_put_contents($invoice_url, $output);
+
+        $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
+        $s3 = \Storage::disk('s3');
+        $s3->put($invoice_url, $output, 'public');
+
+//        $invoice_url = 'uploads/invoice/invoice_'.$order->order_code.'.pdf';
+//        file_put_contents($invoice_url, $output);
         $order->url_invoice = $invoice_url;
         $order->save();
         return;
@@ -125,7 +119,8 @@ class OrderController extends Controller
         $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
         $order = Order::find($id);
         if ($order->url_invoice != ""){
-            return redirect()->to(url('/').'/'.$order->url_invoice);
+            $s3 = \Storage::disk('s3');
+            return redirect()->to($s3->url($order->url_invoice));
         } else {
             $ticket_price = 0;
             if ($order->ticket_class == 'Reguler'){
@@ -138,13 +133,14 @@ class OrderController extends Controller
             $data = array();
             $data['order'] = $order;
             $data['ticket_price'] = $ticket_price;
-            $pdf = \PDF::loadView('dashboard.view_invoice', compact('data'));
+            $pdf = \PDF::loadView('dashboard.view_invoice', compact('data'))->setPaper('A4', 'portrait');
             $output = $pdf->output();
-            $invoice_url = 'uploads/invoice/invoice_'.$order->order_code.'.pdf';
-            file_put_contents($invoice_url, $output);
+            $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
+            $s3 = \Storage::disk('s3');
+            $s3->put($invoice_url, $output, 'public');
             $order->url_invoice = $invoice_url;
             $order->save();
-            return redirect()->to(url('/').'/'.$invoice_url);
+            return redirect()->to($s3->url($order->url_invoice));
         }
     }
 

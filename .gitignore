@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/uploads/
 /storage/*.key
 /vendor
 /.idea
@@ -9,9 +10,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 .env
-<<<<<<< HEAD
 .env.example
 /storage
-=======
 .env.prod
->>>>>>> 79d5470b3d2baf888ce36a5920c7c3512bcbee80
+composer.lock

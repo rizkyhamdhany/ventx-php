@@ -52,7 +52,7 @@
                     <img src="assets/pages/img/pattern_smilemo.png" class="pattern-bottom">
                     <div class="row bs-reset">
                         <div class="col-xs-12 bs-reset">
-                            <button class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Buy Ticket</strong></h4></button>
+                            <a href="{{route('app.ticket.list')}}" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Buy Ticket</strong></h4></a>
                         </div>
                     </div>
                 </div>

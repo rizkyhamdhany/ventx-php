@@ -8,34 +8,42 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>Ventex | Dashboard</title>
+    <title>{{$event_name}} | Ventex</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <meta content="Ventex - Nalar Event Experience " name="description"/>
     <meta content="Nalar" name="author"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
     <link href="{{URL('/')}}/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
-    @yield('page_style')
+    @yield('page_style_libs')
     <link href="{{URL('/')}}/assets/global/css/components.css" rel="stylesheet" id="style_components" type="text/css" />
     <link href="{{URL('/')}}/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
-    <link href="{{URL('/')}}/assets/layouts/layout/css/layout.css" rel="stylesheet" type="text/css" />
-    <link href="{{URL('/')}}/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/layouts/layout/css/app/layout.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/layouts/layout/css/app/custom.css" rel="stylesheet" type="text/css" />
+    @yield('page_style')
     <link rel="shortcut icon" href="favicon.ico" /> </head>
 
 <body class="page-container-bg-solid">
-@include('layouts.header')
+@include('layouts.app_header')
 <div class="clearfix"> </div>
 <div class="page-container page-content-inner page-container-bg-solid">
     @yield('content')
 </div>
-<div class="page-footer hidden-print">
-    <div class="page-footer-inner container-fluid container-lf-space">
-        <p class="page-footer-copyright font-white"> 2017 &copy; Ventex By
-            <a target="_blank" class="font-yellow-soft" href="http://nalar.id">Nalar Creative</a>
+<div class="clearfix"> </div>
+<div class="page-footer hidden-print" style="background-image: url('{{URL('/')}}/assets/pages/img/footer_pattern_smilemotion.png')">
+    <div class="page-footer-inner container-fluid container-lf-space pull-right">
+        <div class="pull-right org-logo">
+            <img src="{{URL('/')}}/assets/pages/img/kema.png">
+            <img src="{{URL('/')}}/assets/pages/img/yppcbl.png">
+            <img src="{{URL('/')}}/assets/pages/img/bem.png">
+        </div>
+        <div class="clearfix"> </div>
+        <p class="page-footer-copyright font-white"> &copy; <a target="_blank" class="font-yellow-soft" href="http://nalar.id"> Nalar Creative Solution</a> 2017.
         </p>
     </div>
     <div class="go2top">
