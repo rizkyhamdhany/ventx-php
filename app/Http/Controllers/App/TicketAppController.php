@@ -36,7 +36,7 @@ class TicketAppController extends Controller
 
         $keys_seat_booked = Redis::keys("smilemotion:seat_booked:*");
         $seat_booked = array();
-        if (isset($keys)){
+        if (isset($keys_seat_booked)){
             $seat_booked = Redis::mget($keys_seat_booked);
         }
         RedisModel::cachingBookedSeat();
