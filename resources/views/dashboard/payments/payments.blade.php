@@ -51,12 +51,11 @@
                             <table class="table table-striped table-bordered table-hover" id="sample_1">
                                 <thead>
                                 <tr>
-                                    <th> Invoice # </th>
-                                    <th> Name </th>
-                                    <th> Account Number </th>
+                                    <th> Order # </th>
+                                    <th> Preorder </th>
+                                    <th> Bank </th>
                                     <th> Account Holder </th>
-                                    <th> Bank Name </th>
-                                    <th> Date </th>
+                                    <th> Transfer Date </th>
                                     <th> Total </th>
                                     <th> Status </th>
                                     <th>  </th>
@@ -70,7 +69,6 @@
                                         <td> {{$order->email}} </td>
                                         <td> {{$order->phonenumber}} </td>
                                         <td> {{$order->ticket_period}} </td>
-                                        <td> {{$order->ticket_class}} </td>
                                         <td> {{$order->payment_status}} </td>
                                         <td> Unverified </td>
                                         <td>

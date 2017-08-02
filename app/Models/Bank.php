@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Bank extends Model
 {
     public function transaction(){
-      return $this->hasMany('App\Transaction');
+      return $this->hasMany('App\Transaction','bank','id');
     }
 
     public function insertBank($input){

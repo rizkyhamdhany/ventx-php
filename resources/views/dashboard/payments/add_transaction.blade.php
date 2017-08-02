@@ -23,10 +23,9 @@
                                       <label class="col-md-3 control-label">Bank</label>
                                       <div class="col-md-4">
                                           <select class="form-control" name="bank_name">
-                                              <option value="bca">Bank Central Asia</option>
-                                              <option value="bni">Bank Negara Indonesia</option>
-                                              <option value="mandiri">Mandiri</option>
-                                              <option value="other">Others</option>
+                                            @foreach($banks as $bank)
+                                              <option value="{{$bank->id}}">{{$bank->name}}</option>
+                                            @endforeach
                                           </select>
                                       </div>
                                     </div>
@@ -34,6 +33,12 @@
                                       <label class="col-md-3 control-label">Account Holder</label>
                                       <div class="col-md-4">
                                           <input type="text" name="inputAccount_holder" class="form-control" placeholder="Insert Account Holder">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-md-3 control-label">Account Number</label>
+                                      <div class="col-md-4">
+                                          <input type="text" name="inputAccount_number" class="form-control" placeholder="Insert Account Number">
                                       </div>
                                     </div>
                                     <div class="form-group">

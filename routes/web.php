@@ -50,7 +50,7 @@ Route::prefix('/dashboard')->group(function () {
         //Route::get('/add' , 'PaymentController@addTransaction')->name('payment.add');//AddTransaction
         Route::prefix('/add')->group(function(){
             Route::get('/','TransactionController@addTransaction')->name('payment.add');
-            Route::get('/submit','TransactionController@addTransactionSubmit')->name('payment.add.submit');
+            Route::post('/submit','TransactionController@addTransactionSubmit')->name('payment.add.submit');
         });
         Route::prefix('/confirm')->group(function(){
             //Route::get('/','TransactionController@orderTicket')->name('ticket.choose.submit');//orderView);

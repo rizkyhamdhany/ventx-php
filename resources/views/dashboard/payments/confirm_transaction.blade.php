@@ -21,7 +21,9 @@
                         <div class="actions">
                             <div class="btn-group btn-group-devided">
                               <select class="form-control" name="inputTransaction">
-                                <option value="">Bank - Account Name - Total</option>
+                                @foreach($transactions as $transaction)
+                                  <option value="">{{$transaction->bankData->name}} - {{$transaction->account_holder}}- {{$transaction->total}}</option>
+                                @endforeach
                               </select>
                             </div>
                             <button type="button" name="buttonVerify" class="btn btn-warning" style="width:100px;">Verify</button>
