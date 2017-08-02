@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class DailyOrderStatistic extends Model
 {
     public function addDailyCounter($event_id){
+        $bank = new Bank();
+
         $daily = self::where('event_id', $event_id)
             ->where('day', date("Y-m-d"))
             ->first();
