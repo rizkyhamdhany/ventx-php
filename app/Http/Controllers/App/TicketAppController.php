@@ -18,6 +18,7 @@ use App\Models\Preticket;
 use App\Models\Preorder;
 use Illuminate\Support\Facades\Redis;
 use App\Models\RedisModel;
+use App\Models\Preseat;
 
 class TicketAppController extends Controller
 {
@@ -28,23 +29,29 @@ class TicketAppController extends Controller
         View::share( 'logo', 'logo_smilemotion.png' );
         View::share( 'url_event', 'http://smilemotion.org' );
     }
+
     public function listTicket()
     {
+//        echo '<pre>'; print_r(Redis::mget(Redis::keys("smilemotion:seat_booked:*"))); exit;
+
+        $seat_booked = Redis::mget(Redis::keys("smilemotion:seat_booked:*"));
+        RedisModel::cachingBookedSeat();
         if (!Redis::exists("seat-VVIP")){
             RedisModel::cachingSeatData();
         }
         View::share( 'page_state', 'pick_seat' );
         $ticket_class = TicketClass::all();
         $seat = array();
-        $seat['VVIP'] = Redis::hgetall('seat-VVIP');
-        $seat['VIP E'] = Redis::hgetall('seat-VIP E');
-        $seat['VIP D'] = Redis::hgetall('seat-VIP D');
-        $seat['VIP I'] = Redis::hgetall('seat-VIP I');
-        $seat['VIP H'] = Redis::hgetall('seat-VIP H');
+        $seat['VVIP'] = Redis::hgetall('smilemotion:seat:VVIP');
+        $seat['VIP E'] = Redis::hgetall('smilemotion:seat:VIP E');
+        $seat['VIP D'] = Redis::hgetall('smilemotion:seat:VIP D');
+        $seat['VIP I'] = Redis::hgetall('smilemotion:seat:VIP I');
+        $seat['VIP H'] = Redis::hgetall('smilemotion:seat:VIP H');
 
         View::share( 'page_state', 'pick_seat' );
         return view('app.ticket.ticket_list')->with('ticket_class', $ticket_class)
-            ->with('seat', $seat);
+            ->with('seat', $seat)
+            ->with('seat_booked', $seat_booked);
     }
 
     public function bookTicketPost(Request $request)

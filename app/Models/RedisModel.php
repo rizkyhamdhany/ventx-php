@@ -8,31 +8,26 @@
 
 namespace App\Models;
 use Illuminate\Support\Facades\Redis;
-use App\Models\TicketClass;
-
+use App\CC;
+use App\Models\Preseat;
 
 class RedisModel
 {
     public static function cachingSeatData(){
-        $ticketclasses = TicketClass::all();
-        $areas = array();
-        foreach ($ticketclasses as $ticketclass){
-            $area = new \stdClass();
-            $area->name = $ticketclass->name;
-            $area->seats = Seat::select('id','no', 'status')->where('ticket_class', $ticketclass->name)->get();
-            array_push($areas, $area);
-        }
-        Redis::set('area', json_encode($areas));
-        echo '<pre>'; print_r(json_encode($areas)); exit;
+        $seats = Seat::where('status', 'active')->get();
         foreach ($seats as $seat){
-            if ($seat->status == 'active'){
-                Redis::hset("seat-".$seat->ticket_class, $seat->no, $seat->id);
-                Redis::expireat("seat-".$seat->ticket_class, strtotime("+1 day"));
-            }
+            Redis::hset(CC::$EVENT_NAME.":".CC::$KEY_SEAT.":".$seat->ticket_class, $seat->no, $seat->id);
+            Redis::expireat(CC::$EVENT_NAME.":".CC::$KEY_SEAT.":".$seat->ticket_class, strtotime("+1 day"));
         }
     }
 
-    public static function cachingBookSeat($seat_no){
+//                Redis::set("smilemotion:seat:".$seat->ticket_class.":".$seat->no, $seat->id);
 
+    public static function cachingBookedSeat(){
+        $preseats = Preseat::whereDate('expire_at', '>', \Carbon\Carbon::now())->get();
+        foreach ($preseats as $preseat){
+            Redis::set(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED.":".$preseat->ticket_class.":".$preseat->seat_no, $preseat->seat_id);
+            Redis::expireat(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED.":".$preseat->ticket_class.":".$preseat->seat_no, strtotime($preseat->expire_at));
+        }
     }
 }
