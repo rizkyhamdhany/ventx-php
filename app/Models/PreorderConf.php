@@ -11,6 +11,6 @@ class PreorderConf extends Model
     }
 
     public function bank(){
-      return $this->hasMany('App\Models\Bank');
+      return $this->hasOne('App\Models\Bank');
     }
 }

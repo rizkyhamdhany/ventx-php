@@ -1,10 +1,9 @@
 @extends('layouts.dashboard')
-@section('title', 'Payments')
 @section('page_style')
-    <link href="./assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css"/>
-    <link href="./assets/global/plugins/mapplic/mapplic/mapplic.css" rel="stylesheet" type="text/css"/>
-    <link href="./assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
-    <link href="./assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="{{URL('/')}}/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <link href="{{URL('/')}}/assets/global/plugins/mapplic/mapplic/mapplic.css" rel="stylesheet" type="text/css"/>
+    <link href="{{URL('/')}}/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{URL('/')}}/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css"/>
 @endsection
 @section('content')
     <div class="container-fluid container-lf-space margin-top-30">
@@ -51,10 +50,10 @@
                             <table class="table table-striped table-bordered table-hover" id="sample_1">
                                 <thead>
                                 <tr>
-                                    <th> Order # </th>
+                                    <th> Order Code </th>
                                     <th> Preorder </th>
-                                    <th> Bank </th>
                                     <th> Account Holder </th>
+                                    <th> Bank </th>
                                     <th> Transfer Date </th>
                                     <th> Total </th>
                                     <th> Status </th>
@@ -90,13 +89,13 @@
     </div>
 @endsection
 @section('page_js_plugins')
-    <script src="./assets/global/plugins/morris/morris.min.js" type="text/javascript"></script>
-    <script src="./assets/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
-    <script src="./assets/global/scripts/datatable.js" type="text/javascript"></script>
-    <script src="./assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-    <script src="./assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-    <script src="./assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/morris/morris.min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/scripts/datatable.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 @endsection
 @section('page_js')
-    <script src="./assets/pages/scripts/table-datatables-colreorder.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/pages/scripts/table-datatables-colreorder.js" type="text/javascript"></script>
 @endsection
