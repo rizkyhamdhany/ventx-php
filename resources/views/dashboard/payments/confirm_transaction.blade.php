@@ -22,7 +22,7 @@
                             <div class="btn-group btn-group-devided">
                               <select class="form-control" name="inputTransaction">
                                 @foreach($transactions as $transaction)
-                                  <option value="">{{$transaction->bank->name}} - {{$transaction->account_holder}}- {{$transaction->total}}</option>
+                                  <option value="">{{$transaction->bankData->name}} - {{$transaction->account_holder}}- {{$transaction->total}}</option>
                                 @endforeach
                               </select>
                             </div>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-  public function bank(){
+  public function bankData(){
     return $this->hasOne('App\Models\Bank','id','bank');
   }
 

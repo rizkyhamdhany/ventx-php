@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Bank extends Model
 {
     public function transaction(){
-      return $this->hasMany('App\Transaction','bank','id');
+      return $this->hasMany('App\Models\Transaction','bank','id');
     }
 
     public function preorderConf(){
-      return $this->hasMany('App\PreorderConf');
+      return $this->hasMany('App\Models\PreorderConf');
     }
 
     public function insertBank($input){

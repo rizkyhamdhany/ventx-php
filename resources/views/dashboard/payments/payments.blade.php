@@ -73,7 +73,7 @@
                                         <td>
                                             <div class="clearfix">
                                                 <div class="btn-group btn-group-solid">
-                                                    <a href="<?php //status unverified, disable ?>{{route("payment.confirm.detail", ['id' => $order->id])}}" class="btn green">Confirm Transaction</a>
+                                                    <a href="{{route("payment.confirm.detail", ['id' => $order->id])}}" class="btn green">Confirm Transaction</a>
                                                 </div>
                                             </div>
                                         </td>
