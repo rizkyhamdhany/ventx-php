@@ -67,14 +67,15 @@ class OrderController extends Controller
             $seatupdate = null;
             if ($request->input('ticket_class') != "Reguler"){
                 if ($ammount > 1){
-                    $seatupdate = Seat::find($request->input('seat')[$i])->first();
+                    $seatupdate = Seat::find($request->input('seat')[$i]);
                     $ticket->seat_no = $seatupdate->no;
                 }
                 else {
-                    $seatupdate = Seat::find($request->input('seat'))->first();
+                    $seatupdate = Seat::find($request->input('seat'));
                     $ticket->seat_no = $seatupdate->no;
                 }
             }
+
             $ticket->save();
             $ticket->order()->attach($order);
 
