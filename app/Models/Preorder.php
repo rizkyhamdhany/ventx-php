@@ -31,6 +31,7 @@ class Preorder extends Model
             $preticket->email = $item->ticket_email;
             $preticket->ticket_period  = $ticket->ticket_period;
             $preticket->ticket_class = $ticket->ticket_type;
+            $preticket->save();
 
             if (isset($item->seat)){
                 $seat = Seat::find($item->seat);
