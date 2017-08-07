@@ -50,5 +50,4 @@
         </div>
     </div>
     </form>
-    <button href="{{route('app.ticket.payment.input.detail', ['order_code' => '12312312'])}}" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Submit</strong></h4></button>
 @endsection
