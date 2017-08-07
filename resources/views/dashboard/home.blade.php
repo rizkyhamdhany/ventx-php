@@ -12,7 +12,7 @@
                         <i class="fa fa-shopping-cart fa-icon-medium font-blue no-opacity"></i>
                     </div>
                     <div class="details">
-                        <div class="number font-blue"> 0 </div>
+                        <div class="number font-blue"> {{$ticket_count}} </div>
                         <div class="desc font-blue"> Total Tiket Sold </div>
                     </div>
                     <a class="more blue" href="{{route('tickets')}}" style="background-color: #3598dc; color:#fff;"> View Details
