@@ -46,8 +46,7 @@ class TransactionsController extends Controller
         $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
         $transaction = new Transaction();
         $transaction->insertTransact($request);
-        $orders = Order::all();
-        return view('dashboard.payments.payments')->with('orders', $orders);
+        return redirect()->route('dashboard.payments');
     }
 
     public function viewOrderDetail(Request $request, $id){
