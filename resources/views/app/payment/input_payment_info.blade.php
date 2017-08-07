@@ -1,5 +1,8 @@
 @extends('layouts.landing_smilemo')
 @section('content')
+    <form class="horizontal-form"  action="{{route('app.ticket.payment.input.detail.input')}}" method="POST">
+    {{ csrf_field() }}
+    <input type="hidden" name="order_code" value="{{$order_code}}">
     <div class="user-login-5" id="confirm-payment-2">
         <div class="row bs-reset">
             <div class="col-md-4 bs-reset mt-login-5-bsfix">
@@ -57,19 +60,18 @@
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-md-3">
-                                    <select class="">
+                                    <select name="bank" required>
                                         <option disabled selected>Bank Name</option>
-                                        <option>BCA</option>
-                                        <option>BNI</option>
-                                        <option>Mandiri</option>
-                                        <option>Other</option>
+                                        @foreach($banks as $bank)
+                                        <option value="{{$bank->id}}">{{$bank->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" placeholder="Account Holder">
+                                    <input type="text" placeholder="Account Holder" name="account_holder" required>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" data-provide="datepicker" placeholder="Transfer Date">
+                                    <input type="text" data-provide="datepicker" placeholder="Transfer Date" name="date" required>
                                 </div>
                             </div>
                         </div>
@@ -79,11 +81,12 @@
                 <div class="login-footer">
                     <div class="row bs-reset">
                         <div class="col-xs-12 bs-reset">
-                            <a href="{{route('app.ticket.payment.confirm.success')}}" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Confirm</strong></h4></a>
+                            <button type="submit" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Confirm</strong></h4></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </form>
 @endsection

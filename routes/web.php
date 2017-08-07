@@ -25,6 +25,7 @@ Route::prefix('/tickets')->group(function () {
             Route::prefix('/confirm')->group(function () {
                 Route::get('/', 'PaymentController@inputPaymentCode')->name('app.ticket.payment.input.code');
                 Route::get('/input', 'PaymentController@inputPaymentDetail')->name('app.ticket.payment.input.detail');
+                Route::post('/input', 'PaymentController@inputPaymentConfirmation')->name('app.ticket.payment.input.detail.input');
                 Route::get('/success', 'PaymentController@confrimSuccess')->name('app.ticket.payment.confirm.success');
             });
         });
@@ -52,17 +53,18 @@ Route::prefix('/dashboard')->group(function () {
 
     //DASHBOARD PAYMENTS
     Route::prefix('/payments')->group(function(){
-        Route::get('/','TransactionController@listPayment')->name('payments');
+        Route::get('/','TransactionsController@listPayment')->name('dashboard.payments');
 
         //Route::get('/add' , 'PaymentController@addTransaction')->name('payment.add');//AddTransaction
         Route::prefix('/add')->group(function(){
-            Route::get('/','TransactionController@addTransaction')->name('payment.add');
-            Route::post('/submit','TransactionController@addTransactionSubmit')->name('payment.add.submit');
+            Route::get('/','TransactionsController@addTransaction')->name('payment.add');
+            Route::post('/submit','TransactionsController@addTransactionSubmit')->name('payment.add.submit');
         });
         Route::prefix('/confirm')->group(function(){
-            //Route::get('/','TransactionController@orderTicket')->name('ticket.choose.submit');//orderView);
-            Route::get('/detail/{id}','TransactionController@viewOrderDetail')->name('payment.confirm.detail');//orderView);
+            //Route::get('/','TransactionsController@orderTicket')->name('ticket.choose.submit');//orderView);
+            Route::get('/detail/{id}','TransactionsController@viewOrderDetail')->name('payment.confirm.detail');//orderView);
         });
+        Route::post('/verify','TransactionsController@verifyPayment')->name('payment.verify');//orderView);
         Route::get('/test','TestInsertController@testView')->name('payment.testView');
         Route::post('/testInsert','TestInsertController@testInsert')->name('payment.testInsert');
     });

@@ -51,7 +51,7 @@
                                 <div class="form-actions">
                                     <div class="row">
                                         <div class="col-md-offset-3 col-md-3">
-                                            <a href="{{route('payments')}}" class="btn btn-outline red"> Cancel
+                                            <a href="{{route('dashboard.payments')}}" class="btn btn-outline red"> Cancel
                                             </a>
                                             <button type="submit" class="btn btn-outline green"> Submit
                                                 <i class="fa fa-angle-right"></i>

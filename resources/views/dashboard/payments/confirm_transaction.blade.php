@@ -13,20 +13,25 @@
                 <div class="portlet light portlet-fit portlet-datatable bordered">
                     <div class="portlet-title">
                         <div class="caption">
-                            <a href="{{route('payments')}}">
+                            <a href="{{route('dashboard.payments')}}">
                                 <i class="fa fa-chevron-left font-dark"></i>
                                 <span class="caption-subject font-dark sbold uppercase">Payments</span>
                             </a>
                         </div>
                         <div class="actions">
+                            <form action="{{route('payment.verify')}}" method="POST">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="preorder_id" value="{{$order->id}}">
+                            <input type="hidden" name="ordersconf_id" value="{{$ordersconf->id}}">
                             <div class="btn-group btn-group-devided">
-                              <select class="form-control" name="inputTransaction">
+                              <select class="form-control" name="transaction_id">
                                 @foreach($transactions as $transaction)
-                                  <option value="">{{$transaction->bankData->name}} - {{$transaction->account_holder}}- {{$transaction->total}}</option>
+                                  <option value="{{$transaction->id}}">{{$transaction->bankData->name}} - {{$transaction->account_holder}}- {{$transaction->total}}</option>
                                 @endforeach
                               </select>
                             </div>
-                            <button type="button" name="buttonVerify" class="btn btn-warning" style="width:100px;">Verify</button>
+                            <button type="submit" class="btn btn-warning" style="width:100px;">Verify</button>
+                            </form>
                         </div>
                     </div>
                     <div class="portlet-body">
@@ -45,23 +50,15 @@
                                 <?php
                                   //ifthen for image
                                 ?>
-                                <h4><strong>Bank Central Asia</strong></h4>
-                            </div>
-                            <div class="col-md-3">
-                                <h4>Account Number</h4>
-                                <h4><strong>{{$order->phonenumber}}</strong></h4>
+                                <h4><strong>{{$ordersconf->bank['name']}}</strong></h4>
                             </div>
                             <div class="col-md-3">
                                 <h4>Account Holder</h4>
-                                <h4><strong>{{$order->email}}</strong></h4>
-                            </div>
-                            <div class="col-md-3">
-                                <h4>Transfer Date</h4>
-                                <h4><strong>14 July 2017</strong></h4>
+                                <h4><strong>{{$ordersconf->account_holder}}</strong></h4>
                             </div>
                             <div class="col-md-3">
                                 <h4>Total</h4>
-                                <h4><strong>Rp1.000.000,00</strong></h4>
+                                <h4><strong>IDR {{$order->grand_total}}</strong></h4>
                             </div>
                             <div class="col-md-3">
                                 <h4>Status</h4>
@@ -77,27 +74,23 @@
                             <table class="table table-striped table-bordered table-hover" id="sample_1">
                                 <thead>
                                 <tr>
-                                    <th> Ticket Code </th>
                                     <th> Name </th>
                                     <th> Email </th>
                                     <th> Phone </th>
                                     <th> Ticket Period </th>
                                     <th> Ticket Class </th>
                                     <th> Seat </th>
-                                    <td>  </td>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($order->tickets as $ticket)
                                     <tr>
-                                        <td>{{$ticket->ticket_code}}</td>
                                         <td>{{$ticket->name}}</td>
                                         <td>{{$ticket->email}}</td>
                                         <td>{{$ticket->phonenumber}}</td>
                                         <td>{{$ticket->ticket_class}}</td>
                                         <td>{{$ticket->ticket_period}}</td>
                                         <td>{{$ticket->seat_no}}</td>
-                                        <td><a target="_blank" href="{{route('ticket.download', ['id' => $ticket->id])}}" class="btn green">Download Ticket</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
