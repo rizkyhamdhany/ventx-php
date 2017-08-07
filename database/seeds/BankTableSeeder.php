@@ -19,8 +19,8 @@ class BankTableSeeder extends Seeder
         $bank->save();
         $bank = new Bank();
         $bank->name = "Mandiri";
-        $bank->account_name = "130001502303";
-        $bank->account_number = "Arina Sani";
+        $bank->account_name = "Arina Sani";
+        $bank->account_number = "130001502303";
         $bank->save();
         $bank = new Bank();
         $bank->name = "BNI";

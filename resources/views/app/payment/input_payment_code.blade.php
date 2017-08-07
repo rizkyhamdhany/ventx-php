@@ -1,5 +1,6 @@
 @extends('layouts.landing_smilemo')
 @section('content')
+    <form class="horizontal-form"  action="{{route('app.ticket.payment.input.detail')}}" method="GET">
     <div class="user-login-5" id="confirm-payment-1">
         <div class="row bs-reset">
             <div class="col-md-4 bs-reset mt-login-5-bsfix">
@@ -27,18 +28,27 @@
                 <div class="col-md-12 aligner">
                     <div class="enter-code col-md-10">
                         <p>Input Your Reservation Code</p>
-                        <input type="text" class="code">
+                        <input name="order_code" type="text" class="code" maxlength="20" style="text-transform:uppercase">
                     </div>
+                </div>
+                <div class="col-md-12 aligner">
+                    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                        @if(Session::has('alert-' . $msg))
+                           <p class="font-red-pink"> <strong>{{ Session::get('alert-' . $msg) }}</strong> Please input yours !</p>
+                        @endif
+                    @endforeach
                 </div>
 
                 <div class="login-footer">
                     <div class="row bs-reset">
                         <div class="col-xs-12 bs-reset">
-                            <a href="#" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Submit</strong></h4></a>
+                            <button type="submit" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Submit</strong></h4></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </form>
+    <button href="{{route('app.ticket.payment.input.detail', ['order_code' => '12312312'])}}" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Submit</strong></h4></button>
 @endsection

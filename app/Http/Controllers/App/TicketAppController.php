@@ -79,12 +79,13 @@ class TicketAppController extends Controller
     {
         try{
             $ticket = json_decode($request->input('book'));
-            $ticket = $this->getTicketPrice($ticket);
             if ($this->validateTicket($request, $ticket)){
                 $ticket->contact_name = $request->input('contact_name');
                 $ticket->contact_phone = $request->input('contact_phone');
                 $ticket->contact_email = $request->input('contact_email');
-                $seat = $ticket->ticket;
+                if (isset($ticket->ticket)){
+                    $seat = $ticket->ticket;
+                }
                 $array_ticket = array();
                 for ($i = 0; $i < $ticket->ticket_ammount; $i++){
                     $ticket_items = new \stdClass();

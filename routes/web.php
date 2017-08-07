@@ -21,6 +21,13 @@ Route::prefix('/tickets')->group(function () {
         Route::post('/pay', 'App\TicketAppController@payTicketPost')->name('app.ticket.pay.post');
         Route::post('/proceed', 'App\TicketAppController@proceedBookTicketPost')->name('app.ticket.proceed.post');
         Route::get('/success', 'App\TicketAppController@successBookTicket')->name('app.ticket.success');
+        Route::prefix('/payment')->group(function () {
+            Route::prefix('/confirm')->group(function () {
+                Route::get('/', 'PaymentController@inputPaymentCode')->name('app.ticket.payment.input.code');
+                Route::get('/input', 'PaymentController@inputPaymentDetail')->name('app.ticket.payment.input.detail');
+                Route::get('/success', 'PaymentController@confrimSuccess')->name('app.ticket.payment.confirm.success');
+            });
+        });
     });
 });
 

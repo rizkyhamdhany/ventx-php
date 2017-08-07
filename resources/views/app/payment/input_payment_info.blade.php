@@ -31,18 +31,11 @@
                         <table class="details">
                             <tbody>
                             <tr>
-                                <td class="type-icon"><span class="type festival"></span></td>
-                                <td class="type">Festival</td>
-                                <td class="amount">2</td>
-                                <td class="total">IDR 250,000.00</td>
+                                <td class="type-icon"><span class="type {{$ticket->ticket_type == 'Reguler' ? 'festival' : 'vipd'}}"></span></td>
+                                <td class="type">{{$ticket->ticket_type}}</td>
+                                <td class="amount">{{$ticket->ticket_ammount}}</td>
+                                <td class="total">IDR {{$ticket->grand_total}}</td>
                             </tr>
-                            <tr>
-                                <td class="type-icon"><span class="type vipd"></span></td>
-                                <td class="type">VIP D</td>
-                                <td class="amount">1</td>
-                                <td class="total">IDR 150,000.00</td>
-                            </tr>
-                            </tbody>
                         </table>
 
                         <strong>Confirm Payment</strong>
@@ -52,15 +45,15 @@
                             <div class="row">
                                 <div class="col-md-4 bank">
                                     <img src="{{URL('/')}}/assets/pages/img/BCA.png">
-                                    <p>Violet Goodman - 95609</p>
+                                    <p>Adzka Fairuz - 2831350697</p>
                                 </div>
                                 <div class="col-md-4 bank">
                                     <img src="{{URL('/')}}/assets/pages/img/Mandiri.png">
-                                    <p>Ruth Hicks - 98282</p>
+                                    <p>Arina Sani - 130001502303</p>
                                 </div>
                                 <div class="col-md-4 bank">
                                     <img src="{{URL('/')}}/assets/pages/img/BNI.png">
-                                    <p>Minnie Newman - 77064</p>
+                                    <p>Adzka Fairuz - 0533301387</p>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-md-3">
@@ -86,7 +79,7 @@
                 <div class="login-footer">
                     <div class="row bs-reset">
                         <div class="col-xs-12 bs-reset">
-                            <a href="#" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Confirm</strong></h4></a>
+                            <a href="{{route('app.ticket.payment.confirm.success')}}" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Confirm</strong></h4></a>
                         </div>
                     </div>
                 </div>

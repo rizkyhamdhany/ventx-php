@@ -16,12 +16,12 @@ class CreatePreorderConfsTable extends Migration
         Schema::create('preorder_confs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('preorder_id');
-            $table->string('order_code');
+            $table->string('order_code', 20);
             $table->integer('bank_id');
-            $table->string('account_holder');
+            $table->string('account_holder', 50);
             $table->date('transfer_date');
             $table->integer('total');
-            $table->string('status');
+            $table->string('status', 20);
             $table->timestamps();
         });
     }
