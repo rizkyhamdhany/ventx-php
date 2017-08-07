@@ -9,6 +9,7 @@ use Webpatser\Uuid\Uuid;
 use App\Models\Seat;
 use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
+use App\Models\PreorderConf;
 
 class HomeController extends Controller
 {
@@ -19,7 +20,9 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
+        $payment_conf_conf = count(PreorderConf::where('status', '!=', 'VERIFIED')->get());
         $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
-        return view('dashboard.home');
+        return view('dashboard.home')
+            ->with('payment_conf_conf', $payment_conf_conf);
     }
 }

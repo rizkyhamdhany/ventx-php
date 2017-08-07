@@ -26,7 +26,7 @@
                         <i class="fa fa-briefcase fa-icon-medium font-red no-opacity"></i>
                     </div>
                     <div class="details">
-                        <div class="number font-red"> 0 </div>
+                        <div class="number font-red"> {{$payment_conf_conf}} </div>
                         <div class="desc font-red"> Request Payment Confirmation </div>
                     </div>
                     <a class="more" href="{{route('dashboard.payments')}}" style="background-color: #e7505a; color:#fff;"> Confirm Payment
