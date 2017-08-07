@@ -31,22 +31,22 @@ class PaymentController extends Controller
         try{
             $order_code = $request->input('order_code');
             $preorder = Preorder::where('order_code', $order_code)->first();
-            $ticket = new \stdClass();
-            $ticket->ticket_ammount = $preorder->ticket_ammount;
-            $ticket->ticket_type = $preorder->ticket_class;
-            if ($ticket->ticket_type == 'Reguler'){
-                $ticket->price_item = 70000;
-                $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
-            } else if ($ticket->ticket_type == 'VIP I' || $ticket->ticket_type == 'VIP H' || $ticket->ticket_type == 'VIP E' || $ticket->ticket_type == 'VIP D'){
-                $ticket->price_item = 200000;
-                $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
-            } else if ($ticket->ticket_type == 'VVIP'){
-                $ticket->price_item = 400000;
-                $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
-            }
-            $bank = Bank::all();
 
             if (isset($preorder)){
+                $ticket = new \stdClass();
+                $ticket->ticket_ammount = $preorder->ticket_ammount;
+                $ticket->ticket_type = $preorder->ticket_class;
+                if ($ticket->ticket_type == 'Reguler'){
+                    $ticket->price_item = 70000;
+                    $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
+                } else if ($ticket->ticket_type == 'VIP I' || $ticket->ticket_type == 'VIP H' || $ticket->ticket_type == 'VIP E' || $ticket->ticket_type == 'VIP D'){
+                    $ticket->price_item = 200000;
+                    $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
+                } else if ($ticket->ticket_type == 'VVIP'){
+                    $ticket->price_item = 400000;
+                    $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
+                }
+                $bank = Bank::all();
                 return view('app.payment.input_payment_info')
                     ->with('preorder', $preorder)
                     ->with('ticket', $ticket)
