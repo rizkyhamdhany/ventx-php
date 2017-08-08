@@ -71,7 +71,7 @@ class OrderController extends Controller
                     $ticket->seat_no = $seatupdate->no;
                 }
                 else {
-                    $seatupdate = Seat::find($request->input('seat'));
+                    $seatupdate = Seat::find($request->input('seat'))->first();
                     $ticket->seat_no = $seatupdate->no;
                 }
             }
