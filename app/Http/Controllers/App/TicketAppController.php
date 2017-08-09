@@ -93,7 +93,7 @@ class TicketAppController extends Controller
                     $ticket_items->ticket_name = $request->input('ticket_name')[$i];
                     $ticket_items->ticket_phone = $request->input('ticket_phone')[$i];
                     $ticket_items->ticket_email = $request->input('ticket_email')[$i];
-                    if(isset($seat)){
+                    if(!empty($seat)){
                         $ticket_items->seat = $seat[$i];
                         if ($ticket->ticket_type != 'Reguler' && ($ticket_items->seat == '' || !isset($ticket_items->seat))){
                             $request->session()->flash('alert-danger', 'Please fill the from below !');
