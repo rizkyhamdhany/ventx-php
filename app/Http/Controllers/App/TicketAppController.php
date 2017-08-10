@@ -19,6 +19,8 @@ use App\Models\Preorder;
 use Illuminate\Support\Facades\Redis;
 use App\Models\RedisModel;
 use App\Models\Preseat;
+use App\Mail\OrderMail;
+use Illuminate\Support\Facades\Mail;
 
 class TicketAppController extends Controller
 {
@@ -142,7 +144,10 @@ class TicketAppController extends Controller
                     }
                     $preorder = new Preorder();
                     $preorder->submitPreorderWithTickets($ticket);
+                    $preorder->grand_total = $ticket->grand_total;
+                    $preorder->bank_account = $ticket->bank_account;
                     View::share( 'page_state', 'proceed' );
+                    Mail::to($preorder->email)->send(new OrderMail($preorder));
                     return view('app.ticket.ticket_proceed')->with('ticket', $ticket);
                 } else {
                     return redirect()->route('app.ticket.list');

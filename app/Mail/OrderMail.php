@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Preorder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -16,9 +17,11 @@ class OrderMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $order;
+
+    public function __construct(Preorder $order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
@@ -28,8 +31,11 @@ class OrderMail extends Mailable
      */
     public function build()
     {
-        return $this->text('mail.order_plain_text')
-                    ->view('mail.order');
+        return $this->from('ticket@nalar-ventex.com')
+                    ->subject('Complete Your Smilemotion Ticket Purchase')
+                    ->text('mail.order_plain_text')
+                    ->view('mail.order')
+                    ->with('order', $this->order);
 //        ->attach('/path/to/file');
 //        ->attach('/path/to/file', [
 //            'as' => 'name.pdf',

@@ -77,6 +77,26 @@
                 background-color: #34495e !important;
                 border-color: #34495e !important;
             }
+            .note {
+                margin: 0 0 20px 0;
+                padding: 5px 5px 5px 15px;
+                border-left: 5px solid #eee;
+                -webkit-border-radius: 0 4px 4px 0;
+                -moz-border-radius: 0 4px 4px 0;
+                -ms-border-radius: 0 4px 4px 0;
+                -o-border-radius: 0 4px 4px 0;
+                border-radius: 0 4px 4px 0;
+                box-sizing: border-box;
+            }
+            .note.note-default {
+                background-color: white;
+                border-color: #b0c1d2;
+                color: black;
+            }
+            .note.note-default.note-bordered {
+                background-color: #eef1f5;
+                border-color: #c0cedb;
+            }
         }
     </style>
 </head>
@@ -97,16 +117,33 @@
                             <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                                 <tr>
                                     <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">
-                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Hi there,</p>
-                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Sometimes you just want to send a simple HTML email with a simple design and clear call to action. This is it.</p>
+                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Salam,</p>
+                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Congratulations, your booking has been recorded!
+                                            <br>The code written below will be used to verify your purchase.</p>
+                                        <p>Reservation Code</p>
+                                        <div class="note note-default note-bordered">
+                                            <p> {{$order->order_code}}</p>
+                                        </div>
+                                        <p>
+                                            Please transfer the total amount to the account below.
+                                        </p>
+                                        <div class="note note-default note-bordered">
+                                            <p> {{$order->bank_account}}</p>
+                                        </div>
+                                        <p>
+                                            Grand Total
+                                        </p>
+                                        <div class="note note-default note-bordered">
+                                            <p> IDR {{number_format( $order->grand_total , 0 , '' , ',' )}}</p>
+                                        </div>
                                         <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
                                             <tbody>
                                             <tr>
                                                 <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;">
-                                                    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
+                                                    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;">
                                                         <tbody>
                                                         <tr>
-                                                            <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; background-color: #3498db; border-radius: 5px; text-align: center;"> <a href="http://htmlemail.io" target="_blank" style="display: inline-block; color: #ffffff; background-color: #3498db; border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #3498db;">Call To Action</a> </td>
+                                                            <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; background-color: #524EA2; border-radius: 5px; text-align: center;"> <a href="{{route('app.ticket.payment.input.detail')}}/?order_code={{$order->order_code}}" target="_blank" style="display: inline-block; color: #97D7BF; background-color: #524EA2; border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #3498db; width: 100%">Confirm My Purchase</a> </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -114,8 +151,6 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>
-                                        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Good luck! Hope it works.</p>
                                     </td>
                                 </tr>
                             </table>
