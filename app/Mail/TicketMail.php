@@ -31,13 +31,16 @@ class TicketMail extends Mailable
      */
     public function build()
     {
-        return $this->from('ticket@nalar-ventex.com')
+        $email = $this->from('ticket@nalar-ventex.com')
                     ->subject('Your Smilemotion Ticket')
                     ->view('mail.ticket')
-                    ->with('order', $this->order)
-                    ->attach(\Storage::disk('s3')->url($this->order->url_invoice), [
-                        'as' => 'name.pdf',
-                        'mime' => 'application/pdf',
-                    ]);
+                    ->with('order', $this->order);
+        foreach ($this->order->tickets as $ticket){
+            $email->attach(\Storage::disk('s3')->url($ticket->url_ticket), [
+                'as' => 'name.pdf',
+                'mime' => 'application/pdf',
+            ]);
+        }
+        return $email;
     }
 }
