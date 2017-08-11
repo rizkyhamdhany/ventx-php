@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
@@ -10,9 +11,12 @@ use App\Models\Seat;
 use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
 use App\Models\PreorderConf;
+use App\Models\RedisModel;
+use Illuminate\Support\Facades\Redis;
 
 class HomeController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');

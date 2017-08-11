@@ -6,8 +6,9 @@
  * Time: 6:50 PM
  */
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
 use App\Models\Preorder;
 use Illuminate\Http\Request;
 use App\Models\Order;

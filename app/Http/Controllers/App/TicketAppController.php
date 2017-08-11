@@ -41,7 +41,7 @@ class TicketAppController extends Controller
         if (!empty($keys_seat_booked)){
             $seat_booked = Redis::mget($keys_seat_booked);
         }
-        RedisModel::cachingBookedSeat();
+
         if (!Redis::exists("seat-VVIP")){
             RedisModel::cachingSeatData();
         }
@@ -101,6 +101,16 @@ class TicketAppController extends Controller
                             $request->session()->flash('alert-danger', 'Please fill the from below !');
                             return redirect()->route('app.ticket.list');
                         }
+                        $keys_seat_booked = Redis::keys("smilemotion:seat_booked_short:*");
+                        $seat_booked = array();
+                        if (!empty($keys_seat_booked)){
+                            $seat_booked = Redis::mget($keys_seat_booked);
+                        }
+                        if (in_array($ticket_items->seat, $seat_booked)){
+                            $request->session()->flash('alert-danger', 'Sorry, selected seat no longer available !');
+                            return redirect()->route('app.ticket.list');
+                        }
+                        RedisModel::cachingBookedSeatShort($ticket_items->seat);
                     }
                     if ($ticket_items->ticket_title == '' ||
                         $ticket_items->ticket_name == '' ||
@@ -148,6 +158,7 @@ class TicketAppController extends Controller
                     $preorder->bank_account = $ticket->bank_account;
                     View::share( 'page_state', 'proceed' );
                     Mail::to($preorder->email)->send(new OrderMail($preorder));
+                    RedisModel::cachingBookedSeat();
                     return view('app.ticket.ticket_proceed')->with('ticket', $ticket);
                 } else {
                     return redirect()->route('app.ticket.list');

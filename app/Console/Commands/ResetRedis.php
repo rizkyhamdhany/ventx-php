@@ -42,7 +42,6 @@ class ResetRedis extends Command
     {
         //
         Redis::command(CC::$REDIS_FLUSHALL);
-//        RedisModel::cachingSeatData();
         RedisModel::cachingBookedSeat();
     }
 }

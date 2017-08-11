@@ -52,7 +52,7 @@ class SendOrderEmails extends Command
                     $status->email = $email_address;
                     $status->type = 'order';
                     $status->identifier = $order->order_code;
-                    $status->error = $e->getMessage();
+                    $status->error = '';
                     $status->save();
                 }
             } else {
