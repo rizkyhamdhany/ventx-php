@@ -16,7 +16,9 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
         Commands\ResetRedis::class,
-        Commands\SendOrderEmails::class
+        Commands\SendOrderEmails::class,
+        Commands\GenerateTicket::class,
+        Commands\GenerateInvoice::class
     ];
 
     /**
