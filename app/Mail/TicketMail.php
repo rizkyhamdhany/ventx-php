@@ -37,7 +37,7 @@ class TicketMail extends Mailable
                     ->with('order', $this->order);
         foreach ($this->order->tickets as $ticket){
             $email->attach(\Storage::disk('s3')->url($ticket->url_ticket), [
-                'as' => 'name.pdf',
+                'as' => $ticket->name.'.pdf',
                 'mime' => 'application/pdf',
             ]);
         }
