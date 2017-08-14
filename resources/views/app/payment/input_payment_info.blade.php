@@ -1,5 +1,8 @@
 @extends('layouts.landing_smilemo')
 @section('content')
+    <form class="horizontal-form"  action="{{route('app.ticket.payment.input.detail.input')}}" method="POST">
+    {{ csrf_field() }}
+    <input type="hidden" name="order_code" value="{{$order_code}}">
     <div class="user-login-5" id="confirm-payment-2">
         <div class="row bs-reset">
             <div class="col-md-4 bs-reset mt-login-5-bsfix">
@@ -19,30 +22,23 @@
                 </div>
             </div>
             <div class="col-md-8 login-container bs-reset mt-login-5-bsfix right-container">
-                <div class="col-md-12 header">
+                <div class="col-mgd-12 header">
                     <div class="back-button"><a href="{{route('welcome')}}"><i class="fa fa-arrow-left"></i></a></div>
                     <h1>Payment Confirmation</h1>
                 </div>
 
                 <div class="col-md-12 aligner">
                     <div class="confirm col-md-10">
-                        <strong>Name : Daniel Brighton</strong>
+                        <strong>Name : {{$preorder->name}}</strong>
                         <p>Ticket Detail :</p>
                         <table class="details">
                             <tbody>
                             <tr>
-                                <td class="type-icon"><span class="type festival"></span></td>
-                                <td class="type">Festival</td>
-                                <td class="amount">2</td>
-                                <td class="total">IDR 250,000.00</td>
+                                <td class="type-icon"><span class="type {{$ticket->ticket_type == 'Reguler' ? 'festival' : 'vipd'}}"></span></td>
+                                <td class="type">{{$ticket->ticket_type}}</td>
+                                <td class="amount">{{$ticket->ticket_ammount}}</td>
+                                <td class="total">IDR {{$ticket->grand_total}}</td>
                             </tr>
-                            <tr>
-                                <td class="type-icon"><span class="type vipd"></span></td>
-                                <td class="type">VIP D</td>
-                                <td class="amount">1</td>
-                                <td class="total">IDR 150,000.00</td>
-                            </tr>
-                            </tbody>
                         </table>
 
                         <strong>Confirm Payment</strong>
@@ -52,31 +48,30 @@
                             <div class="row">
                                 <div class="col-md-4 bank">
                                     <img src="{{URL('/')}}/assets/pages/img/BCA.png">
-                                    <p>Violet Goodman - 95609</p>
+                                    <p>Adzka Fairuz - 2831350697</p>
                                 </div>
                                 <div class="col-md-4 bank">
                                     <img src="{{URL('/')}}/assets/pages/img/Mandiri.png">
-                                    <p>Ruth Hicks - 98282</p>
+                                    <p>Arina Sani - 130001502303</p>
                                 </div>
                                 <div class="col-md-4 bank">
                                     <img src="{{URL('/')}}/assets/pages/img/BNI.png">
-                                    <p>Minnie Newman - 77064</p>
+                                    <p>Adzka Fairuz - 0533301387</p>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-md-3">
-                                    <select class="">
+                                    <select name="bank" required>
                                         <option disabled selected>Bank Name</option>
-                                        <option>BCA</option>
-                                        <option>BNI</option>
-                                        <option>Mandiri</option>
-                                        <option>Other</option>
+                                        @foreach($banks as $bank)
+                                        <option value="{{$bank->id}}">{{$bank->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" placeholder="Account Holder">
+                                    <input type="text" placeholder="Account Holder" name="account_holder" required>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" data-provide="datepicker" placeholder="Transfer Date">
+                                    <input type="text" data-provide="datepicker" placeholder="Transfer Date" name="date" required>
                                 </div>
                             </div>
                         </div>
@@ -86,11 +81,12 @@
                 <div class="login-footer">
                     <div class="row bs-reset">
                         <div class="col-xs-12 bs-reset">
-                            <a href="#" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Confirm</strong></h4></a>
+                            <button type="submit" class="btn btn-block buy-ticket-button padding-top-bot-10"><h4><strong>Confirm</strong></h4></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </form>
 @endsection

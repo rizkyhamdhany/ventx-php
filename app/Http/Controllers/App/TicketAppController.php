@@ -19,6 +19,8 @@ use App\Models\Preorder;
 use Illuminate\Support\Facades\Redis;
 use App\Models\RedisModel;
 use App\Models\Preseat;
+use App\Mail\OrderMail;
+use Illuminate\Support\Facades\Mail;
 
 class TicketAppController extends Controller
 {
@@ -34,8 +36,12 @@ class TicketAppController extends Controller
     {
 //        echo '<pre>'; print_r(Redis::mget(Redis::keys("smilemotion:seat_booked:*"))); exit;
 
-        $seat_booked = Redis::mget(Redis::keys("smilemotion:seat_booked:*"));
-        RedisModel::cachingBookedSeat();
+        $keys_seat_booked = Redis::keys("smilemotion:seat_booked:*");
+        $seat_booked = array();
+        if (!empty($keys_seat_booked)){
+            $seat_booked = Redis::mget($keys_seat_booked);
+        }
+
         if (!Redis::exists("seat-VVIP")){
             RedisModel::cachingSeatData();
         }
@@ -75,12 +81,13 @@ class TicketAppController extends Controller
     {
         try{
             $ticket = json_decode($request->input('book'));
-            $ticket = $this->getTicketPrice($ticket);
             if ($this->validateTicket($request, $ticket)){
                 $ticket->contact_name = $request->input('contact_name');
                 $ticket->contact_phone = $request->input('contact_phone');
                 $ticket->contact_email = $request->input('contact_email');
-                $seat = $ticket->ticket;
+                if (isset($ticket->ticket)){
+                    $seat = $ticket->ticket;
+                }
                 $array_ticket = array();
                 for ($i = 0; $i < $ticket->ticket_ammount; $i++){
                     $ticket_items = new \stdClass();
@@ -88,12 +95,22 @@ class TicketAppController extends Controller
                     $ticket_items->ticket_name = $request->input('ticket_name')[$i];
                     $ticket_items->ticket_phone = $request->input('ticket_phone')[$i];
                     $ticket_items->ticket_email = $request->input('ticket_email')[$i];
-                    if(isset($seat)){
+                    if(!empty($seat)){
                         $ticket_items->seat = $seat[$i];
                         if ($ticket->ticket_type != 'Reguler' && ($ticket_items->seat == '' || !isset($ticket_items->seat))){
                             $request->session()->flash('alert-danger', 'Please fill the from below !');
                             return redirect()->route('app.ticket.list');
                         }
+                        $keys_seat_booked = Redis::keys("smilemotion:seat_booked_short:*");
+                        $seat_booked = array();
+                        if (!empty($keys_seat_booked)){
+                            $seat_booked = Redis::mget($keys_seat_booked);
+                        }
+                        if (in_array($ticket_items->seat, $seat_booked)){
+                            $request->session()->flash('alert-danger', 'Sorry, selected seat no longer available !');
+                            return redirect()->route('app.ticket.list');
+                        }
+                        RedisModel::cachingBookedSeatShort($ticket_items->seat);
                     }
                     if ($ticket_items->ticket_title == '' ||
                         $ticket_items->ticket_name == '' ||
@@ -137,7 +154,11 @@ class TicketAppController extends Controller
                     }
                     $preorder = new Preorder();
                     $preorder->submitPreorderWithTickets($ticket);
+                    $preorder->grand_total = $ticket->grand_total;
+                    $preorder->bank_account = $ticket->bank_account;
                     View::share( 'page_state', 'proceed' );
+                    Mail::to($preorder->email)->send(new OrderMail($preorder));
+                    RedisModel::cachingBookedSeat();
                     return view('app.ticket.ticket_proceed')->with('ticket', $ticket);
                 } else {
                     return redirect()->route('app.ticket.list');

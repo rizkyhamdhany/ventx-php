@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Aws\Command;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +15,10 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
-        Commands\ResetRedis::class
+        Commands\ResetRedis::class,
+        Commands\SendOrderEmails::class,
+        Commands\GenerateTicket::class,
+        Commands\GenerateInvoice::class
     ];
 
     /**

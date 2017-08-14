@@ -31,25 +31,28 @@ class Preorder extends Model
             $preticket->email = $item->ticket_email;
             $preticket->ticket_period  = $ticket->ticket_period;
             $preticket->ticket_class = $ticket->ticket_type;
+            $preticket->save();
 
-            $seat = Seat::find($item->seat);
+            if (isset($item->seat)){
+                $seat = Seat::find($item->seat);
 
-            $preticket->seat_no = $seat->no;
+                $preticket->seat_no = $seat->no;
+
+                $preseat = new Preseat();
+                $preseat->preticket_id = $preticket->id;
+                $preseat->seat_id = $seat->id;
+                $preseat->seat_no = $seat->no;
+                $preseat->ticket_class = $ticket->ticket_type;
+                $preseat->expire_time = 259200;
+                $preseat->expire_at = \Carbon\Carbon::now()->addSeconds($preseat->expire_time);
+                $preseat->status = 'BOOKED';
+                $preseat->save();
+
+                Redis::set(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED.":".$preseat->ticket_class.":".$preseat->seat_no, $preseat->seat_id);
+                Redis::expireat(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED.":".$preseat->ticket_class.":".$preseat->seat_no, strtotime($preseat->expire_at));
+            }
             $preticket->save();
             $preticket->order()->attach($this);
-
-            $preseat = new Preseat();
-            $preseat->preticket_id = $preticket->id;
-            $preseat->seat_id = $seat->id;
-            $preseat->seat_no = $seat->no;
-            $preseat->ticket_class = $ticket->ticket_type;
-            $preseat->expire_time = 259200;
-            $preseat->expire_at = \Carbon\Carbon::now()->addSeconds($preseat->expire_time);
-            $preseat->status = 'BOOKED';
-            $preseat->save();
-
-            Redis::set(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED.":".$preseat->ticket_class.":".$preseat->seat_no, $preseat->seat_id);
-            Redis::expireat(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED.":".$preseat->ticket_class.":".$preseat->seat_no, strtotime($preseat->expire_at));
         }
         return $ticket;
     }

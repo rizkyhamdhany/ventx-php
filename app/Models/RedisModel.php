@@ -30,4 +30,10 @@ class RedisModel
             Redis::expireat(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED.":".$preseat->ticket_class.":".$preseat->seat_no, strtotime($preseat->expire_at));
         }
     }
+
+    public static function cachingBookedSeatShort($seat_id){
+        Redis::set(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED_SHORT.":".$seat_id, $seat_id);
+        Redis::expire(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED_SHORT.":".$seat_id, 60);
+    }
+
 }

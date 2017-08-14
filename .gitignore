@@ -10,4 +10,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 .env
+.env.example
+/storage
 .env.prod
+composer.lock

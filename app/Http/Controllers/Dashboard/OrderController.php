@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
@@ -67,7 +68,7 @@ class OrderController extends Controller
             $seatupdate = null;
             if ($request->input('ticket_class') != "Reguler"){
                 if ($ammount > 1){
-                    $seatupdate = Seat::find($request->input('seat')[$i])->first();
+                    $seatupdate = Seat::find($request->input('seat')[$i]);
                     $ticket->seat_no = $seatupdate->no;
                 }
                 else {
@@ -75,6 +76,7 @@ class OrderController extends Controller
                     $ticket->seat_no = $seatupdate->no;
                 }
             }
+
             $ticket->save();
             $ticket->order()->attach($order);
 

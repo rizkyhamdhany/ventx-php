@@ -51,11 +51,9 @@
                                 <thead>
                                 <tr>
                                     <th> Order Code </th>
-                                    <th> Preorder </th>
                                     <th> Account Holder </th>
                                     <th> Bank </th>
                                     <th> Transfer Date </th>
-                                    <th> Total </th>
                                     <th> Status </th>
                                     <th>  </th>
                                 </tr>
@@ -64,16 +62,14 @@
                                 @foreach ($orders as $order)
                                     <tr>
                                         <td> {{$order->order_code}} </td>
-                                        <td> {{$order->name}} </td>
-                                        <td> {{$order->email}} </td>
-                                        <td> {{$order->phonenumber}} </td>
-                                        <td> {{$order->ticket_period}} </td>
-                                        <td> {{$order->payment_status}} </td>
-                                        <td> Unverified </td>
+                                        <td> {{$order->account_holder}} </td>
+                                        <td> {{$order->bank['name']}} </td>
+                                        <td> {{$order->date}} </td>
+                                        <td> {{$order->status}} </td>
                                         <td>
                                             <div class="clearfix">
                                                 <div class="btn-group btn-group-solid">
-                                                    <a href="{{route("payment.confirm.detail", ['id' => $order->id])}}" class="btn green">Confirm Transaction</a>
+                                                    <a href="{{route("payment.confirm.detail", ['id' => $order->preorder['id']])}}" class="btn green">Confirm Transaction</a>
                                                 </div>
                                             </div>
                                         </td>

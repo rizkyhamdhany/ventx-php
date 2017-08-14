@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-8 login-container bs-reset mt-login-5-bsfix right-container">
                 <div class="col-md-12 conf-payment-container">
-                    <a href="{{route('payment.input.code')}}" class="btn btn-circle buy-ticket-button top-button"><h5><strong>Confirm Payment</strong></h5></a>
+                    <a href="{{route('app.ticket.payment.input.code')}}" class="btn btn-circle buy-ticket-button top-button"><h5><strong>Confirm Payment</strong></h5></a>
                 </div>
                 <div class="col-md-12 conf-payment-container">
                     <div class="col-md-offset-1 col-md-5">
