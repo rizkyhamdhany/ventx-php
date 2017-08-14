@@ -21,6 +21,7 @@ use App\Models\RedisModel;
 use App\Models\Preseat;
 use App\Mail\OrderMail;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\BookTicketRequest;
 
 class TicketAppController extends Controller
 {
@@ -66,8 +67,8 @@ class TicketAppController extends Controller
             $ticket = json_decode($request->input('book'));
             $ticket = $this->getTicketPrice($ticket);
             if ($this->validateTicket($request, $ticket)){
-                View::share( 'page_state', 'book' );
-                return view('app.ticket.ticket_book')->with('ticket', $ticket)->with('book', json_encode($ticket));
+                $request->session()->put('book', $ticket);
+                return redirect()->route('app.ticket.pay');
             } else {
                 return back()->withInput();
             }
@@ -77,92 +78,132 @@ class TicketAppController extends Controller
         }
     }
 
-    public function payTicketPost(Request $request)
+    public function payTicket(Request $request){
+        $ticket = $request->session()->get('book');
+        if (!isset($ticket)){
+            return redirect()->route('app.ticket.list');
+        }
+        if (isset($ticket->contact_name)){
+            $request->session()->forget('book');
+            return redirect()->route('app.ticket.list');
+        }
+        View::share( 'page_state', 'book' );
+        return view('app.ticket.ticket_book')->with('ticket', $ticket);
+    }
+
+    public function payTicketPost(BookTicketRequest $request)
     {
         try{
-            $ticket = json_decode($request->input('book'));
-            if ($this->validateTicket($request, $ticket)){
-                $ticket->contact_name = $request->input('contact_name');
-                $ticket->contact_phone = $request->input('contact_phone');
-                $ticket->contact_email = $request->input('contact_email');
-                if (isset($ticket->ticket)){
-                    $seat = $ticket->ticket;
+            $ticket = $request->session()->get('book');
+            if (!isset($ticket)){
+                return redirect()->route('app.ticket.list');
+            }
+            if (isset($ticket->contact_name)){
+                $request->session()->forget('book');
+                return redirect()->route('app.ticket.list');
+            }
+            $ticket_items = $request->input('ticket');
+            $ticket->contact_name = $request->input('contact_name');
+            $ticket->contact_phone = $request->input('contact_phone');
+            $ticket->contact_email = $request->input('contact_email');
+            $i = 0;
+            $temp = [];
+            if ($ticket->ticket_type != 'Reguler'){
+                foreach ($ticket->ticket as $item){
+                    array_push($temp, array_merge((array) $item, $ticket_items[$i]));
+                    $i++;
                 }
-                $array_ticket = array();
-                for ($i = 0; $i < $ticket->ticket_ammount; $i++){
-                    $ticket_items = new \stdClass();
-                    $ticket_items->ticket_title = $request->input('ticket_title')[$i];
-                    $ticket_items->ticket_name = $request->input('ticket_name')[$i];
-                    $ticket_items->ticket_phone = $request->input('ticket_phone')[$i];
-                    $ticket_items->ticket_email = $request->input('ticket_email')[$i];
-                    if(!empty($seat)){
-                        $ticket_items->seat = $seat[$i];
-                        if ($ticket->ticket_type != 'Reguler' && ($ticket_items->seat == '' || !isset($ticket_items->seat))){
-                            $request->session()->flash('alert-danger', 'Please fill the from below !');
-                            return redirect()->route('app.ticket.list');
-                        }
+
+                foreach ($temp as $ticket_temp){
+                    $ticket_item = (object) $ticket_temp;
+                    if (!isset($ticket_item->seat) || $ticket_item->seat == ''){
+                        $request->session()->flash('alert-danger', 'Please fill the from below !');
+                        return redirect()->route('app.ticket.list');
+                    } else {
+                        /*
+                         * check redis book before pay (time 30mnt)
+                         */
                         $keys_seat_booked = Redis::keys("smilemotion:seat_booked_short:*");
                         $seat_booked = array();
                         if (!empty($keys_seat_booked)){
                             $seat_booked = Redis::mget($keys_seat_booked);
                         }
-                        if (in_array($ticket_items->seat, $seat_booked)){
+                        if (in_array($ticket_item->seat, $seat_booked)){
                             $request->session()->flash('alert-danger', 'Sorry, selected seat no longer available !');
                             return redirect()->route('app.ticket.list');
                         }
-                        RedisModel::cachingBookedSeatShort($ticket_items->seat);
+                        /*
+                         * check redis book waiting payment (time 3 days)
+                         */
+                        $keys_seat_booked = Redis::keys("smilemotion:seat_booked:*");
+                        $seat_booked = array();
+                        if (!empty($keys_seat_booked)){
+                            $seat_booked = Redis::mget($keys_seat_booked);
+                        }
+                        if (in_array($ticket_item->seat, $seat_booked)){
+                            $request->session()->flash('alert-danger', 'Sorry, selected seat no longer available !');
+                            return redirect()->route('app.ticket.list');
+                        }
+                        RedisModel::cachingBookedSeatShort($ticket_item->seat);
                     }
-                    if ($ticket_items->ticket_title == '' ||
-                        $ticket_items->ticket_name == '' ||
-                        $ticket_items->ticket_phone == '' ||
-                        $ticket_items->ticket_email == '' ){
-                        $request->session()->flash('alert-danger', 'Please fill the from below !');
-                        return back()->withInput();
-                    }
-                    array_push($array_ticket, $ticket_items);
                 }
-                $ticket->ticket = $array_ticket;
-                View::share( 'page_state', 'pay' );
-                return view('app.ticket.ticket_pay')->with('ticket', $ticket)->with('book', json_encode($ticket));
+                $ticket->ticket = $temp;
             } else {
-                return redirect()->route('app.ticket.list');
+                $ticket->ticket = $ticket_items;
             }
+            View::share( 'page_state', 'pay' );
+            $request->session()->put('book', $ticket);
+            return redirect()->route('app.ticket.proceed');
         } catch (Exception $e){
             $request->session()->flash('alert-danger', 'Please fill the from below !');
-            return back()->withInput();
+            return redirect()->route('app.ticket.list');
         }
 
+    }
+
+    public function proceedBookTicket(Request $request){
+        $ticket = $request->session()->get('book');
+        if (!isset($ticket)){
+            return redirect()->route('app.ticket.list');
+        }
+        View::share( 'page_state', 'pay' );
+        return view('app.ticket.ticket_pay')->with('ticket', $ticket);
     }
 
     public function proceedBookTicketPost(Request $request)
     {
         try{
-            $ticket = json_decode($request->input('book'));
+            $ticket = $request->session()->get('book');
+            if (!isset($ticket)){
+                return redirect()->route('app.ticket.list');
+            }
             $ticket = $this->getTicketPrice($ticket);
             $ticket->bankopt = $request->input('bankopt');
             if ($this->validateTicket($request, $ticket)){
-                if ($this->validateContactInfo($ticket)){
-                    $uuid = Uuid::generate();
-                    $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
-                    $ticket->order_code = 'SMO'.$code;
-                    if($ticket->bankopt == 'BCA'){
-                        $ticket->bank_account = 'BCA 2831350697 a.n. Adzka Fairuz';
-                    } else if($ticket->bankopt == 'Mandiri'){
-                        $ticket->bank_account = 'Mandiri 130 001502303 2 a.n Arina Sani';
-                    } else if($ticket->bankopt == 'BNI'){
-                        $ticket->bank_account = 'BNI 0533301387 a.n. Adzka Fairuz';
-                    }
-                    $preorder = new Preorder();
-                    $preorder->submitPreorderWithTickets($ticket);
-                    $preorder->grand_total = $ticket->grand_total;
-                    $preorder->bank_account = $ticket->bank_account;
-                    View::share( 'page_state', 'proceed' );
-                    Mail::to($preorder->email)->send(new OrderMail($preorder));
-                    RedisModel::cachingBookedSeat();
-                    return view('app.ticket.ticket_proceed')->with('ticket', $ticket);
-                } else {
-                    return redirect()->route('app.ticket.list');
+                $uuid = Uuid::generate();
+                $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
+                $ticket->order_code = 'SMO'.$code;
+                if($ticket->bankopt == 'BCA'){
+                    $ticket->bank_account = 'BCA 2831350697 a.n. Adzka Fairuz';
+                } else if($ticket->bankopt == 'Mandiri'){
+                    $ticket->bank_account = 'Mandiri 130 001502303 2 a.n Arina Sani';
+                } else if($ticket->bankopt == 'BNI'){
+                    $ticket->bank_account = 'BNI 0533301387 a.n. Adzka Fairuz';
                 }
+                if ($ticket->ticket_type != 'Reguler'){
+                    foreach ($ticket->ticket as $ticket){
+                        $seat = $ticket->seat;
+                    }
+                }
+                $preorder = new Preorder();
+                $preorder->submitPreorderWithTickets($ticket);
+                $preorder->grand_total = $ticket->grand_total;
+                $preorder->bank_account = $ticket->bank_account;
+                View::share( 'page_state', 'proceed' );
+                Mail::to($preorder->email)->send(new OrderMail($preorder));
+                RedisModel::cachingBookedSeat();
+                $request->session()->put('book', $ticket);
+                return redirect()->route('app.ticket.success');
             } else {
                 return redirect()->route('app.ticket.list');
             }
@@ -173,26 +214,13 @@ class TicketAppController extends Controller
     }
     public function successBookTicket(Request $request)
     {
-        View::share( 'page_state', 'success' );
-        return view('app.ticket.ticket_book_success');
-    }
-
-    private function getTicketObj(Request $request){
-        $ticket = new \stdClass();
-        $ticket->ticket_period = $request->input('ticket_period');
-        $ticket->ticket_type = $request->input('ticket_type');
-        $ticket->ticket_ammount = $request->input('ticket_ammount');
-        if ($ticket->ticket_type == 'Reguler'){
-            $ticket->price_item = 70000;
-            $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
-        } else if ($ticket->ticket_type == 'VIP I' || $ticket->ticket_type == 'VIP H' || $ticket->ticket_type == 'VIP E' || $ticket->ticket_type == 'VIP D'){
-            $ticket->price_item = 200000;
-            $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
-        } else if ($ticket->ticket_type == 'VVIP'){
-            $ticket->price_item = 400000;
-            $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
+        $ticket = $request->session()->get('book');
+        if (!isset($ticket)){
+            return redirect()->route('app.ticket.list');
         }
-        return $ticket;
+        $request->session()->forget('book');
+        View::share( 'page_state', 'proceed' );
+        return view('app.ticket.ticket_proceed')->with('ticket', $ticket);
     }
 
     private function getTicketPrice($ticket){
@@ -221,32 +249,6 @@ class TicketAppController extends Controller
             $request->session()->flash('alert-danger', 'Please Choose Ticket Ammount !');
             return false;
         }
-    }
-
-    private function validateContactInfo($ticket){
-        if ($ticket->ticket_type == '' ||
-            $ticket->ticket_period == '' ||
-            $ticket->ticket_ammount == '' ||
-            $ticket->contact_name == '' ||
-            $ticket->contact_phone == '' ||
-            $ticket->contact_email == ''
-        ){
-            return false;
-        }
-        foreach ($ticket->ticket as $item){
-            if(isset($seat)){
-                if ($ticket->ticket_type != 'Reguler' && ($item->seat == '' || !isset($item->seat))){
-                    return false;
-                }
-            }
-            if ($item->ticket_title == '' ||
-                $item->ticket_name == '' ||
-                $item->ticket_phone == '' ||
-                $item->ticket_email == '' ){
-                return false;
-            }
-        }
-        return true;
     }
 
     public function submitBooking(){

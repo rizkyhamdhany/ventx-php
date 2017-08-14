@@ -1276,3 +1276,9 @@ Page Quick Sidebar
         text-align: left;
     }
 }
+.help-block{
+    display: none;
+}
+.has-error .help-block{
+    display: block;
+}

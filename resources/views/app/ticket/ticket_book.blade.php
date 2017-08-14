@@ -45,7 +45,6 @@
                         </div>
                         <form class="horizontal-form"  action="{{route('app.ticket.pay.post')}}" method="POST">
                             {{ csrf_field() }}
-                            <input type="hidden" name="book" value="{{$book}}">
                         <div class="portlet light bordered">
                             <div class="portlet-body padding-bottom-30">
                                 <div>
@@ -57,32 +56,35 @@
                                 </div>
                                 <div class="margin-top-10">
                                     <div class="col-md-12">
-                                        <div class="form-group">
+                                        <div class="form-group {{$errors->has('contact_name') ? 'has-error' : ' ' }}">
                                             <label class="control-label">Full Name</label>
-                                            <input name="contact_name" type="text" id="firstName" class="form-control" placeholder="Don Jon" required>
+                                            <input name="contact_name" value="{{ old('contact_name') }}" type="text" id="firstName" class="form-control" placeholder="Don Jon" required>
+                                            <span class="help-block"> Please insert your name correctly </span>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="margin-top-bottom-30">
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group {{$errors->has('contact_phone') ? 'has-error' : ' ' }}">
                                             <label class="control-label">Phone Number</label>
                                             <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    +62
-                                                </span>
-                                                <input name="contact_phone" type="phone" class="form-control" placeholder="Phone Number" required> </div>
+                                            <span class="input-group-addon">
+                                                +62
+                                            </span>
+                                            <input name="contact_phone" value="{{ old('contact_phone') }}" type="phone" class="form-control" placeholder="Phone Number" required> </div>
+                                            <span class="help-block"> Please insert your phone correctly </span>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group">
+                                        <div class="form-group {{$errors->has('contact_email') ? 'has-error' : ' ' }}">
                                             <label class="control-label">Email</label>
                                             <div class="input-group">
-                                                <span class="input-group-addon addon-email">
-                                                    <i class="fa fa-envelope"></i>
-                                                </span>
-                                                <input name="contact_email" type="email" class="form-control" placeholder="Email Address" required> </div>
+                                            <span class="input-group-addon addon-email">
+                                                <i class="fa fa-envelope"></i>
+                                            </span>
+                                            <input name="contact_email" value="{{ old('contact_email') }}" type="email" class="form-control" placeholder="Email Address" required> </div>
+                                            <span class="help-block"> Please insert your email correctly </span>
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>
@@ -94,14 +96,14 @@
                                     </span>
                                     <span class="sm-font-accent">Ticket Delivery</span>
                                 </div>
-                                @for($i = 1; $i < ($ticket->ticket_ammount + 1); $i++)
+                                @for($i = 0; $i < ($ticket->ticket_ammount); $i++)
                                 <div>
-                                    <h4 class="margin-top-30">Person {{$i}}</h4>
+                                    <h4 class="margin-top-30">Person {{$i + 1}}</h4>
                                     <div class="margin-top-10">
                                         <div class="col-md-2 padding-right-10 title-container">
                                             <div class="form-group">
                                                 <label class="control-label">Title</label>
-                                                <select name="ticket_title[]" class="form-control">
+                                                <select name="ticket[{{$i}}][ticket_title]" class="form-control">
                                                     <option>Mr.</option>
                                                     <option>Mrs.</option>
                                                     <option>Ms.</option>
@@ -109,30 +111,35 @@
                                             </div>
                                         </div>
                                         <div class="col-md-10 no-padding-left name-container">
-                                            <label class="control-label">Full Name</label>
-                                            <input name="ticket_name[]" type="text" id="firstName" class="form-control" placeholder="Don Jon" required>
+                                            <div class="form-group {{$errors->has('ticket.'.$i.'.ticket_name') ? 'has-error' : ' ' }}">
+                                                <label class="control-label">Full Name</label>
+                                                <input name="ticket[{{$i}}][ticket_name]" type="text" id="firstName" class="form-control" placeholder="Don Jon" required>
+                                                <span class="help-block"> Please insert your name correctly </span>
+                                            </div>
                                         </div>
                                         <div class="clearfix"></div>
                                     </div>
                                     <div class="margin-top-30">
                                         <div class="col-md-6">
-                                            <div class="form-group">
+                                            <div class="form-group {{$errors->has('ticket.'.$i.'.ticket_phone') ? 'has-error' : ' ' }}">
                                                 <label class="control-label">Phone Number</label>
                                                 <div class="input-group">
                                                 <span class="input-group-addon">
                                                     +62
                                                 </span>
-                                                    <input name="ticket_phone[]" type="phone" class="form-control" placeholder="Phone Number" required> </div>
+                                                <input name="ticket[{{$i}}][ticket_phone]" type="phone" class="form-control" placeholder="Phone Number" required> </div>
+                                                <span class="help-block"> Please insert your phone correctly </span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            <div class="form-group">
+                                            <div class="form-group {{$errors->has('ticket.'.$i.'.ticket_email') ? 'has-error' : ' ' }}">
                                                 <label class="control-label">Email</label>
                                                 <div class="input-group">
                                                 <span class="input-group-addon addon-email">
                                                     <i class="fa fa-envelope"></i>
                                                 </span>
-                                                    <input name="ticket_email[]" type="email" class="form-control" placeholder="Email Address" required> </div>
+                                                <input name="ticket[{{$i}}][ticket_email]" type="email" class="form-control" placeholder="Email Address" required> </div>
+                                                <span class="help-block"> Please insert your email correctly </span>
                                             </div>
                                         </div>
                                     </div>
