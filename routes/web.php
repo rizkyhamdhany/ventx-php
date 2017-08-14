@@ -33,6 +33,7 @@ Route::prefix('/tickets')->middleware(['bookticketsession'])->group(function () 
         });
     });
 });
+Route::get('/test/invoice', 'Dashboard\OrderController@testInvoice')->name('invoice.test');
 
 Route::prefix('/smilemotion')->group(function () {
     Route::get('/', 'LandingController@index')->name('welcome');

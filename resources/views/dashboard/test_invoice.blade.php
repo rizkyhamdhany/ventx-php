@@ -64,18 +64,18 @@
         <tr>
             <td>Order Number</td>
             <td class="tbl_contact_space"> : </td>
-            <td>{{$data['order']->order_code}}</td>
+            <td></td>
             <td>Phone Number</td>
             <td class="tbl_contact_space"> : </td>
-            <td>{{$data['order']->phonenumber}}</td>
+            <td></td>
         </tr>
         <tr>
             <td>Billed to</td>
             <td class="tbl_contact_space"> : </td>
-            <td>{{$data['order']->name}}</td>
+            <td></td>
             <td>Email</td>
             <td class="tbl_contact_space"> : </td>
-            <td>{{$data['order']->email}}</td>
+            <td></td>
         </tr>
     </table>
     <table class="tbl_order_item" cellspacing="0">
@@ -88,29 +88,19 @@
         </tr>
         <tr class="border_bottom">
             <td class="tbl_order_item_space_vertical"></td>
-            <td>{{$data['order']->ticket_class}}</td>
-            <td>{{$data['order']->ticket_ammount}}</td>
-            <td>IDR {{number_format( $data['ticket_price'] , 0 , '' , '.' )}}</td>
-            <td>IDR {{number_format( $data['ticket_price'] * $data['order']->ticket_ammount , 0 , '' , '.' )}}</td>
+            <td>VIP</td>
+            <td>3</td>
+            <td>IDR 150000</td>
+            <td>IDR 150000</td>
         </tr>
         <tr>
             <td class="tbl_order_item_space_vertical"></td>
             <td></td>
             <td></td>
             <td class="text-bold">Total</td>
-            <td class="text-bold">IDR {{number_format( $data['ticket_price'] * $data['order']->ticket_ammount , 0 , '' , '.' )}}</td>
+            <td class="text-bold">IDR </td>
         </tr>
     </table>
-    <div class="page-break"></div>
-    <div class="page_2">
-        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/invoice_template_2.jpg" style="width: 100%;">
-        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/t&c.jp2" style="width: 100%; top: 50mm;">
-    </div>
-    <div class="page-break"></div>
-    <div class="page_2">
-        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/invoice_template_2.jpg" style="width: 100%;">
-        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/t&c_2.jp2" style="width: 100%; top: 50mm;">
-    </div>
 </div>
 </body>
 </html>

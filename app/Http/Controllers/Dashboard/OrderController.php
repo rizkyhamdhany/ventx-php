@@ -152,4 +152,8 @@ class OrderController extends Controller
         return view('dashboard.orders.order_detail')
                 ->with('order', $order);
     }
+
+    public function testInvoice(){
+        return view('dashboard.test_invoice');
+    }
 }
