@@ -15,17 +15,17 @@ class BankTableSeeder extends Seeder
         $bank = new Bank();
         $bank->name = "BCA";
         $bank->account_name = "Adzka Fairuz";
-        $bank->account_number = "2831350697";
+        $bank->account_number = "";
         $bank->save();
         $bank = new Bank();
         $bank->name = "Mandiri";
-        $bank->account_name = "130001502303";
-        $bank->account_number = "Arina Sani";
+        $bank->account_name = "Arina Sani";
+        $bank->account_number = "";
         $bank->save();
         $bank = new Bank();
         $bank->name = "BNI";
         $bank->account_name = "Adzka Fairuz";
-        $bank->account_number = "0533301387";
+        $bank->account_number = "";
         $bank->save();
     }
 }
