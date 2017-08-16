@@ -10,6 +10,7 @@ use Webpatser\Uuid\Uuid;
 use App\Models\Seat;
 use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
+use App\Models\RedisModel;
 
 class OrderController extends Controller
 {
@@ -52,8 +53,9 @@ class OrderController extends Controller
         //create order
         $ammount = $request->input('ammount');
         $order = new Order();
-        $order->createOrder($request);
+        $order->createOrderFromManualInput($request);
         $i = 0;
+        $seats = [];
         foreach ($request->input('ticket_title') as $title_ticket) {
             $ticket = new Ticket();
             $uuid = Uuid::generate();
@@ -76,15 +78,18 @@ class OrderController extends Controller
                     $ticket->seat_no = $seatupdate->no;
                 }
             }
-
             $ticket->save();
             $ticket->order()->attach($order);
 
             if ($seatupdate != null){
                 $seatupdate->status = 'unavailable';
                 $seatupdate->save();
+                array_push($seats, $seatupdate);
             }
             $i++;
+        }
+        foreach ($seats as $seat){
+            RedisModel::removeCachingSeat($seat);
         }
         $request->session()->flash('alert-success', 'Ticket was successful added!');
         $this->createInvoice($order);

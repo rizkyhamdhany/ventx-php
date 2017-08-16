@@ -190,11 +190,6 @@ class TicketAppController extends Controller
                 } else if($ticket->bankopt == 'BNI'){
                     $ticket->bank_account = 'BNI 0533301387 a.n. Adzka Fairuz';
                 }
-                if ($ticket->ticket_type != 'Reguler'){
-                    foreach ($ticket->ticket as $ticket){
-                        $seat = $ticket->seat;
-                    }
-                }
                 $preorder = new Preorder();
                 $preorder->submitPreorderWithTickets($ticket);
                 $preorder->grand_total = $ticket->grand_total;
