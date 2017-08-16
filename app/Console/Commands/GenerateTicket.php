@@ -39,15 +39,17 @@ class GenerateTicket extends Command
     public function handle()
     {
         $tickets = Ticket::all();
-        foreach ($tickets as $ticket){
-            $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
-            $output = $pdf->output();
+        foreach ($tickets as $ticket) {
+            if ($ticket->url_ticket == "") {
+                $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
+                $output = $pdf->output();
 
-            $ticket_url = 'ventex/ticket/ticket_'.$ticket->ticket_code.'.pdf';
-            $s3 = \Storage::disk('s3');
-            $s3->put($ticket_url, $output, 'public');
-            $ticket->url_ticket = $ticket_url;
-            $ticket->save();
+                $ticket_url = 'ventex/ticket/ticket_' . $ticket->ticket_code . '.pdf';
+                $s3 = \Storage::disk('s3');
+                $s3->put($ticket_url, $output, 'public');
+                $ticket->url_ticket = $ticket_url;
+                $ticket->save();
+            }
         }
     }
 }
