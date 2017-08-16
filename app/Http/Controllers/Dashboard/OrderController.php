@@ -14,6 +14,7 @@ use App\Models\RedisModel;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TicketMail;
 use App\Models\EmailSendStatus;
+use Illuminate\Support\Facades\Redis;
 
 class OrderController extends Controller
 {
@@ -79,6 +80,32 @@ class OrderController extends Controller
                 else {
                     $seatupdate = Seat::find($request->input('seat'))->first();
                     $ticket->seat_no = $seatupdate->no;
+                }
+
+                /*
+                 * check redis book before pay (time 30mnt)
+                 */
+                $keys_seat_booked = Redis::keys("smilemotion:seat_booked_short:*");
+                $seat_booked = array();
+                if (!empty($keys_seat_booked)){
+                    $seat_booked = Redis::mget($keys_seat_booked);
+                }
+                if (in_array($seatupdate->id, $seat_booked)){
+                    $request->session()->flash('alert-danger', 'Sorry, selected seat no longer available !');
+                    Order::destroy($order->id);
+                    return redirect()->route('tickets');
+                }
+                /*
+                 * check redis book waiting payment (time 3 days)
+                 */
+                $keys_seat_booked = Redis::keys("smilemotion:seat_booked:*");
+                $seat_booked = array();
+                if (!empty($keys_seat_booked)){
+                    $seat_booked = Redis::mget($keys_seat_booked);
+                }
+                if (in_array($seatupdate->id, $seat_booked)){
+                    $request->session()->flash('alert-danger', 'Sorry, selected seat no longer available !');
+                    return redirect()->route('tickets');
                 }
             }
             $ticket->save();
