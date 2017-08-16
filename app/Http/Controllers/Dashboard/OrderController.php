@@ -188,6 +188,29 @@ class OrderController extends Controller
         }
     }
 
+    public function sendEmail(Request $request, $id){
+        $order = Order::find($id);
+        Mail::to($order->email)->send(new TicketMail($order));
+        if( count(Mail::failures()) > 0 ) {
+            foreach(Mail::failures as $email_address) {
+                $status = new EmailSendStatus();
+                $status->email = $email_address;
+                $status->type = 'order';
+                $status->identifier = $order->order_code;
+                $status->error = '';
+                $status->save();
+            }
+        } else {
+            $status = new EmailSendStatus();
+            $status->email = $order->email;
+            $status->type = 'order';
+            $status->identifier = $order->order_code;
+            $status->error = 'SUCCESS';
+            $status->save();
+        }
+        return redirect()->route("ticket.order.detail", ['id' => $order->id]);
+    }
+
     public function viewOrderDetail(Request $request, $id){
         $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
         $order = Order::find($id);

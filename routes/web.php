@@ -50,6 +50,7 @@ Route::prefix('/dashboard')->group(function () {
             Route::post('/submit', 'Dashboard\OrderController@orderTicketSubmit')->name('ticket.order.submit');
             Route::get('/detail/{id}', 'Dashboard\OrderController@viewOrderDetail')->name('ticket.order.detail');
             Route::get('/invoice/{id}', 'Dashboard\OrderController@viewInvoice')->name('ticket.order.invoice');
+            Route::get('/send_email/{id}', 'Dashboard\OrderController@sendEmail')->name('ticket.order.email');
         });
     });
 
