@@ -37,7 +37,7 @@
                             @foreach (['danger', 'warning', 'success', 'info'] as $msg)
                                 @if(Session::has('alert-' . $msg))
                                     <div class="alert  alert-{{ $msg }}">
-                                        <strong>Something went wrong !</strong> {{ Session::get('alert-' . $msg) }}
+                                        {!!Session::get('alert-' . $msg) !!}
                                     </div>
                                 @endif
                             @endforeach
@@ -141,12 +141,15 @@
         }
     </style>
     <script>
+        var seat_dict = {};
         var seats = [];
+        var seat = new Object();
         var book = new Object();
         book.step = 'book';
         book.ticket_type = 'Reguler';
         book.ticket_period = 'Presale 1';
         book.ticket_ammount = '0';
+        book.ticket = [];
         $('#book').val(JSON.stringify(book));
         $( "#REG" ).click(function() {
             $('.seats').hide();
@@ -209,31 +212,33 @@
             resetSeat();
         });
         function selectSeat($i) {
-            if ( $.inArray($i, seats) > -1 ) {
-                $('#seat_'+$i).removeClass('seat-sel');
-                seats = jQuery.grep(seats, function(value) {
-                    return value != $i;
-                });
-                $('#ticket_ammount').val(seats.length.toString());
-            } else {
-                if (seats.length < 4){
-                    seats.push($i);
+            if(seat_dict[$i] === undefined ) {
+                if (Object.keys(seat_dict).length < 4){
+                    seat_dict[$i] = $i;
                     $('#seat_'+$i).addClass('seat-sel');
-                    $('#ticket_ammount').val(seats.length.toString());
+                    $('#ticket_ammount').val(Object.keys(seat_dict).length.toString());
                 }
+            } else {
+                $('#seat_'+$i).removeClass('seat-sel');
+                delete seat_dict[$i];
+                $('#ticket_ammount').val(Object.keys(seat_dict).length.toString());
             }
-            book.ticket = seats;
-            book.ticket_ammount = seats.length.toString();
+            book.ticket = [];
+            for (var $x in seat_dict) {
+                seat.seat = $x;
+                book.ticket.push(seat);
+            }
+            book.ticket_ammount = Object.keys(seat_dict).length.toString();
             $('#book').val(JSON.stringify(book));
         }
 
         function resetSeat(){
-            for (var i = 0; i < seats.length; i++) {
-                $('#seat_'+seats[i]).removeClass('seat-sel');
+            for (var $x in seat_dict) {
+                $('#seat_'+$x).removeClass('seat-sel');
             }
-            seats = [];
-            book.ticket = seats;
-            book.ticket_ammount = seats.length.toString();
+            seat_dict = {};
+            book.ticket = [];
+            book.ticket_ammount = Object.keys(seat_dict).length.toString();
             $('#ticket_ammount').val('0');
             $('#book').val(JSON.stringify(book));
         }

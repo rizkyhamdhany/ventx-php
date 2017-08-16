@@ -55,7 +55,6 @@
                                     <th> Email </th>
                                     <th> Phone </th>
                                     <th> Ticket Period </th>
-                                    <th> Ticket Class </th>
                                     <th> Payment Status </th>
                                     <td>  </td>
                                 </tr>
@@ -68,7 +67,6 @@
                                         <td> {{$order->email}} </td>
                                         <td> {{$order->phonenumber}} </td>
                                         <td> {{$order->ticket_period}} </td>
-                                        <td> {{$order->ticket_class}} </td>
                                         <td> {{$order->payment_status}} </td>
                                         <td>
                                             <div class="clearfix">

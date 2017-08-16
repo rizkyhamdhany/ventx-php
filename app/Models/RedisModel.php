@@ -33,7 +33,7 @@ class RedisModel
 
     public static function cachingBookedSeatShort($seat_id){
         Redis::set(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED_SHORT.":".$seat_id, $seat_id);
-        Redis::expire(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED_SHORT.":".$seat_id, 60);
+        Redis::expire(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED_SHORT.":".$seat_id, 1800);
     }
 
 }

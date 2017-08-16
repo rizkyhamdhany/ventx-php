@@ -14,11 +14,13 @@ Auth::routes();
 
 Route::get('/', 'Dashboard\HomeController@index')->name('home');
 
-Route::prefix('/tickets')->group(function () {
+Route::prefix('/tickets')->middleware(['bookticketsession'])->group(function () {
     Route::prefix('/smilemotion')->group(function () {
         Route::get('/', 'App\TicketAppController@listTicket')->name('app.ticket.list');
         Route::post('/book', 'App\TicketAppController@bookTicketPost')->name('app.ticket.book.post');
+        Route::get('/pay', 'App\TicketAppController@payTicket')->name('app.ticket.pay');
         Route::post('/pay', 'App\TicketAppController@payTicketPost')->name('app.ticket.pay.post');
+        Route::get('/proceed', 'App\TicketAppController@proceedBookTicket')->name('app.ticket.proceed');
         Route::post('/proceed', 'App\TicketAppController@proceedBookTicketPost')->name('app.ticket.proceed.post');
         Route::get('/success', 'App\TicketAppController@successBookTicket')->name('app.ticket.success');
         Route::prefix('/payment')->group(function () {
@@ -31,6 +33,7 @@ Route::prefix('/tickets')->group(function () {
         });
     });
 });
+Route::get('/test/invoice', 'Dashboard\OrderController@testInvoice')->name('invoice.test');
 
 Route::prefix('/smilemotion')->group(function () {
     Route::get('/', 'LandingController@index')->name('welcome');

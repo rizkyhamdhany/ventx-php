@@ -23,7 +23,8 @@ class Preorder extends Model
         $this->payment_status = 'UNPAID';
         $this->payment_code = '';
         $this->save();
-        foreach ($ticket->ticket as $item){
+        foreach ($ticket->ticket as $ticket_obj){
+            $item = (object) $ticket_obj;
             $preticket = new Preticket();
             $preticket->title = $item->ticket_title;
             $preticket->name = $item->ticket_name;

@@ -9,20 +9,20 @@
                 <div class="menu-overlay-content">
                     <ul class="menu-overlay-nav text-uppercase">
                         <li>
-                            <a href="#">Dashboard</a>
+                            <a href="{{route('home')}}">Dashboard</a>
                         </li>
                         <li>
                             <a href="#">Reports</a>
                         </li>
-                        <li>
+                        <!--<li>
                             <a href="#">Templates</a>
-                        </li>
+                        </li>-->
                         <li>
                             <a href="#">Support</a>
                         </li>
-                        <li>
+                        <!--<li>
                             <a href="#">Settings</a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>

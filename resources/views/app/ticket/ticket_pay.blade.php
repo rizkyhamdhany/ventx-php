@@ -44,7 +44,6 @@
                         </div>
                         <form class="horizontal-form"  action="{{route('app.ticket.proceed.post')}}" method="POST">
                             {{ csrf_field() }}
-                            <input type="hidden" name="book" value="{{$book}}">
                         <div class="portlet light bordered">
                             <div class="portlet-title tabbable-line">
                                 <ul class="nav nav-tabs pull-left">
