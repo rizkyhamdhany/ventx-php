@@ -41,6 +41,10 @@ class TicketMail extends Mailable
                 'mime' => 'application/pdf',
             ]);
         }
+        $email->attach(\Storage::disk('s3')->url($this->order->url_invoice), [
+            'as' => $this->order->name.'.pdf',
+            'mime' => 'application/pdf',
+        ]);
         return $email;
     }
 }

@@ -11,6 +11,9 @@ use App\Models\Seat;
 use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
 use App\Models\RedisModel;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TicketMail;
+use App\Models\EmailSendStatus;
 
 class OrderController extends Controller
 {
@@ -81,6 +84,17 @@ class OrderController extends Controller
             $ticket->save();
             $ticket->order()->attach($order);
 
+            /*
+             * generate ticket
+             */
+            $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
+            $output = $pdf->output();
+            $ticket_url = 'ventex/ticket/ticket_'.$ticket->ticket_code.'.pdf';
+            $s3 = \Storage::disk('s3');
+            $s3->put($ticket_url, $output, 'public');
+            $ticket->url_ticket = $ticket_url;
+            $ticket->save();
+
             if ($seatupdate != null){
                 $seatupdate->status = 'unavailable';
                 $seatupdate->save();
@@ -93,6 +107,29 @@ class OrderController extends Controller
         }
         $request->session()->flash('alert-success', 'Ticket was successful added!');
         $this->createInvoice($order);
+
+        /*
+         * send email ticket
+         */
+        Mail::to($order->email)->send(new TicketMail($order));
+        if( count(Mail::failures()) > 0 ) {
+            foreach(Mail::failures as $email_address) {
+                $status = new EmailSendStatus();
+                $status->email = $email_address;
+                $status->type = 'order';
+                $status->identifier = $order->order_code;
+                $status->error = '';
+                $status->save();
+            }
+        } else {
+            $status = new EmailSendStatus();
+            $status->email = $order->email;
+            $status->type = 'order';
+            $status->identifier = $order->order_code;
+            $status->error = 'SUCCESS';
+            $status->save();
+        }
+
         return redirect()->route("ticket.order.detail", ['id' => $order->id]);
     }
 
