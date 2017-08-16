@@ -26,7 +26,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!--<div class="form-group">
                                         <label class="col-md-3 control-label">Ticket Class</label>
                                         <div class="col-md-4">
                                             <select class="form-control" name="ticket_class">
@@ -38,7 +38,7 @@
                                                 <option value="VVIP">VVIP</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Amount</label>
                                         <div class="col-md-4">

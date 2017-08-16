@@ -77,4 +77,6 @@ Route::prefix('/dashboard')->group(function () {
         Route::prefix('/followUp')->group(function(){
         });
     });
+
+    Route::get('/testEvent', 'Dashboard\TestEventController@index')->name('event');
 });

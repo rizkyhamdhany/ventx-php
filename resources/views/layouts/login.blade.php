@@ -27,7 +27,8 @@
     <link href="{{ asset('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/global/css/components.min.css') }}" rel="stylesheet" id="style_components" type="text/css"/>
     <link href="{{ asset('assets/global/css/plugins.min.css') }}" rel="stylesheet" type="text/css"/>
-    <link href="{{ asset('assets/pages/css/login-2.css') }}" rel="stylesheet" type="text/css"/>
+    
+    @yield('css')
     <link rel="shortcut icon" href="favicon.ico"/>
 </head>
 <!-- END HEAD -->

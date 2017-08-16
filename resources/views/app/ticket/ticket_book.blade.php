@@ -162,7 +162,7 @@
                                     <h4 class="font-white">Ticket Summary</h4>
                                 </div>
                                 <div class="event-details">
-                                    <h1 class="font-white">Smilemotion 2017</h1>
+                                    <h1 class="font-white">Festival Budaya 2017</h1>
                                     <p class="font-white">
                                         Sabtu, 9 Desember 2017
                                         <br>Sasana Budaya Ganesha

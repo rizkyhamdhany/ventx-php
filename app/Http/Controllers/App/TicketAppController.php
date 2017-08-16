@@ -28,9 +28,9 @@ class TicketAppController extends Controller
 
     public function __construct()
     {
-        View::share( 'event_name', 'Smilemotion 2017' );
+        View::share( 'event_name', 'Festival Budaya 2017' );
         View::share( 'logo', 'logo_smilemotion.png' );
-        View::share( 'url_event', 'http://smilemotion.org' );
+        View::share( 'url_event', 'http://festivalbudaya.org' );
     }
 
     public function listTicket()

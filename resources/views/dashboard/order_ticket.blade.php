@@ -51,7 +51,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <h3 class="form-section">Auidence Details</h3>
+                                <h3 class="form-section">Audience Details</h3>
                                 @for ($i = 0; $i < $ammount; $i++)
                                 <div class="row">
                                     <div class="col-md-1">
