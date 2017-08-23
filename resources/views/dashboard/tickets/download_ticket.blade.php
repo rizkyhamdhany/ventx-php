@@ -88,7 +88,7 @@
     <img class="bg_template" src="{{URL('/')}}/assets/pages/img/ticket_template.jpg" style="height: 210mm; width: 148.5mm;">
     <img class="barcode" src="data:image/png;base64,{{DNS2D::getBarcodePNG($ticket->ticket_code, "QRCODE", 9, 9)}}" alt="barcode"   />
     <h3 class="scan_code_text">Scan The Code for Entry</h3>
-    <div class="ticket_class_container">
+    <!--<div class="ticket_class_container">
         <table class="table-center">
             <tr>
                 <td style="padding-right: 10px">
@@ -101,7 +101,7 @@
                 <td style="vertical-align: middle" class="ticket_class">{{$ticket->ticket_class}}{{$ticket->seat_no != '' ? ' Seat '.$ticket->seat_no : ' Ticket'}}</td>
             </tr>
         </table>
-    </div>
+    </div>-->
     <div class="ticket_info">
         <p class="ticket_info_text">
             {{$ticket->ticket_code}}

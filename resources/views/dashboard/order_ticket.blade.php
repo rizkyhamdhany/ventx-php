@@ -11,7 +11,7 @@
                 <div class="portlet light bordered" id="form_wizard_1">
                     <div class="portlet-title">
                         <div class="caption">
-                            <span class="caption-subject font-dark sbold uppercase">Booking {{$ticket_period}}, {{$ticket_class}}, for {{$ammount}} tickets</span>
+                            <span class="caption-subject font-dark sbold uppercase">Booking {{$ticket_period}}, for {{$ammount}} tickets</span>
                         </div>
                     </div>
                     <div class="portlet-body form">

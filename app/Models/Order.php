@@ -11,7 +11,7 @@ class Order extends Model
     public function createOrder($input){
         $uuid = Uuid::generate();
         $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
-        $this->order_code = 'SMO'.$code;
+        $this->order_code = 'FTBO'.$code;
         $this->name = $input->input('contact_fullname');
         $this->phonenumber = $input->input('contact_phone');
         $this->email = $input->input('contact_email');

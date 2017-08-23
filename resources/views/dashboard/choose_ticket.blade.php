@@ -26,6 +26,7 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="ticket_class" value="Reguler">
                                     <!--<div class="form-group">
                                         <label class="col-md-3 control-label">Ticket Class</label>
                                         <div class="col-md-4">
