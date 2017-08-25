@@ -63,9 +63,5 @@
             </div>
         </form>
     <!-- END FORGOT PASSWORD FORM -->
-<<<<<<< HEAD
-@endsection
-=======
     </div>
 @endsection
->>>>>>> 8abd96f41c7d4da54320f8a23434bd18e168b175

@@ -40,6 +40,7 @@ Route::prefix('/smilemotion')->group(function () {
     Route::get('/input_payment_code', 'App\PaymentController@inputPaymentCode')->name('payment.input.code');
 });
 
+//DASHBOARD
 Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/', 'Dashboard\HomeController@index')->name('dashboard.home');
     Route::prefix('/tickets')->group(function () {

@@ -5,10 +5,12 @@
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
         width: 300px;
+        transition: transform 1s;
         }
 
         .card:hover {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        transform: scale(1.1);
         }
 
         .card_container {
@@ -19,27 +21,32 @@
             float: none;
             margin: 0 auto;
         }
+        a:link,a:visited,a:active{
+          text-decoration: none;
+        }
     </style>
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <div class="card">
+                <a href="{{route('welcome')}}">
+                  <div class="card">
                     <img src="{{ asset('assets/pages/img/sm_thumb.jpg') }}" alt="Avatar" style="width:100%">
-                    <div class="card_container">
-                        <h4><b>Smilemotion 2017</b></h4>
-                        <p>
-                            Saturday, December 9, 2017<br>
-                            Sasana Budaya Ganesha<br>
-                        </p>
-                        <p>FKG Unpad</p>
-                    </div>
-                </div>
+                      <div class="card_container">
+                          <h4><b>Smilemotion 2017</b></h4>
+                          <p>
+                              Saturday, December 9, 2017<br>
+                              Sasana Budaya Ganesha<br>
+                          </p>
+                          <p>FKG Unpad</p>
+                      </div>
+                  </div>
+                </a>
             </div>
             <div class="col-md-4">
                 <div class="card">
                     <img src="{{ asset('assets/pages/img/sm_thumb.jpg') }}" alt="Avatar" style="width:100%">
                     <div class="card_container">
-                        <h4><b>Smilemotion 2017</b></h4>
+                        <h4><b>Festival Budaya 2017</b></h4>
                         <p>
                             Saturday, December 9, 2017<br>
                             Sasana Budaya Ganesha<br>

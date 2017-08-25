@@ -4,23 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "0f60c25bef878450840aba763f83a4a4",
-    "packages": [
-        {
-            "name": "aws/aws-sdk-php",
-            "version": "3.34.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "df7ddca6872048cc91315c2b4fdb9a57d5fceb84"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/df7ddca6872048cc91315c2b4fdb9a57d5fceb84",
-                "reference": "df7ddca6872048cc91315c2b4fdb9a57d5fceb84",
-=======
-    "hash": "b45bc47bd9aa56b5422ad233a1e21449",
     "content-hash": "0a5939a59492bda0f9be6a87cd8052df",
     "packages": [
         {
@@ -35,7 +18,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/eee45c7189f6fe0b70aac86495718ccfdc067495",
                 "reference": "eee45c7189f6fe0b70aac86495718ccfdc067495",
->>>>>>> 8abd96f41c7d4da54320f8a23434bd18e168b175
                 "shasum": ""
             },
             "require": {
@@ -102,11 +84,7 @@
                 "s3",
                 "sdk"
             ],
-<<<<<<< HEAD
-            "time": "2017-08-22T18:32:28+00:00"
-=======
-            "time": "2017-08-24 18:09:26"
->>>>>>> 8abd96f41c7d4da54320f8a23434bd18e168b175
+            "time": "2017-08-24T18:09:26+00:00"
         },
         {
             "name": "barryvdh/laravel-dompdf",
@@ -630,18 +608,6 @@
         },
         {
             "name": "laravel/framework",
-<<<<<<< HEAD
-            "version": "v5.4.33",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/framework.git",
-                "reference": "e53a81a2bf406f501cdf818ad949f8d6c8dabfc0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/e53a81a2bf406f501cdf818ad949f8d6c8dabfc0",
-                "reference": "e53a81a2bf406f501cdf818ad949f8d6c8dabfc0",
-=======
             "version": "v5.4.35",
             "source": {
                 "type": "git",
@@ -652,7 +618,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/54aa18a4e8495c4b6902d9665ec9fa4d3a1f3d2e",
                 "reference": "54aa18a4e8495c4b6902d9665ec9fa4d3a1f3d2e",
->>>>>>> 8abd96f41c7d4da54320f8a23434bd18e168b175
                 "shasum": ""
             },
             "require": {
@@ -768,11 +733,7 @@
                 "framework",
                 "laravel"
             ],
-<<<<<<< HEAD
-            "time": "2017-08-14T20:17:41+00:00"
-=======
-            "time": "2017-08-24 12:30:18"
->>>>>>> 8abd96f41c7d4da54320f8a23434bd18e168b175
+            "time": "2017-08-24T12:30:18+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -918,11 +879,7 @@
                 "sftp",
                 "storage"
             ],
-<<<<<<< HEAD
             "time": "2017-08-06T17:41:04+00:00"
-=======
-            "time": "2017-08-06 17:41:04"
->>>>>>> 8abd96f41c7d4da54320f8a23434bd18e168b175
         },
         {
             "name": "league/flysystem-aws-s3-v3",
@@ -1823,11 +1780,7 @@
                 "identifier",
                 "uuid"
             ],
-<<<<<<< HEAD
             "time": "2017-08-04T13:39:04+00:00"
-=======
-            "time": "2017-08-04 13:39:04"
->>>>>>> 8abd96f41c7d4da54320f8a23434bd18e168b175
         },
         {
             "name": "sabberworm/php-css-parser",
@@ -2410,11 +2363,7 @@
                 "portable",
                 "shim"
             ],
-<<<<<<< HEAD
             "time": "2017-06-14T15:44:48+00:00"
-=======
-            "time": "2017-06-14 15:44:48"
->>>>>>> 8abd96f41c7d4da54320f8a23434bd18e168b175
         },
         {
             "name": "symfony/process",
@@ -2825,10 +2774,7 @@
             "keywords": [
                 "UUID RFC4122"
             ],
-<<<<<<< HEAD
             "time": "2017-06-26T09:33:47+00:00"
-=======
-            "time": "2017-06-26 09:33:47"
         },
         {
             "name": "zizaco/entrust",
@@ -2896,8 +2842,7 @@
                 "permission",
                 "roles"
             ],
-            "time": "2016-12-29 06:25:06"
->>>>>>> 8abd96f41c7d4da54320f8a23434bd18e168b175
+            "time": "2016-12-29T06:25:06+00:00"
         }
     ],
     "packages-dev": [
@@ -2958,7 +2903,7 @@
                 "gherkin",
                 "parser"
             ],
-            "time": "2016-10-30 11:50:56"
+            "time": "2016-10-30T11:50:56+00:00"
         },
         {
             "name": "codeception/codeception",
@@ -3053,7 +2998,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2017-08-10 20:28:02"
+            "time": "2017-08-10T20:28:02+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -3159,7 +3104,7 @@
                 "selenium",
                 "webdriver"
             ],
-            "time": "2017-04-28 14:54:49"
+            "time": "2017-04-28T14:54:49+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -3209,11 +3154,7 @@
                 "faker",
                 "fixtures"
             ],
-<<<<<<< HEAD
             "time": "2017-08-15T16:48:10+00:00"
-=======
-            "time": "2017-08-15 16:48:10"
->>>>>>> 8abd96f41c7d4da54320f8a23434bd18e168b175
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -3464,11 +3405,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-<<<<<<< HEAD
             "time": "2017-08-08T06:39:58+00:00"
-=======
-            "time": "2017-08-08 06:39:58"
->>>>>>> 8abd96f41c7d4da54320f8a23434bd18e168b175
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -3515,11 +3452,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-<<<<<<< HEAD
             "time": "2017-06-03T08:32:36+00:00"
-=======
-            "time": "2017-06-03 08:32:36"
->>>>>>> 8abd96f41c7d4da54320f8a23434bd18e168b175
         },
         {
             "name": "phpspec/prophecy",
@@ -4530,7 +4463,7 @@
                 }
             ],
             "description": "Automatic BASH completion for Symfony Console Component based applications.",
-            "time": "2016-02-24 05:08:54"
+            "time": "2016-02-24T05:08:54+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -4587,7 +4520,7 @@
             ],
             "description": "Symfony BrowserKit Component",
             "homepage": "https://symfony.com",
-            "time": "2017-07-12 13:03:20"
+            "time": "2017-07-12T13:03:20+00:00"
         },
         {
             "name": "symfony/dom-crawler",
@@ -4643,7 +4576,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2017-05-25 23:10:31"
+            "time": "2017-05-25T23:10:31+00:00"
         },
         {
             "name": "symfony/yaml",
