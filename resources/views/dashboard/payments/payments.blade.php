@@ -19,7 +19,7 @@
                 <div class="portlet light portlet-fit portlet-datatable bordered">
                     <div class="portlet-title">
                         <div class="caption">
-                            <a href="{{route('dashboard.home')}}">
+                            <a href="{{route('organizer.home')}}">
                                 <i class="fa fa-chevron-left font-dark"></i>
                                 <span class="caption-subject font-dark sbold uppercase">Dashboard</span>
                             </a>

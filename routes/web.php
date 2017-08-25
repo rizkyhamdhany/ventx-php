@@ -33,50 +33,54 @@ Route::prefix('/tickets')->middleware(['bookticketsession'])->group(function () 
         });
     });
 });
-Route::get('/test/invoice', 'Dashboard\OrderController@testInvoice')->name('invoice.test');
+Route::get('/test/invoice', 'Dashboard\EO\OrderController@testInvoice')->name('invoice.test');
 
 Route::prefix('/smilemotion')->group(function () {
     Route::get('/', 'LandingController@event')->name('welcome');
     Route::get('/input_payment_code', 'App\PaymentController@inputPaymentCode')->name('payment.input.code');
 });
 
-Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmin']], function () {
-    Route::get('/', 'Dashboard\HomeController@index')->name('dashboard.home');
+Route::group(['prefix' => '/organizer', 'middleware' => ['auth', 'role:eo']], function () {
+    Route::get('/', 'Dashboard\EO\HomeController@index')->name('organizer.home');
     Route::prefix('/tickets')->group(function () {
-        Route::get('/', 'Dashboard\TicketDashboardController@listTicket')->name('tickets');
-        Route::get('/choose', 'Dashboard\OrderController@chooseTicket')->name('ticket.choose');
-        Route::get('/download/{id}', 'Dashboard\TicketDashboardController@downloadTicket')->name('ticket.download');
+        Route::get('/', 'Dashboard\EO\TicketDashboardController@listTicket')->name('tickets');
+        Route::get('/choose', 'Dashboard\EO\OrderController@chooseTicket')->name('ticket.choose');
+        Route::get('/download/{id}', 'Dashboard\EO\TicketDashboardController@downloadTicket')->name('ticket.download');
         Route::prefix('/order')->group(function () {
-            Route::post('/', 'Dashboard\OrderController@orderTicket')->name('ticket.choose.submit');
-            Route::post('/submit', 'Dashboard\OrderController@orderTicketSubmit')->name('ticket.order.submit');
-            Route::get('/detail/{id}', 'Dashboard\OrderController@viewOrderDetail')->name('ticket.order.detail');
-            Route::get('/invoice/{id}', 'Dashboard\OrderController@viewInvoice')->name('ticket.order.invoice');
-            Route::get('/send_email/{id}', 'Dashboard\OrderController@sendEmail')->name('ticket.order.email');
+            Route::post('/', 'Dashboard\EO\OrderController@orderTicket')->name('ticket.choose.submit');
+            Route::post('/submit', 'Dashboard\EO\OrderController@orderTicketSubmit')->name('ticket.order.submit');
+            Route::get('/detail/{id}', 'Dashboard\EO\OrderController@viewOrderDetail')->name('ticket.order.detail');
+            Route::get('/invoice/{id}', 'Dashboard\EO\OrderController@viewInvoice')->name('ticket.order.invoice');
+            Route::get('/send_email/{id}', 'Dashboard\EO\OrderController@sendEmail')->name('ticket.order.email');
         });
     });
 
     //DASHBOARD PAYMENTS
     Route::prefix('/payments')->group(function(){
-        Route::get('/','Dashboard\TransactionsController@listPayment')->name('dashboard.payments');
+        Route::get('/','Dashboard\EO\TransactionsController@listPayment')->name('dashboard.payments');
 
         //Route::get('/add' , 'App\PaymentController@addTransaction')->name('payment.add');//AddTransaction
         Route::prefix('/add')->group(function(){
-            Route::get('/','Dashboard\TransactionsController@addTransaction')->name('payment.add');
-            Route::post('/submit','Dashboard\TransactionsController@addTransactionSubmit')->name('payment.add.submit');
+            Route::get('/','Dashboard\EO\TransactionsController@addTransaction')->name('payment.add');
+            Route::post('/submit','Dashboard\EO\TransactionsController@addTransactionSubmit')->name('payment.add.submit');
         });
         Route::prefix('/confirm')->group(function(){
-            //Route::get('/','Dashboard\TransactionsController@orderTicket')->name('ticket.choose.submit');//orderView);
-            Route::get('/detail/{id}','Dashboard\TransactionsController@viewOrderDetail')->name('payment.confirm.detail');//orderView);
+            //Route::get('/','Dashboard\EO\TransactionsController@orderTicket')->name('ticket.choose.submit');//orderView);
+            Route::get('/detail/{id}','Dashboard\EO\TransactionsController@viewOrderDetail')->name('payment.confirm.detail');//orderView);
         });
-        Route::post('/verify','Dashboard\TransactionsController@verifyPayment')->name('payment.verify');//orderView);
+        Route::post('/verify','Dashboard\EO\TransactionsController@verifyPayment')->name('payment.verify');//orderView);
         Route::get('/test','TestInsertController@testView')->name('payment.testView');
         Route::post('/testInsert','TestInsertController@testInsert')->name('payment.testInsert');
     });
 
 
     Route::prefix('/complains')->group(function(){
-        Route::get('/','Dashboard\ComplainController@listComplain')->name('complains');//viewList
+        Route::get('/','Dashboard\EO\ComplainController@listComplain')->name('complains');//viewList
         Route::prefix('/followUp')->group(function(){
         });
     });
+});
+
+Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmin']], function () {
+    Route::get('/', 'Dashboard\EO\HomeController@index')->name('dashboard.home');
 });

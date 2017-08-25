@@ -6,7 +6,7 @@
  * Time: 6:50 PM
  */
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboard\EO;
 
 use App\Http\Controllers\Controller;
 use App\Models\Preorder;

@@ -17,7 +17,7 @@ class RoleTableSeeder extends Seeder
         $role_employee->description = 'Nalar TMS Admin';
         $role_employee->save();
         $role_manager = new Role();
-        $role_manager->name = 'sm-operator';
+        $role_manager->name = 'eo';
         $role_manager->description = 'Smilemotion Operator';
         $role_manager->save();
     }
