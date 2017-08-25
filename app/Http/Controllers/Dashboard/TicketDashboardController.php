@@ -23,13 +23,11 @@ class TicketDashboardController extends Controller
     {
 //        $dailyOrderStat = new DailyOrderStatistic();
 //        $dailyOrderStat->addDailyCounter(0);exit;
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
         $orders = Order::all();
         return view('dashboard.tickets')->with('orders', $orders);
     }
 
     public function downloadTicket(Request $request, $id){
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
         $ticket = Ticket::find($id);
 //        return view('dashboard.tickets.download_ticket')->with('ticket', $ticket);
         if ($ticket->url_ticket != ""){

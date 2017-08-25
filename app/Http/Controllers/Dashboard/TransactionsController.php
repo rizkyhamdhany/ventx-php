@@ -32,26 +32,26 @@ class TransactionsController extends Controller
 
     public function listPayment(Request $request)
     {
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
+
         $orders = PreorderConf::where('status', '!=', 'VERIFIED')->get();
         return view('dashboard.payments.payments')->with('orders', $orders);
     }
 
     public function addTransaction(Request $request){
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
+
         $bank = Bank::all();
         return view('dashboard.payments.add_transaction')->with('banks',$bank);
     }
 
     public function addTransactionSubmit(Request $request){
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
+
         $transaction = new Transaction();
         $transaction->insertTransact($request);
         return redirect()->route('dashboard.payments');
     }
 
     public function viewOrderDetail(Request $request, $id){
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
+
         $order = Preorder::find($id);
         $transaction = Transaction::where('status', '!=', 'USED')->get();
         $ordersconf = PreorderConf::where('preorder_id', $id)->first();
