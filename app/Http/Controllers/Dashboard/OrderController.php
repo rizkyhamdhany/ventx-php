@@ -36,7 +36,7 @@ class OrderController extends Controller
 
     public function chooseTicket(Request $request)
     {
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
+        $request->user()->authorizeRoles(['superadmin']);
         return view('dashboard.choose_ticket');
     }
 

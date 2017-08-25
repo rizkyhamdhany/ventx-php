@@ -37,9 +37,8 @@
     <a href="index.html">
         <img src="{{ asset('assets/pages/img/logo-nalar.png')}}" style="height: 30px;" alt=""/> </a>
 </div>
-<div class="content">
-    @yield('content')
-</div>
+@yield('content')
+
 <div class="copyright hide"> 2014 © Nalar. Event Experience.</div>
 <!--[if lt IE 9]>
 <script src="{{ asset('assets/global/plugins/respond.min.js')}}"></script>

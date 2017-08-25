@@ -183,6 +183,8 @@ return [
         Milon\Barcode\BarcodeServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
+
+        Zizaco\Entrust\EntrustServiceProvider::class,
     ],
 
     /*
@@ -236,6 +238,7 @@ return [
         'DNS2D' => Milon\Barcode\Facades\DNS2DFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'CC' => \App\CC::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
     ],
 
 ];
