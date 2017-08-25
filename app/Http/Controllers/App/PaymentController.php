@@ -37,14 +37,11 @@ class PaymentController extends Controller
                 $ticket = new \stdClass();
                 $ticket->ticket_ammount = $preorder->ticket_ammount;
                 $ticket->ticket_type = $preorder->ticket_class;
-                if ($ticket->ticket_type == 'Reguler'){
+                if ($ticket->ticket_type == 'Presale 1'){
+                    $ticket->price_item = 50000;
+                    $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
+                } else{
                     $ticket->price_item = 70000;
-                    $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
-                } else if ($ticket->ticket_type == 'VIP I' || $ticket->ticket_type == 'VIP H' || $ticket->ticket_type == 'VIP E' || $ticket->ticket_type == 'VIP D'){
-                    $ticket->price_item = 200000;
-                    $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
-                } else if ($ticket->ticket_type == 'VVIP'){
-                    $ticket->price_item = 400000;
                     $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
                 }
                 $bank = Bank::all();

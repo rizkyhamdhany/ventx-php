@@ -34,7 +34,7 @@
         <!-- END NAV TRIGGER -->
         <!-- BEGIN LOGO -->
         <div class="page-logo">
-            <a href="index.html">
+            <a href="{{route('home')}}">
                 <img src="{{URL('/')}}/assets/layouts/layout/img/logo.png" alt="logo" class="logo-default" /> </a>
         </div>
         <!-- END LOGO -->

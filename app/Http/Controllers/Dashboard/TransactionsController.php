@@ -58,11 +58,8 @@ class TransactionsController extends Controller
         if ($order->ticket_class == 'Reguler'){
             $order->price_item = 70000;
             $order->grand_total = $order->price_item * $order->ticket_ammount;
-        } else if ($order->ticket_class == 'VIP I' || $order->ticket_class == 'VIP H' || $order->ticket_class == 'VIP E' || $order->ticket_class == 'VIP D'){
-            $order->price_item = 200000;
-            $order->grand_total = $order->price_item * $order->ticket_ammount;
-        } else if ($order->ticket_class == 'VVIP'){
-            $order->price_item = 400000;
+        } else {
+            $order->price_item = 50000;
             $order->grand_total = $order->price_item * $order->ticket_ammount;
         }
         return view('dashboard.payments.confirm_transaction')

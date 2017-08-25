@@ -70,7 +70,7 @@ class RegisterController extends Controller
         ]);
         $user
             ->roles()
-            ->attach(Role::where('name', 'sm-operator')->first());
+            ->attach(Role::where('name', 'ftb-operator')->first());
         return $user;
     }
 }
