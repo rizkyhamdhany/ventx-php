@@ -40,7 +40,12 @@ Route::prefix('/smilemotion')->group(function () {
     Route::get('/input_payment_code', 'App\PaymentController@inputPaymentCode')->name('payment.input.code');
 });
 
-Route::group(['prefix' => '/organizer', 'middleware' => ['auth', 'role:eo']], function () {
+Route::prefix('/festivalbudaya')->group(function () {
+    Route::get('/', 'LandingController@event')->name('welcome');
+    Route::get('/input_payment_code', 'App\PaymentController@inputPaymentCode')->name('payment.input.code');
+});
+
+Route::group(['prefix' => '/organizer', 'middleware' => ['auth', 'role:eo|superadmin']], function () {
     Route::get('/', 'Dashboard\EO\HomeController@index')->name('organizer.home');
     Route::prefix('/tickets')->group(function () {
         Route::get('/', 'Dashboard\EO\TicketDashboardController@listTicket')->name('tickets');
@@ -82,5 +87,11 @@ Route::group(['prefix' => '/organizer', 'middleware' => ['auth', 'role:eo']], fu
 });
 
 Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmin']], function () {
-    Route::get('/', 'Dashboard\EO\HomeController@index')->name('dashboard.home');
+    Route::get('/', 'Dashboard\Admin\HomeController@index')->name('dashboard.home');
+    Route::prefix('/event')->group(function(){
+      Route::get('/','Dashboard\Admin\EventController@index')->name('dashboard.event');
+      Route::get('/add','Dashboard\Admin\EventController@addEvent')->name('dashboard.event.add');
+      Route::post('/detail','Dashboard\Admin\EventController@detailEvent')->name('dashboard.event.detail');
+      Route::post('/submit','Dashboard\Admin\EventController@submitEvent')->name('dashboard.event.submit');
+    });
 });

@@ -24,7 +24,7 @@
     <link href="{{URL('/')}}/assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/layouts/layout/css/layout.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/layouts/layout/css/custom.css" rel="stylesheet" type="text/css" />
-    <link rel="shortcut icon" href="favicon.ico" /> </head>
+    <link rel="shortcut icon" href="favicon.ico"/></head>
 
 <body class="page-container-bg-solid">
 @include('layouts.header')
