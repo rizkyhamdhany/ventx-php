@@ -18,7 +18,11 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect()->route('dashboard.home');
+            if (Auth::user()->hasRole('superadmin')){
+                return  redirect()->route('dashboard.home');
+            } else if (Auth::user()->hasRole('eo')) {
+                return  redirect()->route('organizer.home');
+            }
         }
 
         return $next($request);
