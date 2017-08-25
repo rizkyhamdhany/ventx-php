@@ -19,8 +19,11 @@
                         </div>
                         <div class="actions">
                             <div class="btn-group btn-group-devided">
-                                <a target="_blank" href="{{route('ticket.order.invoice', ['id' => $order->id])}}" class="btn red">
+                                <a target="_blank" href="{{route('ticket.order.invoice', ['id' => $order->id])}}" class="btn green">
                                     Download Invoice
+                                </a>
+                                <a href="{{route('ticket.order.email', ['id' => $order->id])}}" class="btn red">
+                                    Send Ticket to Email
                                 </a>
                             </div>
                         </div>

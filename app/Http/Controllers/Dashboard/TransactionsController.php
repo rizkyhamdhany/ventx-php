@@ -78,6 +78,7 @@ class TransactionsController extends Controller
         $ordersconf = PreorderConf::find($request->input('ordersconf_id'));
         $ordersconf->status = 'VERIFIED';
         $ordersconf->save();
+        Order::createOrderFromBankTransfer($preorder);
         return redirect()->route('dashboard.payments');
     }
 }

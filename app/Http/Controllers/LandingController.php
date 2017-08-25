@@ -29,4 +29,7 @@ class LandingController extends Controller
     public function index(){
         return view('welcome');
     }
+    public function event(){
+        return view('app.app_landing');
+    }
 }

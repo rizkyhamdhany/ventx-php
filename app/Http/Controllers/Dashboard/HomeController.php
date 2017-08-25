@@ -30,5 +30,7 @@ class HomeController extends Controller
         return view('dashboard.home')
             ->with('payment_conf_conf', $payment_conf_conf)
             ->with('ticket_count', $ticket_count);
+
+        
     }
 }

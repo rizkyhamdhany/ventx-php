@@ -12,7 +12,7 @@
 
 Auth::routes();
 
-Route::get('/', 'Dashboard\HomeController@index')->name('home');
+Route::get('/', 'LandingController@index')->name('home');
 
 Route::prefix('/tickets')->middleware(['bookticketsession'])->group(function () {
     Route::prefix('/smilemotion')->group(function () {
@@ -36,11 +36,12 @@ Route::prefix('/tickets')->middleware(['bookticketsession'])->group(function () 
 Route::get('/test/invoice', 'Dashboard\OrderController@testInvoice')->name('invoice.test');
 
 Route::prefix('/smilemotion')->group(function () {
-    Route::get('/', 'LandingController@index')->name('welcome');
+    Route::get('/', 'LandingController@event')->name('welcome');
     Route::get('/input_payment_code', 'App\PaymentController@inputPaymentCode')->name('payment.input.code');
 });
 
 Route::prefix('/dashboard')->group(function () {
+    Route::get('/', 'Dashboard\HomeController@index')->name('dashboard.home');
     Route::prefix('/tickets')->group(function () {
         Route::get('/', 'Dashboard\TicketDashboardController@listTicket')->name('tickets');
         Route::get('/choose', 'Dashboard\OrderController@chooseTicket')->name('ticket.choose');
@@ -50,6 +51,7 @@ Route::prefix('/dashboard')->group(function () {
             Route::post('/submit', 'Dashboard\OrderController@orderTicketSubmit')->name('ticket.order.submit');
             Route::get('/detail/{id}', 'Dashboard\OrderController@viewOrderDetail')->name('ticket.order.detail');
             Route::get('/invoice/{id}', 'Dashboard\OrderController@viewInvoice')->name('ticket.order.invoice');
+            Route::get('/send_email/{id}', 'Dashboard\OrderController@sendEmail')->name('ticket.order.email');
         });
     });
 

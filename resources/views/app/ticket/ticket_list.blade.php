@@ -225,6 +225,7 @@
             }
             book.ticket = [];
             for (var $x in seat_dict) {
+                seat = new Object();
                 seat.seat = $x;
                 book.ticket.push(seat);
             }

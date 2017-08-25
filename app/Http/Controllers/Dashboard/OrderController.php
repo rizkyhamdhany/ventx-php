@@ -10,6 +10,11 @@ use Webpatser\Uuid\Uuid;
 use App\Models\Seat;
 use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
+use App\Models\RedisModel;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TicketMail;
+use App\Models\EmailSendStatus;
+use Illuminate\Support\Facades\Redis;
 
 class OrderController extends Controller
 {
@@ -31,7 +36,7 @@ class OrderController extends Controller
 
     public function chooseTicket(Request $request)
     {
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
+        $request->user()->authorizeRoles(['superadmin']);
         return view('dashboard.choose_ticket');
     }
 
@@ -52,8 +57,9 @@ class OrderController extends Controller
         //create order
         $ammount = $request->input('ammount');
         $order = new Order();
-        $order->createOrder($request);
+        $order->createOrderFromManualInput($request);
         $i = 0;
+        $seats = [];
         foreach ($request->input('ticket_title') as $title_ticket) {
             $ticket = new Ticket();
             $uuid = Uuid::generate();
@@ -75,19 +81,82 @@ class OrderController extends Controller
                     $seatupdate = Seat::find($request->input('seat'))->first();
                     $ticket->seat_no = $seatupdate->no;
                 }
-            }
 
+                /*
+                 * check redis book before pay (time 30mnt)
+                 */
+                $keys_seat_booked = Redis::keys("smilemotion:seat_booked_short:*");
+                $seat_booked = array();
+                if (!empty($keys_seat_booked)){
+                    $seat_booked = Redis::mget($keys_seat_booked);
+                }
+                if (in_array($seatupdate->id, $seat_booked)){
+                    $request->session()->flash('alert-danger', 'Sorry, selected seat no longer available !');
+                    Order::destroy($order->id);
+                    return redirect()->route('tickets');
+                }
+                /*
+                 * check redis book waiting payment (time 3 days)
+                 */
+                $keys_seat_booked = Redis::keys("smilemotion:seat_booked:*");
+                $seat_booked = array();
+                if (!empty($keys_seat_booked)){
+                    $seat_booked = Redis::mget($keys_seat_booked);
+                }
+                if (in_array($seatupdate->id, $seat_booked)){
+                    $request->session()->flash('alert-danger', 'Sorry, selected seat no longer available !');
+                    return redirect()->route('tickets');
+                }
+            }
             $ticket->save();
             $ticket->order()->attach($order);
+
+            /*
+             * generate ticket
+             */
+            $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
+            $output = $pdf->output();
+            $ticket_url = 'ventex/ticket/ticket_'.$ticket->ticket_code.'.pdf';
+            $s3 = \Storage::disk('s3');
+            $s3->put($ticket_url, $output, 'public');
+            $ticket->url_ticket = $ticket_url;
+            $ticket->save();
 
             if ($seatupdate != null){
                 $seatupdate->status = 'unavailable';
                 $seatupdate->save();
+                array_push($seats, $seatupdate);
             }
             $i++;
         }
+        foreach ($seats as $seat){
+            RedisModel::removeCachingSeat($seat);
+        }
         $request->session()->flash('alert-success', 'Ticket was successful added!');
         $this->createInvoice($order);
+
+        /*
+         * send email ticket
+         */
+        Mail::to($order->email)->send(new TicketMail($order));
+        if( count(Mail::failures()) > 0 ) {
+            foreach(Mail::failures as $email_address) {
+                $status = new EmailSendStatus();
+                $status->email = $email_address;
+                $status->type = 'order';
+                $status->identifier = $order->order_code;
+                $status->error = '';
+                $status->save();
+            }
+        } else {
+            $status = new EmailSendStatus();
+            $status->email = $order->email;
+            $status->type = 'order';
+            $status->identifier = $order->order_code;
+            $status->error = 'SUCCESS';
+            $status->save();
+        }
+
         return redirect()->route("ticket.order.detail", ['id' => $order->id]);
     }
 
@@ -154,6 +223,29 @@ class OrderController extends Controller
             $order->save();
             return redirect()->to($s3->url($order->url_invoice));
         }
+    }
+
+    public function sendEmail(Request $request, $id){
+        $order = Order::find($id);
+        Mail::to($order->email)->send(new TicketMail($order));
+        if( count(Mail::failures()) > 0 ) {
+            foreach(Mail::failures as $email_address) {
+                $status = new EmailSendStatus();
+                $status->email = $email_address;
+                $status->type = 'order';
+                $status->identifier = $order->order_code;
+                $status->error = '';
+                $status->save();
+            }
+        } else {
+            $status = new EmailSendStatus();
+            $status->email = $order->email;
+            $status->type = 'order';
+            $status->identifier = $order->order_code;
+            $status->error = 'SUCCESS';
+            $status->save();
+        }
+        return redirect()->route("ticket.order.detail", ['id' => $order->id]);
     }
 
     public function viewOrderDetail(Request $request, $id){
