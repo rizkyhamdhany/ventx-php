@@ -42,7 +42,7 @@ class OrderController extends Controller
 
     public function orderTicket(Request $request)
     {
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
+
         $input = $request->input();
         $seat_available = Seat::where('ticket_class', $request->input('ticket_class'))->where('status', 'active')->get();
         return view('dashboard.order_ticket')
@@ -53,7 +53,7 @@ class OrderController extends Controller
     }
 
     public function orderTicketSubmit(Request $request){
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
+
         //create order
         $ammount = $request->input('ammount');
         $order = new Order();
@@ -192,7 +192,7 @@ class OrderController extends Controller
     }
 
     public function viewInvoice(Request $request, $id){
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
+
         $order = Order::find($id);
         if ($order->url_invoice != ""){
             $s3 = \Storage::disk('s3');
@@ -249,7 +249,7 @@ class OrderController extends Controller
     }
 
     public function viewOrderDetail(Request $request, $id){
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
+
         $order = Order::find($id);
         return view('dashboard.orders.order_detail')
                 ->with('order', $order);

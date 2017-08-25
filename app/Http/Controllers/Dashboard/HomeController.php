@@ -26,7 +26,7 @@ class HomeController extends Controller
     {
         $payment_conf_conf = count(PreorderConf::where('status', '!=', 'VERIFIED')->get());
         $ticket_count = count(Ticket::all());
-        $request->user()->authorizeRoles(['superadmin', 'sm-operator']);
+
         return view('dashboard.home')
             ->with('payment_conf_conf', $payment_conf_conf)
             ->with('ticket_count', $ticket_count);
