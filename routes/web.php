@@ -91,7 +91,15 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
     Route::prefix('/event')->group(function(){
       Route::get('/','Dashboard\Admin\EventController@index')->name('dashboard.event');
       Route::get('/add','Dashboard\Admin\EventController@addEvent')->name('dashboard.event.add');
+      Route::post('/add','Dashboard\Admin\EventController@addEventPost')->name('dashboard.event.add.post');
       Route::post('/detail','Dashboard\Admin\EventController@detailEvent')->name('dashboard.event.detail');
       Route::post('/submit','Dashboard\Admin\EventController@submitEvent')->name('dashboard.event.submit');
+    });
+
+    Route::prefix('/users')->group(function(){
+        Route::get('/','Dashboard\Admin\UsersController@index')->name('dashboard.users');
+        Route::get('/create','Dashboard\Admin\UsersController@create')->name('dashboard.users.create');
+        Route::post('/create','Dashboard\Admin\UsersController@createUserPost')->name('dashboard.users.create.post');
+        Route::get('/privilege','Dashboard\Admin\UsersController@index')->name('dashboard.users.privilege');
     });
 });

@@ -185,6 +185,7 @@ return [
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
 
         Zizaco\Entrust\EntrustServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
     ],
 
     /*

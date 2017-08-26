@@ -12,4 +12,8 @@ class User extends Authenticatable
     use EntrustUserTrait;
     use Notifiable;
 
+    public function event()
+    {
+        return $this->belongsTo('App\Models\Event');
+    }
 }
