@@ -13,10 +13,11 @@ use App\Models\EmailSendStatus;
 class Order extends Model
 {
 
-    public function createOrderFromManualInput($input){
+    public function createOrderFromManualInput($input, $event){
         $uuid = Uuid::generate();
         $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
-        $this->order_code = 'FTBO'.$code;
+        $this->event_id = $event->id;
+        $this->order_code = $event->initial.'O'.$code;
         $this->name = $input->input('contact_fullname');
         $this->phonenumber = $input->input('contact_phone');
         $this->email = $input->input('contact_email');

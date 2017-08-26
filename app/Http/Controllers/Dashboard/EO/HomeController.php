@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Auth;
 use Webpatser\Uuid\Uuid;
 use App\Models\Seat;
 use App\Models\TicketClass;
@@ -24,13 +25,10 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        $payment_conf_conf = count(PreorderConf::where('status', '!=', 'VERIFIED')->get());
-        $ticket_count = count(Ticket::all());
+        $event_id = Auth::user()->event_id;
+        $ticket_count = count(Ticket::where('event_id', $event_id)->get());
 
         return view('dashboard.home')
-            ->with('payment_conf_conf', $payment_conf_conf)
             ->with('ticket_count', $ticket_count);
-
-        
     }
 }

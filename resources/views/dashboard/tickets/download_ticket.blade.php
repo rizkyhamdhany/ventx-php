@@ -25,13 +25,13 @@
         .scan_code_text{
             position: absolute;
             font-family: 'Work Sans', sans-serif;
-            color:#514F9D;
+            color:{{$ticket->event_id == 0 ? '#514F9D' : '#BC413E'}};
             top: 500px;
             left: 180px;
         }
         .ticket_class{
             font-family: 'Work Sans', sans-serif;
-            color:#514F9D;
+            color:{{$ticket->event_id == 0 ? '#514F9D' : '#BC413E'}};
             font-size: 20px;
             font-weight: bold;
         }
@@ -56,7 +56,7 @@
         }
         table{
             font-family: 'Work Sans', sans-serif;
-            color:#514F9D;
+            color:{{$ticket->event_id == 0 ? '#514F9D' : '#BC413E'}};
         }
         .ticket_info{
             top: 683px;
@@ -71,12 +71,12 @@
         }
         .seat_no{
             font-family: 'Work Sans', sans-serif;
-            color:#514F9D;
+            color:{{$ticket->event_id == 0 ? '#514F9D' : '#BC413E'}};
             font-size: 30px;
         }
         .ticket_info_text{
             font-family: 'Work Sans', sans-serif;
-            color:#514F9D;
+            color:{{$ticket->event_id == 0 ? '#514F9D' : '#BC413E'}};
             text-align: right;
             padding-right: 85px;
             line-height: 95%;
@@ -85,7 +85,7 @@
 </head>
 <body>
 <div class="container">
-    <img class="bg_template" src="{{URL('/')}}/assets/pages/img/ticket_template.jpg" style="height: 210mm; width: 148.5mm;">
+    <img class="bg_template" src="{{URL('/')}}/assets/pages/img/{{$ticket->event_id == 0 ? 'ticket_template.jpeg' : 'ticket_template_ftb.jpg'}}" style="height: 210mm; width: 148.5mm;">
     <img class="barcode" src="data:image/png;base64,{{DNS2D::getBarcodePNG($ticket->ticket_code, "QRCODE", 9, 9)}}" alt="barcode"   />
     <h3 class="scan_code_text">Scan The Code for Entry</h3>
     <!--<div class="ticket_class_container">

@@ -27,19 +27,16 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="ticket_class" value="Reguler">
-                                    <!--<div class="form-group">
+                                    <div class="form-group">
                                         <label class="col-md-3 control-label">Ticket Class</label>
                                         <div class="col-md-4">
                                             <select class="form-control" name="ticket_class">
-                                                <option value="Reguler">Reguler</option>
-                                                <option value="VIP I">VIP I</option>
-                                                <option value="VIP H">VIP H</option>
-                                                <option value="VIP E">VIP E</option>
-                                                <option value="VIP D">VIP D</option>
-                                                <option value="VVIP">VVIP</option>
+                                                @foreach($ticket_classes as $ticket_classes)
+                                                    <option value="{{$ticket_classes->name}}">{{$ticket_classes->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
-                                    </div>-->
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Amount</label>
                                         <div class="col-md-4">

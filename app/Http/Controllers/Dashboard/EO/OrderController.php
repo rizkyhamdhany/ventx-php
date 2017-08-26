@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\TicketMail;
 use App\Models\EmailSendStatus;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Event;
 
 class OrderController extends Controller
 {
@@ -36,7 +38,10 @@ class OrderController extends Controller
 
     public function chooseTicket(Request $request)
     {
-        return view('dashboard.choose_ticket');
+        $event_id = Auth::user()->event_id;
+        $ticket_class = TicketClass::where('event_id', $event_id)->get();
+        return view('dashboard.choose_ticket')
+                ->with('ticket_classes', $ticket_class);
     }
 
     public function orderTicket(Request $request)
@@ -53,17 +58,19 @@ class OrderController extends Controller
 
     public function orderTicketSubmit(Request $request){
 
+        $event = Event::find(Auth::user()->event_id);
         //create order
         $ammount = $request->input('ammount');
         $order = new Order();
-        $order->createOrderFromManualInput($request);
+        $order->createOrderFromManualInput($request, $event);
         $i = 0;
         $seats = [];
         foreach ($request->input('ticket_title') as $title_ticket) {
             $ticket = new Ticket();
             $uuid = Uuid::generate();
             $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
-            $ticket->ticket_code = 'FTBT'.$code;
+            $ticket->event_id = $event->id;
+            $ticket->ticket_code = $event->initial.'T'.$code;
             $ticket->title = $request->input('ticket_title')[$i];
             $ticket->name = $request->input('ticket_name')[$i];
             $ticket->phonenumber = $request->input('ticket_phone')[$i];
@@ -115,7 +122,7 @@ class OrderController extends Controller
              */
             $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
             $output = $pdf->output();
-            $ticket_url = 'ventex/ticket/ticket_'.$ticket->ticket_code.'.pdf';
+            $ticket_url = 'ventex/ticket/'.$event->name.'/ticket_'.$ticket->ticket_code.'.pdf';
             $s3 = \Storage::disk('s3');
             $s3->put($ticket_url, $output, 'public');
             $ticket->url_ticket = $ticket_url;
@@ -132,7 +139,9 @@ class OrderController extends Controller
             RedisModel::removeCachingSeat($seat);
         }
         $request->session()->flash('alert-success', 'Ticket was successful added!');
-        $this->createInvoice($order);
+        if ($event->id == 0){
+            $this->createInvoice($order);
+        }
 
         /*
          * send email ticket

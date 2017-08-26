@@ -7,6 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Order;
+use App\Models\Event;
 
 class TicketMail extends Mailable
 {
@@ -31,8 +32,10 @@ class TicketMail extends Mailable
      */
     public function build()
     {
+        $event = Event::find($this->order->event_id);
+
         $email = $this->from('ticket@nalar-ventex.com')
-                    ->subject('Your Smilemotion Ticket')
+                    ->subject('Your '.$event->name.' Ticket')
                     ->view('mail.ticket')
                     ->with('order', $this->order);
         foreach ($this->order->tickets as $ticket){
@@ -41,10 +44,12 @@ class TicketMail extends Mailable
                 'mime' => 'application/pdf',
             ]);
         }
-        $email->attach(\Storage::disk('s3')->url($this->order->url_invoice), [
-            'as' => $this->order->name.'.pdf',
-            'mime' => 'application/pdf',
-        ]);
+        if ($this->order->event_id == 0){
+            $email->attach(\Storage::disk('s3')->url($this->order->url_invoice), [
+                'as' => $this->order->name.'.pdf',
+                'mime' => 'application/pdf',
+            ]);
+        }
         return $email;
     }
 }

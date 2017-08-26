@@ -11,6 +11,7 @@ use App\Models\Seat;
 use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
 use App\Models\DailyOrderStatistic;
+use Illuminate\Support\Facades\Auth;
 
 class TicketDashboardController extends Controller
 {
@@ -23,7 +24,8 @@ class TicketDashboardController extends Controller
     {
 //        $dailyOrderStat = new DailyOrderStatistic();
 //        $dailyOrderStat->addDailyCounter(0);exit;
-        $orders = Order::all();
+        $event_id = Auth::user()->event_id;
+        $orders = Order::where('event_id', $event_id)->get();
         return view('dashboard.tickets')->with('orders', $orders);
     }
 
