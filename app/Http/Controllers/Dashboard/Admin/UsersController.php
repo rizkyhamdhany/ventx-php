@@ -52,6 +52,7 @@ class UsersController extends Controller
         $user->name = $input['name'];
         $user->email = $input['email'];
         $user->password = bcrypt($input['password']);
+        $user->event_id = $input['event_id'];
         $user->save();
         $role_eo  = Role::where('name', 'eo')->first();
         $user->roles()->attach($role_eo);
