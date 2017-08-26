@@ -45,7 +45,7 @@ Route::prefix('/festivalbudaya')->group(function () {
     Route::get('/input_payment_code', 'App\PaymentController@inputPaymentCode')->name('payment.input.code');
 });
 
-Route::group(['prefix' => '/organizer', 'middleware' => ['auth', 'role:eo|superadmin']], function () {
+Route::group(['prefix' => '/organizer', 'middleware' => ['auth', 'role:eo']], function () {
     Route::get('/', 'Dashboard\EO\HomeController@index')->name('organizer.home');
     Route::prefix('/tickets')->group(function () {
         Route::get('/', 'Dashboard\EO\TicketDashboardController@listTicket')->name('tickets');
