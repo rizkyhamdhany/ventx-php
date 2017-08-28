@@ -23,6 +23,8 @@ class CreateTicketPeriodsTable extends Migration
         });
         Schema::table('ticket_classes', function (Blueprint $table) {
             $table->integer('ticket_period_id')->after('event_id');
+            $table->string('price')->after('name');
+            $table->integer('ammount')->after('price');
         });
     }
 
@@ -36,6 +38,8 @@ class CreateTicketPeriodsTable extends Migration
         Schema::dropIfExists('ticket_periods');
         Schema::table('ticket_classes', function($table) {
             $table->dropColumn('ticket_period_id');
+            $table->dropColumn('price');
+            $table->dropColumn('ammount');
         });
     }
 }
