@@ -27,8 +27,7 @@ class LandingController extends Controller
     }
 
     public function index(){
-        return redirect('login');
-//        return view('welcome');
+        return view('welcome');
     }
     public function event(){
         return view('app.app_landing');

@@ -89,11 +89,12 @@ Route::group(['prefix' => '/organizer', 'middleware' => ['auth', 'role:eo']], fu
 Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmin']], function () {
     Route::get('/', 'Dashboard\Admin\HomeController@index')->name('dashboard.home');
     Route::prefix('/event')->group(function(){
-      Route::get('/','Dashboard\Admin\EventController@index')->name('dashboard.event');
-      Route::get('/add','Dashboard\Admin\EventController@addEvent')->name('dashboard.event.add');
-      Route::post('/add','Dashboard\Admin\EventController@addEventPost')->name('dashboard.event.add.post');
-      Route::post('/detail','Dashboard\Admin\EventController@detailEvent')->name('dashboard.event.detail');
-      Route::post('/submit','Dashboard\Admin\EventController@submitEvent')->name('dashboard.event.submit');
+        Route::get('/','Dashboard\Admin\EventController@index')->name('dashboard.event');
+        Route::get('/add','Dashboard\Admin\EventController@addEvent')->name('dashboard.event.add');
+        Route::post('/add','Dashboard\Admin\EventController@addEventPost')->name('dashboard.event.add.post');
+        Route::prefix('/details')->group(function(){
+            Route::get('/{id}','Dashboard\Admin\EventController@detailEvent')->name('dashboard.event.details');
+        });
     });
 
     Route::prefix('/users')->group(function(){

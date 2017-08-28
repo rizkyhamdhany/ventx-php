@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <div class="portlet-body form">
-    <form class="horizontal-form" action="{{route('dashboard.event.detail')}}" method="POST">
+    <form class="horizontal-form" action="{{route('dashboard.event.detail.post')}}" method="POST">
         {{ csrf_field() }}
         <div class="form-body">
             <h3 class="form-section">Event Detail Information</h3>

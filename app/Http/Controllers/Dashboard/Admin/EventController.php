@@ -48,17 +48,10 @@ class EventController extends Controller
         return redirect()->route('dashboard.event');
     }
 
-    public function detailEvent(Request $request){
-      return view('dashboard/event_submit')
-                  ->with('event_name',$request->input('event_name'))
-                  ->with('color_scheme',$request->input('color_scheme'))
-                  ->with('event_logo',$request->input('event_logo'))
-                  ->with('event_background',$request->input('event_background'))
-                  ->with('event_date',$request->input('event_date'))
-                  ->with('event_location',$request->input('event_location'));
-    }
-
-    public function submitEvent(Request $request){
-      //return view('dashboard/event_add');
+    public function detailEvent($id){
+        $event = $this->eventRepo->find($id);
+        View::share( 'page_state', 'Event Details' );
+        return view('dashboard.admin.event.event_details')
+                ->with('event', $event);
     }
 }

@@ -1,4 +1,7 @@
 @extends('layouts.admin_dashboard')
+@section('sidebar')
+    @include('layouts.admin_dashboard_sidebar')
+@endsection
 @section('page_style')
 
 @endsection
@@ -51,15 +54,17 @@
                                     </thead>
                                     <tbody>
                                     @foreach($events as $indexKey => $event)
-                                        <tr>
-                                            <td> {{$indexKey + 1}} </td>
-                                            <td> {{$event->name}} </td>
-                                            <td> {{$event->organizer}} </td>
-                                            <td> {{$event->location}} </td>
-                                            <td>
-                                                <span class="label label-sm label-success"> Active </span>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td> {{$indexKey + 1}} </td>
+                                                <td> {{$event->name}} </td>
+                                                <td> {{$event->organizer}} </td>
+                                                <td> {!! $event->location !!} </td>
+                                                <td>
+                                                    <a href="{{route('dashboard.event.details', [$event->id])}}" class="btn btn-success">
+                                                        Details
+                                                    </a>
+                                                </td>
+                                            </tr>
                                     @endforeach
 
                                     </tbody>

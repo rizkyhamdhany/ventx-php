@@ -1,4 +1,7 @@
 @extends('layouts.admin_dashboard')
+@section('sidebar')
+    @include('layouts.admin_dashboard_sidebar')
+@endsection
 @section('page_style')
     <link href="{{URL('/')}}/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />

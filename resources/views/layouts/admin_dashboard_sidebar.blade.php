@@ -40,6 +40,21 @@
                     {!! $page_state == 'users' ? '<span class="selected"></span>' : '' !!}
                 </a>
             </li>
+            <li class="heading">
+                <h3 class="uppercase">Partner</h3>
+            </li>
+            <li class="nav-item start">
+                <a href="#" class="nav-link nav-toggle">
+                    <i class="icon-wallet"></i>
+                    <span class="title">Ticket Box</span>
+                </a>
+            </li>
+            <li class="nav-item start">
+                <a href="#" class="nav-link nav-toggle">
+                    <i class=" icon-bag"></i>
+                    <span class="title">Counter</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

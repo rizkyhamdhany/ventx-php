@@ -31,7 +31,7 @@
         @include('layouts.admin_dashboard_header')
         <div class="clearfix"> </div>
         <div class="page-container">
-            @include('layouts.admin_dashboard_sidebar')
+            @yield('sidebar')
             @yield('content')
         </div>
         <div class="page-footer">

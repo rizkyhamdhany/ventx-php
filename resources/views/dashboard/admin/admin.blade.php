@@ -1,4 +1,7 @@
 @extends('layouts.admin_dashboard')
+@section('sidebar')
+    @include('layouts.admin_dashboard_sidebar')
+@endsection
 @section('page_style')
 
 @endsection
