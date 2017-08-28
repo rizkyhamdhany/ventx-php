@@ -170,18 +170,18 @@ class OrderController extends Controller
 
     public function createInvoice(Order $order){
         $ticket_price = 0;
-        if($order->ticket_period == 'Presale 1'){
-          $ticket_price = 50000;
-        }else{
-          $ticket_price = 70000;
-        }
-        /*if ($order->ticket_class == 'Reguler'){
+//        if($order->ticket_period == 'Presale 1'){
+//          $ticket_price = 50000;
+//        }else{
+//          $ticket_price = 70000;
+//        }
+        if ($order->ticket_class == 'Reguler'){
             $ticket_price = 70000;
         } else if ($order->ticket_class == 'VVIP'){
             $ticket_price = 400000;
         } else {
             $ticket_price = 200000;
-        }*/
+        }
         $data = array();
         $data['order'] = $order;
         $data['ticket_price'] = $ticket_price;
