@@ -13,10 +13,10 @@ class CreatePreorderPreticketTable extends Migration
      */
     public function up()
     {
-        Schema::create('preorder_preticket', function (Blueprint $table) {
+        Schema::create('book_bookticket', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('preorder_id')->unsigned();
-            $table->integer('preticket_id')->unsigned();
+            $table->integer('book_id')->unsigned();
+            $table->integer('bookticket_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreatePreorderPreticketTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('preorder_preticket');
+        Schema::dropIfExists('book_bookticket');
     }
 }

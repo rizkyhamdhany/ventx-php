@@ -13,9 +13,9 @@ class CreatePreseatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('preseats', function (Blueprint $table) {
+        Schema::create('bookseats', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('preticket_id');
+            $table->integer('bookticket_id');
             $table->integer('seat_id');
             $table->string('seat_no', 10);
             $table->string('ticket_class', 20);
@@ -33,6 +33,6 @@ class CreatePreseatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('preseats');
+        Schema::dropIfExists('bookseats');
     }
 }

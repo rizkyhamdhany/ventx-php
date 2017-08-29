@@ -21,7 +21,7 @@
                         <div class="actions">
                             <form action="{{route('payment.verify')}}" method="POST">
                             {{ csrf_field() }}
-                            <input type="hidden" name="preorder_id" value="{{$order->id}}">
+                            <input type="hidden" name="book_id" value="{{$order->id}}">
                             <input type="hidden" name="ordersconf_id" value="{{$ordersconf->id}}">
                             <div class="btn-group btn-group-devided">
                               <select class="form-control" name="transaction_id">

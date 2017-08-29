@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Preticket;
-use App\Models\Preseat;
+use App\Models\Bookticket;
+use App\Models\Bookseat;
 use App\Models\Seat;
 use App\Constants;
 use App\CC;
 use Illuminate\Support\Facades\Redis;
 
-class Preorder extends Model
+class Book extends Model
 {
     public function submitPreorderWithTickets($ticket){
         $this->order_code = $ticket->order_code;
@@ -25,7 +25,7 @@ class Preorder extends Model
         $this->save();
         foreach ($ticket->ticket as $ticket_obj){
             $item = (object) $ticket_obj;
-            $preticket = new Preticket();
+            $preticket = new Bookticket();
             $preticket->title = $item->ticket_title;
             $preticket->name = $item->ticket_name;
             $preticket->phonenumber = $item->ticket_phone;
@@ -39,8 +39,8 @@ class Preorder extends Model
 
                 $preticket->seat_no = $seat->no;
 
-                $preseat = new Preseat();
-                $preseat->preticket_id = $preticket->id;
+                $preseat = new Bookseat();
+                $preseat->bookticket_id = $preticket->id;
                 $preseat->seat_id = $seat->id;
                 $preseat->seat_no = $seat->no;
                 $preseat->ticket_class = $ticket->ticket_type;
@@ -60,7 +60,7 @@ class Preorder extends Model
     public function tickets()
     {
         return $this
-            ->belongsToMany('App\Models\Preticket')
+            ->belongsToMany('App\Models\Bookticket')
             ->withTimestamps();
     }
 

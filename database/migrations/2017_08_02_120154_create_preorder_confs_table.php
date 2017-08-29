@@ -13,9 +13,9 @@ class CreatePreorderConfsTable extends Migration
      */
     public function up()
     {
-        Schema::create('preorder_confs', function (Blueprint $table) {
+        Schema::create('book_confs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('preorder_id');
+            $table->integer('book_id');
             $table->string('order_code', 20);
             $table->integer('bank_id');
             $table->string('account_holder', 50);
@@ -33,6 +33,6 @@ class CreatePreorderConfsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('preorder_confs');
+        Schema::dropIfExists('book_confs');
     }
 }

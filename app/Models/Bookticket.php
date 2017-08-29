@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Preticket extends Model
+class Bookticket extends Model
 {
     public function order()
     {
         return $this
-            ->belongsToMany('App\Models\Preorder')
+            ->belongsToMany('App\Models\Book')
             ->withTimestamps();
     }
 }

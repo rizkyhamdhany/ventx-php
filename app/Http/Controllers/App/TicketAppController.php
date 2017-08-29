@@ -14,11 +14,11 @@ use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
 use App\Models\DailyOrderStatistic;
 use View;
-use App\Models\Preticket;
-use App\Models\Preorder;
+use App\Models\Bookticket;
+use App\Models\Book;
 use Illuminate\Support\Facades\Redis;
 use App\Models\RedisModel;
-use App\Models\Preseat;
+use App\Models\Bookseat;
 use App\Mail\OrderMail;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\BookTicketRequest;
@@ -190,7 +190,7 @@ class TicketAppController extends Controller
                 } else if($ticket->bankopt == 'BNI'){
                     $ticket->bank_account = 'BNI 0533301387 a.n. Adzka Fairuz';
                 }
-                $preorder = new Preorder();
+                $preorder = new Book();
                 $preorder->submitPreorderWithTickets($ticket);
                 $preorder->grand_total = $ticket->grand_total;
                 $preorder->bank_account = $ticket->bank_account;
@@ -247,7 +247,7 @@ class TicketAppController extends Controller
     }
 
     public function submitBooking(){
-        $preorders = Preorder::all();
+        $preorders = Book::all();
         foreach ($preorders as $preorder){
             foreach ($preorder->tickets as $ticket){
                 echo '<pre>'; print_r($ticket->title);
