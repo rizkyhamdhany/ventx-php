@@ -3,7 +3,7 @@
     <input type="text" name="STOREID" value="10589598">
     <input type="text" name="TRANSIDMERCHANT" value="000001">
     <input type="text" name="AMOUNT" value="75000.00">
-    <input type="text" name="URL" value="http://www.nalar-ventex.com/">
+    <input type="text" name="URL" value="http://nalar-ventex.com/">
     <input type="text" name=”WORDS” value="{{sha1("75000.00"."J7h9X7i7F4D8"."000001")}}">
     <input type="text" name="CNAME" value="Ismail Danuarta">
     <input type="text" name="CEMAIL" value="ismail@gmail.com">

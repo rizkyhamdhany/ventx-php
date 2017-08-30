@@ -82,10 +82,6 @@ class PaymentController extends Controller
         return view('app.payment.confirm_success');
     }
 
-    public function testPay(Request $request){
-        return view('testpay');
-    }
-
     public function dokuVerify(Request $request){
         $this->dokuRepo->create([
             'action' => 'verify' ,
