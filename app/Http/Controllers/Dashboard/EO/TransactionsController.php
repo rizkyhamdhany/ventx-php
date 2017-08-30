@@ -21,6 +21,7 @@ use App\Models\Bank;
 use Webpatser\Uuid\Uuid;
 use Milon\Barcode\DNS2D;
 use App\Models\BookConf;
+use View;
 
 
 class TransactionsController extends Controller
@@ -28,6 +29,7 @@ class TransactionsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        View::share( 'page_state', 'Payments' );
     }
 
     public function listPayment(Request $request)
@@ -69,6 +71,7 @@ class TransactionsController extends Controller
     }
 
     public function verifyPayment(Request $request){
+        $event = Event::find($this->order->event_id);
         $transaction = Transaction::find($request->input('transaction_id'));
         $transaction->status = 'USED';
         $transaction->save();

@@ -1,4 +1,7 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin_dashboard')
+@section('sidebar')
+    @include('layouts.admin_dashboard_sidebar')
+@endsection
 @section('page_style')
     <link href="{{URL('/')}}/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css"/>
     <link href="{{URL('/')}}/assets/global/plugins/mapplic/mapplic/mapplic.css" rel="stylesheet" type="text/css"/>
@@ -6,81 +9,88 @@
     <link href="{{URL('/')}}/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css"/>
 @endsection
 @section('content')
-    <div class="container-fluid container-lf-space margin-top-30">
-        <div class="row">
-            <div class="col-md-12">
-                @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                    @if(Session::has('alert-' . $msg))
-                        <div class="note note-{{ $msg }}">
-                            <p>{{ Session::get('alert-' . $msg) }}</p>
-                        </div>
-                    @endif
-                @endforeach
-                <div class="portlet light portlet-fit portlet-datatable bordered">
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <a href="{{route('organizer.home')}}">
-                                <i class="fa fa-chevron-left font-dark"></i>
-                                <span class="caption-subject font-dark sbold uppercase">Dashboard</span>
-                            </a>
-                        </div>
-                        <div class="actions">
-                            <div class="btn-group btn-group-devided">
-                                <a href="{{route('payment.add')}}" class="btn red">
-                                    <i class="fa fa-plus"></i> New Transaction Log
-                                </a>
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="#">Payments</a>
+                    </li>
+                    <li>
+                        <span>Payment Confirmation</span>
+                    </li>
+                </ul>
+            </div>
+            <h1 class="page-title"> Payment Confirmation
+                <small>statistics, charts and reports</small>
+            </h1>
+            <div class="row">
+                <div class="col-md-12">
+                    @include('layouts.error_msg')
+                    <div class="portlet light portlet-fit portlet-datatable bordered">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <span class="caption-subject font-dark sbold uppercase">Request for Confirmation</span>
+                            </div>
+                            <div class="actions">
+                                <div class="btn-group btn-group-devided">
+                                    <a href="{{route('payment.add')}}" class="btn red">
+                                        <i class="fa fa-plus"></i> New Transaction Log
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="portlet-body">
-                        <div class="table-container">
-                            <div class="table-actions-wrapper">
-                                <span> </span>
-                                <select class="table-group-action-input form-control input-inline input-small input-sm">
-                                    <option value="">Select...</option>
-                                    <option value="Cancel">Cancel</option>
-                                    <option value="Cancel">Hold</option>
-                                    <option value="Cancel">On Hold</option>
-                                    <option value="Close">Close</option>
-                                </select>
-                                <button class="btn btn-sm green table-group-action-submit">
-                                    <i class="fa fa-check"></i> Submit
-                                </button>
-                            </div>
-                            <table class="table table-striped table-bordered table-hover" id="sample_1">
-                                <thead>
-                                <tr>
-                                    <th> Order Code </th>
-                                    <th> Account Holder </th>
-                                    <th> Bank </th>
-                                    <th> Transfer Date </th>
-                                    <th> Status </th>
-                                    <th>  </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($orders as $order)
+                        <div class="portlet-body">
+                            <div class="table-container">
+                                <div class="table-actions-wrapper">
+                                    <span> </span>
+                                    <select class="table-group-action-input form-control input-inline input-small input-sm">
+                                        <option value="">Select...</option>
+                                        <option value="Cancel">Cancel</option>
+                                        <option value="Cancel">Hold</option>
+                                        <option value="Cancel">On Hold</option>
+                                        <option value="Close">Close</option>
+                                    </select>
+                                    <button class="btn btn-sm green table-group-action-submit">
+                                        <i class="fa fa-check"></i> Submit
+                                    </button>
+                                </div>
+                                <table class="table table-striped table-bordered table-hover" id="sample_1">
+                                    <thead>
                                     <tr>
-                                        <td> {{$order->order_code}} </td>
-                                        <td> {{$order->account_holder}} </td>
-                                        <td> {{$order->bank['name']}} </td>
-                                        <td> {{$order->date}} </td>
-                                        <td> {{$order->status}} </td>
-                                        <td>
-                                            <div class="clearfix">
-                                                <div class="btn-group btn-group-solid">
-                                                    <a href="{{route("payment.confirm.detail", ['id' => $order->preorder['id']])}}" class="btn green">Confirm Transaction</a>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <th> Order Code </th>
+                                        <th> Account Holder </th>
+                                        <th> Bank </th>
+                                        <th> Transfer Date </th>
+                                        <th> Status </th>
+                                        <th>  </th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    @foreach ($orders as $order)
+                                        <tr>
+                                            <td> {{$order->order_code}} </td>
+                                            <td> {{$order->account_holder}} </td>
+                                            <td> {{$order->bank['name']}} </td>
+                                            <td> {{$order->date}} </td>
+                                            <td> {{$order->status}} </td>
+                                            <td>
+                                                <div class="clearfix">
+                                                    <div class="btn-group btn-group-solid">
+                                                        <a href="{{route("payment.confirm.detail", ['id' => $order->preorder['id']])}}" class="btn green">Confirm Transaction</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="clearfix"></div>
         </div>
     </div>
 @endsection

@@ -60,24 +60,6 @@ Route::group(['prefix' => '/organizer', 'middleware' => ['auth', 'role:eo']], fu
         });
     });
 
-    //DASHBOARD PAYMENTS
-    Route::prefix('/payments')->group(function(){
-        Route::get('/','Dashboard\EO\TransactionsController@listPayment')->name('dashboard.payments');
-
-        //Route::get('/add' , 'App\PaymentController@addTransaction')->name('payment.add');//AddTransaction
-        Route::prefix('/add')->group(function(){
-            Route::get('/','Dashboard\EO\TransactionsController@addTransaction')->name('payment.add');
-            Route::post('/submit','Dashboard\EO\TransactionsController@addTransactionSubmit')->name('payment.add.submit');
-        });
-        Route::prefix('/confirm')->group(function(){
-            //Route::get('/','Dashboard\EO\TransactionsController@orderTicket')->name('ticket.choose.submit');//orderView);
-            Route::get('/detail/{id}','Dashboard\EO\TransactionsController@viewOrderDetail')->name('payment.confirm.detail');//orderView);
-        });
-        Route::post('/verify','Dashboard\EO\TransactionsController@verifyPayment')->name('payment.verify');//orderView);
-        Route::get('/test','TestInsertController@testView')->name('payment.testView');
-        Route::post('/testInsert','TestInsertController@testInsert')->name('payment.testInsert');
-    });
-
 
     Route::prefix('/complains')->group(function(){
         Route::get('/','Dashboard\EO\ComplainController@listComplain')->name('complains');//viewList
@@ -111,5 +93,17 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
         Route::get('/create','Dashboard\Admin\UsersController@create')->name('dashboard.users.create');
         Route::post('/create','Dashboard\Admin\UsersController@createUserPost')->name('dashboard.users.create.post');
         Route::get('/privilege','Dashboard\Admin\UsersController@index')->name('dashboard.users.privilege');
+    });
+
+    Route::prefix('/payments')->group(function(){
+        Route::get('/','Dashboard\EO\TransactionsController@listPayment')->name('dashboard.payments');
+        Route::prefix('/add')->group(function(){
+            Route::get('/','Dashboard\EO\TransactionsController@addTransaction')->name('payment.add');
+            Route::post('/submit','Dashboard\EO\TransactionsController@addTransactionSubmit')->name('payment.add.submit');
+        });
+        Route::prefix('/confirm')->group(function(){
+            Route::get('/detail/{id}','Dashboard\EO\TransactionsController@viewOrderDetail')->name('payment.confirm.detail');//orderView);
+        });
+        Route::post('/verify','Dashboard\EO\TransactionsController@verifyPayment')->name('payment.verify');
     });
 });
