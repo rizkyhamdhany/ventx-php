@@ -46,17 +46,21 @@
                             <span class="label">Bank Transfer</span>
                             <p>Transfered to: </p>
                             <div class="row">
-                                <div class="col-md-4 bank">
+                                <div class="col-md-3 bank">
                                     <img src="{{URL('/')}}/assets/pages/img/BCA.png">
-                                    <p>Adzka Fairuz - 2831350697</p>
+                                    <p>Sandika Ichsan Arafat - 4381411669</p>
                                 </div>
-                                <div class="col-md-4 bank">
+                                <div class="col-md-3 bank">
                                     <img src="{{URL('/')}}/assets/pages/img/Mandiri.png">
-                                    <p>Arina Sani - 130001502303</p>
+                                    <p>Sandika Ichsan Arafat - 1320017379083</p>
                                 </div>
-                                <div class="col-md-4 bank">
+                                <div class="col-md-3 bank">
                                     <img src="{{URL('/')}}/assets/pages/img/BNI.png">
-                                    <p>Adzka Fairuz - 0533301387</p>
+                                    <p>Sandika Ichsan Arafat - 0602257953</p>
+                                </div>
+                                <div class="col-md-3 bank">
+                                    <img src="{{URL('/')}}/assets/pages/img/cimb-logo.png">
+                                    <p>Sandika Ichsan Arafat - 11290001012569</p>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div class="col-md-3">

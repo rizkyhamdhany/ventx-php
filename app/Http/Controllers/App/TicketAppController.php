@@ -184,11 +184,13 @@ class TicketAppController extends Controller
                 $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
                 $ticket->order_code = 'SMO'.$code;
                 if($ticket->bankopt == 'BCA'){
-                    $ticket->bank_account = 'BCA 2831350697 a.n. Adzka Fairuz';
+                    $ticket->bank_account = 'BCA 4381411669 a.n. Sandika Ichsan Arafat';
                 } else if($ticket->bankopt == 'Mandiri'){
-                    $ticket->bank_account = 'Mandiri 130 001502303 2 a.n Arina Sani';
+                    $ticket->bank_account = 'Mandiri 1320017379083 a.n Sandika Ichsan Arafat';
                 } else if($ticket->bankopt == 'BNI'){
-                    $ticket->bank_account = 'BNI 0533301387 a.n. Adzka Fairuz';
+                    $ticket->bank_account = 'BNI 0602257953 a.n. Sandika Ichsan Arafat';
+                } else if($ticket->bankopt == 'CIMB Niaga'){
+                    $ticket->bank_account = 'CIMB Niaga 11290001012569 a.n. Sandika Ichsan Arafat';
                 }
                 $preorder = new Book();
                 $preorder->submitPreorderWithTickets($ticket);
