@@ -22,7 +22,6 @@ use Webpatser\Uuid\Uuid;
 use Milon\Barcode\DNS2D;
 use App\Models\BookConf;
 use View;
-use App\Models\Event;
 
 
 class TransactionsController extends Controller
@@ -72,7 +71,6 @@ class TransactionsController extends Controller
     }
 
     public function verifyPayment(Request $request){
-        $event = Event::find($this->order->event_id);
         $transaction = Transaction::find($request->input('transaction_id'));
         $transaction->status = 'USED';
         $transaction->save();
