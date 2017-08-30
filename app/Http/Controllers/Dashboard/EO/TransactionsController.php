@@ -22,6 +22,7 @@ use Webpatser\Uuid\Uuid;
 use Milon\Barcode\DNS2D;
 use App\Models\BookConf;
 use View;
+use App\Models\Event;
 
 
 class TransactionsController extends Controller
