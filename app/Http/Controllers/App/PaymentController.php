@@ -12,16 +12,15 @@ use Webpatser\Uuid\Uuid;
 use Milon\Barcode\DNS2D;
 use App\Models\Book;
 use App\Models\Bank;
+use App\Models\DokuPaymentRepository;
 
 class PaymentController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected $dokuRepo;
+
+    public function __construct(DokuPaymentRepository $dokuPaymentRepository)
     {
+        $this->dokuRepo = $dokuPaymentRepository;
     }
 
     public function inputPaymentCode(){
@@ -81,5 +80,45 @@ class PaymentController extends Controller
 
     public function confrimSuccess(Request $request){
         return view('app.payment.confirm_success');
+    }
+
+    public function testPay(Request $request){
+        return view('testpay');
+    }
+
+    public function dokuVerify(Request $request){
+        $this->dokuRepo->create([
+            'action' => 'verify' ,
+            'log' => json_encode($request->input())
+        ]);
+        echo "Continue";
+    }
+
+    public function dokuNotify(Request $request){
+        $this->dokuRepo->create([
+            'action' => 'notify' ,
+            'log' => json_encode($request->input())
+        ]);
+        echo "notify";
+    }
+
+    public function dokuRedirectProcess(Request $request){
+        $this->dokuRepo->create([
+            'action' => 'redirect process' ,
+            'log' => json_encode($request->input())
+        ]);
+        echo "redirect process";
+    }
+
+    public function dokuCancel(Request $request){
+        $this->dokuRepo->create([
+            'action' => 'cancel' ,
+            'log' => json_encode($request->input())
+        ]);
+        echo "cancel";
+    }
+
+    public function testPay(){
+        return view('testpay');
     }
 }

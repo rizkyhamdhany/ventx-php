@@ -14,6 +14,15 @@ Auth::routes();
 
 Route::get('/', 'LandingController@index')->name('home');
 
+Route::prefix('/doku')->group(function () {
+    Route::get('/verify', 'App\PaymentController@dokuVerify')->name('payment.doku.verify');
+    Route::get('/notify', 'App\PaymentController@dokuNotify')->name('payment.doku.notify');
+    Route::get('/redirect', 'App\PaymentController@dokuRedirectProcess')->name('payment.doku.redirecprocess');
+    Route::get('/cancel', 'App\PaymentController@dokuCancel')->name('payment.doku.cancel');
+});
+
+Route::get('/testpay', 'App\PaymentController@testPay')->name('testpay');
+
 Route::prefix('/tickets')->middleware(['bookticketsession'])->group(function () {
     Route::prefix('/smilemotion')->group(function () {
         Route::get('/', 'App\TicketAppController@listTicket')->name('app.ticket.list');
