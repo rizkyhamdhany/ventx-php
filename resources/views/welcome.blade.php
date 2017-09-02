@@ -53,7 +53,7 @@
                     <div class="grid">
                         <div class="grid-item music col-md-3 col-sm-6 col-xs-12">
                             <a href="{{URL('/')}}/smilemotion">
-                                <img src="{{URL('/')}}/assets_landing/img/sm-thumb.jpg" alt=""/>
+                                <img src="{{URL('/')}}/assets_landing/img/smo_thumb.jpg" alt=""/>
                                 <div class="grid-item-hover">
                                     <span class="grid-item-hover-icon"></span>
                                     <span class="grid-item-hover-bottom">Smilemotion 2017</span>
@@ -64,7 +64,7 @@
 
                         <div class="grid-item music col-md-3 col-sm-6 col-xs-12">
                             <a href="#">
-                                <img src="{{URL('/')}}/assets_landing/img/fb-thumb.jpg" alt=""/>
+                                <img src="{{URL('/')}}/assets_landing/img/ftb_thumb.jpg" alt=""/>
                                 <div class="grid-item-hover">
                                     <span class="grid-item-hover-icon"></span>
                                     <span class="grid-item-hover-bottom">Festival Budaya 2017</span>

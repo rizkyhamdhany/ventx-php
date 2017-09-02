@@ -97,6 +97,15 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
         });
     });
 
+    Route::prefix('/partner')->group(function(){
+        Route::prefix('/ticket')->group(function(){
+            Route::get('/','Dashboard\Admin\PartnerController@index')->name('dashboard.partner.ticket_box');
+        });
+        Route::prefix('/counter')->group(function(){
+
+        });
+    });
+
     Route::prefix('/users')->group(function(){
         Route::get('/','Dashboard\Admin\UsersController@index')->name('dashboard.users');
         Route::get('/create','Dashboard\Admin\UsersController@create')->name('dashboard.users.create');

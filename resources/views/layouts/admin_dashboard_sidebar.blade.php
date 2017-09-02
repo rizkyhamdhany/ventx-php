@@ -43,10 +43,11 @@
             <li class="heading">
                 <h3 class="uppercase">Partner</h3>
             </li>
-            <li class="nav-item start">
-                <a href="#" class="nav-link nav-toggle">
+            <li class="nav-item start {{$page_state == 'Ticket Box' ? 'active' : ''}}">
+                <a href="{{route('dashboard.partner.ticket_box')}}" class="nav-link nav-toggle">
                     <i class="icon-wallet"></i>
                     <span class="title">Ticket Box</span>
+                    {!! $page_state == 'Ticket Box' ? '<span class="selected"></span>' : '' !!}
                 </a>
             </li>
             <li class="nav-item start">
