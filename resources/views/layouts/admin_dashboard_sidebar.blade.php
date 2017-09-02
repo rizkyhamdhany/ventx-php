@@ -17,7 +17,7 @@
                 </a>
             </li>
             <li class="nav-item start {{$page_state == 'Event' ? 'active' : ''}}">
-                <a href="{{route('dashboard.event')}}" class="nav-link nav-toggle">
+                <a href="{{route('dashboard.event')}}" class="nav-link">
                     <i class="icon-calendar"></i>
                     <span class="title">Event</span>
                     {!! $page_state == 'Event' ? '<span class="selected"></span>' : '' !!}

@@ -1,9 +1,8 @@
 @extends('layouts.admin_dashboard')
 @section('sidebar')
-    @include('layouts.admin_dashboard_sidebar')
+    @include('layouts.admin_dashboard_sidebar_event')
 @endsection
 @section('page_style')
-
 @endsection
 @section('content')
     <div class="page-content-wrapper">
@@ -11,7 +10,19 @@
             <div class="page-bar">
                 <ul class="page-breadcrumb">
                     <li>
-                        <a href="index.html">{{$page_state}}</a>
+                        <a href="#">Home</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <a href="#">Event</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <a href="#">Ticket Category</a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <span>{{$page_state}}</span>
                     </li>
                 </ul>
             </div>
@@ -31,12 +42,12 @@
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="icon-settings font-red"></i>
-                                <span class="caption-subject font-red sbold uppercase">Event Table</span>
+                                <span class="caption-subject font-red sbold uppercase">Ticket Period Table</span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group btn-group-devided">
-                                    <a href="{{route('dashboard.event.add')}}" class="btn btn-transparent red btn-outline btn-circle btn-sm active">
-                                        Add Event
+                                    <a href="{{route('dashboard.event.ticket.add')}}" class="btn btn-transparent red btn-outline btn-circle btn-sm active">
+                                        Add Ticket Period
                                     </a>
                                 </div>
                             </div>
@@ -48,8 +59,8 @@
                                     <tr>
                                         <th> # </th>
                                         <th> Name </th>
-                                        <th> Event Organizer </th>
-                                        <th> Location </th>
+                                        <th> Start Date </th>
+                                        <th> End Date </th>
                                     </tr>
                                     </thead>
                                     <tbody>
