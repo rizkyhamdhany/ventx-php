@@ -111,14 +111,14 @@
           })
           .done(function(data){
             alert(data);
-            /*var add = confirm('Data Submitted\nAdd another Ticket Class?');
+            var add = confirm('Data Submitted\nAdd another Ticket Class?');
             if (add == true) {
                 $("input[name='name']").val('');
                 $("input[name='price']").val('');
                 $("input[name='amount']").val('');
             } else {
                 window.location.href = "{{route('dashboard.event')}}";
-            }*/
+            }
           })
           .fail(function(){
             alert('Fail');

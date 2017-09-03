@@ -27,7 +27,7 @@
               </li>
             </ul>
         </div>
-        <h1 class="page-title"> Create Ticket Period
+        <h1 class="page-title"> Create Ticket Period for {{$page_title}}
         </h1>
         <div class="row">
             <div class="col-md-12">

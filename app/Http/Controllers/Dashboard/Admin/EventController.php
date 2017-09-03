@@ -67,7 +67,9 @@ class EventController extends Controller
 
     public function ticketPeriodAdd($id, Request $request)
     {
+        $event = $this->eventRepo->find($id);
         View::share('page_state', 'Ticket Period');
+        View::share('page_title',$event->name);
         if ($request->isMethod('post')) {
 
             $validator = Validator::make($request->all(), [
