@@ -61,52 +61,53 @@ class EventController extends Controller
         $event = $this->eventRepo->find($id);
         View::share('page_state', 'Event Details');
         return view('dashboard.admin.event.event_details')
-                ->with('event', $event)
-                ->with('id', $id);
+            ->with('event', $event)
+            ->with('id', $id);
     }
 
     public function ticketPeriodAdd($id, Request $request)
     {
         $event = $this->eventRepo->find($id);
         View::share('page_state', 'Ticket Period');
-        View::share('page_title',$event->name);
+        View::share('page_title', $event->name);
         if ($request->isMethod('post')) {
 
             $validator = Validator::make($request->all(), [
-              'name' => 'required|max:50',
-              'startDate' => 'required',
-              'endDate' => 'required',
+                'name' => 'required|max:50',
+                'startDate' => 'required',
+                'endDate' => 'required',
             ]);
 
             if ($validator->fails()) {
                 return redirect()->route('dashboard.event.ticketPeriod.add', $id)
-                ->withErrors($validator)
-                ->withInput();
+                    ->withErrors($validator)
+                    ->withInput();
             } else {
-              $input = $request->input();
-              $input['event_id'] = $request->event_id;
-              $input['name'] = $request->name;
-              $input['start_date'] = date('Y-m-d', strtotime($request->startDate));
-              $input['end_date'] = date('Y-m-d', strtotime($request->endDate));
-              //$dataPeriod = $this->ticketPeriodSave($request);
-              if ($this->$ticketPeriodRepo->create($input)) {
-                  $request->session()->flash('alert-success', 'Ticket Period has been created !');
-                  return view('dashboard.admin.event.event_ticketClass_add')
-                  ->with('id', $id)
-                  ->with('name', $request->input('name'))
-                  ->with('start_date', date('Y-m-d', strtotime($request->input('startDate'))))
-                  ->with('end_date', date('Y-m-d', strtotime($request->input('endDate'))))
-                  ->with('period_id',$this->ticketPeriodRepo->id);
-              } else {
-                  $request->session()->flash('alert-warning', 'Failed to create Ticket Perio !');
-              }
+                $input = $request->input();
+                $input['event_id'] = $event->id;
+                $input['name'] = $event->name;
+                $input['start_date'] = date('Y-m-d', strtotime($request->startDate));
+                $input['end_date'] = date('Y-m-d', strtotime($request->endDate));
+                $dataPeriod = $this->ticketPeriodRepo->create($input);
+
+                if ($dataPeriod) {
+                    $request->session()->flash('alert-success', 'Ticket Period has been created !');
+                    return view('dashboard.admin.event.event_ticketClass_add')
+                        ->with('id', $id)
+                        ->with('name', $request->input('name'))
+                        ->with('start_date', date('Y-m-d', strtotime($request->input('startDate'))))
+                        ->with('end_date', date('Y-m-d', strtotime($request->input('endDate'))))
+                        ->with('period_id', $dataPeriod->id);
+                } else {
+                    $request->session()->flash('alert-warning', 'Failed to create Ticket Perio !');
+                }
             }
         } else {
             return view('dashboard.admin.event.event_ticketPeriod_add')
-            ->with('name', $request->input('name'))
-            ->with('start_date', date('Y-m-d', strtotime($request->input('startDate'))))
-            ->with('end_date', date('Y-m-d', strtotime($request->input('endDate'))))
-            ->with('id', $id);
+                ->with('name', $request->input('name'))
+                ->with('start_date', date('Y-m-d', strtotime($request->input('startDate'))))
+                ->with('end_date', date('Y-m-d', strtotime($request->input('endDate'))))
+                ->with('id', $id);
         }
     }
 
@@ -115,36 +116,36 @@ class EventController extends Controller
         View::share('page_state', 'Ticket Category');
         if ($request->isMethod('post')) {
             $validator = Validator::make($request->all(), [
-              'name' => 'required|max:50',
-              'price' => 'required',
-              'amount' => 'required',
+                'name' => 'required|max:50',
+                'price' => 'required',
+                'amount' => 'required',
             ]);
 
-        if ($validator->fails()) {
-            return redirect()->route('dashboard.event.ticketClass.add', $id)
-            ->withErrors($validator)
-            ->withInput();
-        } else {
-            /*$input['event_id'] = $request->event_id;
-            $input['name'] = $request->name;
-            $input['start_date'] = date('Y-m-d', strtotime($request->input('startDate')));
-            $input['end_date'] = date('Y-m-d', strtotime($request->input('endDate')));
-            if ($this->$ticketPeriodRepo->create($input)) {
-                $request->session()->flash('alert-success', 'Event has been created !');
+            if ($validator->fails()) {
+                return redirect()->route('dashboard.event.ticketClass.add', $id)
+                    ->withErrors($validator)
+                    ->withInput();
             } else {
-                $request->session()->flash('alert-warning', 'Failed to create Event !');
-            }*/
-        }
+                /*$input['event_id'] = $request->event_id;
+                $input['name'] = $request->name;
+                $input['start_date'] = date('Y-m-d', strtotime($request->input('startDate')));
+                $input['end_date'] = date('Y-m-d', strtotime($request->input('endDate')));
+                if ($this->$ticketPeriodRepo->create($input)) {
+                    $request->session()->flash('alert-success', 'Event has been created !');
+                } else {
+                    $request->session()->flash('alert-warning', 'Failed to create Event !');
+                }*/
+            }
 
-        return response()->json($request->period_name);
+            return response()->json($request->period_name);
 
         } else {
             return view('dashboard.admin.event.event_ticketClass_add.post')
-            ->with('event_id', $id)
-            ->with('name', $request->input('name'))
-            ->with('start_date', date('Y-m-d', strtotime($request->input('startDate'))))
-            ->with('end_date', date('Y-m-d', strtotime($request->input('endDate'))))
-            ->with('id', $id);
+                ->with('event_id', $id)
+                ->with('name', $request->input('name'))
+                ->with('start_date', date('Y-m-d', strtotime($request->input('startDate'))))
+                ->with('end_date', date('Y-m-d', strtotime($request->input('endDate'))))
+                ->with('id', $id);
         }
     }
 
@@ -158,6 +159,7 @@ class EventController extends Controller
 
         return $input;
     }
+
     public function ticketClassSave($request)
     {
         $input = $request->input();
