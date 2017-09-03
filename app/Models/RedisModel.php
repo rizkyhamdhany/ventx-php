@@ -9,7 +9,7 @@
 namespace App\Models;
 use Illuminate\Support\Facades\Redis;
 use App\CC;
-use App\Models\Preseat;
+use App\Models\Bookseat;
 
 class RedisModel
 {
@@ -28,7 +28,7 @@ class RedisModel
 //                Redis::set("smilemotion:seat:".$seat->ticket_class.":".$seat->no, $seat->id);
 
     public static function cachingBookedSeat(){
-        $preseats = Preseat::whereDate('expire_at', '>', \Carbon\Carbon::now())->get();
+        $preseats = Bookseat::whereDate('expire_at', '>', \Carbon\Carbon::now())->get();
         foreach ($preseats as $preseat){
             Redis::set(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED.":".$preseat->ticket_class.":".$preseat->seat_no, $preseat->seat_id);
             Redis::expireat(CC::$EVENT_NAME.":".CC::$KEY_SEAT_BOOKED.":".$preseat->ticket_class.":".$preseat->seat_no, strtotime($preseat->expire_at));

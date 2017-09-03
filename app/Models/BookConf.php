@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PreorderConf extends Model
+class BookConf extends Model
 {
     public function preorder(){
-      return $this->hasOne('App\Models\Preorder', 'id', 'preorder_id');
+      return $this->hasOne('App\Models\Book', 'id', 'book_id');
     }
 
     public function bank(){

@@ -11,7 +11,7 @@ use Webpatser\Uuid\Uuid;
 use App\Models\Seat;
 use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
-use App\Models\PreorderConf;
+use App\Models\BookConf;
 use App\Models\RedisModel;
 use Illuminate\Support\Facades\Redis;
 

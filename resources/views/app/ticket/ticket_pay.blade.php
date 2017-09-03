@@ -104,6 +104,18 @@
                                                             </div>
                                                         </td>
                                                     </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="radio">
+                                                                <label><input type="radio" id='express' name="bankopt" value="CIMB Niaga" ><span class="bank-name">CIMB Niaga</span></label>
+                                                            </div>
+                                                        </td>
+                                                        <td class="vertical-middle">
+                                                            <div class="radiotext text-align-right">
+                                                                <img src="{{URL('/')}}/assets/pages/img/cimb-logo.png">
+                                                            </div>
+                                                        </td>
+                                                    </tr>
                                                 </form>
                                             </table>
                                         </div>

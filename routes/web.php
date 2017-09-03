@@ -14,6 +14,15 @@ Auth::routes();
 
 Route::get('/', 'LandingController@index')->name('home');
 
+Route::prefix('/doku')->group(function () {
+    Route::get('/verify', 'App\PaymentController@dokuVerify')->name('payment.doku.verify');
+    Route::get('/notify', 'App\PaymentController@dokuNotify')->name('payment.doku.notify');
+    Route::get('/redirect', 'App\PaymentController@dokuRedirectProcess')->name('payment.doku.redirecprocess');
+    Route::get('/cancel', 'App\PaymentController@dokuCancel')->name('payment.doku.cancel');
+});
+
+Route::get('/testpay', 'App\PaymentController@testPay')->name('testpay');
+
 Route::prefix('/tickets')->middleware(['bookticketsession'])->group(function () {
     Route::prefix('/smilemotion')->group(function () {
         Route::get('/', 'App\TicketAppController@listTicket')->name('app.ticket.list');
@@ -124,5 +133,17 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
         Route::get('/create','Dashboard\Admin\UsersController@create')->name('dashboard.users.create');
         Route::post('/create','Dashboard\Admin\UsersController@createUserPost')->name('dashboard.users.create.post');
         Route::get('/privilege','Dashboard\Admin\UsersController@index')->name('dashboard.users.privilege');
+    });
+
+    Route::prefix('/payments')->group(function(){
+        Route::get('/','Dashboard\EO\TransactionsController@listPayment')->name('dashboard.payments');
+        Route::prefix('/add')->group(function(){
+            Route::get('/','Dashboard\EO\TransactionsController@addTransaction')->name('payment.add');
+            Route::post('/submit','Dashboard\EO\TransactionsController@addTransactionSubmit')->name('payment.add.submit');
+        });
+        Route::prefix('/confirm')->group(function(){
+            Route::get('/detail/{id}','Dashboard\EO\TransactionsController@viewOrderDetail')->name('payment.confirm.detail');//orderView);
+        });
+        Route::post('/verify','Dashboard\EO\TransactionsController@verifyPayment')->name('payment.verify');
     });
 });

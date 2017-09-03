@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Dashboard\EO;
 
 use App\Http\Controllers\Controller;
-use App\Models\Preorder;
+use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
@@ -20,7 +20,8 @@ use App\Models\Transaction;
 use App\Models\Bank;
 use Webpatser\Uuid\Uuid;
 use Milon\Barcode\DNS2D;
-use App\Models\PreorderConf;
+use App\Models\BookConf;
+use View;
 
 
 class TransactionsController extends Controller
@@ -28,12 +29,13 @@ class TransactionsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        View::share( 'page_state', 'Payments' );
     }
 
     public function listPayment(Request $request)
     {
 
-        $orders = PreorderConf::where('status', '!=', 'VERIFIED')->get();
+        $orders = BookConf::where('status', '!=', 'VERIFIED')->get();
         return view('dashboard.payments.payments')->with('orders', $orders);
     }
 
@@ -52,9 +54,9 @@ class TransactionsController extends Controller
 
     public function viewOrderDetail(Request $request, $id){
 
-        $order = Preorder::find($id);
+        $order = Book::find($id);
         $transaction = Transaction::where('status', '!=', 'USED')->get();
-        $ordersconf = PreorderConf::where('preorder_id', $id)->first();
+        $ordersconf = BookConf::where('book_id', $id)->first();
         if ($order->ticket_class == 'Reguler'){
             $order->price_item = 70000;
             $order->grand_total = $order->price_item * $order->ticket_ammount;
@@ -72,10 +74,10 @@ class TransactionsController extends Controller
         $transaction = Transaction::find($request->input('transaction_id'));
         $transaction->status = 'USED';
         $transaction->save();
-        $preorder = Preorder::find($request->input('preorder_id'));
+        $preorder = Book::find($request->input('book_id'));
         $preorder->payment_status = 'PAID';
         $preorder->save();
-        $ordersconf = PreorderConf::find($request->input('ordersconf_id'));
+        $ordersconf = BookConf::find($request->input('ordersconf_id'));
         $ordersconf->status = 'VERIFIED';
         $ordersconf->save();
         Order::createOrderFromBankTransfer($preorder);

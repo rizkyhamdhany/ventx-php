@@ -11,7 +11,7 @@ class Bank extends Model
     }
 
     public function preorderConf(){
-      return $this->hasMany('App\Models\PreorderConf');
+      return $this->hasMany('App\Models\BookConf');
     }
 
     public function insertBank($input){

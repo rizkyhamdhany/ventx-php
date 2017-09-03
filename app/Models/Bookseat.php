@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Preseat extends Model
+class Bookseat extends Model
 {
     //
 }

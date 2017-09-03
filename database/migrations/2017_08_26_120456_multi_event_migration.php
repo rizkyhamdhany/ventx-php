@@ -25,13 +25,13 @@ class MultiEventMigration extends Migration
         Schema::table('seats', function (Blueprint $table) {
             $table->integer('event_id')->after('id')->unsigned();
         });
-        Schema::table('preorders', function (Blueprint $table) {
+        Schema::table('books', function (Blueprint $table) {
             $table->integer('event_id')->after('id')->unsigned();
         });
-        Schema::table('preseats', function (Blueprint $table) {
+        Schema::table('bookseats', function (Blueprint $table) {
             $table->integer('event_id')->after('id')->unsigned();
         });
-        Schema::table('pretickets', function (Blueprint $table) {
+        Schema::table('booktickets', function (Blueprint $table) {
             $table->integer('event_id')->after('id')->unsigned();
         });
         Schema::table('ticket_classes', function (Blueprint $table) {
@@ -40,7 +40,7 @@ class MultiEventMigration extends Migration
         Schema::table('transactions', function (Blueprint $table) {
             $table->integer('event_id')->after('id')->unsigned();
         });
-        Schema::table('preorder_confs', function (Blueprint $table) {
+        Schema::table('book_confs', function (Blueprint $table) {
             $table->integer('event_id')->after('id')->unsigned();
         });
     }
@@ -64,13 +64,13 @@ class MultiEventMigration extends Migration
         Schema::table('seats', function($table) {
             $table->dropColumn('event_id');
         });
-        Schema::table('preorders', function($table) {
+        Schema::table('books', function($table) {
             $table->dropColumn('event_id');
         });
-        Schema::table('preseats', function($table) {
+        Schema::table('bookseats', function($table) {
             $table->dropColumn('event_id');
         });
-        Schema::table('pretickets', function($table) {
+        Schema::table('booktickets', function($table) {
             $table->dropColumn('event_id');
         });
         Schema::table('ticket_classes', function($table) {
@@ -79,7 +79,7 @@ class MultiEventMigration extends Migration
         Schema::table('transactions', function($table) {
             $table->dropColumn('event_id');
         });
-        Schema::table('preorder_confs', function($table) {
+        Schema::table('book_confs', function($table) {
             $table->dropColumn('event_id');
         });
 

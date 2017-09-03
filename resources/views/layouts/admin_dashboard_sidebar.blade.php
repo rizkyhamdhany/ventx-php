@@ -56,6 +56,16 @@
                     <span class="title">Counter</span>
                 </a>
             </li>
+            <li class="heading">
+                <h3 class="uppercase">Transaction</h3>
+            </li>
+            <li class="nav-item start {{$page_state == 'Payments' ? 'active' : ''}}">
+                <a href="{{route('dashboard.payments')}}" class="nav-link nav-toggle">
+                    <i class="icon-wallet"></i>
+                    <span class="title">Payment Confirmation</span>
+                    {!! $page_state == 'Payments' ? '<span class="selected"></span>' : '' !!}
+                </a>
+            </li>
         </ul>
     </div>
 </div>

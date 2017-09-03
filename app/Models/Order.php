@@ -39,6 +39,7 @@ class Order extends Model
 
     public static function createOrderFromBankTransfer($preorder){
         $order = new Order();
+        $order->event_id = $preorder->event_id;
         $order->order_code = $preorder->order_code;
         $order->name = $preorder->name;
         $order->phonenumber = $preorder->phonenumber;
@@ -55,6 +56,7 @@ class Order extends Model
             $ticket = new Ticket();
             $uuid = Uuid::generate();
             $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
+            $ticket->event_id = $preorder->event_id;
             $ticket->ticket_code = 'SMT'.$code;
             $ticket->title = $ticket_item->title;
             $ticket->name = $ticket_item->name;

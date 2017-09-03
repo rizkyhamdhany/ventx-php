@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Preorder;
+use App\Models\Book;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -19,7 +19,7 @@ class OrderMail extends Mailable
      */
     public $order;
 
-    public function __construct(Preorder $order)
+    public function __construct(Book $order)
     {
         $this->order = $order;
     }

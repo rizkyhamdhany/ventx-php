@@ -14,11 +14,11 @@ use App\Models\TicketClass;
 use Milon\Barcode\DNS2D;
 use App\Models\DailyOrderStatistic;
 use View;
-use App\Models\Preticket;
-use App\Models\Preorder;
+use App\Models\Bookticket;
+use App\Models\Book;
 use Illuminate\Support\Facades\Redis;
 use App\Models\RedisModel;
-use App\Models\Preseat;
+use App\Models\Bookseat;
 use App\Mail\OrderMail;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\BookTicketRequest;
@@ -184,13 +184,15 @@ class TicketAppController extends Controller
                 $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
                 $ticket->order_code = 'SMO'.$code;
                 if($ticket->bankopt == 'BCA'){
-                    $ticket->bank_account = 'BCA 2831350697 a.n. Adzka Fairuz';
+                    $ticket->bank_account = 'BCA 4381411669 a.n. Sandika Ichsan Arafat';
                 } else if($ticket->bankopt == 'Mandiri'){
-                    $ticket->bank_account = 'Mandiri 130 001502303 2 a.n Arina Sani';
+                    $ticket->bank_account = 'Mandiri 1320017379083 a.n Sandika Ichsan Arafat';
                 } else if($ticket->bankopt == 'BNI'){
-                    $ticket->bank_account = 'BNI 0533301387 a.n. Adzka Fairuz';
+                    $ticket->bank_account = 'BNI 0602257953 a.n. Sandika Ichsan Arafat';
+                } else if($ticket->bankopt == 'CIMB Niaga'){
+                    $ticket->bank_account = 'CIMB Niaga 11290001012569 a.n. Sandika Ichsan Arafat';
                 }
-                $preorder = new Preorder();
+                $preorder = new Book();
                 $preorder->submitPreorderWithTickets($ticket);
                 $preorder->grand_total = $ticket->grand_total;
                 $preorder->bank_account = $ticket->bank_account;
@@ -247,7 +249,7 @@ class TicketAppController extends Controller
     }
 
     public function submitBooking(){
-        $preorders = Preorder::all();
+        $preorders = Book::all();
         foreach ($preorders as $preorder){
             foreach ($preorder->tickets as $ticket){
                 echo '<pre>'; print_r($ticket->title);

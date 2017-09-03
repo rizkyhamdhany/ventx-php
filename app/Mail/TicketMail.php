@@ -33,7 +33,6 @@ class TicketMail extends Mailable
     public function build()
     {
         $event = Event::find($this->order->event_id);
-
         $email = $this->from('ticket@nalar-ventex.com')
                     ->subject('Your '.$event->name.' Ticket')
                     ->view('mail.ticket')
