@@ -24,6 +24,7 @@ class LandingController extends Controller
         View::share( 'event_name', 'Smilemotion 2017' );
         View::share( 'logo', 'logo_smilemotion.png' );
         View::share( 'url_event', 'http://smilemotion.org' );
+        View::share( 'color_prime', '#236E89' );
     }
 
     public function index(){
@@ -31,5 +32,13 @@ class LandingController extends Controller
     }
     public function event(){
         return view('app.app_landing');
+    }
+    public function contact(){
+        View::share( 'page_state', 'Contact Us' );
+        return view('contact');
+    }
+    public function tnc(){
+        View::share( 'page_state', 'Terms and Conditions' );
+        return view('tnc');
     }
 }

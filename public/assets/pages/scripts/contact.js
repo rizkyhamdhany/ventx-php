@@ -7,15 +7,15 @@ var Contact = function () {
 			$(document).ready(function(){
 			  map = new GMaps({
 				div: '#gmapbg',
-				lat: -13.004333,
-				lng: -38.494333
+				lat: -6.9037214,
+				lng: 107.6538229
 			  });
 			   var marker = map.addMarker({
-		            lat: -13.004333,
-					lng: -38.494333,
-		            title: 'Loop, Inc.',
+                    lat: -6.9037214,
+                    lng: 107.6538229,
+		            title: 'Nalar Creative.',
 		            infoWindow: {
-		                content: "<b>Metronic, Inc.</b> 795 Park Ave, Suite 120<br>San Francisco, CA 94107"
+		                content: "<b>Nalar Creative.</b> Jl. Jend. A. Yani No.782,<br> Kota Bandung"
 		            }
 		        });
 

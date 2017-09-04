@@ -132,11 +132,7 @@ class EventController extends Controller
                 $input['ammount'] = $request->amount;*/
                 $input = $request->input();
                 $input['event_id'] = $event->id;
-                $input['ticket_period_id'] = $request->ticket_period_id;
-                $input['name'] = $request->name;
-                $input['price'] = $request->price;
-                $input['ammount'] = $request->amount;
-                $class = $this->$ticketClassRepo->create($input);
+                $class = $this->ticketClassRepo->create($input);
                 if ($class) {
                     $request->session()->flash('alert-success', 'Event has been created !');
                 } else {

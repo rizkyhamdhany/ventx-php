@@ -13,6 +13,8 @@
 Auth::routes();
 
 Route::get('/', 'LandingController@index')->name('home');
+Route::get('/contact', 'LandingController@contact')->name('contact');
+Route::get('/tnc', 'LandingController@tnc')->name('tnc');
 
 Route::prefix('/doku')->group(function () {
     Route::get('/verify', 'App\PaymentController@dokuVerify')->name('payment.doku.verify');
