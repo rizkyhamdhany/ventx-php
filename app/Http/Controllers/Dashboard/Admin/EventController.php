@@ -110,7 +110,6 @@ class EventController extends Controller
 
     public function ticketClassAdd($id, Request $request)
     {
-        $event = $this->eventRepo->find($id);
         View::share('page_state', 'Ticket Class');
         if ($request->isMethod('post')) {
             $validator = Validator::make($request->all(), [
@@ -124,22 +123,17 @@ class EventController extends Controller
                     ->withErrors($validator)
                     ->withInput();
             } else {
-                /*$input = $request->input();
+                $input = $request->input();
                 $input['event_id'] = $request->event_id;
                 $input['ticket_period_id'] = $request->ticket_period_id;
                 $input['name'] = $request->name;
                 $input['price'] = $request->price;
-                $input['ammount'] = $request->amount;*/
-                $input = $request->input();
-                $input['event_id'] = $event->id;
-                $class = $this->ticketClassRepo->create($input);
-                if ($class) {
+                $input['ammount'] = $request->amount;
+                if ($this->ticketClassRepo->create($input)) {
                     $request->session()->flash('alert-success', 'Event has been created !');
                 } else {
                     $request->session()->flash('alert-warning', 'Failed to create Event !');
                 }
-                //return $request->name;
-                //return response()->json($request->name);
             }
         } else {
             return view('dashboard.admin.event.event_ticketClass_add.post')

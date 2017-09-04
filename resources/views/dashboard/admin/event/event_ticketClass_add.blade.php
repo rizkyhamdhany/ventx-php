@@ -42,8 +42,8 @@
                         <!-- BEGIN FORM-->
                         <form method="POST" action="{{route('dashboard.event.ticketClass.add.post',$id)}}" class="form-horizontal" id="formClass">
                             {{ csrf_field() }}
-                            <input type="text" name="event_id" value="{{$id}}" readonly>
-                            <input type="text" name="ticket_period_id" value="{{$period_id}}" readonly>
+                            <input type="hidden" name="event_id" value="{{$id}}" readonly>
+                            <input type="hidden" name="ticket_period_id" value="{{$period_id}}" readonly>
                             <div class="form-body">
                                 <div class="form-group {{$errors->has('name') ? 'has-error' : ' ' }}">
                                     <label class="col-md-3 control-label">Class Name</label>
@@ -102,7 +102,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
     <script>
       $(function(){
-        /*$('#formClass').submit(function(e){
+        $('#formClass').submit(function(e){
           e.preventDefault();
           var data1 = {event_id:$("input[name='event_id']").val(),
           period_id:$("input[name='event_id']").val(),
@@ -131,7 +131,7 @@
             console.log(data);
             console.log(status);
           });
-        });*/
+        });
       });
     </script>
 @endsection
