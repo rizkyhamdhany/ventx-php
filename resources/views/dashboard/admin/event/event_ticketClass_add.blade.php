@@ -104,20 +104,11 @@
       $(function(){
         $('#formClass').submit(function(e){
           e.preventDefault();
-          var data1 = {event_id:$("input[name='event_id']").val(),
-          period_id:$("input[name='event_id']").val(),
-          name:$("input[name='name']").val(),
-          price:$("input[name='price']").val(),
-          amount:$("input[name='amount']").val()};
-
           var data = $("#formClass").serialize();
-          console.log(data);
-          console.log(data1);
           $.post("{{route('dashboard.event.ticketClass.add.post',$id)}}",data,function(){
           })
           .done(function(data,status){
             console.log(status);
-            console.log(data);
             var add = confirm('Data Submitted\nAdd another Ticket Class?');
             if (add == true) {
                 $("input[name='name']").val('');
@@ -128,7 +119,6 @@
             }
           })
           .fail(function(data,status){
-            console.log(data);
             console.log(status);
           });
         });
