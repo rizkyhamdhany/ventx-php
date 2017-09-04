@@ -94,6 +94,9 @@ html {
   -moz-osx-font-smoothing: grayscale;
   position: relative;
 }
+.clearfix{
+  clear: both;
+}
 
 /* line 17, ../sass/cospo/_basic.scss */
 body {
@@ -10960,4 +10963,11 @@ h6 .cospo-comment-content span {
 /* line 593, ../sass/cospo/_blog.scss */
 .log-in-form input {
   font-size: 1.143rem;
+}
+
+.min-height-500{
+  min-height: 520px;
+}
+.border-none{
+  border : none !important;
 }
