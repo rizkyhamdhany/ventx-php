@@ -23,7 +23,7 @@
                   <i class="fa fa-circle"></i>
               </li>
               <li>
-                  <span>{{$cur_page}}</span>
+                  <span>{{$page_state}}</span>
               </li>
             </ul>
         </div>
@@ -40,12 +40,10 @@
                     </div>
                     <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form method="POST" action="" class="form-horizontal" id="formClass">
+                        <form method="POST" action="{{route('dashboard.event.ticketClass.add.post',$id)}}" class="form-horizontal" id="formClass">
                             {{ csrf_field() }}
-                            <input type="hidden" name="event_id" value="{{$id}}">
-                            <input type="text" name="period_id" value="{{$period_id}}" readonly>
-                            <input type="hidden" name="startDate" value="{{$start_date}}" readonly>
-                            <input type="hidden" name="endDate" value="{{$end_date}}" readonly>
+                            <input type="text" name="event_id" value="{{$id}}" readonly>
+                            <input type="text" name="ticket_period_id" value="{{$period_id}}" readonly>
                             <div class="form-body">
                                 <div class="form-group {{$errors->has('name') ? 'has-error' : ' ' }}">
                                     <label class="col-md-3 control-label">Class Name</label>
@@ -104,13 +102,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
     <script>
       $(function(){
-        $('#formClass').submit(function(e){
+        /*$('#formClass').submit(function(e){
           e.preventDefault();
+          var data1 = {event_id:$("input[name='event_id']").val(),
+          period_id:$("input[name='event_id']").val(),
+          name:$("input[name='name']").val(),
+          price:$("input[name='price']").val(),
+          amount:$("input[name='amount']").val()};
+
           var data = $("#formClass").serialize();
+          console.log(data);
+          console.log(data1);
           $.post("{{route('dashboard.event.ticketClass.add.post',$id)}}",data,function(){
           })
-          .done(function(data){
-            alert(data);
+          .done(function(data,status){
+            console.log(status);
+            console.log(data);
             var add = confirm('Data Submitted\nAdd another Ticket Class?');
             if (add == true) {
                 $("input[name='name']").val('');
@@ -120,10 +127,11 @@
                 window.location.href = "{{route('dashboard.event')}}";
             }
           })
-          .fail(function(){
-            alert('Fail');
+          .fail(function(data,status){
+            console.log(data);
+            console.log(status);
           });
-        });
+        });*/
       });
     </script>
 @endsection
