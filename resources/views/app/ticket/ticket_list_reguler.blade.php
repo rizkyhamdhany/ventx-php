@@ -14,7 +14,7 @@
             <tbody>
             <tr>
                 <td id="ticket-class"> Reguler </td>
-                <td id="ticket-price"> IDR 70.000 </td>
+                <td id="ticket-price"> IDR 125.000 </td>
                 <td>
                     <div class="form-group">
                         <select class="form-control" name="ticket_ammount" id="ticket_ammount">
