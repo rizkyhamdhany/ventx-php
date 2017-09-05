@@ -1,7 +1,7 @@
 <div class="page-header navbar-fixed-top hidden-print">
     <div class="clearfix">
         <div class="page-logo">
-            <a href="{{route('welcome')}}">
+            <a href="{{route('home')}}">
                 <img src="{{URL('/')}}/assets/pages/img/{{$logo}}" alt="logo" class="logo-default" /> </a>
         </div>
         <div class="top-menu">

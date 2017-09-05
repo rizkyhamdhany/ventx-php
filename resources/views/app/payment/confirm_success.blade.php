@@ -30,7 +30,7 @@
                         <p>Your transaction is being processed and we'll deliver the ticket to your email address. It shouldn't take longer than 48 hours. Thank you for Waiting!</p>
                     </div>
 
-                    <a href="{{route('welcome')}}">Back to Home</a>
+                    <a href="{{route('home')}}">Back to Home</a>
                 </div>
             </div>
         </div>

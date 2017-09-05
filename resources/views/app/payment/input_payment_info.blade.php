@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-8 login-container bs-reset mt-login-5-bsfix right-container">
                 <div class="col-mgd-12 header">
-                    <div class="back-button"><a href="{{route('welcome')}}"><i class="fa fa-arrow-left"></i></a></div>
+                    <div class="back-button"><a href="{{route('home')}}"><i class="fa fa-arrow-left"></i></a></div>
                     <h1>Payment Confirmation</h1>
                 </div>
 

@@ -55,7 +55,7 @@ Route::prefix('/smilemotion')->group(function () {
 Route::prefix('/festivalbudaya')->group(function () {
     Route::get('/', function(){
       echo "Not available right now";
-    })->name('welcome');
+    })->name('fesbud');
     Route::get('/input_payment_code', 'App\PaymentController@inputPaymentCode')->name('payment.input.code');
 });
 
