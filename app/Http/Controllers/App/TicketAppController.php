@@ -222,13 +222,13 @@ class TicketAppController extends Controller
 
     private function getTicketPrice($ticket){
         if ($ticket->ticket_type == 'Reguler'){
-            $ticket->price_item = 70000;
+            $ticket->price_item = 125000;
             $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
         } else if ($ticket->ticket_type == 'VIP I' || $ticket->ticket_type == 'VIP H' || $ticket->ticket_type == 'VIP E' || $ticket->ticket_type == 'VIP D'){
-            $ticket->price_item = 200000;
+            $ticket->price_item = 250000;
             $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
         } else if ($ticket->ticket_type == 'VVIP'){
-            $ticket->price_item = 400000;
+            $ticket->price_item = 450000;
             $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
         }
         return $ticket;
