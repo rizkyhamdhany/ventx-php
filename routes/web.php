@@ -14,6 +14,7 @@ Auth::routes();
 
 Route::get('/', 'LandingController@index')->name('home');
 Route::get('/contact', 'LandingController@contact')->name('contact');
+Route::post('/contact_post', 'LandingController@contactPost')->name('contact.post');
 Route::get('/tnc', 'LandingController@tnc')->name('tnc');
 
 Route::prefix('/doku')->group(function () {

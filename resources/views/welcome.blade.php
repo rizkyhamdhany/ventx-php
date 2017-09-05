@@ -32,7 +32,7 @@
                     </a>
                 </div>
                 <div class="col-xs-12 col-sm-6 buy">
-                    <a class="button" href="{{URL('/')}}/login">Login</a>
+                    <a class="button">Available Tickets</a>
                 </div>
             </div>
             <!-- </div> -->
@@ -55,7 +55,7 @@
                         <a href="{{URL('/')}}/smilemotion">
                             <img src="{{URL('/')}}/assets_landing/img/smo_thumb.jpg" alt=""/>
                             <div class="grid-item-hover">
-                                <span class="grid-item-hover-icon"></span>
+                                <span class="grid-item-hover-icon grid-buy"><button class="btn-buy">Buy Ticket</button></span>
                                 <span class="grid-item-hover-bottom">Smilemotion 2017</span>
                                 <span class="grid-item-hover-bg boysband"></span>
                             </div>
@@ -91,6 +91,12 @@
                 </a>
                 <a href="{{route('contact')}}" class="navbar-btn btn-danger btn pull-right">
                     Contact Us
+                </a>
+                <a class="navbar-btn btn-danger btn pull-right border-none">
+                    <span class="glyphicon glyphicon-star"></span>  | &nbsp;
+                </a>
+                <a href="{{URL('/')}}/login" class="navbar-btn btn-danger btn pull-right">
+                    Login
                 </a>
             </div>
         </div>

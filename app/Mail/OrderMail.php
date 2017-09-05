@@ -31,7 +31,7 @@ class OrderMail extends Mailable
      */
     public function build()
     {
-        return $this->from('ticket@nalar-ventex.com')
+        return $this->from('Ticket@nalar-ventex.com', 'Nalar Ventex')
                     ->subject('Complete Your Smilemotion Ticket Purchase')
                     ->text('mail.order_plain_text')
                     ->view('mail.order')

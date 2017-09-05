@@ -58,10 +58,14 @@ class TransactionsController extends Controller
         $transaction = Transaction::where('status', '!=', 'USED')->get();
         $ordersconf = BookConf::where('book_id', $id)->first();
         if ($order->ticket_class == 'Reguler'){
-            $order->price_item = 70000;
+            $order->price_item = 125000;
             $order->grand_total = $order->price_item * $order->ticket_ammount;
-        } else {
-            $order->price_item = 50000;
+        } else if ($order->ticket_class == 'VVIP'){
+            $order->price_item = 450000;
+            $order->grand_total = $order->price_item * $order->ticket_ammount;
+        }
+        else {
+            $order->price_item = 250000;
             $order->grand_total = $order->price_item * $order->ticket_ammount;
         }
         return view('dashboard.payments.confirm_transaction')

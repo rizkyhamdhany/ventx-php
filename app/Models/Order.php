@@ -90,11 +90,11 @@ class Order extends Model
          */
         $ticket_price = 0;
         if ($order->ticket_class == 'Reguler'){
-            $ticket_price = 70000;
+            $ticket_price = 125000;
         } else if ($order->ticket_class == 'VVIP'){
-            $ticket_price = 400000;
+            $ticket_price = 450000;
         } else {
-            $ticket_price = 200000;
+            $ticket_price = 250000;
         }
         $data = array();
         $data['order'] = $order;
