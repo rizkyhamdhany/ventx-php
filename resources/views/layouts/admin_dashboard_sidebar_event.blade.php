@@ -27,7 +27,7 @@
                 <h3 class="uppercase">Ticket</h3>
             </li>
             <li class="nav-item start {{$page_state == 'Ticket Category' ? 'active' : ''}}">
-                <a href="{{route('dashboard.event.ticketPeriod.add',$id)}}" class="nav-link">
+                <a href="{{route('dashboard.event.ticketCategory',$id)}}" class="nav-link">
                     <i class="icon-graph"></i>
                     <span class="title">Ticket Category</span>
                 </a>

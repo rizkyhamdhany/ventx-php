@@ -52,8 +52,8 @@ Route::prefix('/smilemotion')->group(function () {
 });
 
 Route::prefix('/festivalbudaya')->group(function () {
-    Route::get('/', function(){
-      echo "Not available right now";
+    Route::get('/', function () {
+        echo "Not available right now";
     })->name('welcome');
     Route::get('/input_payment_code', 'App\PaymentController@inputPaymentCode')->name('payment.input.code');
 });
@@ -108,44 +108,45 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
         Route::prefix('/details')->group(function () {
             Route::prefix('/{id}')->group(function ($id) {
                 Route::get('/', 'Dashboard\Admin\EventController@detailEvent')->name('dashboard.event.details');
-                Route::get('/ticketCategory','Dashboard\Admin\EventController@ticketPeriod')->name('dashboard.event.ticketCategory');
-                Route::prefix('/ticketPeriod')->group(function ($id) {
-                    Route::get('/add', 'Dashboard\Admin\EventController@ticketPeriodAdd')->name('dashboard.event.ticketPeriod.add');
-                    Route::post('/add', 'Dashboard\Admin\EventController@ticketPeriodAdd')->name('dashboard.event.ticketPeriod.add.post');
-                });
-                Route::prefix('/ticketClass')->group(function ($id) {
-                    Route::get('/add', 'Dashboard\Admin\EventController@ticketClassAdd')->name('dashboard.event.ticketClass.add');
-                    Route::post('/add', 'Dashboard\Admin\EventController@ticketClassAdd')->name('dashboard.event.ticketClass.add.post');
+                Route::prefix('/ticketCategory')->group(function () {
+                    Route::get('/', 'Dashboard\Admin\EventController@ticketCategory')->name('dashboard.event.ticketCategory');
+                    Route::prefix('/ticketPeriod')->group(function ($id) {
+                        Route::get('/add', 'Dashboard\Admin\EventController@ticketPeriodAdd')->name('dashboard.event.ticketPeriod.add');
+                        Route::post('/add', 'Dashboard\Admin\EventController@ticketPeriodAdd')->name('dashboard.event.ticketPeriod.add.post');
+                    });
+                    Route::prefix('/ticketClass')->group(function ($id) {
+                        Route::get('/add', 'Dashboard\Admin\EventController@ticketClassAdd')->name('dashboard.event.ticketClass.add');
+                        Route::post('/add', 'Dashboard\Admin\EventController@ticketClassAdd')->name('dashboard.event.ticketClass.add.post');
+                    });
                 });
             });
         });
     });
 
-    Route::prefix('/partner')->group(function(){
-        Route::prefix('/ticket')->group(function(){
-            Route::get('/','Dashboard\Admin\PartnerController@index')->name('dashboard.partner.ticket_box');
+    Route::prefix('/partner')->group(function () {
+        Route::prefix('/ticket')->group(function () {
+            Route::get('/', 'Dashboard\Admin\PartnerController@index')->name('dashboard.partner.ticket_box');
         });
-        Route::prefix('/counter')->group(function(){
-
+        Route::prefix('/counter')->group(function () {
         });
     });
 
-    Route::prefix('/users')->group(function(){
-        Route::get('/','Dashboard\Admin\UsersController@index')->name('dashboard.users');
-        Route::get('/create','Dashboard\Admin\UsersController@create')->name('dashboard.users.create');
-        Route::post('/create','Dashboard\Admin\UsersController@createUserPost')->name('dashboard.users.create.post');
-        Route::get('/privilege','Dashboard\Admin\UsersController@index')->name('dashboard.users.privilege');
+    Route::prefix('/users')->group(function () {
+        Route::get('/', 'Dashboard\Admin\UsersController@index')->name('dashboard.users');
+        Route::get('/create', 'Dashboard\Admin\UsersController@create')->name('dashboard.users.create');
+        Route::post('/create', 'Dashboard\Admin\UsersController@createUserPost')->name('dashboard.users.create.post');
+        Route::get('/privilege', 'Dashboard\Admin\UsersController@index')->name('dashboard.users.privilege');
     });
 
-    Route::prefix('/payments')->group(function(){
-        Route::get('/','Dashboard\EO\TransactionsController@listPayment')->name('dashboard.payments');
-        Route::prefix('/add')->group(function(){
-            Route::get('/','Dashboard\EO\TransactionsController@addTransaction')->name('payment.add');
-            Route::post('/submit','Dashboard\EO\TransactionsController@addTransactionSubmit')->name('payment.add.submit');
+    Route::prefix('/payments')->group(function () {
+        Route::get('/', 'Dashboard\EO\TransactionsController@listPayment')->name('dashboard.payments');
+        Route::prefix('/add')->group(function () {
+            Route::get('/', 'Dashboard\EO\TransactionsController@addTransaction')->name('payment.add');
+            Route::post('/submit', 'Dashboard\EO\TransactionsController@addTransactionSubmit')->name('payment.add.submit');
         });
-        Route::prefix('/confirm')->group(function(){
-            Route::get('/detail/{id}','Dashboard\EO\TransactionsController@viewOrderDetail')->name('payment.confirm.detail');//orderView);
+        Route::prefix('/confirm')->group(function () {
+            Route::get('/detail/{id}', 'Dashboard\EO\TransactionsController@viewOrderDetail')->name('payment.confirm.detail');//orderView);
         });
-        Route::post('/verify','Dashboard\EO\TransactionsController@verifyPayment')->name('payment.verify');
+        Route::post('/verify', 'Dashboard\EO\TransactionsController@verifyPayment')->name('payment.verify');
     });
 });

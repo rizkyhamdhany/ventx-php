@@ -64,6 +64,16 @@ class EventController extends Controller
             ->with('id', $id);
     }
 
+    public function ticketCategory($id){
+      //$event = $this->eventRepo->find($id);
+      View::share('page_state', 'Ticket Category');
+      return view('dashboard.admin.event.event_ticketCategory')
+          ->with('events', $this->eventRepo->all())
+          ->with('periods', $this->ticketPeriodRepo->all())
+          ->with('classes', $this->ticketClassRepo->all())
+          ->with('id', $id);
+    }
+
     public function ticketPeriodAdd($id, Request $request)
     {
         $event = $this->eventRepo->find($id);
@@ -88,7 +98,6 @@ class EventController extends Controller
                 $input['start_date'] = date('Y-m-d', strtotime($request->startDate));
                 $input['end_date'] = date('Y-m-d', strtotime($request->endDate));
                 $dataPeriod = $this->ticketPeriodRepo->create($input);
-
                 if ($dataPeriod) {
                     $request->session()->flash('alert-success', 'Ticket Period has been created !');
                     return view('dashboard.admin.event.event_ticketClass_add')
@@ -140,28 +149,5 @@ class EventController extends Controller
                 ->with('event_id', $id)
                 ->with('name', $request->input('name'));
         }
-    }
-
-    public function ticketPeriodSave($request)
-    {
-        $input = $request->input();
-        $input['event_id'] = $request->event_id;
-        $input['name'] = $request->name;
-        $input['start_date'] = date('Y-m-d', strtotime($request->startDate));
-        $input['end_date'] = date('Y-m-d', strtotime($request->endDate));
-
-        return $input;
-    }
-
-    public function ticketClassSave($request)
-    {
-        $input = $request->input();
-        $input['event_id'] = $request->event_id;
-        $input['ticket_period'] = $request->event_id;
-        $input['name'] = $request->name;
-        $input['start_date'] = date('Y-m-d', strtotime($request->startDate));
-        $input['end_date'] = date('Y-m-d', strtotime($request->endDate));
-
-        return $input;
     }
 }
