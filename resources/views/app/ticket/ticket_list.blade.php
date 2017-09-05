@@ -156,7 +156,7 @@
             $('#seat-map-13').show();
             $('#ticket-class').text('Reguler');
             $('#ticket_type').val('Reguler');
-            $('#ticket-price').text('IDR 70.000');
+            $('#ticket-price').text('IDR 125.000');
             $('#ticket_ammount').prop("disabled", false);
             book.ticket_type = 'Reguler';
             resetSeat();
@@ -166,7 +166,7 @@
             $('#seat-map-18').show();
             $('#ticket-class').text('VVIP');
             $('#ticket_type').val('VVIP');
-            $('#ticket-price').text('IDR 400.000');
+            $('#ticket-price').text('IDR 450.000');
             $('#ticket_ammount').prop("disabled", true);
             book.ticket_type = 'VVIP';
             resetSeat();
@@ -176,7 +176,7 @@
             $('#seat-map-14').show();
             $('#ticket-class').text('VIP E');
             $('#ticket_type').val('VIP E');
-            $('#ticket-price').text('IDR 200.000');
+            $('#ticket-price').text('IDR 250.000');
             $('#ticket_ammount').prop("disabled", true);
             book.ticket_type = 'VIP E';
             resetSeat();
@@ -186,7 +186,7 @@
             $('#seat-map-15').show();
             $('#ticket-class').text('VIP D');
             $('#ticket_type').val('VIP D');
-            $('#ticket-price').text('IDR 200.000');
+            $('#ticket-price').text('IDR 250.000');
             $('#ticket_ammount').prop("disabled", true);
             book.ticket_type = 'VIP D';
             resetSeat();
@@ -196,7 +196,7 @@
             $('#seat-map-16').show();
             $('#ticket-class').text('VIP I');
             $('#ticket_type').val('VIP I');
-            $('#ticket-price').text('IDR 200.000');
+            $('#ticket-price').text('IDR 250.000');
             $('#ticket_ammount').prop("disabled", true);
             book.ticket_type = 'VIP I';
             resetSeat();
@@ -206,7 +206,7 @@
             $('#seat-map-17').show();
             $('#ticket-class').text('VIP H');
             $('#ticket_type').val('VIP H');
-            $('#ticket-price').text('IDR 200.000');
+            $('#ticket-price').text('IDR 250.000');
             $('#ticket_ammount').prop("disabled", true);
             book.ticket_type = 'VIP H';
             resetSeat();
