@@ -5,7 +5,7 @@
             <div class="col-md-4 bs-reset mt-login-5-bsfix">
                 <div class="login-bg" style="background-image:url({{URL('/')}}/assets/pages/img/login/bg1.jpg)">
                     <img class="login-logo" src="{{URL('/')}}/assets/pages/img/login/logo.png" />
-                    <div class="btn smilemo-color-rev presale_button">Presale 1</div>
+                    <div class="btn smilemo-color-rev presale_button">Presale 2</div>
                     <div class="presale-artist">
                         <p>
                             Pre-Sale <br>

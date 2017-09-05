@@ -22,7 +22,7 @@
                                         <label class="col-md-3 control-label">Period Ticket</label>
                                         <div class="col-md-4">
                                             <select class="form-control" name="ticket_period">
-                                                <option value="Presale 1">Presale 1</option>
+                                                <option value="Presale 2">Presale 2</option>
                                             </select>
                                         </div>
                                     </div>

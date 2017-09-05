@@ -30,8 +30,8 @@
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
                         <div class="ticket-period-container">
-                            <span class="btn btn-circle">Presale 1</span>
-                            <span>Presale 1</span>
+                            <span class="btn btn-circle">Presale 2</span>
+                            <span>Presale 2</span>
                             <span>Reguler</span>
                         </div>
                         <div class="portlet light bordered">

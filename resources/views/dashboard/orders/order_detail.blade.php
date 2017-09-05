@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-md-3">
                                 <h4>Ticket Period</h4>
-                                <h4><strong>Presale 1</strong></h4>
+                                <h4><strong>Presale 2</strong></h4>
                             </div>
                         </div>
                         <br>

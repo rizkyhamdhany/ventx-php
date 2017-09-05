@@ -147,7 +147,7 @@
         var book = new Object();
         book.step = 'book';
         book.ticket_type = 'Reguler';
-        book.ticket_period = 'Presale 1';
+        book.ticket_period = 'Presale 2';
         book.ticket_ammount = '0';
         book.ticket = [];
         $('#book').val(JSON.stringify(book));
