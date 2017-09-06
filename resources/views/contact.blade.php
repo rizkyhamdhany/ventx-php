@@ -110,7 +110,7 @@
     </div>
 @endsection
 @section('page_js_plugins')
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyBMecqKthwhr1QOmp0uAofyJ8kHhBxra-Y&sensor=false" type="text/javascript"></script>
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyBMecqKthwhr1QOmp0uAofyJ8kHhBxra-Y&sensor=false" type="text/javascript"></script>
     <script src="{{URL('/')}}/assets/global/plugins/gmaps/gmaps.min.js" type="text/javascript"></script>
 @endsection
 @section('page_js')

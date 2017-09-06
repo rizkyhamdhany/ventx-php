@@ -4,6 +4,7 @@
     <link href="{{URL('/')}}/assets/global/plugins/mapplic/mapplic/mapplic.css" rel="stylesheet" type="text/css"/>
     <link href="{{URL('/')}}/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
     <link href="{{URL('/')}}/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="{{URL('/')}}/assets/pages/css/faq.min.css" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     <div class="container-fluid container-lf-space margin-top-30">
