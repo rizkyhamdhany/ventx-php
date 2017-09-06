@@ -121,5 +121,5 @@
 @endsection
 @section('page_js')
     <script src="{{URL('/')}}/assets/pages/scripts/table-datatables-colreorder.js" type="text/javascript"></script>
-    <script src="{{URL('/')}}/assets/pages/scripts/components-select2.min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/pages/scripts/components-select2.js" type="text/javascript"></script>
 @endsection
