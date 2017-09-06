@@ -45,7 +45,6 @@ Route::prefix('/tickets')->middleware(['bookticketsession'])->group(function () 
         });
     });
 });
-Route::get('/test/invoice', 'Dashboard\EO\OrderController@testInvoice')->name('invoice.test');
 
 Route::prefix('/smilemotion')->group(function () {
     Route::get('/', 'LandingController@event')->name('welcome');
@@ -149,4 +148,8 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
         });
         Route::post('/verify','Dashboard\EO\TransactionsController@verifyPayment')->name('payment.verify');
     });
+});
+
+Route::group(['prefix' => '/partner', 'middleware' => ['auth', 'role:partner']], function () {
+    Route::get('/', 'Dashboard\Partner\PartnerController@index')->name('partner.home');
 });

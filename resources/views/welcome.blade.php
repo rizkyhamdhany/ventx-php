@@ -13,12 +13,6 @@
 
 <body class="dark">
 
-<div class="main-preloader">
-    <div class="ball-scale">
-        <div></div>
-    </div>
-</div>
-
 <div class="into-page">
     <main>
 

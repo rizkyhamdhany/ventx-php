@@ -22,6 +22,8 @@ class RedirectIfAuthenticated
                 return  redirect()->route('dashboard.home');
             } else if (Auth::user()->hasRole('eo')) {
                 return  redirect()->route('organizer.home');
+            } else if (Auth::user()->hasRole('partner')) {
+                return  redirect()->route('partner.home');
             }
         }
 
