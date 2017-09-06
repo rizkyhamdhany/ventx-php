@@ -48,6 +48,8 @@
                                     <div class="c-content-label uppercase bg-blue">Contacts</div>
                                     <p>
                                         <strong>T</strong> (022) 20531755
+                                        <br>
+                                        <strong>E</strong> Ticket@nalar-ventex.com
                                 </div>
                             </div>
                         </div>

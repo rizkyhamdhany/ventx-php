@@ -1,103 +1,82 @@
 @extends('layouts.dashboard')
 @section('page_style')
-    <link href="{{URL('/')}}/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
-    <link href="{{URL('/')}}/assets/global/plugins/mapplic/mapplic/mapplic.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/global/plugins/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <link href="{{URL('/')}}/assets/global/plugins/mapplic/mapplic/mapplic.css" rel="stylesheet" type="text/css"/>
+    <link href="{{URL('/')}}/assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{URL('/')}}/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css"/>
 @endsection
 @section('content')
     <div class="container-fluid container-lf-space margin-top-30">
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 margin-bottom-10">
-                <div class="dashboard-stat white">
-                    <div class="visual">
-                        <i class="fa fa-shopping-cart fa-icon-medium font-blue no-opacity"></i>
-                    </div>
-                    <div class="details">
-                        <div class="number font-blue"> </div>
-                        <div class="desc font-blue"> Total Tiket Sold </div>
-                    </div>
-                    <a class="more blue" href="{{route('tickets')}}" style="background-color: #3598dc; color:#fff;"> View Details
-                        <i class="m-icon-swapright m-icon-white"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="dashboard-stat white">
-                    <div class="visual">
-                        <i class="fa fa-briefcase fa-icon-medium font-red no-opacity"></i>
-                    </div>
-                    <div class="details">
-                        <div class="number font-red"> 0</div>
-                        <div class="desc font-red"> Request Payment Confirmation </div>
-                    </div>
-                    <a class="more" href="#" style="background-color: #e7505a; color:#fff;"> Confirm Payment
-                        <i class="m-icon-swapright m-icon-white"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                <div class="dashboard-stat white">
-                    <div class="visual">
-                        <i class="fa fa-group fa-icon-medium font-yellow-lemon no-opacity"></i>
-                    </div>
-                    <div class="details">
-                        <div class="number font-yellow-lemon"> 0 </div>
-                        <div class="desc font-yellow-lemon"> Customer Complains </div>
-                    </div>
-                    <a class="more" href="#" style="background-color: #f7ca18; color:#fff;"> View more
-                        <i class="m-icon-swapright m-icon-white"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6 col-xs-12 col-sm-12">
-                <!-- BEGIN PORTLET-->
-                <div class="portlet light bordered">
+            <div class="col-md-12">
+                @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                    @if(Session::has('alert-' . $msg))
+                        <div class="note note-{{ $msg }}">
+                            <p>{{ Session::get('alert-' . $msg) }}</p>
+                        </div>
+                    @endif
+                @endforeach
+                <div class="portlet light portlet-fit portlet-datatable bordered">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="icon-bar-chart font-dark hide"></i>
-                            <span class="caption-subject font-dark bold uppercase">Sold Ticket</span>
-                            <span class="caption-helper">weekly stats...</span>
-                        </div>
-                        <div class="actions">
-                            <div class="btn-group btn-group-devided">
-                                <a href="{{route('tickets')}}">
-                                    <label class="btn red btn-outline btn-circle btn-sm active">
-                                        View Details
-                                    </label>
-                                </a>
-                            </div>
+                            <a href="#">
+                                <span class="caption-subject font-dark sbold uppercase">List Event</span>
+                            </a>
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <div id="site_statistics_loading">
-                            <img src="{{URL('/')}}/assets/global/img/loading.gif" alt="loading" /> </div>
-                        <div id="site_statistics_content" class="display-none">
-                            <div id="site_statistics" class="chart dashboard-chart"> </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END PORTLET-->
-            </div>
-            <div class="col-lg-6 col-xs-12 col-sm-12">
-                <div class="portlet light bordered">
-                    <div class="portlet-title">
-                        <div class="caption ">
-                            <span class="caption-subject font-dark bold uppercase">Presale Statistic</span>
-                            <span class="caption-helper">ticket stats...</span>
-                        </div>
-                        <div class="actions">
-                            <div class="btn-group btn-group-devided">
-                                <a href="{{route('tickets')}}">
-                                    <label class="btn green-haze btn-outline btn-circle btn-sm active">
-                                        View Details
-                                    </label>
-                                </a>
+                        <div class="table-container">
+                            <div class="table-actions-wrapper">
+                                <span> </span>
+                                <select class="table-group-action-input form-control input-inline input-small input-sm">
+                                    <option value="">Select...</option>
+                                    <option value="Cancel">Cancel</option>
+                                    <option value="Cancel">Hold</option>
+                                    <option value="Cancel">On Hold</option>
+                                    <option value="Close">Close</option>
+                                </select>
+                                <button class="btn btn-sm green table-group-action-submit">
+                                    <i class="fa fa-check"></i> Submit
+                                </button>
                             </div>
+                            <table class="table table-striped table-bordered table-hover" id="sample_1">
+                                <thead>
+                                <tr>
+                                    <th> No </th>
+                                    <th> Name </th>
+                                    <th> Date </th>
+                                    <th> Location </th>
+                                    <th> Total Ticket Sold </th>
+                                    <th>  </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td> 1 </td>
+                                        <td> Smilemotion </td>
+                                        <td> Dec 9, 2017 </td>
+                                        <td> Sasana Budaya Ganesha </td>
+                                        <td>  </td>
+                                        <td>
+                                            <div class="clearfix">
+                                                <div class="btn-group btn-group-solid">
+                                                    <a href="" class="btn red">Buy Ticket</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    <tr>
+                                        <td> 2 </td>
+                                        <td> Festival Budaya </td>
+                                        <td> Sept 30, 2017 </td>
+                                        <td> Lapangan Jalan Bali </td>
+                                        <td> </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                    <div class="portlet-body">
-                        <div id="dashboard_amchart_4" class="CSSAnimationChart dashboard-chart"></div>
                     </div>
                 </div>
             </div>
@@ -105,6 +84,13 @@
     </div>
 @endsection
 @section('page_js_plugins')
+    <script src="{{URL('/')}}/assets/global/plugins/morris/morris.min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/scripts/datatable.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 @endsection
 @section('page_js')
+    <script src="{{URL('/')}}/assets/pages/scripts/table-datatables-colreorder.js" type="text/javascript"></script>
 @endsection
