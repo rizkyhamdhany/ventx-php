@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Dashboard\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateEventRequest;
 use App\Models\EventRepository;
+use App\Models\TicketPeriod;
+use App\Models\TicketClass;
 use App\Models\TicketPeriodRepository;
 use App\Models\TicketClassRepository;
 use Validator;
@@ -65,13 +67,39 @@ class EventController extends Controller
     }
 
     public function ticketCategory($id){
-      //$event = $this->eventRepo->find($id);
+      $periodRepoByEvent = TicketPeriod::where('event_id', $id)->get();
+      $arrRoot = array();
+      $arrPeriod = array();
+      $arrClass = array();
+
+      $cls1 = array("id"=>1,"name"=>"namanya1");
+      $cls2 = array("id"=>2,"name"=>"namanya2");
+      $test1 = array("id"=>1,"name"=>"bebas1","class"=>$cls1);
+      $test2 = array("id"=>2,"name"=>"bebas2","class"=>$cls2);
+      $root = array();
+      array_push($root,$test1);
+      array_push($root,$test2);
+
+      foreach ($periodRepoByEvent as $period) {
+        $arrPeriod['id'] = $period->id;
+        $arrPeriod['name'] = $period->name;
+        foreach (TicketClass::where('ticket_period_id', $period->id)->get() as $class) {
+          $arrClass['id'] = $class->id;
+          $arrClass['name'] = $class->name;
+          $arrClass['price'] = $class->price;
+          $arrClass['amount'] = $class->amount;
+          $arrPeriod['class'] = $arrClass;
+        }
+        //$arrPeriod['class'] = $arrClass;
+        array_push($arrRoot,$arrPeriod);
+      }
+
       View::share('page_state', 'Ticket Category');
       return view('dashboard.admin.event.event_ticketCategory')
-          ->with('events', $this->eventRepo->all())
           ->with('periods', $this->ticketPeriodRepo->all())
           ->with('classes', $this->ticketClassRepo->all())
-          ->with('id', $id);
+          ->with('id', $id)
+          ->with('arrRoot', (object) $arrRoot);
     }
 
     public function ticketPeriodAdd($id, Request $request)

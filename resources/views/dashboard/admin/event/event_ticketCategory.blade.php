@@ -6,6 +6,7 @@
 
 @endsection
 @section('content')
+
     <div class="page-content-wrapper">
         <div class="page-content">
             <div class="page-bar">
@@ -29,6 +30,11 @@
                     @endforeach
                     <div class="portlet light bordered">
                         <div class="portlet-title">
+                          @forelse($arrRoot as $r)
+                            <?php print_r($r); print "<br>";?>
+                            @empty
+                            <?php echo "There is Nothing"; ?>
+                          @endforelse
                             <div class="caption">
                                 <i class="icon-settings font-red"></i>
                                 <span class="caption-subject font-red sbold uppercase">Ticket Category Table</span>
@@ -43,12 +49,12 @@
                         </div>
                         <div class="portlet-body">
                             <div class="row">
-                              @forelse($periods as $period)
+                              @forelse($arrRoot as $root)
                               <div class="col-lg-3 col-md-4 col-xs-12">
                                   <div class="mt-element-ribbon bg-grey-steel">
-                                      <div class="ribbon ribbon-color-warning uppercase">{{$period->name}}</div>
-                                      @foreach($classes as $class)
-                                        <div class="ribbon-content">{{$class->name}}</div>
+                                      <div class="ribbon ribbon-color-warning uppercase">{{$root['name']}}</div>
+                                      @foreach($root['class'] as $class)
+                                        <div class="ribbon-content">{{$class}}</div>
                                       @endforeach
                                   </div>
                               </div>
