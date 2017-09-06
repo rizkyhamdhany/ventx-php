@@ -57,11 +57,11 @@
                                         <td> Smilemotion </td>
                                         <td> Dec 9, 2017 </td>
                                         <td> Sasana Budaya Ganesha </td>
-                                        <td>  </td>
+                                        <td> {{$count}} </td>
                                         <td>
                                             <div class="clearfix">
                                                 <div class="btn-group btn-group-solid">
-                                                    <a href="" class="btn red">Buy Ticket</a>
+                                                    <a href="{{route('partner.home.ticket.buy', [0])}}" class="btn red">Buy Ticket</a>
                                                 </div>
                                             </div>
                                         </td>

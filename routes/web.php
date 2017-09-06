@@ -152,4 +152,6 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
 
 Route::group(['prefix' => '/partner', 'middleware' => ['auth', 'role:partner']], function () {
     Route::get('/', 'Dashboard\Partner\PartnerController@index')->name('partner.home');
+    Route::get('event/{id}/buy/', 'Dashboard\Partner\PartnerController@buyTicket')->name('partner.home.ticket.buy');
+    Route::post('event/{id}/buy/', 'Dashboard\Partner\PartnerController@buyTicketPost')->name('partner.home.ticket.buy.post');
 });
