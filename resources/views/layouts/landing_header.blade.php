@@ -7,6 +7,11 @@
         <div class="top-menu">
             <ul class="nav navbar-nav pull-right">
                 <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                    <a class="dropdown-toggle font-white" href="{{URL('/')}}">
+                        Home
+                    </a>
+                </li>
+                <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
                     <span class="dropdown-toggle">
                         {{$page_state}}
                     </span>
