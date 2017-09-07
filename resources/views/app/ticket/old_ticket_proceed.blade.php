@@ -1,4 +1,4 @@
-@extends('layouts.app.app')
+@extends('layouts.app')
 @section('page_style_libs')
     <link href="{{URL('/')}}/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -10,13 +10,13 @@
     <div class="page-title-container">
         <div class="container">
             <div class="page-title pull-left">
-                <h1 class="event-font-primary">Ticket Purchase</h1>
-                <p>{{$event->name}} ticket(s)</p>
+                <h1>Ticket Purchase</h1>
+                <p>{{$event_name}} ticket(s)</p>
             </div>
             <div class="page-sub-title pull-right">
-                <h1 class="event-font-secondary">
+                <h1>
                     <span class="fa-stack fa-2x">
-                        <i class="fa fa-circle fa-stack-2x icon-background2 event-font-secondary"></i>
+                        <i class="fa fa-circle fa-stack-2x icon-background2"></i>
                         <i class="fa fa-money fa-stack-1x"></i>
                     </span>
 
@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-7">
                         <div class="ticket-period-container">
-                            <h3 class="event-font-primary">Proceed Your Payment</h3>
+                            <h3 class="sm-font">Proceed Your Payment</h3>
                         </div>
                         <div class="portlet light bordered">
                             <div class="portlet-body">
@@ -59,28 +59,24 @@
                                     We have sent step-by-step payment guide to your email address. Kindly check your inbox.
                                 </p>
                             </div>
-                            <a href="{{route('app.event.ticket.payment.input.code', [$event->short_name])}}" class="btn sm-button event-button-rev btn-block">Confirm My Purchase</a>
+                            <a href="{{route('app.ticket.payment.input.code')}}" class="btn sm-button btn-block">Confirm My Purchase</a>
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div class="ticket-period-container">
-                            <h3 class="event-font-primary">&nbsp;</h3>
+                            <h3 class="sm-font">&nbsp;</h3>
                         </div>
-                        <div class="portlet light bordered event-bg-color" style="background-image: url('{{asset($event->background_pattern)}}'); background-repeat: no-repeat;     background-repeat: no-repeat;background-position: center top;background-size: 100% auto;">
+                        <div class="portlet light bordered sm-bg-color" style="background-image: url('{{URL('/')}}/assets/pages/img/smilemo-theme.png'); background-repeat: no-repeat;     background-repeat: no-repeat;background-position: center top;background-size: 100% auto;">
                             <div class="portlet-body ticket-summary">
                                 <div class="pull-right">
                                     <h4 class="font-white">Ticket Summary</h4>
                                 </div>
                                 <div class="event-details">
-                                    <h1 class="font-white">{{$event->name}}</h1>
+                                    <h1 class="font-white">Smilemotion 2017</h1>
                                     <p class="font-white">
-                                        {{date('D, d M Y', strtotime($event->date))}}
-                                        <br>
-                                    <div class="font-white">
-                                        {!! $event->location !!}
-                                    </div>
-                                    <br>&nbsp;
-                                    </p>
+                                        Sabtu, 9 Desember 2017
+                                        <br>Sasana Budaya Ganesha
+                                        <br>&nbsp;</p>
                                 </div>
                                 <div class="ticket-item-container">
                                     <table class="ticket-table">

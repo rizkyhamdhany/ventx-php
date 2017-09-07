@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Dashboard\EO;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
@@ -57,16 +58,10 @@ class TransactionsController extends Controller
         $order = Book::find($id);
         $transaction = Transaction::where('status', '!=', 'USED')->get();
         $ordersconf = BookConf::where('book_id', $id)->first();
-        if ($order->ticket_class == 'Reguler'){
-            $order->price_item = 125000;
-            $order->grand_total = $order->price_item * $order->ticket_ammount;
-        } else if ($order->ticket_class == 'VVIP'){
-            $order->price_item = 450000;
-            $order->grand_total = $order->price_item * $order->ticket_ammount;
-        }
-        else {
-            $order->price_item = 250000;
-            $order->grand_total = $order->price_item * $order->ticket_ammount;
+        if ($order->event_id = 0){
+            $order = $this->getTicketPrice($order);
+        }else {
+            $order = $this->getTicketPriceFTB($order);
         }
         return view('dashboard.payments.confirm_transaction')
             ->with('order', $order)
@@ -84,7 +79,29 @@ class TransactionsController extends Controller
         $ordersconf = BookConf::find($request->input('ordersconf_id'));
         $ordersconf->status = 'VERIFIED';
         $ordersconf->save();
-        Order::createOrderFromBankTransfer($preorder);
+        $event = Event::find($preorder->event_id);
+        Order::createOrderFromBankTransferEvent($preorder, $event);
         return redirect()->route('dashboard.payments');
+    }
+
+    private function getTicketPrice($order){
+        if ($order->ticket_class == 'Reguler'){
+            $order->price_item = 125000;
+            $order->grand_total = $order->price_item * $order->ticket_ammount;
+        } else if ($order->ticket_class == 'VVIP'){
+            $order->price_item = 450000;
+            $order->grand_total = $order->price_item * $order->ticket_ammount;
+        }
+        else {
+            $order->price_item = 250000;
+            $order->grand_total = $order->price_item * $order->ticket_ammount;
+        }
+        return $order;
+    }
+
+    private function getTicketPriceFTB($order){
+        $order->price_item = 45000;
+        $order->grand_total = $order->price_item * $order->ticket_ammount;
+        return $order;
     }
 }

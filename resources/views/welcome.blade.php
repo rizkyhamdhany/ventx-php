@@ -46,7 +46,7 @@
             <div class="row min-height-500">
                 <div class="grid">
                     <div class="grid-item music col-md-3 col-sm-6 col-xs-12">
-                        <a href="{{URL('/')}}/smilemotion">
+                        <a href="{{route('event.home', ['smilemotion'])}}">
                             <img src="{{URL('/')}}/assets_landing/img/smo_thumb.jpg" alt=""/>
                             <div class="grid-item-hover">
                                 <span class="grid-item-hover-icon grid-buy"><button class="btn-buy">Buy Ticket</button></span>
@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="grid-item music col-md-3 col-sm-6 col-xs-12">
-                        <a href="#">
+                        <a href="{{route('event.home', ['festival_budaya'])}}">
                             <img src="{{URL('/')}}/assets_landing/img/ftb_thumb.jpg" alt=""/>
                             <div class="grid-item-hover">
                                 <span class="grid-item-hover-icon"></span>

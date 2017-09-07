@@ -1,24 +1,9 @@
-@extends('layouts.landing_smilemo')
+@extends('layouts.app_event')
 @section('content')
     <div class="user-login-5" id="confirm-payment-3">
         <div class="row bs-reset">
-            <div class="col-md-4 bs-reset mt-login-5-bsfix">
-                <div class="login-bg" style="background-image:url({{URL('/')}}/assets/pages/img/login/bg1.jpg)">
-                    <img class="login-logo" src="{{URL('/')}}/assets/pages/img/login/logo.png" />
-                    <div class="btn smilemo-color-rev presale_button">Presale 2</div>
-                    <div class="presale-artist">
-                        <p>
-                            Pre-Sale <br>
-                            Confirmed Artist
-                        </p>
-                        <h1>
-                            Teddy <br>
-                            Adhitya
-                        </h1>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8 login-container bs-reset mt-login-5-bsfix right-container">
+            @include('app.event.landing_left')
+            <div class="col-md-8 login-container event-bg-color bs-reset mt-login-5-bsfix right-container">
                 <div class="col-md-12 header">
                     <h1>Payment Confirmation</h1>
                 </div>

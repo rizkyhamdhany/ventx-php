@@ -38,7 +38,7 @@
                         <div class="portlet light bordered">
                             <div class="portlet-body padding-bottom-30">
                                 <div class="col-md-6 sm-border-right">
-                                    @include('app.ticket.ticket_seat_svg')
+                                    @include('app.ticket.old_ticket_seat_svg')
                                 </div>
                                 <div class="col-md-6">
                                     <div class="tab-content">
@@ -104,7 +104,7 @@
                         </div>
                         <div class="portlet light bordered">
                             <div class="portlet-body no-padding-bottom">
-                                @include('app.ticket.ticket_list_reguler')
+                                @include('app.ticket.old_ticket_list_reguler')
                             </div>
                         </div>
                     </div>

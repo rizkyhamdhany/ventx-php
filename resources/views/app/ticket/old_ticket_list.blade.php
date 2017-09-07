@@ -1,4 +1,4 @@
-@extends('layouts.app.app')
+@extends('layouts.app')
 @section('page_style_libs')
     <link href="{{URL('/')}}/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
     <link href="{{URL('/')}}/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -10,13 +10,13 @@
     <div class="page-title-container">
         <div class="container">
             <div class="page-title pull-left">
-                <h1 class="event-font-primary">Ticket Purchase</h1>
-                <p>{{$event->name}} ticket(s)</p>
+                <h1>Ticket Purchase</h1>
+                <p>{{$event_name}} ticket(s)</p>
             </div>
             <div class="page-sub-title pull-right">
-                <h1 class="event-font-secondary">
+                <h1>
                     <span class="fa-stack fa-2x">
-                        <i class="fa fa-circle fa-stack-2x icon-background2 event-font-secondary"></i>
+                        <i class="fa fa-circle fa-stack-2x icon-background2"></i>
                         <i class="fa fa-ticket fa-stack-1x"></i>
                     </span>
 
@@ -30,12 +30,18 @@
     <div class="container">
         <div class="page-content-wrapper">
             <div class="page-content">
-                @if($event->count_ticket_class > 1)
                 <div class="row">
                     <div>
                         <div class="ticket-period-container">
-                            <h3 class="sm-font event-font-primary">Select Your Seat</h3>
-                            @include('layouts.error_msg_app')
+                            <h3 class="sm-font">Select Your Seat</h3>
+                            @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                                @if(Session::has('alert-' . $msg))
+                                    <div class="alert  alert-{{ $msg }}">
+                                        {!!Session::get('alert-' . $msg) !!}
+                                    </div>
+                                @endif
+                            @endforeach
+
 
                         </div>
                         <div class="portlet light bordered">
@@ -46,54 +52,54 @@
                                 <div class="col-md-6">
                                     <div class="tab-content">
                                         @php($is_first = true)
-                                            @php($alphabet = range('A', 'Z'))
-                                                @foreach($ticket_class as $area)
-                                                    <div class="tab-pane seats {{$is_first ? 'active' : ' '}} @php($is_first = false)" id="seat-map-{{$area->id}}">
-                                                        @if($area->have_seat)
-                                                            <button class="btn btn-circle sm-button-small margin-bottom-10">{{$area->name}} - Available Seat</button>
-                                                            @for ($i = 0; $i < $area->row; $i++)
-                                                                @if($i == 0)
-                                                                    <div class="seat-row">
-                                                                        <div class="seat-col">&nbsp </div>
-                                                                        @for ($j = 1; $j < ($area->col + 1); $j++)
-                                                                            <div class="seat-col">{{$j < 10 ? '&nbsp;'.$j : $j }}</div>
-                                                                        @endfor
-                                                                    </div>
-                                                                @endif
-                                                                <div class="seat-row">
-                                                                    @php($row = $alphabet[($area->row - $i) - 1])
-                                                                        <div class="seat-col">{{$row}}</div>
-                                                                        @for ($j = 0; $j < $area->col; $j++)
-                                                                            <div class="seat-col {{isset($seat[$area->name][$row.($j+1)]) && !in_array($seat[$area->name][$row.($j+1)], $seat_booked)  ? 'seat-ava' : 'seat-una'}}"
-                                                                                 onclick="{{isset($seat[$area->name][$row.($j+1)]) && !in_array($seat[$area->name][$row.($j+1)], $seat_booked)  ? 'selectSeat('.$seat[$area->name][$row.($j+1)].')' : ''}}"
-                                                                                 id="{{isset($seat[$area->name][$row.($j+1)]) && !in_array($seat[$area->name][$row.($j+1)], $seat_booked) ? 'seat_'.$seat[$area->name][$row.($j+1)] : ''}}">
-                                                                                &nbsp;
-                                                                            </div>
-                                                                        @endfor
+                                        @php($alphabet = range('A', 'Z'))
+                                        @foreach($ticket_class as $area)
+                                            <div class="tab-pane seats {{$is_first ? 'active' : ' '}} @php($is_first = false)" id="seat-map-{{$area->id}}">
+                                                @if($area->have_seat)
+                                                    <button class="btn btn-circle sm-button-small margin-bottom-10">{{$area->name}} - Available Seat</button>
+                                                    @for ($i = 0; $i < $area->row; $i++)
+                                                        @if($i == 0)
+                                                            <div class="seat-row">
+                                                                <div class="seat-col">&nbsp </div>
+                                                                @for ($j = 1; $j < ($area->col + 1); $j++)
+                                                                    <div class="seat-col">{{$j < 10 ? '&nbsp;'.$j : $j }}</div>
+                                                                @endfor
+                                                            </div>
+                                                        @endif
+                                                        <div class="seat-row">
+                                                            @php($row = $alphabet[($area->row - $i) - 1])
+                                                            <div class="seat-col">{{$row}}</div>
+                                                            @for ($j = 0; $j < $area->col; $j++)
+                                                                <div class="seat-col {{isset($seat[$area->name][$row.($j+1)]) && !in_array($seat[$area->name][$row.($j+1)], $seat_booked)  ? 'seat-ava' : 'seat-una'}}"
+                                                                     onclick="{{isset($seat[$area->name][$row.($j+1)]) && !in_array($seat[$area->name][$row.($j+1)], $seat_booked)  ? 'selectSeat('.$seat[$area->name][$row.($j+1)].')' : ''}}"
+                                                                     id="{{isset($seat[$area->name][$row.($j+1)]) && !in_array($seat[$area->name][$row.($j+1)], $seat_booked) ? 'seat_'.$seat[$area->name][$row.($j+1)] : ''}}">
+                                                                    &nbsp;
                                                                 </div>
                                                             @endfor
-                                                            <div class="seat-info-container">
+                                                        </div>
+                                                    @endfor
+                                                    <div class="seat-info-container">
 
-                                                                <div class="seat-info-item">
-                                                                    <div class="seat-info-item seat-col seat-info-sel"></div>
-                                                                    <p>Selected</p>
-                                                                </div>
-                                                                <div class="seat-info-item">
-                                                                    <div class="seat-info-item seat-col seat-info-ava"></div>
-                                                                    <p>Available</p>
-                                                                </div>
-                                                                <div class="seat-info-item">
-                                                                    <div class="seat-info-item seat-col seat-info-una"></div>
-                                                                    <p>Sold</p>
-                                                                </div>
-                                                                <div style="clear: both"></div>
-                                                            </div>
-                                                        @else
-                                                            <p class="no-seat-text">Selecting Seat Only Available for VVIP & VIP</p>
-                                                        @endif
-                                                        <div class="clearfix"></div>
+                                                        <div class="seat-info-item">
+                                                            <div class="seat-info-item seat-col seat-info-sel"></div>
+                                                            <p>Selected</p>
+                                                        </div>
+                                                        <div class="seat-info-item">
+                                                            <div class="seat-info-item seat-col seat-info-ava"></div>
+                                                            <p>Available</p>
+                                                        </div>
+                                                        <div class="seat-info-item">
+                                                            <div class="seat-info-item seat-col seat-info-una"></div>
+                                                            <p>Sold</p>
+                                                        </div>
+                                                        <div style="clear: both"></div>
                                                     </div>
-                                                @endforeach
+                                                @else
+                                                    <p class="no-seat-text">Selecting Seat Only Available for VVIP & VIP</p>
+                                                @endif
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -102,17 +108,10 @@
                         </div>
                     </div>
                 </div>
-                @endif
                 <div class="row">
                     <div>
                         <div class="ticket-period-container">
-                            <h3 class="sm-font event-font-primary">Selected Seat</h3>
-                            @if($event->count_ticket_class == 1)
-                                @include('layouts.error_msg_app')
-                                <br>
-                                <br>
-                                <br>
-                            @endif
+                            <h3 class="sm-font">Selected Seat</h3>
                         </div>
                         <div class="portlet light bordered">
                             <div class="portlet-body no-padding-bottom">
