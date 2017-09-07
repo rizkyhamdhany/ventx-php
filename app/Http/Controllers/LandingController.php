@@ -34,7 +34,7 @@ class LandingController extends Controller
         return view('welcome');
     }
     public function event(){
-        return view('app.app_landing');
+        return redirect()->route('event.home', ['smilemotion']);
     }
     public function contact(){
         View::share( 'page_state', 'Contact Us' );
