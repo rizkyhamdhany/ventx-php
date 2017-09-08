@@ -30,10 +30,22 @@
                     @endforeach
                     <div class="portlet light bordered">
                         <div class="portlet-title">
-                          @forelse($arrRoot as $r)
-                            <?php print_r($r); print "<br>";?>
-                            @empty
-                            <?php echo "There is Nothing"; ?>
+                          @forelse($periods as $period)
+                            {{$period}}
+                          @empty
+                            <?php print "Empty"; ?>
+                          @endforelse
+                          <br><br><br>
+                          @forelse($classes as $class)
+                            {{$class}}
+                          @empty
+                            <?php print "Empty"; ?>
+                          @endforelse
+                          <br><br><br>
+                          @forelse($events as $event)
+                            {{$event}}
+                          @empty
+                            <?php print "Empty"; ?>
                           @endforelse
                             <div class="caption">
                                 <i class="icon-settings font-red"></i>
@@ -49,17 +61,19 @@
                         </div>
                         <div class="portlet-body">
                             <div class="row">
-                              @forelse($arrRoot as $root)
+                              @forelse($periods as $period)
                               <div class="col-lg-3 col-md-4 col-xs-12">
                                   <div class="mt-element-ribbon bg-grey-steel">
-                                      <div class="ribbon ribbon-color-warning uppercase">{{$root['name']}}</div>
-                                      @foreach($root['class'] as $class)
-                                        <div class="ribbon-content">{{$class}}</div>
-                                      @endforeach
+                                      <div class="ribbon ribbon-color-warning uppercase">{{$period->name}}</div>
+                                        @forelse($classes as $class)
+                                          <div class="ribbon-content">{{$class}}</div>
+                                        @empty
+                                          <?php print "Empty"; ?>
+                                        @endforelse
                                   </div>
                               </div>
                               @empty
-                                <p>There is no Ticket Period yet</p>
+                                <?php print "No Category" ?>
                               @endforelse
                             </div>
                         </div>

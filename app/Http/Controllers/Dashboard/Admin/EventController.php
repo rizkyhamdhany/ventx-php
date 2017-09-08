@@ -67,39 +67,20 @@ class EventController extends Controller
     }
 
     public function ticketCategory($id){
-      $periodRepoByEvent = TicketPeriod::where('event_id', $id)->get();
-      $arrRoot = array();
-      $arrPeriod = array();
-      $arrClass = array();
-
-      $cls1 = array("id"=>1,"name"=>"namanya1");
-      $cls2 = array("id"=>2,"name"=>"namanya2");
-      $test1 = array("id"=>1,"name"=>"bebas1","class"=>$cls1);
-      $test2 = array("id"=>2,"name"=>"bebas2","class"=>$cls2);
-      $root = array();
-      array_push($root,$test1);
-      array_push($root,$test2);
-
-      foreach ($periodRepoByEvent as $period) {
-        $arrPeriod['id'] = $period->id;
-        $arrPeriod['name'] = $period->name;
-        foreach (TicketClass::where('ticket_period_id', $period->id)->get() as $class) {
-          $arrClass['id'] = $class->id;
-          $arrClass['name'] = $class->name;
-          $arrClass['price'] = $class->price;
-          $arrClass['amount'] = $class->amount;
-          $arrPeriod['class'] = $arrClass;
-        }
-        //$arrPeriod['class'] = $arrClass;
-        array_push($arrRoot,$arrPeriod);
+      $periodByEvent = TicketPeriod::where('event_id', $id)->get();
+      $class = array();
+      $event = array();
+      foreach($periodByEvent as $period){
+        $class[] = TicketClass::where('ticket_period_id', $period->id)->where('event_id', $id)->get();
+        array_push($event, $this->eventRepo->find($id));
       }
 
       View::share('page_state', 'Ticket Category');
       return view('dashboard.admin.event.event_ticketCategory')
-          ->with('periods', $this->ticketPeriodRepo->all())
-          ->with('classes', $this->ticketClassRepo->all())
-          ->with('id', $id)
-          ->with('arrRoot', (object) $arrRoot);
+          ->with('periods', $periodByEvent->all())
+          ->with('events',$event)
+          ->with('classes',(object)$class)
+          ->with('id', $id);
     }
 
     public function ticketPeriodAdd($id, Request $request)

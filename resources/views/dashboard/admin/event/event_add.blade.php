@@ -73,9 +73,7 @@
                                     <div class="form-group {{$errors->has('location') ? 'has-error' : ' ' }}">
                                         <label class="control-label col-md-3">Location</label>
                                         <div class="col-md-9">
-                                            <textarea name="location" id="summernote_1">
-                                            {{ old('location') }}
-                                            </textarea>
+                                            <textarea name="location" id="summernote_1">{{ old('location') }}</textarea>
                                             <span class="help-block"> Please Fill Location </span>
                                         </div>
                                     </div>
