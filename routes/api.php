@@ -19,7 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('/doku')->group(function () {
     Route::post('/verify', 'App\PaymentController@dokuVerify')->name('payment.doku.verify');
-    Route::get('/notify', 'App\PaymentController@dokuNotify')->name('payment.doku.notify');
+    Route::post('/notify', 'App\PaymentController@dokuNotify')->name('payment.doku.notify');
+    Route::post('/redirect', 'App\PaymentController@dokuRedirectProcess')->name('payment.doku.redirecprocess');
+    Route::post('/cancel', 'App\PaymentController@dokuCancel')->name('payment.doku.cancel');
 });
 
 Route::get('/api/v1/products/{id?}', ['middleware' => 'auth.basic', function($id = null) {
