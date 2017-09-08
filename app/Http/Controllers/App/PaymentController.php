@@ -118,7 +118,9 @@ class PaymentController extends Controller
         $preorderConfs = new BookConf();
         $preorderConfs->order_code = $order_code;
         $preorderConfs->account_holder = $request->input('account_holder');
-        $preorderConfs->transfer_date = $request->input('date');
+        $time = strtotime($request->input('date'));
+        $newformat = date('Y-m-d',$time);
+        $preorderConfs->transfer_date = $newformat;
         $preorderConfs->status = 'WAITING';
         $preorderConfs->bank_id = $request->input('bank');
         $preorderConfs->book_id = $preorder->id;
