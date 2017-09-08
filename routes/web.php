@@ -20,6 +20,7 @@ Route::get('/tnc', 'LandingController@tnc')->name('tnc');
 Route::prefix('/doku')->group(function () {
     Route::get('/test', 'App\PaymentController@testPay')->name('payment.doku.test');
     Route::get('/redirect', 'App\PaymentController@dokuRedirectProcess')->name('payment.doku.redirecprocess');
+    Route::get('/cancel', 'App\PaymentController@dokuCancel')->name('payment.doku.cancel');
 });
 
 Route::get('/testpay', 'App\PaymentController@testPay')->name('testpay');
