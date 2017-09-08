@@ -159,7 +159,7 @@ class PaymentController extends Controller
             'action' => 'verify' ,
             'log' => json_encode($request->input())
         ]);
-        echo "Continue";
+        echo '"Continue"';
     }
 
     public function dokuNotify(Request $request){
