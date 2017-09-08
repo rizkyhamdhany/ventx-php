@@ -23,6 +23,7 @@ Route::prefix('/doku')->group(function () {
     Route::get('/notify', 'App\PaymentController@dokuNotify')->name('payment.doku.notify');
     Route::get('/redirect', 'App\PaymentController@dokuRedirectProcess')->name('payment.doku.redirecprocess');
     Route::get('/cancel', 'App\PaymentController@dokuCancel')->name('payment.doku.cancel');
+    //
 });
 
 Route::get('/testpay', 'App\PaymentController@testPay')->name('testpay');
