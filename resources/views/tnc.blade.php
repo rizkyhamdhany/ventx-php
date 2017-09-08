@@ -28,85 +28,77 @@
                             <div class="portlet light bordered margin-top-30">
                                 <div class="portlet-body">
                                     <h1>Nalar Ventex</h1>
-                                    <p>
-                                        Terms and Conditions
-                                    </p>
-
-                                    <ol>
-                                        <li class="tnc_item">E-ticket ini merupakan tiket pertunjukan. Bawalah e-Ticket ini pada hari H pertunjukan.
-                                            <br><i>E-tickets are the show's tickets. Please bring this E-ticket to the show.
-                                            </i></li>
-                                        <li class="tnc_item">Pembelian yang sah hanya dapat didapatkan secara online melalui smilemotion.org atau ticket box yang ditunjuk.
-                                            <br><i>Valid purchases can only be obtained online via smilemotion.org or any other chosen ticket boxes.
-                                            </i></li>
-                                        <li class="tnc_item">Kehilangan dan kerusakan e-Ticket bukan tanggung jawab promotor, harap perhatikan dengan baik e-Ticket anda.
-                                            <br><i>Lost and damaged e-Tickets are NOT the responsibility of the promoter. Please check your e-Tickets carefully.
-                                            </i></li>
-                                        <li class="tnc_item">Penyelenggara berhak melarang masuk pengunjung yang tidak dapat menunjukan e-Ticket.
-                                            <br><i>The promoter reserves the right to forbid the entry of visitors who cannot present their e-Tickets.
-                                            </i></li>
-                                        <li class="tnc_item">Pembeli hanya diperkenankan untuk menggunakan e-Ticket yang telah dibeli sebanyak satu kali, penggunaan yang berulang dan penggandaan e-Ticket merupakan perbuatan melanggar hukum.
-                                            <br><i>Purchasers only are allowed to use e-Ticket one time for each purchase, re-using and duplicating of e-Ticket are not allowed and is illegal.
-                                            </i></li>
-                                        <li class="tnc_item">Satu e-Ticket dengan satu kode QR unik ini hanya berlaku untuk satu orang.
-                                            <br><i>One e-Ticket with its own unique QR code is only valid for one person.
-                                            </i></li>
-                                        <li class="tnc_item">E-Ticket dengan kode QR yang telah dipergunakan sebelumnya tidak berlaku.
-                                            <br><i>An e-Ticket with used QR code is not valid.
-                                            </i></li>
-                                        <li class="tnc_item">Penyelenggara berhak untuk menolak penukaran e-Ticket dengan kode QR yang telah terdeteksi masuk sebelumnya oleh orang lain.
-                                            <br><i>The promoter reserves the right to refuse e-Ticket's exchange with QR code that has been detected to enter previously.
-                                            </i></li>
-                                        <li class="tnc_item">Penyelenggara berhak untuk memproses dan menuntut secara hukum sesuai dengan ketentuan perundangan yang berlaku baik secara perdata maupun secara pidana, terhadap orang-orang yang memperoleh e-Ticket dengan cara yang tidak sah termasuk tapi tidak terbatas, dengan cara melakukan pemalsuan atau menggandakan e-Ticket yang sah atau memperoleh e-Ticket dengan cara yang tidak sesuai dengan yang ditentukan oleh penyelenggara sebagaimana dalam butir (2) ketentuan ini.
-                                            <br><i>The promoter reserves the right to process and litigate in accordance with Indonesian regulations either in civil or criminal proceedings against people who get tickets in ways that are not valid, including but not limited to counterfeiting or copying a valid ticket or get a ticket in a way that do not match those specified by the Promoter as in item (2) of this provision.
-                                            </i></li>
-                                        <li class="tnc_item">Penyelenggara tidak bertanggung jawab atas kelalaian, pembeli tiket yang mengakibatkan tiket jatuh ke tangan orang lain (dalam penguasaan orang lain) untuk dipergunakan  sebagai tanda masuk tempat pertunjukan yang menghilangkan hak dari pembeli e-Ticket.
-                                            <br><i>The promoter is not responsible for negligence of the ticket purchaser that resulted in the purchaser's ticket fell to the hands of others (in the possession of others) to be used as an admission that eliminates the ticket buyer from entering the venue.
-                                            </i></li>
-                                        <li class="tnc_item">E-Ticket yang telah dibeli tidak dapat ditukar / divangkan kembali.
-                                            <br><i>E-Tickets are non-returnable and may not be redeemed for cash under any circumstances.
-                                            </i></li>
-                                        <li class="tnc_item">Harap membawa kartu identitas diri yang sesuai dengan data yang didaftarkan pada saat reservasi.
-                                            <br><i>Purchasers must present identification cards according to the data registered during reservation.
-                                            </i></li>
-                                        <li class="tnc_item">Jika e-Ticket ini dipindahtangankan harus menyertakan surat kuasa yang ditandatangani pemesan dan bermaterai cukup.
-                                            <br><i>If the e-Ticket is transferred from the purchaser, please provide an authorization documentation stating the ticket transfer.
-                                            </i></li>
-                                        <li class="tnc_item">Dilarang membawa makanan dan minuman dari luar.
-                                            <br><i>Food and drinks other than those which can be purchased from the Venue concessionaires,  shall be prohibited inside the Venue.
-                                            </i></li>
-                                        <li class="tnc_item">Dilarang membawa obat-obatan terlarang, senjata api, senjata tajam, dan alcohol ke dalam tempat pertunjukan.
-                                            <br><i>Weapons, illegal drugs, and alcoholic beverages are prohibited inside the Venue.
-                                            </i></li>
-                                        <li class="tnc_item">Penyelenggara berhak mengeluarkan pengunjung yang membuat kegaduhan dan mengganggu kenyamanan pengunjung lain.
-                                            <br><i>The promoter reserves the right to reject audience who possess a clear and present danger or commotion to the public
-                                            </i></li>
-                                        <li class="tnc_item">Penyelenggara tidak menyediakan tempat penitipan barang dan tidak bertanggung jawab apabila terjadi kehilangan.
-                                            <br><i>The   promoter   does   not   provide   care   goods and not responsible in the event of loss.
-                                            </i></li>
-                                        <li class="tnc_item">Penyelenggara berhak tidak memberi izin penonton masuk  ke  dalam  suatu  ruangan  karena sudah dianggap penuh sehingga menjadi tidak aman untuk pengunjung.
-                                            <br><i>The Promoter reserves the right to not give permission entry to the audience due to Venue's capacity that may present danger.
-                                            </i></li>
-                                        <li class="tnc_item">Tiket yang sudah dibeli tidak dapat dikembalikan
-                                            <br><i>Tickets already purchased are non-refundable.
-                                            </i></li>
-                                        <li class="tnc_item">Nalar Ventex akan mengembalikan tiket yang hilang karena kegagalan transaksi yang disebabkan oleh kesalahan sistem. Pengembalian tiket disesuaikan dengan harga tiket.
-                                            <br><i>Nalar Ventex will replace ticket lost to transactional failure caused by system error. The ticket will be refunded based on ticket price.
-                                            </i></li>
-                                        <li class="tnc_item">Ketika suatu event diundur atau dibatalkan, kami akan segera menginformasikan kepada pemegang tiket mengenai kebijakan prosedur pengembalian tiket setelah kami mendapatkan informasi mendetil dari pihak promotor.
-                                            <br><i>When an event rescheduled or cancelled, we will immediately notify ticket holders and informing them about the refund procedure after we receive information details from promoter.
-                                            </i></li>
-                                        <li class="tnc_item">Ketika suatu acara diundur atau dibatalkan, Nalar Ventex akan mengembalikan dana berdasarkan harga tiket. Segala biaya administrasi seperti biaya proses pesanan, dan biaya proses kartu kredit tidak dapat dikembalikan.
-                                            <br><i>When an event rescheduled or cancelled, Nalar Ventex will refund the ticket based on ticket price. Any cost such as order processing fee, and credit card processing fee is non-refundable.
-                                            </i></li>
-                                        <li class="tnc_item">Informasi lanjutan mengenai pembatalan suatu acara ataupun prosedur pengembalian tiket akan dipublikasikan melalui email/website/telepon.
-                                            <br><i>Details about cancellation of events or refund procedure will be published via email/website/telephone.
-                                            </i></li>
-                                    </ol>
-                                    SYARAT DAN KETENTUAN DI ATAS TELAH SAYA BACA, PAHAMI, MENGERTI DAN SAYA MENYETUJUI UNTUK TERIKAT SECARA HUKUM ATAS SYARAT DAN KETENTUAN DI ATAS
-                                    I HAVE READ, UNDERSTAND, AND AGREE TO BE BOUND BY LAW TO THE TERMS AND CONDITIONS ABOVE
-
-                                    </p>
+                                    <p><strong>TERMS &amp; CONDITIONS OF USE</strong><strong>&nbsp;</strong></p>
+                                    <p>Nalar-ventex.com adalah jasa online yang dimiliki dan dioperasikan oleh PT Wijaya Visi Internasional. Segala aktifitas dan aturan yang bersangkutan langsung dengan website ini akan sepenuhnya diatur oleh syarat dan ketentuan di bawah ini.&nbsp;</p>
+                                    <p>Dalam waktu yang tidak ditentukan syarat dan ketentuan akan berubah. Penggunaan anda atas website ini harus mengikuti setiap perubahan yang merupakan bagian dari perjanjian dan terikat oleh persyaratan sesuai dengan perubahan yang ada tanpa terkecuali.</p>
+                                    <p><strong>Barang dan Jasa</strong></p>
+                                    <p>Wijaya Visi Internasional merupakan perusahaan teknologi informasi yang memperjual belikan barang / jasa pemesanan tiket acara yang bermitra dengan Nalar Ventex, termasuk dan tidak terbatas pada acara pertunjukkan musik, festival kebudayan, dan sebagainya.</p>
+                                    <p><strong>Kebijakan Pemesanan</strong></p>
+                                    <ul>
+                                        <li>Pelanggan terlebih dahulu memilih acara yang diinginkan dengan meng-klik thumbnail event yang bersangkutan.</li>
+                                        <li>Di bagian event, pelanggan dapat mendapatkan informasi spesifikasi acara, kemudian dapat melakukan pembelian dengan cara meng-klik &ldquo;Buy Ticket&rdquo;.</li>
+                                        <li>Pelanggan memilih jenis dan jumlah tiket (serta posisi tempat duduk jika tersedia). Setelah memilih, pelanggan bias melanjutkan pembelian dengan meng-klik &ldquo;Proceed&rdquo;.</li>
+                                        <li>Pelanggan memasukkan data identitas pribadi pemesan tiket, (Nama Lengkap, No. Telepon dan Alamat Email) dan data identitas pribadi penerima tiket masing-masing, lalu klik &ldquo;Proceed&rdquo;.</li>
+                                        <li>Selanjutnya, pelanggan memilih metode pembayaran (Transfer Bank, Kartu Kredit, Alfamart atau Indomaret). Lalu klik &ldquo;pay&rdquo;.</li>
+                                        <li>Kemudian sistem Nalar Ventex akan memberikan kode pemesanan beserta informasi mendetil tentang metode pembayaran yang dipilih. Kemudian pelanggan meng-klik &ldquo;Confirm My Purchase&rdquo;.</li>
+                                        <li>Selanjutnya, pelanggan memasukkan kode pemesanan di kolom yang tersedia kemudian meng-klik &ldquo;Submit&rdquo;.</li>
+                                        <li>Setelah melakukan pembayaran, pelanggan melakukan konfirmasi dengan mengisi bukti pembayaran lalu meng-klik &ldquo;Confirm&rdquo;.</li>
+                                        <li>Sistem Nalar Ventex akan mengkonfirmasi pembelian dan menyampaikan bukti pembelian beserta tiket kepada pelanggan.</li>
+                                    </ul>
+                                    <p><strong>Kebijakan Pembayaran</strong></p>
+                                    <p>Kami menawarkan beberapa metode pembayaran:</p>
+                                    <ul>
+                                        <li>Pembayaran melalui transfer ke rekening bank</li>
+                                        <li>Pembayaran dengan kartu kredit: Visa dan Mastercard</li>
+                                        <li>Pembayaran melalui Alfamart</li>
+                                        <li>Pembayaran melalui Indomaret</li>
+                                    </ul>
+                                    <p>Khusus pembayaran dengan kartu kredit, pelanggan harus meng-klik submit untuk proses pembayaran online dan memasukan data pemegang kartu kredit</p>
+                                    <p>Kami tidak bertanggung jawab atas penyalahgunaan kartu kredit atau alat pembayaran apapun yang merupakan hak milik anda dan di luar jangkauan pengawasan kami.</p>
+                                    <p>Mata uang yang digunakan dan berlaku sah dalam pembelian pada website ini adalah dalam Indonesia Rupiah (IDR). (Semua transaksi akan diproses dalam mata uang Rupiah)</p>
+                                    <p>Semua transaksi akan diproses dalam kurun waktu 1x 24 jam</p>
+                                    <p>Pelanggan kemudian diwajibkan untuk menyelesaikan pembayaran dan apabila transaksi pembayaran telah berhasil dilakukan, kami akan mengirimkan tanda terima pembayaran melalui surat elektronik (e-mail) kepada alamat e-mail yang tercantum dalam data pribadi pembeli dalam waktu max 1 (satu) hari setelah proses pembayaran selesai dilakukan"</p>
+                                    <p>Kami tidak melayani pengembalian dana kecuali apabila ada kesalahan dari pihak kami dan di luar dari yang sudah ditetapkan dalan syarat dan ketentuan pada halaman ini. Pengembalian barang yang terjadi di luar dari kesepakatan penyelesain masalah pembelian yang telah disetujui kedua belah pihak bukan merupakan tanggung jawab dan bagian dari pelayanan kami. Kami tidak bertanggung jawab atas tiket yang pelanggan kembalikan karena secara sah tiket tersebut sudah menjadi hak milik dan tanggung jawab pelanggan.</p>
+                                    <p>Refund berlaku apabila barang yang telah di pesan dan dibayar tidak ada stock dan akan kami kembalikan dlam bentuk Kredit Balance.</p>
+                                    <p>Pembatalan Pesanan (cancellation) dibatalkan secara sepihak apabila:</p>
+                                    <ul>
+                                        <li>Anda belum melakukan pembayaran dalam waktu 3x24 jam setelah order atau atas permintaan pelanggan.</li>
+                                        <li>Kami belum menerima pembayaran anda.</li>
+                                        <li>Tanggal berlaku pada invoice untuk order tersebut sudah kadaluarsa.</li>
+                                    </ul>
+                                    <p><strong>&nbsp;</strong></p>
+                                    <p><strong>Kebijakan Pengiriman</strong></p>
+                                    <ul>
+                                        <li>Pengiriman tiket akan dilakukan setelah Nalar Ventex melakukan verifikasi atas pembayaran yang dilakukan pelanggan. Pelanggan dapat mengetahui status pemesanan melalui korespondensi melalui email.</li>
+                                        <li>Pengiriman tiket ditujukan kepada alamat-alamat email yang tertera di bagian formulir pemesanan yang diisi pelanggan.</li>
+                                    </ul>
+                                    <p>&nbsp;</p>
+                                    <p><strong>Kebijakan Privasi</strong></p>
+                                    <p>Nalar Ventex menjaga privasi Anda dengan sangat serius. Kami percaya bahwa privasi elektronik sangat penting bagi keberhasilan berkelanjutan dari layanan berbasis Internet.</p>
+                                    <p>Kami percaya bahwa informasi ini hanya dan harus digunakan untuk membantu kami menyediakan layanan yang lebih baik. Itulah sebabnya kami telah menempatkan kebijakan untuk melindungi informasi pribadi Anda.</p>
+                                    <p><strong>&nbsp;</strong></p>
+                                    <p><strong>Ringkasan Kebijakan kami</strong></p>
+                                    <p>Secara umum, ketika pelanggan mengunjungi situs web kami dan mengakses informasi pelanggan akan tetap diperlakukan sebagai anonim. Sebelum kami meminta pelanggan untuk mengisi informasi, kami akan menjelaskan bagaimana informasi ini akan digunakan. Kami tidak akan memberikan informasi pribadi Anda kepada perusahaan lain atau individu tanpa perizinan tertulis dari pelanggan.</p>
+                                    <p>Beberapa bagian dari website kami memerlukan pendaftaran untuk mengaksesnya, walaupun biasanya semua yang diminta adalah berupaalamat e-mail dan beberapa informasi dasar tentang pelanggan.</p>
+                                    <p>Ada bagian di mana kami akan meminta informasi tambahan. Kami melakukan ini untuk dapat lebih memahami kebutuhan pelanggan, dan memberikan sebaik mungkin untuk pelanggan. Beberapa contoh informasi website kami butuhkan seperti nama, email, dan info pribadi. Kami memberikan Anda kesempatan untuk memilih untuk tidak menerima materi informasi dari kami.</p>
+                                    <p><strong>&nbsp;</strong></p>
+                                    <p><strong>Melindungi privasi Anda</strong></p>
+                                    <p>Kami akan mengambil langkah yang tepat untuk melindungi privasi pelanggan. Setiap kali pelanggan memberikan informasi yang sensitif (misalnya, nomor kartu kredit untuk melakukan pembelian), kami akan mengambil langkah-langkah yang wajar untuk melindungi, seperti enkripsi nomor kartu pelanggan. Kami juga akan mengambil langkah-langkah keamanan yang wajar untuk melindungi informasi pribadi pelanggan dalam penyimpanan. Nomor kartu kredit hanya digunakan untuk proses pembayaran dan bukan disimpan untuk tujuan pemasaran.</p>
+                                    <p>Kami tidak akan memberikan informasi pribadi Anda kepada perusahaan lain atau individu tanpa izin pelanggan. "Proses-proses pemesanan pelanggan kami pastikan aman dengan protokol Secure Sockets Layer (SSL) dimana SSL menyediakan setiap pelanggan keamanan penuh dan kebebasan untuk belanja online tanpa rasa khawatir mengenai kemungkinan pencurian informasi kartu kredit".</p>
+                                    <p><strong>&nbsp;</strong></p>
+                                    <p><strong>Penggunaan Cookie</strong></p>
+                                    <p>Situs ini menggunakan "cookies" untuk mengidentifikasi sesi pengguna pada Website dan dengan demikian menawarkan kontinuitas sebagai anggota bergerak di sekitar lokasi. Cookie hanya digunakan pada Situs untuk menyimpan data yang non-kritis. Cookies adalah potongan informasi yang situs mentransfer ke hard drive perangkat pelanggan untuk tujuan menyimpan catatan.</p>
+                                    <p>Cookie memungkinkan situs web untuk menjaga informasi pengguna di seluruh koneksi. Cookie berupa string kecil berupa karakter yang digunakan oleh banyak situs untuk mengirimkan data ke komputer Anda, dan dalam keadaan tertentu, mengembalikan informasi ke situs web. Cookie hanya berisi informasi bahwa anggota relawan, dan mereka tidak memiliki kemampuan infiltrasi hard drive pengguna dan mencuri informasi pribadi. Fungsi sederhana cookie adalah membantu pengguna menavigasi situs web dengan sebagai obstruksi sesedikit mungkin.</p>
+                                    <p>Kami mungkin menggunakan perusahaan iklan luar untuk menampilkan iklan di situs kami. Iklan ini mungkin mengandung cookies, dan tampaknya datang dari situs web, tetapi dalam kenyataannya mereka yang datang dari mitra kami yang melayani iklan di Website. Website tertentu dapat menempatkan "cookie" pada perangkat pelanggan untuk memberikan layanan personalisasi dan / atau mempertahankan identitas pelanggan di beberapa halaman dalam satu sesi.</p>
+                                    <p><strong>&nbsp;</strong></p>
+                                    <p><strong>Keamanan</strong></p>
+                                    <p>Situs ini memiliki langkah-langkah keamanan untuk melindungi kehilangan, penyalahgunaan dan perubahan informasi di dalam kendali kita. Langkah-langkah ini meliputi metode perlindungan data dasar dan kompleks, dalam penyimpanan offline tertentu informasi dan securitizing server database kami.</p>
+                                    <p>Situs ini memberikan pilihan bagi para untuk menghapus informasi mereka dari database kami untuk tidak menerima informasi kedepannya atau untuk tidak lagi menerima layanan kami.</p>
+                                    <p><strong>Masukan, Saran, dan Pesan </strong></p>
+                                    <p>Perkembangan dan peningkatan pelayanan kami tidak terlepas dari adanya masukkan Anda. Jika Anda ingin memberi masukan, saran, atau pesan, Anda dapat menghubungi customer care kami di salam@nalar.id atau menghubungi kami di 022-20351755.</p>
+                                    <p>&nbsp;</p>
+                                    <p><strong>Jam Operasional</strong></p>
+                                    <p>Kami akan memproses feedback pelanggan pada hari dan waktu operasional kantor Nalar Ventex yaitu Senin-Jumat jam 09.00-17.00.</p>
                                 </div>
                             </div>
                         </div>

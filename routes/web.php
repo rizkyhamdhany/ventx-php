@@ -14,6 +14,7 @@ Auth::routes();
 
 Route::get('/', 'LandingController@index')->name('home');
 Route::get('/contact', 'LandingController@contact')->name('contact');
+Route::post('/contact_post', 'LandingController@contactPost')->name('contact.post');
 Route::get('/tnc', 'LandingController@tnc')->name('tnc');
 
 Route::prefix('/doku')->group(function () {
@@ -25,36 +26,70 @@ Route::prefix('/doku')->group(function () {
 
 Route::get('/testpay', 'App\PaymentController@testPay')->name('testpay');
 
+/*
+ * delete
+ */
 Route::prefix('/tickets')->middleware(['bookticketsession'])->group(function () {
     Route::prefix('/smilemotion')->group(function () {
-        Route::get('/', 'App\TicketAppController@listTicket')->name('app.ticket.list');
-        Route::post('/book', 'App\TicketAppController@bookTicketPost')->name('app.ticket.book.post');
-        Route::get('/pay', 'App\TicketAppController@payTicket')->name('app.ticket.pay');
-        Route::post('/pay', 'App\TicketAppController@payTicketPost')->name('app.ticket.pay.post');
-        Route::get('/proceed', 'App\TicketAppController@proceedBookTicket')->name('app.ticket.proceed');
-        Route::post('/proceed', 'App\TicketAppController@proceedBookTicketPost')->name('app.ticket.proceed.post');
-        Route::get('/success', 'App\TicketAppController@successBookTicket')->name('app.ticket.success');
+        Route::get('/', 'App\TicketAppController@listTicketOld')->name('app.ticket.list');
+        Route::post('/book', 'App\TicketAppController@bookTicketPostOld')->name('app.ticket.book.post');
+        Route::get('/pay', 'App\TicketAppController@payTicketOld')->name('app.ticket.pay');
+        Route::post('/pay', 'App\TicketAppController@payTicketPostOld')->name('app.ticket.pay.post');
+        Route::get('/proceed', 'App\TicketAppController@proceedBookTicketOld')->name('app.ticket.proceed');
+        Route::post('/proceed', 'App\TicketAppController@proceedBookTicketPostOld')->name('app.ticket.proceed.post');
+        Route::get('/success', 'App\TicketAppController@successBookTicketOld')->name('app.ticket.success');
         Route::prefix('/payment')->group(function () {
             Route::prefix('/confirm')->group(function () {
-                Route::get('/', 'App\PaymentController@inputPaymentCode')->name('app.ticket.payment.input.code');
-                Route::get('/input', 'App\PaymentController@inputPaymentDetail')->name('app.ticket.payment.input.detail');
-                Route::post('/input', 'App\PaymentController@inputPaymentConfirmation')->name('app.ticket.payment.input.detail.input');
-                Route::get('/success', 'App\PaymentController@confrimSuccess')->name('app.ticket.payment.confirm.success');
+                Route::get('/', 'App\PaymentController@inputPaymentCodeOld')->name('app.ticket.payment.input.code');
+                Route::get('/input', 'App\PaymentController@inputPaymentDetailOld')->name('app.ticket.payment.input.detail');
+                Route::post('/input', 'App\PaymentController@inputPaymentConfirmationOld')->name('app.ticket.payment.input.detail.input');
+                Route::get('/success', 'App\PaymentController@confrimSuccessOld')->name('app.ticket.payment.confirm.success');
             });
         });
     });
 });
-Route::get('/test/invoice', 'Dashboard\EO\OrderController@testInvoice')->name('invoice.test');
+/*
+ * end delete
+ */
 
+/*
+ * delete
+ */
 Route::prefix('/smilemotion')->group(function () {
     Route::get('/', 'LandingController@event')->name('welcome');
     Route::get('/input_payment_code', 'App\PaymentController@inputPaymentCode')->name('payment.input.code');
 });
+/*
+ * end delete
+ */
+
+Route::prefix('/event')->group(function () {
+    Route::get('/{event}', 'App\EventController@index')->name('event.home');
+    Route::get('/{event}/input_payment_code', 'App\PaymentController@inputPaymentCode')->name('event.payment.input.code');
+
+    Route::prefix('/tickets/{event}')->middleware(['bookticketsession'])->group(function () {
+        Route::get('/', 'App\TicketAppController@listTicket')->name('app.event.ticket.list');
+        Route::post('/book', 'App\TicketAppController@bookTicketPost')->name('app.event.ticket.book.post');
+        Route::get('/pay', 'App\TicketAppController@payTicket')->name('app.event.ticket.pay');
+        Route::post('/pay', 'App\TicketAppController@payTicketPost')->name('app.event.ticket.pay.post');
+        Route::get('/proceed', 'App\TicketAppController@proceedBookTicket')->name('app.event.ticket.proceed');
+        Route::post('/proceed', 'App\TicketAppController@proceedBookTicketPost')->name('app.event.ticket.proceed.post');
+        Route::get('/success', 'App\TicketAppController@successBookTicket')->name('app.event.ticket.success');
+        Route::prefix('/payment')->group(function () {
+            Route::prefix('/confirm')->group(function () {
+                Route::get('/', 'App\PaymentController@inputPaymentCode')->name('app.event.ticket.payment.input.code');
+                Route::get('/input', 'App\PaymentController@inputPaymentDetail')->name('app.event.ticket.payment.input.detail');
+                Route::post('/input', 'App\PaymentController@inputPaymentConfirmation')->name('app.event.ticket.payment.input.detail.input');
+                Route::get('/success', 'App\PaymentController@confrimSuccess')->name('app.event.ticket.payment.confirm.success');
+            });
+        });
+    });
+});
 
 Route::prefix('/festivalbudaya')->group(function () {
-    Route::get('/', function () {
-        echo "Not available right now";
-    })->name('welcome');
+    Route::get('/', function(){
+      echo "Not available right now";
+    })->name('fesbud');
     Route::get('/input_payment_code', 'App\PaymentController@inputPaymentCode')->name('payment.input.code');
 });
 
@@ -149,4 +184,10 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
         });
         Route::post('/verify', 'Dashboard\EO\TransactionsController@verifyPayment')->name('payment.verify');
     });
+});
+
+Route::group(['prefix' => '/partner', 'middleware' => ['auth', 'role:partner']], function () {
+    Route::get('/', 'Dashboard\Partner\PartnerController@index')->name('partner.home');
+    Route::get('event/{id}/buy/', 'Dashboard\Partner\PartnerController@buyTicket')->name('partner.home.ticket.buy');
+    Route::post('event/{id}/buy/', 'Dashboard\Partner\PartnerController@buyTicketPost')->name('partner.home.ticket.buy.post');
 });

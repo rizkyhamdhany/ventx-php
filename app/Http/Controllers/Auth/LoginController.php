@@ -45,6 +45,8 @@ class LoginController extends Controller
             return  '/dashboard';
         } else if (Auth::user()->hasRole('eo')) {
             return  '/organizer';
+        } else if (Auth::user()->hasRole('partner')) {
+            return  '/partner';
         }
         return "/";
         // or return route('routename');

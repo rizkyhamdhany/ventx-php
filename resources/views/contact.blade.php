@@ -10,6 +10,13 @@
             <div class="page-title pull-left">
                 <h1 class="color-prime">Contact Us</h1>
                 <p>Here are some places where you can find us.</p>
+                @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+                    @if(Session::has('alert-' . $msg))
+                        <div class="note note-{{ $msg }}">
+                            <p>{{ Session::get('alert-' . $msg) }}</p>
+                        </div>
+                    @endif
+                @endforeach
             </div>
             <div class="page-sub-title pull-right">
                 <h1>
@@ -41,6 +48,8 @@
                                     <div class="c-content-label uppercase bg-blue">Contacts</div>
                                     <p>
                                         <strong>T</strong> (022) 20531755
+                                        <br>
+                                        <strong>E</strong> Ticket@nalar-ventex.com
                                 </div>
                             </div>
                         </div>
@@ -55,8 +64,9 @@
                                 <div class="c-content-title-1 c-inverse">
                                     <h3 class="uppercase">Need to know more?</h3>
                                     <div class="c-line-left"></div>
-                                    <p class="c-font-lowercase">We get it, you need more information for assurance, here's where you can get it:.</p>
-                                    <button class="btn grey-cararra font-dark">Learn More</button>
+                                    <p class="c-font-lowercase">We get it, you need more information for assurance, here's where you can get it </p>
+                                    <br>
+                                    <a href="{{route('tnc')}}" class="btn grey-cararra font-dark">Learn More</a>
                                 </div>
                             </div>
                         </div>
@@ -67,16 +77,28 @@
                                     <div class="c-line-left bg-dark"></div>
                                     <p class="c-font-lowercase">Leave your email address so you can get the latest news from us</p>
                                 </div>
-                                <form action="#">
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Your Name" class="form-control input-md"> </div>
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Your Email" class="form-control input-md"> </div>
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Contact Phone" class="form-control input-md"> </div>
-                                    <div class="form-group">
-                                        <textarea rows="8" name="message" placeholder="Write comment here ..." class="form-control input-md"></textarea>
+                                <form action="{{route('contact.post')}}" method="POST">
+                                    {{csrf_field()}}
+                                    <div class="form-group {{$errors->has('name') ? 'has-error' : ' ' }}">
+                                        <input name="name" type="text" placeholder="Your Name" class="form-control input-md" required>
+                                        <span class="help-block"> Please Fill Name </span>
                                     </div>
+                                    <br>
+                                    <div class="form-group {{$errors->has('email') ? 'has-error' : ' ' }}">
+                                        <input name="email" type="text" placeholder="Your Email" class="form-control input-md" required>
+                                        <span class="help-block"> Please Fill Email </span>
+                                    </div>
+                                    <br>
+                                    <div class="form-group {{$errors->has('phone') ? 'has-error' : ' ' }}">
+                                        <input name="phone" type="text" placeholder="Contact Phone" class="form-control input-md" required>
+                                        <span class="help-block"> Please Fill Phone </span>
+                                    </div>
+                                    <br>
+                                    <div class="form-group {{$errors->has('message') ? 'has-error' : ' ' }}">
+                                        <textarea name="message" rows="8" name="message" placeholder="Write comment here ..." class="form-control input-md" required></textarea>
+                                        <span class="help-block"> Please Fill Message </span>
+                                    </div>
+                                    <br>
                                     <button type="submit" class="btn grey">Submit</button>
                                 </form>
                             </div>
@@ -88,7 +110,7 @@
     </div>
 @endsection
 @section('page_js_plugins')
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyBMecqKthwhr1QOmp0uAofyJ8kHhBxra-Y&sensor=false" type="text/javascript"></script>
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyBMecqKthwhr1QOmp0uAofyJ8kHhBxra-Y&sensor=false" type="text/javascript"></script>
     <script src="{{URL('/')}}/assets/global/plugins/gmaps/gmaps.min.js" type="text/javascript"></script>
 @endsection
 @section('page_js')

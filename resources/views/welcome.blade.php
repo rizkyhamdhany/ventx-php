@@ -13,12 +13,6 @@
 
 <body class="dark">
 
-<div class="main-preloader">
-    <div class="ball-scale">
-        <div></div>
-    </div>
-</div>
-
 <div class="into-page">
     <main>
 
@@ -32,7 +26,7 @@
                     </a>
                 </div>
                 <div class="col-xs-12 col-sm-6 buy">
-                    <a class="button" href="{{URL('/')}}/login">Login</a>
+                    <a class="button">Available Tickets</a>
                 </div>
             </div>
             <!-- </div> -->
@@ -52,10 +46,10 @@
             <div class="row min-height-500">
                 <div class="grid">
                     <div class="grid-item music col-md-3 col-sm-6 col-xs-12">
-                        <a href="{{URL('/')}}/smilemotion">
+                        <a href="{{route('event.home', ['smilemotion'])}}">
                             <img src="{{URL('/')}}/assets_landing/img/smo_thumb.jpg" alt=""/>
                             <div class="grid-item-hover">
-                                <span class="grid-item-hover-icon"></span>
+                                <span class="grid-item-hover-icon grid-buy"><button class="btn-buy">Buy Ticket</button></span>
                                 <span class="grid-item-hover-bottom">Smilemotion 2017</span>
                                 <span class="grid-item-hover-bg boysband"></span>
                             </div>
@@ -63,7 +57,7 @@
                     </div>
 
                     <div class="grid-item music col-md-3 col-sm-6 col-xs-12">
-                        <a href="#">
+                        <a href="{{route('event.home', ['festival_budaya'])}}">
                             <img src="{{URL('/')}}/assets_landing/img/ftb_thumb.jpg" alt=""/>
                             <div class="grid-item-hover">
                                 <span class="grid-item-hover-icon"></span>
@@ -91,6 +85,12 @@
                 </a>
                 <a href="{{route('contact')}}" class="navbar-btn btn-danger btn pull-right">
                     Contact Us
+                </a>
+                <a class="navbar-btn btn-danger btn pull-right border-none">
+                    <span class="glyphicon glyphicon-star"></span>  | &nbsp;
+                </a>
+                <a href="{{URL('/')}}/login" class="navbar-btn btn-danger btn pull-right">
+                    Login
                 </a>
             </div>
         </div>

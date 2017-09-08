@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
@@ -11,6 +12,8 @@ use Webpatser\Uuid\Uuid;
 use Milon\Barcode\DNS2D;
 use View;
 use Illuminate\Support\Facades\Redis;
+use App\Mail\ContactMail;
+use Illuminate\Support\Facades\Mail;
 
 class LandingController extends Controller
 {
@@ -31,11 +34,16 @@ class LandingController extends Controller
         return view('welcome');
     }
     public function event(){
-        return view('app.app_landing');
+        return redirect()->route('event.home', ['smilemotion']);
     }
     public function contact(){
         View::share( 'page_state', 'Contact Us' );
         return view('contact');
+    }
+    public function contactPost(ContactRequest $request){
+        Mail::to('salam@nalar.id')->send(new ContactMail($request->input()));
+        $request->session()->flash('alert-success', 'Thank you for contacting us, we will reply your message asap !');
+        return redirect()->route('contact');
     }
     public function tnc(){
         View::share( 'page_state', 'Terms and Conditions' );

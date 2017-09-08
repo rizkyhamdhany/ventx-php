@@ -19,4 +19,14 @@ class Event extends Model
         ->hasMany('App\Models\TicketClass')
         ->withTimestamp();
     }
+
+    public function artists()
+    {
+        return $this->hasMany('App\Models\EventArtist');
+    }
+
+    public function sponsors()
+    {
+        return $this->hasMany('App\Models\EventSponsor');
+    }
 }

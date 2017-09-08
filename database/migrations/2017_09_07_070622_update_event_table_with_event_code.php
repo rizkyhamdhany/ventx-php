@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTableTicketClassWithPrice extends Migration
+class UpdateEventTableWithEventCode extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,9 @@ class UpdateTableTicketClassWithPrice extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('events', function (Blueprint $table) {
+            $table->string('short_name')->after('name');
+        });
     }
 
     /**
@@ -23,6 +25,8 @@ class UpdateTableTicketClassWithPrice extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('events', function($table) {
+            $table->dropColumn('pattern_footer');
+        });
     }
 }
