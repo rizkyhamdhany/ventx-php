@@ -19,11 +19,7 @@ Route::get('/tnc', 'LandingController@tnc')->name('tnc');
 
 Route::prefix('/doku')->group(function () {
     Route::get('/test', 'App\PaymentController@testPay')->name('payment.doku.test');
-    Route::post('/verify', 'App\PaymentController@dokuVerify')->name('payment.doku.verify');
-    Route::get('/notify', 'App\PaymentController@dokuNotify')->name('payment.doku.notify');
     Route::get('/redirect', 'App\PaymentController@dokuRedirectProcess')->name('payment.doku.redirecprocess');
-    Route::get('/cancel', 'App\PaymentController@dokuCancel')->name('payment.doku.cancel');
-    //
 });
 
 Route::get('/testpay', 'App\PaymentController@testPay')->name('testpay');
