@@ -240,6 +240,7 @@ class TicketAppController extends Controller
                 $preorder->grand_total = $ticket->grand_total;
                 $preorder->bank_account = $ticket->bank_account;
                 $preorder->event_name = $event->name;
+                $preorder->short_name = $event->short_name;
                 View::share( 'page_state', 'proceed' );
                 Mail::to($preorder->email)->send(new OrderMail($preorder));
                 RedisModel::cachingBookedSeat();

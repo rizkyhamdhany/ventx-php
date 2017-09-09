@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Ventex by Nalar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
-    <link rel="shortcut icon" href="{{ asset('assets_landing/img/favicon.ico') }}"/>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
     <link rel="stylesheet" href="{{ asset('assets_landing/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_landing/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_landing/css/style.css') }}">

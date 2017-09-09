@@ -17,6 +17,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::prefix('/doku')->group(function () {
+    Route::post('/verify', 'App\PaymentController@dokuVerify')->name('payment.doku.verify');
+    Route::post('/notify', 'App\PaymentController@dokuNotify')->name('payment.doku.notify');
+    Route::post('/redirect', 'App\PaymentController@dokuRedirectProcess')->name('payment.doku.redirecprocess');
+    Route::post('/cancel', 'App\PaymentController@dokuCancel')->name('payment.doku.cancel');
+});
+
 Route::get('/api/v1/products/{id?}', ['middleware' => 'auth.basic', function($id = null) {
     if ($id == null) {
         $products = App\Product::all(array('id', 'name', 'price'));

@@ -60,7 +60,7 @@
                                         <input type="text" placeholder="Account Holder" name="account_holder" required>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" data-provide="datepicker" placeholder="Transfer Date" name="date" required>
+                                        <input name="date" class="form-control form-control-inline input-medium date-picker" size="16" type="text" value="" required/>
                                     </div>
                                 </div>
                             </div>
