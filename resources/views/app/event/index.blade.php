@@ -30,7 +30,8 @@
                     </div>
                 </div>
 
-                <div class="event-bg-color">
+                <div class="login-footer event-bg-color">
+                    <img src="{{asset($event->pattern_footer)}}" class="pattern-bottom" style="margin-top : 40px">
                     <div class="row bs-reset">
                         <div class="col-xs-12 bs-reset buy-button">
                             <a href="{{route('app.event.ticket.list', [$event->short_name])}}" class="btn btn-block event-button padding-top-bot-10"><h4><strong>Buy Ticket</strong></h4></a>
