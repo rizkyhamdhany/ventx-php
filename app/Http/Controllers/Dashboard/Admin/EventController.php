@@ -163,7 +163,7 @@ class EventController extends Controller
     }
 
     public function ticketPeriodDelete($id,$period){
-      if ($this->ticketClassRepo->delete($period)) {
+      if ($this->ticketPeriodRepo->delete($period)) {
           session(['alert-success' => 'Ticket Period Deleted']);
           $periodByEvent = TicketPeriod::where('event_id', $id)->get();
           View::share('page_state', 'Ticket Category');
@@ -249,6 +249,15 @@ class EventController extends Controller
     }
 
     public function ticketClassDelete($id,$class){
-
+      if ($this->ticketClassRepo->delete($class)) {
+          session(['alert-success' => 'Ticket Class Deleted']);
+          $periodByEvent = TicketPeriod::where('event_id', $id)->get();
+          View::share('page_state', 'Ticket Category');
+          return view('dashboard.admin.event.event_ticketCategory')
+              ->with('periods', $periodByEvent->all())
+              ->with('id', $id);
+      } else {
+          session(['alert-warning' => 'Failed to Delete Ticket Class']);
+      }
     }
 }
