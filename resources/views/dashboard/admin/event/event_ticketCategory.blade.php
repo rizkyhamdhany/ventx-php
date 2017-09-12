@@ -55,12 +55,12 @@
                               @forelse($periods as $period)
                               <div class="col-lg-4 col-md-4 col-xs-12">
                                   <div class="mt-element-ribbon bg-grey-steel">
-                                      <div class="ribbon ribbon-color-warning uppercase">{{$period->name}}<a href="#" class="btn btn-circle btn-icon-only blue circle-style"><i class="icon-wrench"></i></a><a href="#" data-period-del="{{$period->id}}" class="btn btn-circle btn-icon-only red circle-style"><i class="icon-trash" ></i></a></div>
+                                      <div class="ribbon ribbon-color-warning uppercase">{{$period->name}}<a href="{{route('dashboard.event.ticketPeriod.edit',[$id,$period->id])}}" class="btn btn-circle btn-icon-only blue circle-style"><i class="icon-wrench"></i></a><a href="{{route('dashboard.event.ticketPeriod.delete',[$id,$period->id])}}" data-period-del="{{$period->id}}" class="btn btn-circle btn-icon-only red circle-style"><i class="icon-trash"></i></a></div>
                                       <div class="ribbon ribbon-right ribbon-color-default uppercase" style="font-size:0.7em;">{{$period->start_date}} / {{$period->end_date}}</div>
                                         @forelse($period->ticketClass as $class)
                                           <div class="ribbon-content">
                                             {{$class->name}}:IDR {{number_format($class->price,2)}}
-                                            <a href="#" class="btn btn-circle btn-icon-only yellow circle-style"><i class="icon-wrench" ></i></a><a href="#" data-period-del="{{$class->id}}" class="btn btn-circle btn-icon-only red circle-style"><i class="icon-trash" ></i></a>
+                                            <a href="{{route('dashboard.event.ticketClass.edit',[$id,$class->id])}}" class="btn btn-circle btn-icon-only yellow circle-style"><i class="icon-wrench" ></i></a><a href="{{route('dashboard.event.ticketClass.delete',[$id,$class->id])}}" data-period-del="{{$class->id}}" class="btn btn-circle btn-icon-only red circle-style"><i class="icon-trash" ></i></a>
                                           </div>
 
                                         @empty

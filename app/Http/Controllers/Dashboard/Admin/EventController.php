@@ -68,18 +68,9 @@ class EventController extends Controller
 
     public function ticketCategory($id){
       $periodByEvent = TicketPeriod::where('event_id', $id)->get();
-      $class = array();
-      $event = array();
-      foreach($periodByEvent as $period){
-        $class[] = TicketClass::where('ticket_period_id', $period->id)->where('event_id', $id)->get();
-        array_push($event, $this->eventRepo->find($id));
-      }
-
       View::share('page_state', 'Ticket Category');
       return view('dashboard.admin.event.event_ticketCategory')
           ->with('periods', $periodByEvent->all())
-          ->with('events',$event)
-          ->with('classes',(object)$class)
           ->with('id', $id);
     }
 
@@ -126,6 +117,64 @@ class EventController extends Controller
         }
     }
 
+    public function ticketPeriodEdit($id, $period, Request $request)
+    {
+        $periodRepo = $this->ticketPeriodRepo->find($id);
+        $event = $this->ticketPeriodRepo->find($period);
+        View::share('page_state', 'Ticket Period');
+        View::share('page_title', $event->name);
+        if ($request->isMethod('post')) {
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|max:50',
+                'startDate' => 'required',
+                'endDate' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->route('dashboard.event.ticketPeriod.edit', $id, $period)
+                    ->withErrors($validator)
+                    ->withInput();
+            } else {
+                $input = $request->input();
+                $input['name'] = $request->name;
+                $input['start_date'] = date('Y-m-d', strtotime($request->startDate));
+                $input['end_date'] = date('Y-m-d', strtotime($request->endDate));
+                $dataPeriod = $this->ticketPeriodRepo->update($input,$period);
+                if ($dataPeriod) {
+                    $request->session()->flash('alert-success', 'Ticket Period has been created !');
+                    $periodByEvent = TicketPeriod::where('event_id', $id)->get();
+                    View::share('page_state', 'Ticket Category');
+                    return view('dashboard.admin.event.event_ticketCategory')
+                        ->with('periods', $periodByEvent->all())
+                        ->with('id', $id);
+                } else {
+                    $request->session()->flash('alert-warning', 'Failed to create Ticket Period !');
+                }
+            }
+        } else {
+            return view('dashboard.admin.event.event_ticketPeriod_edit')
+                ->with('name', $request->input('name'))
+                ->with('start_date', date('Y-m-d', strtotime($request->input('startDate'))))
+                ->with('end_date', date('Y-m-d', strtotime($request->input('endDate'))))
+                ->with('id', $id)
+                ->with('period',$periodRepo);
+        }
+    }
+
+    public function ticketPeriodDelete($id,$period){
+      if ($this->ticketClassRepo->delete($period)) {
+          session(['alert-success' => 'Ticket Period Deleted']);
+          $periodByEvent = TicketPeriod::where('event_id', $id)->get();
+          View::share('page_state', 'Ticket Category');
+          return view('dashboard.admin.event.event_ticketCategory')
+              ->with('periods', $periodByEvent->all())
+              ->with('id', $id);
+      } else {
+          session(['alert-warning' => 'Failed to Delete Ticket Period']);
+      }
+    }
+
     public function ticketClassAdd($id, Request $request)
     {
         View::share('page_state', 'Ticket Class');
@@ -137,7 +186,7 @@ class EventController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect()->route('dashboard.event.ticketClass.add', $id)
+                return redirect()->route('dashboard.event.ticketClass.edit', $id)
                     ->withErrors($validator)
                     ->withInput();
             } else {
@@ -148,41 +197,7 @@ class EventController extends Controller
                 $input['price'] = $request->price;
                 $input['ammount'] = $request->amount;
                 if ($this->ticketClassRepo->create($input)) {
-                    $request->session()->flash('alert-success', 'Ticket Period has been created !');
-                } else {
-                    $request->session()->flash('alert-warning', 'Failed to create Ticket Period !');
-                }
-            }
-        } else {
-            return view('dashboard.admin.event.event_ticketClass_add.post')
-                ->with('event_id', $id)
-                ->with('name', $request->input('name'));
-        }
-    }
-
-    public function ticketClassEdit($id, Request $request)
-    {
-        View::share('page_state', 'Ticket Class');
-        if ($request->isMethod('post')) {
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|max:50',
-                'price' => 'required',
-                'amount' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()->route('dashboard.event.ticketClass.add', $id)
-                    ->withErrors($validator)
-                    ->withInput();
-            } else {
-                $input = $request->input();
-                $input['event_id'] = $request->event_id;
-                $input['ticket_period_id'] = $request->ticket_period_id;
-                $input['name'] = $request->name;
-                $input['price'] = $request->price;
-                $input['ammount'] = $request->amount;
-                if ($this->ticketClassRepo->create($input)) {
-                    $request->session()->flash('alert-success', 'Ticket Class has been Edited !');
+                    $request->session()->flash('alert-success', 'Ticket Class has been created !');
                 } else {
                     $request->session()->flash('alert-warning', 'Failed to create Ticket Class !');
                 }
@@ -192,5 +207,48 @@ class EventController extends Controller
                 ->with('event_id', $id)
                 ->with('name', $request->input('name'));
         }
+    }
+
+    public function ticketClassEdit($id, $class, Request $request)
+    {
+        $classRepo = $this->ticketClassRepo->find($class);
+        View::share('page_state', 'Ticket Class');
+        if ($request->isMethod('post')) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|max:50',
+                'price' => 'required',
+                'amount' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->route('dashboard.event.ticketClass.edit', $id, $class)
+                    ->withErrors($validator)
+                    ->withInput();
+            } else {
+                $input = $request->input();
+                $input['name'] = $request->name;
+                $input['price'] = $request->price;
+                $input['ammount'] = $request->amount;
+                if ($this->ticketClassRepo->update($input,$class)) {
+                    $request->session()->flash('alert-success', 'Ticket Class has been Edited !');
+                    $periodByEvent = TicketPeriod::where('event_id', $id)->get();
+                    View::share('page_state', 'Ticket Category');
+                    return view('dashboard.admin.event.event_ticketCategory')
+                        ->with('periods', $periodByEvent->all())
+                        ->with('id', $id);
+                } else {
+                    $request->session()->flash('alert-warning', 'Failed to create Ticket Class !');
+                }
+            }
+        } else {
+            return view('dashboard.admin.event.event_ticketClass_edit')
+                ->with('id', $id)
+                ->with('class',$classRepo)
+                ->with('name', $request->input('name'));
+        }
+    }
+
+    public function ticketClassDelete($id,$class){
+
     }
 }
