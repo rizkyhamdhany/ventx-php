@@ -58,7 +58,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group {{$errors->has('contact_name') ? 'has-error' : ' ' }}">
                                                 <label class="control-label">Full Name</label>
-                                                <input name="contact_name" value="{{ old('contact_name') }}" type="text" id="firstName" class="form-control" placeholder="Don Jon" required>
+                                                <input name="contact_name" value="{{ old('contact_name') }}" type="text" id="firstName" class="form-control" placeholder="Fullname" required>
                                                 <span class="help-block"> Please insert your name correctly </span>
                                             </div>
                                         </div>
@@ -113,7 +113,7 @@
                                                 <div class="col-md-10 no-padding-left name-container">
                                                     <div class="form-group {{$errors->has('ticket.'.$i.'.ticket_name') ? 'has-error' : ' ' }}">
                                                         <label class="control-label">Full Name</label>
-                                                        <input name="ticket[{{$i}}][ticket_name]" type="text" id="firstName" class="form-control" placeholder="Don Jon" required>
+                                                        <input name="ticket[{{$i}}][ticket_name]" type="text" id="firstName" class="form-control" placeholder="Fullname" required>
                                                         <span class="help-block"> Please insert your name correctly </span>
                                                     </div>
                                                 </div>

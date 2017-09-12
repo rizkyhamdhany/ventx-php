@@ -64,7 +64,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
                                             <label class="control-label">Full Name</label>
-                                            <input value="{{old('name')}}" name="name" type="text" id="firstName" class="form-control" placeholder="Don Jon" required>
+                                            <input value="{{old('name')}}" name="name" type="text" id="firstName" class="form-control" placeholder="Fullname" required>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
