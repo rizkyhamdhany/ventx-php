@@ -145,10 +145,14 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
                     Route::prefix('/ticketPeriod')->group(function ($id) {
                         Route::get('/add', 'Dashboard\Admin\EventController@ticketPeriodAdd')->name('dashboard.event.ticketPeriod.add');
                         Route::post('/add', 'Dashboard\Admin\EventController@ticketPeriodAdd')->name('dashboard.event.ticketPeriod.add.post');
+                        Route::get('/edit/{id}','Dashboard\Admin\EventController@ticketPeriodEdit')->name('dashboard.event.ticketPeriod.edit');
+                        Route::post('/edit/{id}','Dashboard\Admin\EventController@ticketPeriodEdit')->name('dashboard.event.ticketPeriod.edit.post');
                     });
                     Route::prefix('/ticketClass')->group(function ($id) {
                         Route::get('/add', 'Dashboard\Admin\EventController@ticketClassAdd')->name('dashboard.event.ticketClass.add');
                         Route::post('/add', 'Dashboard\Admin\EventController@ticketClassAdd')->name('dashboard.event.ticketClass.add.post');
+                        Route::get('/edit/{id}','Dashboard\Admin\EventController@ticketClassEdit')->name('dashboard.event.ticketClass.edit');
+                        Route::post('/edit/{id}','Dashboard\Admin\EventController@ticketClassEdit')->name('dashboard.event.ticketClass.edit.post');
                     });
                 });
             });

@@ -3,7 +3,15 @@
     @include('layouts.admin_dashboard_sidebar_event')
 @endsection
 @section('page_style')
-
+<style media="screen">
+  .circle-style{
+    width:20px!important;
+    height:20px!important;
+    padding:0!important;
+    margin-left:10px!important;
+    font-size: 0.8em!important;
+  }
+</style>
 @endsection
 @section('content')
 
@@ -30,23 +38,6 @@
                     @endforeach
                     <div class="portlet light bordered">
                         <div class="portlet-title">
-                          @forelse($periods as $period)
-                            {{$period}}
-                          @empty
-                            <?php print "Empty"; ?>
-                          @endforelse
-                          <br><br><br>
-                          @forelse($classes as $class)
-                            {{$class}}
-                          @empty
-                            <?php print "Empty"; ?>
-                          @endforelse
-                          <br><br><br>
-                          @forelse($events as $event)
-                            {{$event}}
-                          @empty
-                            <?php print "Empty"; ?>
-                          @endforelse
                             <div class="caption">
                                 <i class="icon-settings font-red"></i>
                                 <span class="caption-subject font-red sbold uppercase">Ticket Category Table</span>
@@ -62,11 +53,16 @@
                         <div class="portlet-body">
                             <div class="row">
                               @forelse($periods as $period)
-                              <div class="col-lg-3 col-md-4 col-xs-12">
+                              <div class="col-lg-4 col-md-4 col-xs-12">
                                   <div class="mt-element-ribbon bg-grey-steel">
-                                      <div class="ribbon ribbon-color-warning uppercase">{{$period->name}}</div>
-                                        @forelse($classes as $class)
-                                          <div class="ribbon-content">{{$class}}</div>
+                                      <div class="ribbon ribbon-color-warning uppercase">{{$period->name}}<a href="#" class="btn btn-circle btn-icon-only blue circle-style"><i class="icon-wrench"></i></a><a href="#" data-period-del="{{$period->id}}" class="btn btn-circle btn-icon-only red circle-style"><i class="icon-trash" ></i></a></div>
+                                      <div class="ribbon ribbon-right ribbon-color-default uppercase" style="font-size:0.7em;">{{$period->start_date}} / {{$period->end_date}}</div>
+                                        @forelse($period->ticketClass as $class)
+                                          <div class="ribbon-content">
+                                            {{$class->name}}:IDR {{number_format($class->price,2)}}
+                                            <a href="#" class="btn btn-circle btn-icon-only yellow circle-style"><i class="icon-wrench" ></i></a><a href="#" data-period-del="{{$class->id}}" class="btn btn-circle btn-icon-only red circle-style"><i class="icon-trash" ></i></a>
+                                          </div>
+
                                         @empty
                                           <?php print "Empty"; ?>
                                         @endforelse
@@ -85,4 +81,10 @@
     </div>
 @endsection
 @section('page_js')
+<script>
+    $(function(){
+
+      });
+    });
+</script>
 @endsection

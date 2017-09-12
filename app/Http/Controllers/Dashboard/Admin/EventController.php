@@ -148,13 +148,47 @@ class EventController extends Controller
                 $input['price'] = $request->price;
                 $input['ammount'] = $request->amount;
                 if ($this->ticketClassRepo->create($input)) {
-                    $request->session()->flash('alert-success', 'Event has been created !');
+                    $request->session()->flash('alert-success', 'Ticket Period has been created !');
                 } else {
-                    $request->session()->flash('alert-warning', 'Failed to create Event !');
+                    $request->session()->flash('alert-warning', 'Failed to create Ticket Period !');
                 }
             }
         } else {
             return view('dashboard.admin.event.event_ticketClass_add.post')
+                ->with('event_id', $id)
+                ->with('name', $request->input('name'));
+        }
+    }
+
+    public function ticketClassEdit($id, Request $request)
+    {
+        View::share('page_state', 'Ticket Class');
+        if ($request->isMethod('post')) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|max:50',
+                'price' => 'required',
+                'amount' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->route('dashboard.event.ticketClass.add', $id)
+                    ->withErrors($validator)
+                    ->withInput();
+            } else {
+                $input = $request->input();
+                $input['event_id'] = $request->event_id;
+                $input['ticket_period_id'] = $request->ticket_period_id;
+                $input['name'] = $request->name;
+                $input['price'] = $request->price;
+                $input['ammount'] = $request->amount;
+                if ($this->ticketClassRepo->create($input)) {
+                    $request->session()->flash('alert-success', 'Ticket Class has been Edited !');
+                } else {
+                    $request->session()->flash('alert-warning', 'Failed to create Ticket Class !');
+                }
+            }
+        } else {
+            return view('dashboard.admin.event.event_ticketClass_edit.post')
                 ->with('event_id', $id)
                 ->with('name', $request->input('name'));
         }

@@ -16,8 +16,7 @@ class Event extends Model
 
     public function ticketClass(){
       return $this
-        ->hasMany('App\Models\TicketClass')
-        ->withTimestamp();
+        ->hasMany('App\Models\TicketClass');
     }
 
     public function artists()

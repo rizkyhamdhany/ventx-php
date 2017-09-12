@@ -55,6 +55,10 @@
                             <h3 class="form-section">Transaction Information</h3>
                             <div class="row">
                                 <div class="col-md-3">
+                                    <h4>Date</h4>
+                                    <h4><strong>{{$order->created_at->toDateString()}}</strong></h4>
+                                </div>
+                                <div class="col-md-3">
                                     <h4>Order Code</h4>
                                     <h4><strong>{{$order->order_code}}</strong></h4>
                                 </div>

@@ -10,13 +10,11 @@ class TicketClass extends Model
 
     public function event(){
       return $this
-        ->belongsTo('App\Models\Event')
-        ->withTimestamp();
+        ->belongsTo('App\Models\Event');
     }
 
     public function ticketPeriod(){
       return $this
-        ->belongsTo('App\Models\TicketPeriod')
-        ->withTimestamps();
+        ->belongsTo('App\Models\TicketPeriod');
     }
 }

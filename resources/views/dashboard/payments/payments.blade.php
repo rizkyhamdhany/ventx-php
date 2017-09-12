@@ -58,6 +58,7 @@
                                 <table class="table table-striped table-bordered table-hover" id="sample_1">
                                     <thead>
                                     <tr>
+                                        <th> Date </th>
                                         <th> Order Code </th>
                                         <th> Account Holder </th>
                                         <th> Bank </th>
@@ -69,6 +70,7 @@
                                     <tbody>
                                     @foreach ($orders as $order)
                                         <tr>
+                                            <td> {{$order->created_at->toDateString()}} </td>
                                             <td> {{$order->order_code}} </td>
                                             <td> {{$order->account_holder}} </td>
                                             <td> {{$order->bank['name']}} </td>

@@ -25,7 +25,7 @@ class TicketDashboardController extends Controller
 //        $dailyOrderStat = new DailyOrderStatistic();
 //        $dailyOrderStat->addDailyCounter(0);exit;
         $event_id = Auth::user()->event_id;
-        $orders = Order::where('event_id', $event_id)->get();
+        $orders = Order::where('event_id', $event_id)->orderBy('created_at', 'desc')->get();
         return view('dashboard.tickets')->with('orders', $orders);
     }
 
