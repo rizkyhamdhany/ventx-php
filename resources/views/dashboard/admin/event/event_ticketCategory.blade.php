@@ -59,13 +59,15 @@
                                       <div class="ribbon ribbon-right ribbon-color-default uppercase" style="font-size:0.7em;">{{$period->start_date}} / {{$period->end_date}}</div>
                                         @forelse($period->ticketClass as $class)
                                           <div class="ribbon-content">
-                                            {{$class->name}} : IDR {{number_format($class->price,0, "",".")}}
+                                            <b>{{$class->name}}</b> : IDR {{number_format($class->price,0, "",".")}}
                                             <a href="{{route('dashboard.event.ticketClass.edit',[$id,$class->id])}}" class="btn btn-circle btn-icon-only yellow circle-style"><i class="icon-wrench" ></i></a><a href="{{route('dashboard.event.ticketClass.delete',[$id,$class->id])}}" data-period-del="{{$class->id}}" class="btn btn-circle btn-icon-only red circle-style"><i class="icon-trash" ></i></a>
                                           </div>
-
                                         @empty
                                           <?php print "Empty"; ?>
                                         @endforelse
+                                        <div class="ribbon-content">
+                                          <a href="{{route('dashboard.event.ticketClass.add',[$id,$period->id])}}" class="btn green"><i class="icon-plus"></i>Add Class</a>
+                                        </div>
                                   </div>
                               </div>
                               @empty
