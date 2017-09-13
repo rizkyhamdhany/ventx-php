@@ -1,10 +1,10 @@
 <FORM NAME="order" METHOD="Post" ACTION="https://apps.myshortcart.com/payment/request-payment/" >
     <input type=text" name="BASKET" value="Gold,70000.00,1,70000.00;Administration fee,5000.00,1,5000.00">
-    <input type=text" name="STOREID" value="10589598">
-    <input type=text" name="TRANSIDMERCHANT" value="000001">
+    <input type=text" name="STOREID" value="{{$store_id}}">
+    <input type=text" name="TRANSIDMERCHANT" value="000002">
     <input type=text" name="AMOUNT" value="75000.00">
     <input type=text" name="URL" value="http://www.yourwebsite.com/ ">
-    <input type=text" name="WORDS" value="e8270e972e4049394dafdcacaa938a48a1949168">
+    <input type=text" name="WORDS" value="{{sha1('75000.00'.$shared_key.'000002')}}">
     <input type=text" name="CNAME" value="Ismail Danuarta">
     <input type=text" name="CEMAIL" value="ismail@gmail.com">
     <input type=text" name="CWPHONE" value="0210000011">

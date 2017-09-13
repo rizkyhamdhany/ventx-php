@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App;
 
+use App\CC;
 use App\Http\Controllers\Controller;
 use App\Models\BookConf;
 use App\Models\EventRepository;
@@ -187,7 +188,9 @@ class PaymentController extends Controller
     }
 
     public function testPay(){
-        return view('testpay');
+        return view('testpay')
+            ->with("shared_key", env("APP_ENV", CC::ENV_LOCAL) == CC::ENV_LOCAL ? CC::DOKU_SHARED_KEY_DEV : CC::DOKU_SHARED_KEY_PROD)
+            ->with("store_id", env("APP_ENV", CC::ENV_LOCAL) == CC::ENV_LOCAL ? CC::DOKU_STORE_ID_DEV : CC::DOKU_STORE_ID_PROD);
     }
 
     private function getTicketPrice($ticket){
