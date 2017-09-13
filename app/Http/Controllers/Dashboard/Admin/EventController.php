@@ -119,8 +119,8 @@ class EventController extends Controller
 
     public function ticketPeriodEdit($id, $period, Request $request)
     {
-        $periodRepo = $this->ticketPeriodRepo->find($id);
-        $event = $this->ticketPeriodRepo->find($period);
+        $periodRepo = $this->ticketPeriodRepo->find($period);
+        $event = $this->eventRepo->find($id);
         View::share('page_state', 'Ticket Period');
         View::share('page_title', $event->name);
         if ($request->isMethod('post')) {
