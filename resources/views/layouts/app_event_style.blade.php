@@ -29,6 +29,7 @@
     .buy-button{
         position: absolute;
         bottom: 0px;
+        z-index: 99;
     }
     .event-border{
         border-color: {{$event->color_secondary}} !important;
