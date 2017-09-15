@@ -13,7 +13,7 @@ class UpdateEventTableWithEventCode extends Migration
      */
     public function up()
     {
-        Schema::table('events', function (Blueprint $table) {
+        Schema::table('books', function (Blueprint $table) {
             $table->string('short_name')->after('name');
         });
     }

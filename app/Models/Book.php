@@ -63,9 +63,15 @@ class Book extends Model
         $this->name = $ticket->contact_name;
         $this->phonenumber = $ticket->contact_phone;
         $this->email = $ticket->contact_email;
+        $this->birthday = date('Y-m-d',strtotime($ticket->contact_birthday_year.'-'.$ticket->contact_birthday_month.'-'.$ticket->contact_birthday_day));
+        $this->address = $ticket->contact_address;
+        $this->country = $ticket->contact_country;
+        $this->city = $ticket->contact_city;
+        $this->postal_code = $ticket->contact_postal_code;
         $this->ticket_period = $ticket->ticket_period;
         $this->ticket_class = $ticket->ticket_type;
         $this->ticket_ammount = $ticket->ticket_ammount;
+        $this->payment_method = $ticket->payment_method;
         $this->payment_status = 'UNPAID';
         $this->payment_code = '';
         $this->event_id = $event->id;

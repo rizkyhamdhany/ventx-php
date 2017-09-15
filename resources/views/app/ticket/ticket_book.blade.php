@@ -1,10 +1,11 @@
 @extends('layouts.app.app')
 @section('page_style_libs')
-    <link href="{{URL('/')}}/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-    <link href="{{URL('/')}}/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
+    <link href="{{URL('/')}}/assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet"
+          type="text/css"/>
 @endsection
 @section('page_style')
-    <link href="{{URL('/')}}/assets/layouts/layout/css/app/ticket_book.css" rel="stylesheet" type="text/css" />
+    <link href="{{URL('/')}}/assets/layouts/layout/css/app/ticket_book.css" rel="stylesheet" type="text/css"/>
 @endsection
 @section('content')
     <div class="page-title-container">
@@ -24,7 +25,7 @@
                     <span>Credential Input</span>
                 </h1>
             </div>
-            <div class="clearfix"> </div>
+            <div class="clearfix"></div>
         </div>
         <div class="clearfix"></div>
     </div>
@@ -43,7 +44,8 @@
                                 @endif
                             @endforeach
                         </div>
-                        <form class="horizontal-form"  action="{{route('app.event.ticket.pay.post', [$event->short_name])}}" method="POST">
+                        <form class="horizontal-form"
+                              action="{{route('app.event.ticket.pay.post', [$event->short_name])}}" method="POST">
                             {{ csrf_field() }}
                             <div class="portlet light bordered">
                                 <div class="portlet-body padding-bottom-30">
@@ -54,41 +56,7 @@
                                     </span>
                                         <span class="event-font-secondary">Contact Information</span>
                                     </div>
-                                    <div class="margin-top-10">
-                                        <div class="col-md-12">
-                                            <div class="form-group {{$errors->has('contact_name') ? 'has-error' : ' ' }}">
-                                                <label class="control-label">Full Name</label>
-                                                <input name="contact_name" value="{{ old('contact_name') }}" type="text" id="firstName" class="form-control" placeholder="Fullname" required>
-                                                <span class="help-block"> Please insert your name correctly </span>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div class="margin-top-bottom-30">
-                                        <div class="col-md-6">
-                                            <div class="form-group {{$errors->has('contact_phone') ? 'has-error' : ' ' }}">
-                                                <label class="control-label">Phone Number</label>
-                                                <div class="input-group">
-                                            <span class="input-group-addon">
-                                                +62
-                                            </span>
-                                                    <input name="contact_phone" value="{{ old('contact_phone') }}" type="phone" class="form-control" placeholder="Phone Number" required> </div>
-                                                <span class="help-block"> Please insert your phone correctly </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group {{$errors->has('contact_email') ? 'has-error' : ' ' }}">
-                                                <label class="control-label">Email</label>
-                                                <div class="input-group">
-                                            <span class="input-group-addon addon-email">
-                                                <i class="fa fa-envelope"></i>
-                                            </span>
-                                                    <input name="contact_email" value="{{ old('contact_email') }}" type="email" class="form-control" placeholder="Email Address" required> </div>
-                                                <span class="help-block"> Please insert your email correctly </span>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
+                                    @include('app.payment.form_payment')
                                     <div>
                                     <span class="fa-stack fa-2x">
                                         <i class="fa fa-circle fa-stack-2x icon-background2 event-font-secondary"></i>
@@ -103,7 +71,8 @@
                                                 <div class="col-md-2 padding-right-10 title-container">
                                                     <div class="form-group">
                                                         <label class="control-label">Title</label>
-                                                        <select name="ticket[{{$i}}][ticket_title]" class="form-control">
+                                                        <select name="ticket[{{$i}}][ticket_title]"
+                                                                class="form-control">
                                                             <option>Mr.</option>
                                                             <option>Mrs.</option>
                                                             <option>Ms.</option>
@@ -113,7 +82,10 @@
                                                 <div class="col-md-10 no-padding-left name-container">
                                                     <div class="form-group {{$errors->has('ticket.'.$i.'.ticket_name') ? 'has-error' : ' ' }}">
                                                         <label class="control-label">Full Name</label>
-                                                        <input name="ticket[{{$i}}][ticket_name]" type="text" id="firstName" class="form-control" placeholder="Fullname" required>
+                                                        <input name="ticket[{{$i}}][ticket_name]" type="text"
+                                                               id="firstName" class="form-control"
+                                                               placeholder="Fullname"
+                                                               value="{{old('ticket.'.$i.'.ticket_name')}}" required>
                                                         <span class="help-block"> Please insert your name correctly </span>
                                                     </div>
                                                 </div>
@@ -127,7 +99,11 @@
                                                 <span class="input-group-addon">
                                                     +62
                                                 </span>
-                                                            <input name="ticket[{{$i}}][ticket_phone]" type="phone" class="form-control" placeholder="Phone Number" required> </div>
+                                                            <input name="ticket[{{$i}}][ticket_phone]" type="phone"
+                                                                   class="form-control" placeholder="Phone Number"
+                                                                   value="{{old('ticket.'.$i.'.ticket_phone')}}"
+                                                                   required>
+                                                        </div>
                                                         <span class="help-block"> Please insert your phone correctly </span>
                                                     </div>
                                                 </div>
@@ -135,10 +111,14 @@
                                                     <div class="form-group {{$errors->has('ticket.'.$i.'.ticket_email') ? 'has-error' : ' ' }}">
                                                         <label class="control-label">Email</label>
                                                         <div class="input-group">
-                                                <span class="input-group-addon addon-email">
-                                                    <i class="fa fa-envelope"></i>
-                                                </span>
-                                                            <input name="ticket[{{$i}}][ticket_email]" type="email" class="form-control" placeholder="Email Address" required> </div>
+                                                            <span class="input-group-addon addon-email">
+                                                                <i class="fa fa-envelope"></i>
+                                                            </span>
+                                                            <input name="ticket[{{$i}}][ticket_email]" type="email"
+                                                                   class="form-control" placeholder="Email Address"
+                                                                   value="{{old('ticket.'.$i.'.ticket_email')}}"
+                                                                   required>
+                                                        </div>
                                                         <span class="help-block"> Please insert your email correctly </span>
                                                     </div>
                                                 </div>
@@ -156,7 +136,8 @@
                         <div class="ticket-period-container">
                             <h3 class="event-font-primary">&nbsp;</h3>
                         </div>
-                        <div class="portlet light bordered event-bg-color" style="background-image: url('{{asset($event->background_pattern)}}'); background-repeat: no-repeat;     background-repeat: no-repeat;background-position: center top;background-size: 100% auto;">
+                        <div class="portlet light bordered event-bg-color"
+                             style="background-image: url('{{asset($event->background_pattern)}}'); background-repeat: no-repeat;     background-repeat: no-repeat;background-position: center top;background-size: 100% auto;">
                             <div class="portlet-body ticket-summary">
                                 <div class="pull-right">
                                     <h4 class="font-white">Ticket Summary</h4>
@@ -166,16 +147,18 @@
                                     <p class="font-white">
                                         {{date('D, d M Y', strtotime($event->date))}}
                                         <br>
-                                        <div class="font-white">
+                                    <div class="font-white">
                                         {!! $event->location !!}
-                                        </div>
-                                        <br>&nbsp;
+                                    </div>
+                                    <br>&nbsp;
                                     </p>
                                 </div>
                                 <div class="ticket-item-container">
                                     <table class="ticket-table">
                                         <tr>
-                                            <td><div class="circle circle-{{$ticket->ticket_type == 'Reguler' ? 'reguler' : 'vip'}}"></div></td>
+                                            <td>
+                                                <div class="circle circle-{{$ticket->ticket_type == 'Reguler' ? 'reguler' : 'vip'}}"></div>
+                                            </td>
                                             <td>{{$ticket->ticket_type}}</td>
                                             <td>{{$ticket->ticket_ammount}}</td>
                                             <td>IDR {{$ticket->price_item}}</td>
@@ -202,10 +185,50 @@
 @endsection
 @section('page_js')
     <script>
-        onload=function(){
-            var e=document.getElementById("refreshed");
-            if(e.value=="no")e.value="yes";
-            else{e.value="no";location.reload();}
+        onload = function () {
+            var e = document.getElementById("refreshed");
+            if (e.value == "no") e.value = "yes";
+            else {
+                e.value = "no";
+                location.reload();
+            }
         }
+    </script>
+    <script>
+        $('.basic').bootstrapBirthday({
+            widget: {
+                wrapper: {
+                    tag: 'div',
+                    class: 'row'
+                },
+                wrapperYear: {
+                    use: true,
+                    tag: 'div',
+                    class: 'col-sm-4 padding-right-10 no-padding-left'
+                },
+                wrapperMonth: {
+                    use: true,
+                    tag: 'div',
+                    class: 'col-sm-4 padding-right-10 no-padding-left'
+                },
+                wrapperDay: {
+                    use: true,
+                    tag: 'div',
+                    class: 'col-sm-4 padding-right-10 no-padding-left'
+                },
+                selectYear: {
+                    name: 'contact_birthday_year',
+                    class: 'form-control'
+                },
+                selectMonth: {
+                    name: 'contact_birthday_month',
+                    class: 'form-control'
+                },
+                selectDay: {
+                    name: 'contact_birthday_day',
+                    class: 'form-control'
+                }
+            }
+        });
     </script>
 @endsection

@@ -27,6 +27,13 @@ class BookTicketRequest extends FormRequest
             'contact_name' => 'required|max:255',
             'contact_phone' => 'required|max:255',
             'contact_email' => 'required|max:255',
+            'contact_birthday_month' => 'numeric|min:1|max:12',
+            'contact_birthday_day' => 'numeric|min:1',
+            'contact_birthday_year' => 'numeric|min:1',
+            'contact_address' => 'required',
+            'contact_country' => 'required',
+            'contact_city' => 'required',
+            'contact_postal_code' => 'required',
         ];
 
         $i = 0;

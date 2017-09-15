@@ -29,4 +29,6 @@ class CC
     const DOKU_STORE_ID_PROD = '10589598';
     const DOKU_SHARED_KEY_PROD = 'J7h9X7i7F4D8';
     const ENV_LOCAL = 'local';
+    const PAYMENT_BANK_TRF = 'BANK_TRANSFER';
+    const PAYMENT_DOKU = 'DOKU';
 }
