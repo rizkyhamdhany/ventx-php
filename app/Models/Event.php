@@ -9,14 +9,18 @@ class Event extends Model
     protected $fillable = ['name', 'initial','organizer', 'logo_color', 'logo_white', 'background_pattern', 'color_primary', 'color_secondary', 'color_accent', 'date', 'time', 'location', 'lat', 'lon'];
 
     public function ticketPeriod(){
-      return $this
-        ->hasMany('App\Models\TicketPeriod')
-        ->withTimestamp();
+      return $this->hasMany('App\Models\TicketPeriod');
+    }
+
+    public function ticketPeriodNow(){
+        $date = date('Y-m-d');
+        return $this->ticketPeriod()
+            ->where('start_date','<=', $date)
+            ->where('end_date','>=', $date);
     }
 
     public function ticketClass(){
-      return $this
-        ->hasMany('App\Models\TicketClass');
+      return $this->hasMany('App\Models\TicketClass');
     }
 
     public function artists()

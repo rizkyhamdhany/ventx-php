@@ -13,7 +13,7 @@ class EventRepository extends BaseRepository implements CacheableInterface
 
     protected $cacheMinutes = 1440;
 
-    protected $cacheOnly = ['findWhere'];
+    protected $cacheOnly = ['findWhere', 'find', 'ticketPeriodNow'];
 
     public function model()
     {

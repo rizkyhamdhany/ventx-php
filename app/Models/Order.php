@@ -13,7 +13,7 @@ use App\Models\EmailSendStatus;
 class Order extends Model
 {
 
-    public function createOrderFromManualInput($input, $event){
+    public function createOrderFromManualInput($input, $event, $ticket_period, $ticket_class){
         $uuid = Uuid::generate();
         $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
         $this->event_id = $event->id;
@@ -21,8 +21,8 @@ class Order extends Model
         $this->name = $input->input('contact_fullname');
         $this->phonenumber = $input->input('contact_phone');
         $this->email = $input->input('contact_email');
-        $this->ticket_period = $input->input('ticket_period');
-        $this->ticket_class = $input->input('ticket_class');
+        $this->ticket_period = $ticket_period->name;
+        $this->ticket_class = $ticket_class->name;
         $this->ticket_ammount = $input->input('ammount');
         $this->payment_status = 'COMPLETE';
         $this->payment_code = '';

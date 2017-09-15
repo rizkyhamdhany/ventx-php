@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Dashboard\EO;
 
 use App\Http\Controllers\Controller;
+use App\Models\EventRepository;
+use App\Models\TicketClassRepository;
+use App\Models\TicketPeriodRepository;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
+use Validator;
 use Webpatser\Uuid\Uuid;
 use App\Models\Seat;
 use App\Models\TicketClass;
@@ -20,49 +24,62 @@ use App\Models\Event;
 
 class OrderController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected $eventRepo;
+    protected $ticketPeriodRepo;
+    protected $ticketClassRepo;
+
+    public function __construct(EventRepository $eventRepo, TicketPeriodRepository $ticketPeriodRepo, TicketClassRepository $ticketClassRepo)
     {
+        $this->eventRepo = $eventRepo;
+        $this->ticketPeriodRepo = $ticketPeriodRepo;
+        $this->ticketClassRepo = $ticketClassRepo;
         $this->middleware('auth');
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
     public function chooseTicket(Request $request)
     {
         $event_id = Auth::user()->event_id;
-        $ticket_class = TicketClass::where('event_id', $event_id)->get();
-        return view('dashboard.choose_ticket')
-                ->with('ticket_classes', $ticket_class);
+        $ticket_periods = $this->ticketPeriodRepo->ticketPeriodByEvent($event_id);
+        $ticket_classes = $this->ticketClassRepo->ticketClassByEvent($event_id);
+        return view('dashboard.eo.choose_ticket')
+            ->with('ticket_periods', $ticket_periods)
+            ->with('ticket_classes', $ticket_classes);
     }
 
     public function orderTicket(Request $request)
     {
+        if ($request->isMethod('post')) {
 
-        $input = $request->input();
-        $seat_available = Seat::where('ticket_class', $request->input('ticket_class'))->where('status', 'active')->get();
-        return view('dashboard.order_ticket')
-            ->with('ticket_period', $request->input('ticket_period'))
-            ->with('ticket_class', $request->input('ticket_class'))
-            ->with('ammount', $request->input('amount'))
-            ->with('seat_available', $seat_available);
+            $validator = Validator::make($request->all(), [
+                'ticket_period' => 'required',
+                'ticket_class' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->route('ticket.choose')
+                    ->withErrors($validator)
+                    ->withInput();
+            } else {
+                $input = $request->input();
+                $seat_available = Seat::where('ticket_class', $request->input('ticket_class'))->where('status', 'active')->get();
+                return view('dashboard.order_ticket')
+                    ->with('ticket_period', $request->input('ticket_period'))
+                    ->with('ticket_class', $request->input('ticket_class'))
+                    ->with('ammount', $request->input('amount'))
+                    ->with('seat_available', $seat_available);
+            }
+        }
+
     }
 
     public function orderTicketSubmit(Request $request){
-
+        $ticket_period = $this->ticketPeriodRepo->find($request->input('ticket_period'));
+        $ticket_class = $this->ticketClassRepo->find($request->input('ticket_class'));
         $event = Event::find(Auth::user()->event_id);
         //create order
         $ammount = $request->input('ammount');
         $order = new Order();
-        $order->createOrderFromManualInput($request, $event);
+        $order->createOrderFromManualInput($request, $event, $ticket_period, $ticket_class);
         $i = 0;
         $seats = [];
         foreach ($request->input('ticket_title') as $title_ticket) {
@@ -75,10 +92,10 @@ class OrderController extends Controller
             $ticket->name = $request->input('ticket_name')[$i];
             $ticket->phonenumber = $request->input('ticket_phone')[$i];
             $ticket->email = $request->input('ticket_email')[$i];
-            $ticket->ticket_period = $request->input('ticket_period');
-            $ticket->ticket_class = $request->input('ticket_class');
+            $ticket->ticket_period = $ticket_period->name;
+            $ticket->ticket_class = $ticket_class->name;
             $seatupdate = null;
-            if ($request->input('ticket_class') != "Reguler"){
+            if ($ticket_class->have_seat == 1){
                 if ($ammount > 1){
                     $seatupdate = Seat::find($request->input('seat')[$i]);
                     $ticket->seat_no = $seatupdate->no;
@@ -91,7 +108,7 @@ class OrderController extends Controller
                 /*
                  * check redis book before pay (time 30mnt)
                  */
-                $keys_seat_booked = Redis::keys("smilemotion:seat_booked_short:*");
+                $keys_seat_booked = Redis::keys($event->shortname.":seat_booked_short:*");
                 $seat_booked = array();
                 if (!empty($keys_seat_booked)){
                     $seat_booked = Redis::mget($keys_seat_booked);
@@ -104,7 +121,7 @@ class OrderController extends Controller
                 /*
                  * check redis book waiting payment (time 3 days)
                  */
-                $keys_seat_booked = Redis::keys("smilemotion:seat_booked:*");
+                $keys_seat_booked = Redis::keys($event->shortname.":seat_booked:*");
                 $seat_booked = array();
                 if (!empty($keys_seat_booked)){
                     $seat_booked = Redis::mget($keys_seat_booked);
@@ -140,7 +157,7 @@ class OrderController extends Controller
         }
         $request->session()->flash('alert-success', 'Ticket was successful added!');
         if ($event->id == 0){
-            $this->createInvoice($order);
+            $this->createInvoice($order, $ticket_class);
         }
 
         /*
@@ -168,20 +185,8 @@ class OrderController extends Controller
         return redirect()->route("ticket.order.detail", ['id' => $order->id]);
     }
 
-    public function createInvoice(Order $order){
-        $ticket_price = 0;
-//        if($order->ticket_period == 'Presale 1'){
-//          $ticket_price = 50000;
-//        }else{
-//          $ticket_price = 70000;
-//        }
-        if ($order->ticket_class == 'Reguler'){
-            $ticket_price = 125000;
-        } else if ($order->ticket_class == 'VVIP'){
-            $ticket_price = 450000;
-        } else {
-            $ticket_price = 250000;
-        }
+    public function createInvoice(Order $order, $ticket_class){
+        $ticket_price = $ticket_class->price;
         $data = array();
         $data['order'] = $order;
         $data['ticket_price'] = $ticket_price;
@@ -192,45 +197,9 @@ class OrderController extends Controller
         $s3 = \Storage::disk('s3');
         $s3->put($invoice_url, $output, 'public');
 
-//        $invoice_url = 'uploads/invoice/invoice_'.$order->order_code.'.pdf';
-//        file_put_contents($invoice_url, $output);
         $order->url_invoice = $invoice_url;
         $order->save();
         return;
-    }
-
-    public function viewInvoice(Request $request, $id){
-
-        $order = Order::find($id);
-        if ($order->url_invoice != ""){
-            $s3 = \Storage::disk('s3');
-            return redirect()->to($s3->url($order->url_invoice));
-        } else {
-            $ticket_price = 0;
-            if ($order->ticket_class == 'Reguler'){
-                $ticket_price = 125000;
-            } else if ($order->ticket_class == 'VVIP'){
-                $ticket_price = 450000;
-            } else {
-                $ticket_price = 250000;
-            }
-//            if ($order->ticket_period == 'Presale 1'){
-//                $ticket_price = 50000;
-//            } else {
-//                $ticket_price = 70000;
-//            }
-            $data = array();
-            $data['order'] = $order;
-            $data['ticket_price'] = $ticket_price;
-            $pdf = \PDF::loadView('dashboard.view_invoice', compact('data'))->setPaper('A4', 'portrait');
-            $output = $pdf->output();
-            $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
-            $s3 = \Storage::disk('s3');
-            $s3->put($invoice_url, $output, 'public');
-            $order->url_invoice = $invoice_url;
-            $order->save();
-            return redirect()->to($s3->url($order->url_invoice));
-        }
     }
 
     public function sendEmail(Request $request, $id){
