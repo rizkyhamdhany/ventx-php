@@ -18,14 +18,14 @@
                 <div class="portlet light bordered" id="form_wizard_1">
                     <div class="portlet-title">
                         <div class="caption">
-                            <span class="caption-subject font-dark sbold uppercase">Booking {{$ticket_period}}, for {{$ammount}} tickets</span>
+                            <span class="caption-subject font-dark sbold uppercase">Booking {{$ticket_period->name}}, for {{$ammount}} tickets</span>
                         </div>
                     </div>
                     <div class="portlet-body form">
                         <form class="horizontal-form"  action="{{route('ticket.order.submit')}}" method="POST">
                             {{ csrf_field() }}
-                            <input type="hidden" name="ticket_period" value="{{$ticket_period}}">
-                            <input type="hidden" name="ticket_class" value="{{$ticket_class}}">
+                            <input type="hidden" name="ticket_period" value="{{$ticket_period->id}}">
+                            <input type="hidden" name="ticket_class" value="{{$ticket_class->id}}">
                             <input type="hidden" name="ammount" value="{{$ammount}}">
                             <div class="form-body">
                                 <h3 class="form-section">Contact Information</h3>

@@ -60,11 +60,12 @@ class OrderController extends Controller
                     ->withErrors($validator)
                     ->withInput();
             } else {
-                $input = $request->input();
-                $seat_available = Seat::where('ticket_class', $request->input('ticket_class'))->where('status', 'active')->get();
+                $ticket_period = $this->ticketPeriodRepo->find($request->input('ticket_period'));
+                $ticket_class = $this->ticketClassRepo->find($request->input('ticket_class'));
+                $seat_available = Seat::where('ticket_class', $ticket_class->name)->where('status', 'active')->get();
                 return view('dashboard.order_ticket')
-                    ->with('ticket_period', $request->input('ticket_period'))
-                    ->with('ticket_class', $request->input('ticket_class'))
+                    ->with('ticket_period', $ticket_period)
+                    ->with('ticket_class', $ticket_class)
                     ->with('ammount', $request->input('amount'))
                     ->with('seat_available', $seat_available);
             }

@@ -114,7 +114,7 @@
         </tr>
         <tr class="border_bottom">
             <td class="tbl_order_item_space_vertical"></td>
-            <td>{{$data['order']->ticket_class}}</td>
+            <td>{{$data['order']->ticket_period}} - {{$data['order']->ticket_class}}</td>
             <td>{{$data['order']->ticket_ammount}}</td>
             <td>IDR {{number_format( $data['ticket_price'] , 0 , '' , '.' )}}</td>
             <td>IDR {{number_format( $data['ticket_price'] * $data['order']->ticket_ammount , 0 , '' , '.' )}}</td>
