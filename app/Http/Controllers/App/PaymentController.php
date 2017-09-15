@@ -237,7 +237,6 @@ class PaymentController extends Controller
         ]);
         $order_code = $request->input('TRANSIDMERCHANT');
         $event = substr($order_code, 0, 2);
-        $request->session()->forget('book');
         if ($event == 'FB'){
             return redirect()->route('app.event.ticket.payment.confirm.success', ['festival_budaya']);
         } else if ($event == 'SM'){
