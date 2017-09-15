@@ -122,13 +122,25 @@
                                             </form>
                                         </div>
                                         <div class="tab-pane" id="portlet_comments_2">
-
+                                            <form class="horizontal-form"  action="{{route('app.event.ticket.proceed.post', [$event->short_name])}}" method="POST">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="payment_method" value="DOKU">
+                                                <button type="submit" class="btn sm-button btn-block event-button-rev">Pay With Credit Card</button>
+                                            </form>
                                         </div>
                                         <div class="tab-pane" id="portlet_comments_3">
-
+                                            <form class="horizontal-form"  action="{{route('app.event.ticket.proceed.post', [$event->short_name])}}" method="POST">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="payment_method" value="DOKU">
+                                                <button type="submit" class="btn sm-button btn-block event-button-rev">Pay With E-Wallet</button>
+                                            </form>
                                         </div>
                                         <div class="tab-pane" id="portlet_comments_4">
-
+                                            <form class="horizontal-form"  action="{{route('app.event.ticket.proceed.post', [$event->short_name])}}" method="POST">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="payment_method" value="DOKU">
+                                                <button type="submit" class="btn sm-button btn-block event-button-rev">Pay With Alfamart / Indomaret</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
