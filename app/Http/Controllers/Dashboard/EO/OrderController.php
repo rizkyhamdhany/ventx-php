@@ -203,6 +203,30 @@ class OrderController extends Controller
         return;
     }
 
+    public function viewInvoice(Request $request, $id){
+
+        $order = Order::find($id);
+        if ($order->url_invoice != ""){
+            $s3 = \Storage::disk('s3');
+            return redirect()->to($s3->url($order->url_invoice));
+        } else {
+            $ticket_period = $this->ticketPeriodRepo->findWhere([ 'event_id' => $order->event_id,'name' => $order->ticket_period])->first();
+            $ticket_class = $this->ticketClassRepo->findWhere(['event_id' => $order->event_id, 'ticket_period_id' => $ticket_period->id, 'name' => $order->ticket_class])->first();
+            $ticket_price = $ticket_class->price;
+            $data = array();
+            $data['order'] = $order;
+            $data['ticket_price'] = $ticket_price;
+            $pdf = \PDF::loadView('dashboard.view_invoice', compact('data'))->setPaper('A4', 'portrait');
+            $output = $pdf->output();
+            $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
+            $s3 = \Storage::disk('s3');
+            $s3->put($invoice_url, $output, 'public');
+            $order->url_invoice = $invoice_url;
+            $order->save();
+            return redirect()->to($s3->url($order->url_invoice));
+        }
+    }
+
     public function sendEmail(Request $request, $id){
         $order = Order::find($id);
         Mail::to($order->email)->send(new TicketMail($order));
