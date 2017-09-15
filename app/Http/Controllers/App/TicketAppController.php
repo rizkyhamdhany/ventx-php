@@ -70,7 +70,7 @@ class TicketAppController extends Controller
             $seat = new \stdClass();
             $seat_booked = new \stdClass();
             $event->count_ticket_class = 1;
-            $event->price_reguler = 45000;
+            $event->price_reguler = 55000;
         }
 
         View::share( 'page_state', 'pick_seat' );
@@ -512,7 +512,7 @@ class TicketAppController extends Controller
     }
 
     private function getTicketPriceFTB($ticket){
-        $ticket->price_item = 45000;
+        $ticket->price_item = 55000;
         $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
         return $ticket;
     }

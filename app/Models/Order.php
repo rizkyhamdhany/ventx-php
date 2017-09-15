@@ -193,7 +193,7 @@ class Order extends Model
                 $ticket_price = 250000;
             }
         } else {
-            $ticket_price = 45000;
+            $ticket_price = 55000;
         }
 
         $data = array();

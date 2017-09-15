@@ -100,7 +100,7 @@ class TransactionsController extends Controller
     }
 
     private function getTicketPriceFTB($order){
-        $order->price_item = 45000;
+        $order->price_item = 55000;
         $order->grand_total = $order->price_item * $order->ticket_ammount;
         return $order;
     }
