@@ -60,7 +60,7 @@
                         <a href="{{route('event.home', ['festival_budaya'])}}">
                             <img src="{{URL('/')}}/assets_landing/img/ftb_thumb.jpg" alt=""/>
                             <div class="grid-item-hover">
-                                <span class="grid-item-hover-icon"></span>
+                                <span class="grid-item-hover-icon grid-buy"><button class="btn-buy">Buy Ticket</button></span>
                                 <span class="grid-item-hover-bottom">Festival Budaya 2017</span>
                                 <span class="grid-item-hover-bg agency"></span>
                             </div>
