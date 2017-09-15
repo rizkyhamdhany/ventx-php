@@ -15,6 +15,7 @@ use Milon\Barcode\DNS2D;
 use App\Models\Book;
 use App\Models\Bank;
 use App\Models\DokuPaymentRepository;
+use App\Models\Event;
 
 class PaymentController extends Controller
 {

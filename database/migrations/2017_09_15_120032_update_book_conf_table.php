@@ -25,7 +25,7 @@ class UpdateBookConfTable extends Migration
      */
     public function down()
     {
-        Schema::table('books', function($table) {
+        Schema::table('book_confs', function($table) {
             $table->dropColumn('payment_method');
         });
     }
