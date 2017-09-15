@@ -237,6 +237,7 @@ class PaymentController extends Controller
         ]);
         $order_code = $request->input('TRANSIDMERCHANT');
         $event = substr($order_code, 0, 2);
+        $request->session()->forget('book');
         if ($event == 'FB'){
             return redirect()->route('app.event.ticket.payment.confirm.success', ['festival_budaya']);
         } else if ($event == 'SM'){
@@ -249,7 +250,15 @@ class PaymentController extends Controller
             'action' => 'cancel' ,
             'log' => json_encode($request->input())
         ]);
-        echo "cancel";
+        $order_code = $request->input('TRANSIDMERCHANT');
+        $event = substr($order_code, 0, 2);
+        $request->session()->forget('book');
+        if ($event == 'FB'){
+            return redirect()->route('app.event.ticket.proceed', ['festival_budaya']);
+        } else if ($event == 'SM'){
+            return redirect()->route('app.event.ticket.proceed', ['smilemotion']);
+        }
+
     }
 
     public function testPay(){
