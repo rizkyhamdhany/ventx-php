@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard\EO;
 
+use App\CC;
 use App\Http\Controllers\Controller;
 use App\Models\EventRepository;
 use App\Models\TicketClassRepository;
@@ -134,17 +135,18 @@ class OrderController extends Controller
             }
             $ticket->save();
             $ticket->order()->attach($order);
-
-            /*
-             * generate ticket
-             */
-            $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
-            $output = $pdf->output();
-            $ticket_url = 'ventex/ticket/'.$event->name.'/ticket_'.$ticket->ticket_code.'.pdf';
-            $s3 = \Storage::disk('s3');
-            $s3->put($ticket_url, $output, 'public');
-            $ticket->url_ticket = $ticket_url;
-            $ticket->save();
+            if (env("APP_ENV", CC::ENV_LOCAL) != CC::ENV_TESTING){
+                /*
+                 * generate ticket
+                 */
+                $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
+                $output = $pdf->output();
+                $ticket_url = 'ventex/ticket/'.$event->name.'/ticket_'.$ticket->ticket_code.'.pdf';
+                $s3 = \Storage::disk('s3');
+                $s3->put($ticket_url, $output, 'public');
+                $ticket->url_ticket = $ticket_url;
+                $ticket->save();
+            }
 
             if ($seatupdate != null){
                 $seatupdate->status = 'unavailable';
@@ -158,30 +160,35 @@ class OrderController extends Controller
         }
         $request->session()->flash('alert-success', 'Ticket was successful added!');
         if ($event->id == 0){
-            $this->createInvoice($order, $ticket_class);
+            if (env("APP_ENV", CC::ENV_LOCAL) != CC::ENV_TESTING){
+                $this->createInvoice($order, $ticket_class);
+            }
         }
 
-        /*
-         * send email ticket
-         */
-        Mail::to($order->email)->send(new TicketMail($order));
-        if( count(Mail::failures()) > 0 ) {
-            foreach(Mail::failures as $email_address) {
+        if (env("APP_ENV", CC::ENV_LOCAL) != CC::ENV_TESTING){
+            /*
+             * send email ticket
+             */
+            Mail::to($order->email)->send(new TicketMail($order));
+            if( count(Mail::failures()) > 0 ) {
+                foreach(Mail::failures as $email_address) {
+                    $status = new EmailSendStatus();
+                    $status->email = $email_address;
+                    $status->type = 'order';
+                    $status->identifier = $order->order_code;
+                    $status->error = '';
+                    $status->save();
+                }
+            } else {
                 $status = new EmailSendStatus();
-                $status->email = $email_address;
+                $status->email = $order->email;
                 $status->type = 'order';
                 $status->identifier = $order->order_code;
-                $status->error = '';
+                $status->error = 'SUCCESS';
                 $status->save();
             }
-        } else {
-            $status = new EmailSendStatus();
-            $status->email = $order->email;
-            $status->type = 'order';
-            $status->identifier = $order->order_code;
-            $status->error = 'SUCCESS';
-            $status->save();
         }
+
 
         return redirect()->route("ticket.order.detail", ['id' => $order->id]);
     }
@@ -251,7 +258,33 @@ class OrderController extends Controller
     }
 
     public function viewOrderDetail(Request $request, $id){
-
+//        $datajson = '[{"email":"saraswati@smilemotion.org","password":"smilemotion132"},{"email":"saraswati@smilemotion.org","password":"smilemotion132"}]';
+//        $data = json_decode($datajson);
+//        echo '<pre>';
+//        foreach ($data as $item){
+//            print_r($item->email);
+//        }
+//        exit;
+//        $event = new \stdClass();
+//        $event->email = 'saraswati@smilemotion.org';
+//        $event->password = 'smilemotion132';
+//        $ticket = new \stdClass();
+//        $ticket->ticket_period = 'Presale 1';
+//        $ticket->ticket_class = 'Reguler';
+//        $ticket->ammount = '1';
+//        $tickets = array($ticket);
+//        $ticket->ticket_period = 'Presale 1';
+//        $ticket->ticket_class = 'Reguler';
+//        $ticket->ammount = '2';
+//        array_push($tickets, $ticket);
+//        $event->tickets = $tickets;
+//        $events = array($event);
+//
+//        $event = new \stdClass();
+//        $event->email = 'naufal@festivalbudaya.org';
+//        $event->password = 'festivalbudaya132';
+//        array_push($events, $event);
+//        echo '<pre>'; print_r(json_encode($events)); exit;
         $order = Order::find($id);
         return view('dashboard.orders.order_detail')
                 ->with('order', $order);

@@ -24,6 +24,7 @@ class Order extends Model
         $this->ticket_period = $ticket_period->name;
         $this->ticket_class = $ticket_class->name;
         $this->ticket_ammount = $input->input('ammount');
+        $this->grand_total = $this->ticket_ammount * $ticket_class->price;
         $this->payment_status = 'COMPLETE';
         $this->payment_code = '';
         $this->payment_method = 'MANUAL INPUT';

@@ -74,7 +74,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Full Name</label>
-                                            <input name="ticket_name[]" type="text" id="firstName" class="form-control" placeholder="Don Jon" required>
+                                            <input id="ticket_name_{{$i}}" name="ticket_name[]" type="text" id="firstName" class="form-control" placeholder="Don Jon" required>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -84,7 +84,7 @@
                                                 <span class="input-group-addon">
                                                     +62
                                                 </span>
-                                                <input name="ticket_phone[]" type="phone" class="form-control" placeholder="Phone Number" required> </div>
+                                                <input id="ticket_phone_{{$i}}" name="ticket_phone[]" type="phone" class="form-control" placeholder="Phone Number" required> </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -94,7 +94,7 @@
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-envelope"></i>
                                                 </span>
-                                                <input name="ticket_email[]" type="email" class="form-control" placeholder="Email Address" required> </div>
+                                                <input id="ticket_email_{{$i}}" name="ticket_email[]" type="email" class="form-control" placeholder="Email Address" required> </div>
                                         </div>
                                     </div>
                                     @if(!$seat_available->isEmpty())
