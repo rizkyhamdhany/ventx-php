@@ -156,11 +156,39 @@ class PaymentController extends Controller
     }
 
     public function dokuVerify(Request $request){
-        $this->dokuRepo->create([
-            'action' => 'verify' ,
-            'log' => json_encode($request->input())
-        ]);
-        echo 'Continue';
+        $mystore_id = env("APP_ENV", CC::ENV_LOCAL) == CC::ENV_LOCAL ? CC::DOKU_STORE_ID_DEV : CC::DOKU_STORE_ID_PROD;
+        $myshared_key = env("APP_ENV", CC::ENV_LOCAL) == CC::ENV_LOCAL ? CC::DOKU_SHARED_KEY_DEV : CC::DOKU_SHARED_KEY_PROD;
+        $store_id = $request->input('STOREID');
+        $order_code = $request->input('TRANSIDMERCHANT');
+        $ammount = $request->input('AMOUNT');
+        $words = $request->input('WORDS');
+        $book = Book::where('order_code', $order_code)->first();
+        if ($mystore_id == $store_id){
+            if (isset($book)){
+                $event = substr($order_code, 0, 2);
+                $ticket = new \stdClass();
+                $ticket->ticket_type = $book->ticket_class;
+                $ticket->ticket_ammount = $book->ticket_ammount;
+                if ($event == 'FB'){
+                    $ticket = $this->getTicketPriceFTB($ticket);
+                } else if ($event == 'SM'){
+                    $ticket = $this->getTicketPrice($ticket);
+                } else {
+                    return 'Stop';
+                }
+                if ($ticket->grand_total + 5000 == (int) $ammount){
+                    if (sha1($ammount.$myshared_key.$book->order_code) == $words){
+                        $this->dokuRepo->create([
+                            'action' => 'verify' ,
+                            'log' => json_encode($request->input())
+                        ]);
+                        return 'Continue';
+                    }
+                }
+            }
+        }
+        return 'Stop';
+
     }
 
     public function dokuNotify(Request $request){
