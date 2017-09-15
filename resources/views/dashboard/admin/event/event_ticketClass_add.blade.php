@@ -40,10 +40,14 @@
                     </div>
                     <div class="portlet-body form">
                         <!-- BEGIN FORM-->
-                        <form method="POST" action="{{route('dashboard.event.ticketClass.add.post',$id)}}" class="form-horizontal" id="formClass">
+                        <form method="POST" action="{{route('dashboard.event.ticketClass.add.post',[$id])}}" class="form-horizontal" id="formClass">
                             {{ csrf_field() }}
                             <input type="hidden" name="event_id" value="{{$id}}" readonly>
+                            @if($period === NULL)
                             <input type="hidden" name="ticket_period_id" value="{{$period_id}}" readonly>
+                            @else
+                            <input type="text" name="ticket_period_id" value="{{$period}}" readonly>
+                            @endif
                             <div class="form-body">
                                 <div class="form-group {{$errors->has('name') ? 'has-error' : ' ' }}">
                                     <label class="col-md-3 control-label">Class Name</label>
@@ -73,7 +77,7 @@
                             <div class="form-actions">
                                 <div class="row">
                                     <div class="col-md-offset-3 col-md-4">
-                                        <button type="submit" class="btn green">Next</button>
+                                        <button type="submit" class="btn green">Add</button>
                                     </div>
                                 </div>
                             </div>

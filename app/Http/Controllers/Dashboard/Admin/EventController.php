@@ -103,7 +103,8 @@ class EventController extends Controller
                     return view('dashboard.admin.event.event_ticketClass_add')
                         ->with('id', $id)
                         ->with('name', $request->input('name'))
-                        ->with('period_id', $dataPeriod->id);
+                        ->with('period_id', $dataPeriod->id)
+                        ->with('period',NULL);
                 } else {
                     $request->session()->flash('alert-warning', 'Failed to create Ticket Perio !');
                 }
@@ -119,8 +120,8 @@ class EventController extends Controller
 
     public function ticketPeriodEdit($id, $period, Request $request)
     {
-        $periodRepo = $this->ticketPeriodRepo->find($id);
-        $event = $this->ticketPeriodRepo->find($period);
+        $periodRepo = $this->ticketPeriodRepo->find($period);
+        $event = $this->eventRepo->find($id);
         View::share('page_state', 'Ticket Period');
         View::share('page_title', $event->name);
         if ($request->isMethod('post')) {
@@ -175,8 +176,11 @@ class EventController extends Controller
       }
     }
 
-    public function ticketClassAdd($id, Request $request)
+    public function ticketClassAdd($id, $period=NULL, Request $request)
     {
+        if($period!=NULL){
+          $periodRepo = $this->ticketPeriodRepo->find($period);
+        }
         View::share('page_state', 'Ticket Class');
         if ($request->isMethod('post')) {
             $validator = Validator::make($request->all(), [
@@ -186,7 +190,7 @@ class EventController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect()->route('dashboard.event.ticketClass.edit', $id)
+                return redirect()->route('dashboard.event.ticketClass.add', $id)
                     ->withErrors($validator)
                     ->withInput();
             } else {
@@ -203,9 +207,16 @@ class EventController extends Controller
                 }
             }
         } else {
-            return view('dashboard.admin.event.event_ticketClass_edit.post')
-                ->with('event_id', $id)
-                ->with('name', $request->input('name'));
+            if($period!=NULL){
+              return view('dashboard.admin.event.event_ticketClass_add')
+                  ->with('id', $id)
+                  ->with('name', $request->input('name'))
+                  ->with('period',$period);
+            }else{
+              return view('dashboard.admin.event.event_ticketClass_add')
+                  ->with('id', $id)
+                  ->with('name', $request->input('name'));
+            }
         }
     }
 
