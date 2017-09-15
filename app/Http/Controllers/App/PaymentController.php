@@ -133,6 +133,7 @@ class PaymentController extends Controller
         $order_code = $request->input('order_code');
         $preorder = Book::where('order_code', $order_code)->first();
         $preorderConfs = new BookConf();
+        $preorderConfs->payment_method = CC::PAYMENT_BANK_TRF;
         $preorderConfs->order_code = $order_code;
         $preorderConfs->account_holder = $request->input('account_holder');
         $preorderConfs->transfer_date = $request->input('date');
@@ -192,10 +193,39 @@ class PaymentController extends Controller
     }
 
     public function dokuNotify(Request $request){
+        $order_code = $request->input('TRANSIDMERCHANT');
+        $ammount = $request->input('AMOUNT');
+        $result = $request->input('RESULT');
+        $payment_type = $request->input('PTYPE');
+
+        $preorder = Book::where('order_code', $order_code)->first();
+        $preorderConfs = new BookConf();
+        $preorderConfs->payment_method = CC::PAYMENT_DOKU.'-'.$payment_type;
+        $preorderConfs->order_code = $order_code;
+        $newformat = date('Y-m-d');
+        $preorderConfs->transfer_date = $newformat;
+        if ($result == 'Success'){
+            $preorderConfs->status = 'VERIFIED';
+        } else {
+            $preorderConfs->status = 'UNPAID';
+        }
+        $preorderConfs->total = $ammount;
+        $preorderConfs->bank_id = 0;
+        $preorderConfs->book_id = $preorder->id;
+        $preorderConfs->save();
+
         $this->dokuRepo->create([
             'action' => 'notify' ,
             'log' => json_encode($request->input())
         ]);
+
+        if ($result == 'Success') {
+            $preorder->payment_status = 'PAID';
+            $preorder->save();
+
+            $event = Event::find($preorder->event_id);
+            Order::createOrderFromBankTransferEvent($preorder, $event);
+        }
         echo "notify";
     }
 
@@ -204,7 +234,13 @@ class PaymentController extends Controller
             'action' => 'redirect process' ,
             'log' => json_encode($request->input())
         ]);
-        echo "redirect process";
+        $order_code = $request->input('TRANSIDMERCHANT');
+        $event = substr($order_code, 0, 2);
+        if ($event == 'FB'){
+            return redirect()->route('app.event.ticket.payment.confirm.success', ['festival_budaya']);
+        } else if ($event == 'SM'){
+            return redirect()->route('app.event.ticket.payment.confirm.success', ['smilemotion']);
+        }
     }
 
     public function dokuCancel(Request $request){
