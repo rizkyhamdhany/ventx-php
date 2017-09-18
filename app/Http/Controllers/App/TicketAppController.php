@@ -247,7 +247,7 @@ class TicketAppController extends Controller
                     } else if($ticket->bankopt == 'BNI'){
                         $ticket->bank_account = 'BNI 0602257953 a.n. Sandika Ichsan Arafat';
                     } else if($ticket->bankopt == 'CIMB Niaga'){
-                        $ticket->bank_account = 'CIMB Niaga 11290001012569 a.n. Sandika Ichsan Arafat';
+                        $ticket->bank_account = 'CIMB Niaga 704205525500 a.n. Sandika Ichsan Arafat';
                     }
                     $preorder = new Book();
                     $preorder->submitPreorderWithTicketsEvent($ticket, $event);
@@ -466,7 +466,7 @@ class TicketAppController extends Controller
                 } else if($ticket->bankopt == 'BNI'){
                     $ticket->bank_account = 'BNI 0602257953 a.n. Sandika Ichsan Arafat';
                 } else if($ticket->bankopt == 'CIMB Niaga'){
-                    $ticket->bank_account = 'CIMB Niaga 11290001012569 a.n. Sandika Ichsan Arafat';
+                    $ticket->bank_account = 'CIMB Niaga 704205525500 a.n. Sandika Ichsan Arafat';
                 }
                 $preorder = new Book();
                 $preorder->submitPreorderWithTickets($ticket);
