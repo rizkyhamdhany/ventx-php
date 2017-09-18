@@ -188,7 +188,7 @@ class PaymentController extends Controller
                 $ticket_period = $this->ticketPeriodRepo->findWhere([ 'event_id' => $book->event_id,'name' => $book->ticket_period])->first();
                 $ticket_class = $this->ticketClassRepo->findWhere(['event_id' => $book->event_id, 'ticket_period_id' => $ticket_period->id, 'name' => $book->ticket_class])->first();
 
-                if (!empty($ticket_class)){
+                if (empty($ticket_class)){
                     return 'Stop';
                 }
 
