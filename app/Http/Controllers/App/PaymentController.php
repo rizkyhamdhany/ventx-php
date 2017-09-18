@@ -188,13 +188,8 @@ class PaymentController extends Controller
                 $ticket_period = $this->ticketPeriodRepo->findWhere([ 'event_id' => $book->event_id,'name' => $book->ticket_period])->first();
                 $ticket_class = $this->ticketClassRepo->findWhere(['event_id' => $book->event_id, 'ticket_period_id' => $ticket_period->id, 'name' => $book->ticket_class])->first();
 
-                if (empty($ticket_class)){
-                    return 'Stop';
-                }
-
                 $ticket->price_item = $ticket_class->price;
                 $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
-
 
                 if ($ticket->grand_total + 5000 == (int) $ammount){
                     if (sha1($ammount.$myshared_key.$book->order_code) == $words){
