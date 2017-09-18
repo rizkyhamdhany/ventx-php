@@ -25,7 +25,9 @@ class EventController extends Controller
         $event = $this->eventRepo->findWhere([
             'short_name'=> $event,
         ])->first();
+        $ticket_period = $this->ticketPeriodRepo->ticketPeriodNow($event->id);
         return view('app.event.index')
-                ->with('event', $event);
+                ->with('event', $event)
+                ->with('ticket_period', $ticket_period);
     }
 }

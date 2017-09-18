@@ -6,6 +6,8 @@ use App\CC;
 use App\Http\Controllers\Controller;
 use App\Models\BookConf;
 use App\Models\EventRepository;
+use App\Models\TicketClassRepository;
+use App\Models\TicketPeriodRepository;
 use Dompdf\Exception;
 use Illuminate\Http\Request;
 use App\Models\Order;
@@ -21,10 +23,14 @@ class PaymentController extends Controller
 {
     protected $dokuRepo;
     protected $eventRepo;
+    protected $ticketPeriodRepo;
+    protected $ticketClassRepo;
 
-    public function __construct(DokuPaymentRepository $dokuPaymentRepository, EventRepository $eventRepo)
+    public function __construct(DokuPaymentRepository $dokuPaymentRepository, TicketPeriodRepository $ticketPeriodRepo, EventRepository $eventRepo,  TicketClassRepository $ticketClassRepo)
     {
         $this->eventRepo = $eventRepo;
+        $this->ticketPeriodRepo = $ticketPeriodRepo;
+        $this->ticketClassRepo = $ticketClassRepo;
         $this->dokuRepo = $dokuPaymentRepository;
     }
 
@@ -32,8 +38,10 @@ class PaymentController extends Controller
         $event = $this->eventRepo->findWhere([
             'short_name'=> $event,
         ])->first();
+        $ticket_period = $this->ticketPeriodRepo->ticketPeriodNow($event->id);
         return view('app.payment.input_payment_code')
-                ->with('event', $event);
+                ->with('event', $event)
+                ->with('ticket_period', $ticket_period);
     }
 
     public function inputPaymentCodeOld(){
@@ -52,19 +60,23 @@ class PaymentController extends Controller
                 $ticket = new \stdClass();
                 $ticket->ticket_ammount = $preorder->ticket_ammount;
                 $ticket->ticket_type = $preorder->ticket_class;
-                if ($event->short_name == 'smilemotion'){
-                    $ticket = $this->getTicketPrice($ticket);
-                } else {
-                    $ticket = $this->getTicketPriceFTB($ticket);
-                }
+
+                $ticket_period = $this->ticketPeriodRepo->findWhere([ 'event_id' => $preorder->event_id,'name' => $preorder->ticket_period])->first();
+                $ticket_class = $this->ticketClassRepo->findWhere(['event_id' => $preorder->event_id, 'ticket_period_id' => $ticket_period->id, 'name' => $preorder->ticket_class])->first();
+
+                $ticket->price_item = $ticket_class->price;
+                $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
+
                 $bank = Bank::all();
+                $ticket_period = $this->ticketPeriodRepo->ticketPeriodNow($event->id);
 
                 return view('app.payment.input_payment_info')
                     ->with('preorder', $preorder)
                     ->with('ticket', $ticket)
                     ->with('banks', $bank)
                     ->with('order_code', $order_code)
-                    ->with('event', $event);
+                    ->with('event', $event)
+                    ->with('ticket_period', $ticket_period);
             } else {
                 $request->session()->flash('alert-danger', 'Reservation Code not Found !');
                 return redirect()->route('app.event.ticket.payment.input.code', [$event->short_name]);
@@ -149,8 +161,10 @@ class PaymentController extends Controller
         $event = $this->eventRepo->findWhere([
             'short_name'=> $event,
         ])->first();
+        $ticket_period = $this->ticketPeriodRepo->ticketPeriodNow($event->id);
         return view('app.payment.confirm_success')
-            ->with('event', $event);
+            ->with('event', $event)
+            ->with('ticket_period', $ticket_period);
     }
 
     public function confrimSuccessOld(Request $request){
@@ -167,17 +181,21 @@ class PaymentController extends Controller
         $book = Book::where('order_code', $order_code)->first();
         if ($mystore_id == $store_id){
             if (isset($book)){
-                $event = substr($order_code, 0, 2);
                 $ticket = new \stdClass();
                 $ticket->ticket_type = $book->ticket_class;
                 $ticket->ticket_ammount = $book->ticket_ammount;
-                if ($event == 'FB'){
-                    $ticket = $this->getTicketPriceFTB($ticket);
-                } else if ($event == 'SM'){
-                    $ticket = $this->getTicketPrice($ticket);
-                } else {
+
+                $ticket_period = $this->ticketPeriodRepo->findWhere([ 'event_id' => $book->event_id,'name' => $book->ticket_period])->first();
+                $ticket_class = $this->ticketClassRepo->findWhere(['event_id' => $book->event_id, 'ticket_period_id' => $ticket_period->id, 'name' => $book->ticket_class])->first();
+
+                if (!isset($ticket_class)){
                     return 'Stop';
                 }
+
+                $ticket->price_item = $ticket_class->price;
+                $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
+
+
                 if ($ticket->grand_total + 5000 == (int) $ammount){
                     if (sha1($ammount.$myshared_key.$book->order_code) == $words){
                         $this->dokuRepo->create([

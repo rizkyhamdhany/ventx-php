@@ -32,4 +32,11 @@ class TicketClassRepository extends BaseRepository implements CacheableInterface
         ]);
     }
 
+    public function ticketPeriodNowWithName($period_id, $name){
+        return $this->findWhere([
+            'ticket_period_id' => $period_id,
+            'name' => $name
+        ])->first();
+    }
+
 }

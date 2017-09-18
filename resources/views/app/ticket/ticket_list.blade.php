@@ -135,83 +135,56 @@
 @section('page_js')
     <script src="{{URL('/')}}/assets/pages/scripts/form-wizard.min.js" type="text/javascript"></script>
     <style>
-        #REG:hover, #VIP_E:hover, #VIP_D:hover, #VIP_I:hover, #VIP_H:hover, #VVIP:hover{
+        @foreach($ticket_class as $indexTicket => $TC)
+            {{str_replace(' ', '_', '#'.$TC->name)}}:hover{
             background-color: #000000;
             opacity: 0.3;
             cursor: pointer;
         }
+        @endforeach
+
     </style>
     <script>
-        var seat_dict = {};
-        var seats = [];
-        var seat = new Object();
-        var book = new Object();
-        book.step = 'book';
-        book.ticket_type = 'Reguler';
-        book.ticket_period = 'Presale 2';
-        book.ticket_ammount = '0';
-        book.ticket = [];
-        $('#book').val(JSON.stringify(book));
-        $( "#REG" ).click(function() {
-            $('.seats').hide();
-            $('#seat-map-13').show();
-            $('#ticket-class').text('Reguler');
-            $('#ticket_type').val('Reguler');
-            $('#ticket-price').text('IDR 125.000');
-            $('#ticket_ammount').prop("disabled", false);
-            book.ticket_type = 'Reguler';
-            resetSeat();
-        });
-        $( "#VVIP" ).click(function() {
-            $('.seats').hide();
-            $('#seat-map-18').show();
-            $('#ticket-class').text('VVIP');
-            $('#ticket_type').val('VVIP');
-            $('#ticket-price').text('IDR 450.000');
-            $('#ticket_ammount').prop("disabled", true);
-            book.ticket_type = 'VVIP';
-            resetSeat();
-        });
-        $( "#VIP_E" ).click(function() {
-            $('.seats').hide();
-            $('#seat-map-14').show();
-            $('#ticket-class').text('VIP E');
-            $('#ticket_type').val('VIP E');
-            $('#ticket-price').text('IDR 250.000');
-            $('#ticket_ammount').prop("disabled", true);
-            book.ticket_type = 'VIP E';
-            resetSeat();
-        });
-        $( "#VIP_D" ).click(function() {
-            $('.seats').hide();
-            $('#seat-map-15').show();
-            $('#ticket-class').text('VIP D');
-            $('#ticket_type').val('VIP D');
-            $('#ticket-price').text('IDR 250.000');
-            $('#ticket_ammount').prop("disabled", true);
-            book.ticket_type = 'VIP D';
-            resetSeat();
-        });
-        $( "#VIP_I" ).click(function() {
-            $('.seats').hide();
-            $('#seat-map-16').show();
-            $('#ticket-class').text('VIP I');
-            $('#ticket_type').val('VIP I');
-            $('#ticket-price').text('IDR 250.000');
-            $('#ticket_ammount').prop("disabled", true);
-            book.ticket_type = 'VIP I';
-            resetSeat();
-        });
-        $( "#VIP_H" ).click(function() {
-            $('.seats').hide();
-            $('#seat-map-17').show();
-            $('#ticket-class').text('VIP H');
-            $('#ticket_type').val('VIP H');
-            $('#ticket-price').text('IDR 250.000');
-            $('#ticket_ammount').prop("disabled", true);
-            book.ticket_type = 'VIP H';
-            resetSeat();
-        });
+        @foreach($ticket_class as $indexTicket => $TC)
+            @if($indexTicket < 1)
+                var seat_dict = {};
+                var seats = [];
+                var seat = new Object();
+                var book = new Object();
+                book.step = 'book';
+                book.ticket_type = 'Reguler';
+                book.ticket_class = '{{$TC->id}}';
+                book.ticket_period = 'Presale 2';
+                book.ticket_ammount = '0';
+                book.ticket = [];
+                $('#book').val(JSON.stringify(book));
+                $( "#{{str_replace(' ', '_', $TC->name)}}" ).click(function() {
+                    $('.seats').hide();
+                    $('#seat-map-{{$TC->id}}').show();
+                    $('#ticket-class').text('{{$TC->name}}');
+                    $('#ticket_type').val('{{$TC->name}}');
+                    $('#ticket-price').text('IDR {{$TC->price}}');
+                    $('#ticket_ammount').prop("disabled", false);
+                    book.ticket_type = '{{$TC->name}}';
+                    book.ticket_class = '{{$TC->id}}';
+                    resetSeat();
+                });
+            @else
+                $( "#{{str_replace(' ', '_', $TC->name)}}" ).click(function() {
+                    $('.seats').hide();
+                    $('#seat-map-{{$TC->id}}').show();
+                    $('#ticket-class').text('{{$TC->name}}');
+                    $('#ticket_type').val('{{$TC->name}}');
+                    $('#ticket-price').text('IDR {{$TC->price}}');
+                    $('#ticket_ammount').prop("disabled", true);
+                    book.ticket_type = '{{$TC->name}}';
+                    book.ticket_class = '{{$TC->id}}';
+                    resetSeat();
+                });
+            @endif
+
+        @endforeach
+
         function selectSeat($i) {
             if(seat_dict[$i] === undefined ) {
                 if (Object.keys(seat_dict).length < 4){

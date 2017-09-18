@@ -6,6 +6,8 @@ use App\CC;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProceesBookTicketRequest;
 use App\Models\EventRepository;
+use App\Models\TicketClassRepository;
+use App\Models\TicketPeriodRepository;
 use Dompdf\Exception;
 use Illuminate\Http\Request;
 use App\Models\Order;
@@ -31,10 +33,14 @@ class TicketAppController extends Controller
 {
 
     protected $eventRepo;
+    protected $ticketPeriodRepo;
+    protected $ticketClassRepo;
 
-    public function __construct(EventRepository $eventRepo)
+    public function __construct(EventRepository $eventRepo, TicketPeriodRepository $ticketPeriodRepo, TicketClassRepository $ticketClassRepo)
     {
         $this->eventRepo = $eventRepo;
+        $this->ticketPeriodRepo = $ticketPeriodRepo;
+        $this->ticketClassRepo = $ticketClassRepo;
         View::share( 'event_name', 'Smilemotion 2017' );
         View::share( 'logo', 'logo_smilemotion.png' );
         View::share( 'url_event', 'http://smilemotion.org' );
@@ -45,6 +51,8 @@ class TicketAppController extends Controller
         $event = $this->eventRepo->findWhere([
             'short_name'=> $event,
         ])->first();
+        $ticket_period = $this->ticketPeriodRepo->ticketPeriodNow($event->id);
+        $ticket_class = $this->ticketClassRepo->ticketPeriodNow($ticket_period->id);
         if ($event->short_name == "smilemotion"){
             $keys_seat_booked = Redis::keys("smilemotion:seat_booked:*");
             $seat_booked = array();
@@ -56,7 +64,6 @@ class TicketAppController extends Controller
                 RedisModel::cachingSeatData();
             }
             View::share( 'page_state', 'pick_seat' );
-            $ticket_class = TicketClass::all();
             $seat = array();
             $seat['VVIP'] = Redis::hgetall('smilemotion:seat:VVIP');
             $seat['VIP E'] = Redis::hgetall('smilemotion:seat:VIP E');
@@ -64,13 +71,20 @@ class TicketAppController extends Controller
             $seat['VIP I'] = Redis::hgetall('smilemotion:seat:VIP I');
             $seat['VIP H'] = Redis::hgetall('smilemotion:seat:VIP H');
             $event->count_ticket_class = 5;
-            $event->price_reguler = 125000;
+            if (count($ticket_class) > 1){
+                $event->price_reguler = $ticket_class->first()->price;
+            } else {
+                $event->price_reguler = $ticket_class->first()->price;
+            }
         } else {
-            $ticket_class = new \stdClass();
             $seat = new \stdClass();
             $seat_booked = new \stdClass();
             $event->count_ticket_class = 1;
-            $event->price_reguler = 55000;
+            if (count($ticket_class) > 1){
+                $event->price_reguler = $ticket_class->first()->price;
+            } else {
+                $event->price_reguler = $ticket_class->first()->price;
+            }
         }
 
         View::share( 'page_state', 'pick_seat' );
@@ -88,11 +102,14 @@ class TicketAppController extends Controller
                 'short_name'=> $event,
             ])->first();
             $ticket = json_decode($request->input('book'));
-            if ($event->short_name == 'smilemotion'){
-                $ticket = $this->getTicketPrice($ticket);
-            } else {
-                $ticket = $this->getTicketPriceFTB($ticket);
+            $ticket_period = $this->ticketPeriodRepo->ticketPeriodNow($event->id);
+            $ticket_class = $this->ticketClassRepo->ticketPeriodNowWithName($ticket_period->id, $ticket->ticket_type);
+            if (!isset($ticket_class)){
+                $request->session()->flash('alert-danger', '');
+                return back()->withInput();
             }
+            $ticket->price_item = $ticket_class->price;
+            $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
             if ($this->validateTicket($request, $ticket)){
                 $request->session()->put('book', $ticket);
                 return redirect()->route('app.event.ticket.pay', [$event->short_name]);
@@ -228,11 +245,16 @@ class TicketAppController extends Controller
             if (!isset($ticket)){
                 return redirect()->route('app.event.ticket.list', [$event->short_name]);
             }
-            if ($event->short_name == 'smilemotion'){
-                $ticket = $this->getTicketPrice($ticket);
-            } else {
-                $ticket = $this->getTicketPriceFTB($ticket);
+
+            $ticket_period = $this->ticketPeriodRepo->ticketPeriodNow($event->id);
+            $ticket_class = $this->ticketClassRepo->ticketPeriodNowWithName($ticket_period->id, $ticket->ticket_type);
+            if (!isset($ticket_class)){
+                $request->session()->flash('alert-danger', '');
+                return back()->withInput();
             }
+            $ticket->price_item = $ticket_class->price;
+            $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
+
             $ticket->payment_method = $request->input('payment_method');
             if ($ticket->payment_method == CC::PAYMENT_BANK_TRF){
                 $ticket->bankopt = $request->input('bankopt');

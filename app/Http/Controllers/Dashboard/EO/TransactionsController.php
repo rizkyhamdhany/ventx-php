@@ -11,6 +11,9 @@ namespace App\Http\Controllers\Dashboard\EO;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Event;
+use App\Models\EventRepository;
+use App\Models\TicketClassRepository;
+use App\Models\TicketPeriodRepository;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
@@ -27,8 +30,15 @@ use View;
 
 class TransactionsController extends Controller
 {
-    public function __construct()
+    protected $eventRepo;
+    protected $ticketPeriodRepo;
+    protected $ticketClassRepo;
+
+    public function __construct(EventRepository $eventRepo, TicketPeriodRepository $ticketPeriodRepo, TicketClassRepository $ticketClassRepo)
     {
+        $this->eventRepo = $eventRepo;
+        $this->ticketPeriodRepo = $ticketPeriodRepo;
+        $this->ticketClassRepo = $ticketClassRepo;
         $this->middleware('auth');
         View::share( 'page_state', 'Payments' );
     }
@@ -58,11 +68,10 @@ class TransactionsController extends Controller
         $order = Book::find($id);
         $transaction = Transaction::where('status', '!=', 'USED')->get();
         $ordersconf = BookConf::where('book_id', $id)->first();
-        if ($order->event_id = 0){
-            $order = $this->getTicketPrice($order);
-        }else {
-            $order = $this->getTicketPriceFTB($order);
-        }
+        $ticket_period = $this->ticketPeriodRepo->findWhere([ 'event_id' => $order->event_id,'name' => $order->ticket_period])->first();
+        $ticket_class = $this->ticketClassRepo->findWhere(['event_id' => $order->event_id, 'ticket_period_id' => $ticket_period->id, 'name' => $order->ticket_class])->first();
+        $order->price_item = $ticket_class->price;
+        $order->grand_total = $order->price_item * $order->ticket_ammount;
         return view('dashboard.payments.confirm_transaction')
             ->with('order', $order)
             ->with('ordersconf', $ordersconf)
@@ -82,26 +91,5 @@ class TransactionsController extends Controller
         $event = Event::find($preorder->event_id);
         Order::createOrderFromBankTransferEvent($preorder, $event);
         return redirect()->route('dashboard.payments');
-    }
-
-    private function getTicketPrice($order){
-        if ($order->ticket_class == 'Reguler'){
-            $order->price_item = 125000;
-            $order->grand_total = $order->price_item * $order->ticket_ammount;
-        } else if ($order->ticket_class == 'VVIP'){
-            $order->price_item = 450000;
-            $order->grand_total = $order->price_item * $order->ticket_ammount;
-        }
-        else {
-            $order->price_item = 250000;
-            $order->grand_total = $order->price_item * $order->ticket_ammount;
-        }
-        return $order;
-    }
-
-    private function getTicketPriceFTB($order){
-        $order->price_item = 55000;
-        $order->grand_total = $order->price_item * $order->ticket_ammount;
-        return $order;
     }
 }
