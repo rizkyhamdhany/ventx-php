@@ -182,8 +182,6 @@ class PaymentController extends Controller
         if ($mystore_id == $store_id){
             if (isset($book)){
                 $ticket = new \stdClass();
-                $ticket->ticket_type = $book->ticket_class;
-                $ticket->ticket_ammount = $book->ticket_ammount;
 
                 $ticket_period = $this->ticketPeriodRepo->findWhere([ 'event_id' => $book->event_id,'name' => $book->ticket_period])->first();
                 $ticket_class = $this->ticketClassRepo->findWhere(['event_id' => $book->event_id, 'ticket_period_id' => $ticket_period->id, 'name' => $book->ticket_class])->first();
