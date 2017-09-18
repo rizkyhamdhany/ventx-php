@@ -236,12 +236,22 @@ class PaymentController extends Controller
             'log' => json_encode($request->input())
         ]);
         $order_code = $request->input('TRANSIDMERCHANT');
+        $result = $request->input('RESULT');
         $event = substr($order_code, 0, 2);
-        if ($event == 'FB'){
-            return redirect()->route('app.event.ticket.payment.confirm.success', ['festival_budaya']);
-        } else if ($event == 'SM'){
-            return redirect()->route('app.event.ticket.payment.confirm.success', ['smilemotion']);
+        if ($result == 'FAILURE'){
+            if ($event == 'FB'){
+                return redirect()->route('app.event.ticket.proceed', ['festival_budaya']);
+            } else if ($event == 'SM'){
+                return redirect()->route('app.event.ticket.proceed', ['smilemotion']);
+            }
+        } else {
+            if ($event == 'FB'){
+                return redirect()->route('app.event.ticket.payment.confirm.success', ['festival_budaya']);
+            } else if ($event == 'SM'){
+                return redirect()->route('app.event.ticket.payment.confirm.success', ['smilemotion']);
+            }
         }
+
     }
 
     public function dokuCancel(Request $request){
