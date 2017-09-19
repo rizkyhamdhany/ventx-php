@@ -23,6 +23,20 @@
                     {!! $page_state == 'Event Details' ? '<span class="selected"></span>' : '' !!}
                 </a>
             </li>
+            <li class="nav-item start {{$page_state == 'Event Artists' ? 'active' : ''}}">
+                <a href="{{route('dashboard.event.eventArtist',$id)}}" class="nav-link nav-toggle">
+                    <i class="icon-calendar"></i>
+                    <span class="title">Event Artists</span>
+                    {!! $page_state == 'Event Details' ? '<span class="selected"></span>' : '' !!}
+                </a>
+            </li>
+            <li class="nav-item start {{$page_state == 'Event Sponsors' ? 'active' : ''}}">
+                <a href="{{route('dashboard.event.eventSponsor',$id)}}" class="nav-link nav-toggle">
+                    <i class="icon-calendar"></i>
+                    <span class="title">Event Sponsors</span>
+                    {!! $page_state == 'Event Details' ? '<span class="selected"></span>' : '' !!}
+                </a>
+            </li>
             <li class="heading">
                 <h3 class="uppercase">Ticket</h3>
             </li>

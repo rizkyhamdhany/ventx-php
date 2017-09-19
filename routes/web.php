@@ -140,6 +140,23 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
         Route::prefix('/details')->group(function () {
             Route::prefix('/{id}')->group(function ($id) {
                 Route::get('/', 'Dashboard\Admin\EventController@detailEvent')->name('dashboard.event.details');
+                Route::prefix('eventArtist')->group(function ($id){
+                  Route::get('/', 'Dashboard\Admin\EventController@eventArtist')->name('dashboard.event.eventArtist');
+                  Route::get('/add', 'Dashboard\Admin\EventController@eventArtistAdd')->name('dashboard.event.eventArtist.add');
+                  Route::post('/add', 'Dashboard\Admin\EventController@eventArtistAdd')->name('dashboard.event.eventArtist.add.post');
+                  Route::get('/edit/{artist}','Dashboard\Admin\EventController@eventArtistEdit')->name('dashboard.event.eventArtist.edit');
+                  Route::post('/edit/{artist}','Dashboard\Admin\EventController@eventArtistEdit')->name('dashboard.event.eventArtist.edit.post');
+                  Route::get('/del/{artist}','Dashboard\Admin\EventController@eventArtistDelete')->name('dashboard.event.eventArtist.delete');
+                });
+                Route::prefix('eventSponsor')->group(function ($id){
+                  Route::get('/', 'Dashboard\Admin\EventController@eventSponsor')->name('dashboard.event.eventSponsor');
+                  Route::get('/add', 'Dashboard\Admin\EventController@eventSponsorAdd')->name('dashboard.event.eventSponsor.add');
+                  Route::post('/add', 'Dashboard\Admin\EventController@eventSponsorAdd')->name('dashboard.event.eventSponsor.add.post');
+                  Route::get('/edit/{sponsor}','Dashboard\Admin\EventController@eventSponsorEdit')->name('dashboard.event.eventSponsor.edit');
+                  Route::post('/edit/{sponsor}','Dashboard\Admin\EventController@eventSponsorEdit')->name('dashboard.event.eventSponsor.edit.post');
+                  Route::get('/del/{sponsor}','Dashboard\Admin\EventController@eventSponsorDelete')->name('dashboard.event.eventSponsor.delete');
+                });
+
                 Route::prefix('/ticketCategory')->group(function () {
                     Route::get('/', 'Dashboard\Admin\EventController@ticketCategory')->name('dashboard.event.ticketCategory');
                     Route::prefix('/ticketPeriod')->group(function ($id) {
