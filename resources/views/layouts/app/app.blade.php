@@ -62,6 +62,7 @@
 <script src="{{URL('/')}}/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="{{URL('/')}}/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="{{URL('/')}}/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<script src="{{URL('/')}}/assets/global/plugins/bootstrap-birthday.js" type="text/javascript"></script>
 @yield('page_js_plugins')
 <script src="{{URL('/')}}/assets/global/scripts/app.js" type="text/javascript"></script>
 @yield('page_js')

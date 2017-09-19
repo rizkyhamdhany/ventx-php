@@ -14,7 +14,6 @@ class TicketPeriod extends Model
     }
 
     public function ticketClass(){
-      return $this
-        ->hasMany('App\Models\TicketClass', 'ticket_period_id', 'id');
+      return $this->hasMany('App\Models\TicketClass', 'ticket_period_id', 'id');
     }
 }

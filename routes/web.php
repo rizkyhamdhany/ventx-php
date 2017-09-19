@@ -73,6 +73,7 @@ Route::prefix('/event')->group(function () {
         Route::post('/proceed', 'App\TicketAppController@proceedBookTicketPost')->name('app.event.ticket.proceed.post');
         Route::get('/success', 'App\TicketAppController@successBookTicket')->name('app.event.ticket.success');
         Route::prefix('/payment')->group(function () {
+            Route::get('/redirect', 'App\TicketAppController@redirectPayment')->name('app.event.ticket.payment.redirect');
             Route::prefix('/confirm')->group(function () {
                 Route::get('/', 'App\PaymentController@inputPaymentCode')->name('app.event.ticket.payment.input.code');
                 Route::get('/input', 'App\PaymentController@inputPaymentDetail')->name('app.event.ticket.payment.input.detail');

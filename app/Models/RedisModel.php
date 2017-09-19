@@ -25,8 +25,6 @@ class RedisModel
         Redis::hDel(CC::$EVENT_NAME.":".CC::$KEY_SEAT.":".$seat->ticket_class, $seat->no);
     }
 
-//                Redis::set("smilemotion:seat:".$seat->ticket_class.":".$seat->no, $seat->id);
-
     public static function cachingBookedSeat(){
         $preseats = Bookseat::whereDate('expire_at', '>', \Carbon\Carbon::now())->get();
         foreach ($preseats as $preseat){

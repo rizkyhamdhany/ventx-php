@@ -175,7 +175,7 @@
                         @endforeach
                     ], {
                         fade: 1000,
-                        duration: 8000
+                        duration: 1000
                     }
                 );
 

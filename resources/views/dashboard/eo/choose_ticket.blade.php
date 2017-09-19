@@ -18,22 +18,22 @@
                             {{ csrf_field() }}
                             <div class="form-wizard">
                                 <div class="form-body">
-                                    <div class="form-group">
+                                    <div class="form-group {{$errors->has('ticket_period') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Period Ticket</label>
                                         <div class="col-md-4">
-                                            <select class="form-control" name="ticket_period">
-                                                <option value="Presale 2">Presale 2</option>
+                                            <select class="form-control" name="ticket_period" id="ticket_period">
+                                                <option value="">--------</option>
+                                                @foreach($ticket_periods as $ticket_period)
+                                                <option value="{{$ticket_period->id}}">{{$ticket_period->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <input type="hidden" name="ticket_class" value="Reguler">
-                                    <div class="form-group">
+                                    <div class="form-group {{$errors->has('ticket_class') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Ticket Class</label>
                                         <div class="col-md-4">
-                                            <select class="form-control" name="ticket_class">
-                                                @foreach($ticket_classes as $ticket_classes)
-                                                    <option value="{{$ticket_classes->name}}">{{$ticket_classes->name}}</option>
-                                                @endforeach
+                                            <select class="form-control" name="ticket_class" id="ticket_class">
                                             </select>
                                         </div>
                                     </div>
@@ -77,5 +77,17 @@
     <script src="{{URL('/')}}/assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js" type="text/javascript"></script>
 @endsection
 @section('page_js')
+    <script>
+        $('#ticket_period').on('change', function(){
+            $('#ticket_class').html('');
 
+            @foreach($ticket_periods as $ticket_period)
+            if($('#ticket_period').val() == {{$ticket_period->id}}){
+                @foreach($ticket_period->ticketClass as $ticket_class)
+                    $('#ticket_class').append('<option value="{{$ticket_class->id}}">{{$ticket_class->name}}</option>');
+                @endforeach
+            }
+            @endforeach
+        });
+    </script>
 @endsection

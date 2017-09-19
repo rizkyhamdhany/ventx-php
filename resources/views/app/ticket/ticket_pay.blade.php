@@ -42,32 +42,32 @@
                                 @endif
                             @endforeach
                         </div>
-                        <form class="horizontal-form"  action="{{route('app.event.ticket.proceed.post', [$event->short_name])}}" method="POST">
-                            {{ csrf_field() }}
                             <div class="portlet light bordered">
                                 <div class="portlet-title tabbable-line">
                                     <ul class="nav nav-tabs pull-left">
                                         <li class="active">
-                                            <a href="#portlet_comments_1" data-toggle="tab" aria-expanded="true"> Transfer </a>
+                                            <a href="#portlet_comments_1" data-toggle="tab" aria-expanded="true"> Bank Transfer </a>
                                         </li>
                                         <li class="">
                                             <a href="#portlet_comments_2" data-toggle="tab" aria-expanded="false"> Credit Card </a>
                                         </li>
                                         <li class="">
-                                            <a href="#portlet_comments_3" data-toggle="tab" aria-expanded="false"> E-Money </a>
+                                            <a href="#portlet_comments_3" data-toggle="tab" aria-expanded="false"> E-Wallet </a>
                                         </li>
                                         <li class="">
-                                            <a href="#portlet_comments_4" data-toggle="tab" aria-expanded="false"> Indomaret </a>
+                                            <a href="#portlet_comments_4" data-toggle="tab" aria-expanded="false"> Alfamart / Indomaret </a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="portlet-body padding-bottom-30">
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="portlet_comments_1">
-                                            <h4>Select Bank</h4>
+                                            <form class="horizontal-form"  action="{{route('app.event.ticket.proceed.post', [$event->short_name])}}" method="POST">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="payment_method" value="BANK_TRANSFER">
+                                            <h4 class="margin-top-bottom-30">Select Bank</h4>
                                             <div class="table-scrollable">
                                                 <table class="table table-bank">
-                                                    <form>
                                                         <tr>
                                                             <td>
                                                                 <div class="radio">
@@ -116,24 +116,35 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                    </form>
                                                 </table>
                                             </div>
                                             <button type="submit" class="btn sm-button btn-block event-button-rev">Pay With Transfer</button>
+                                            </form>
                                         </div>
                                         <div class="tab-pane" id="portlet_comments_2">
-                                            <h4>Sorry this feature isn't available right now, please try again later</h4>
+                                            <form class="horizontal-form"  action="{{route('app.event.ticket.proceed.post', [$event->short_name])}}" method="POST">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="payment_method" value="DOKU">
+                                                <button type="submit" class="btn sm-button btn-block event-button-rev">Pay With Credit Card</button>
+                                            </form>
                                         </div>
                                         <div class="tab-pane" id="portlet_comments_3">
-                                            <h4>Sorry this feature isn't available right now, please try again later</h4>
+                                            <form class="horizontal-form"  action="{{route('app.event.ticket.proceed.post', [$event->short_name])}}" method="POST">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="payment_method" value="DOKU">
+                                                <button type="submit" class="btn sm-button btn-block event-button-rev">Pay With E-Wallet</button>
+                                            </form>
                                         </div>
                                         <div class="tab-pane" id="portlet_comments_4">
-                                            <h4>Sorry this feature isn't available right now, please try again later</h4>
+                                            <form class="horizontal-form"  action="{{route('app.event.ticket.proceed.post', [$event->short_name])}}" method="POST">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="payment_method" value="DOKU">
+                                                <button type="submit" class="btn sm-button btn-block event-button-rev">Pay With Alfamart / Indomaret</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
                     </div>
                     <div class="col-md-5">
                         <div class="ticket-period-container">
@@ -181,5 +192,4 @@
 @section('page_js_plugins')
 @endsection
 @section('page_js')
-
 @endsection

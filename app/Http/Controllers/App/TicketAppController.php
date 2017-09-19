@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\App;
 
+use App\CC;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProceesBookTicketRequest;
 use App\Models\EventRepository;
+use App\Models\TicketClassRepository;
+use App\Models\TicketPeriodRepository;
 use Dompdf\Exception;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
+use Ixudra\Curl\Facades\Curl;
 use phpDocumentor\Reflection\Types\Array_;
 use Webpatser\Uuid\Uuid;
 use App\Models\Seat;
@@ -28,10 +33,14 @@ class TicketAppController extends Controller
 {
 
     protected $eventRepo;
+    protected $ticketPeriodRepo;
+    protected $ticketClassRepo;
 
-    public function __construct(EventRepository $eventRepo)
+    public function __construct(EventRepository $eventRepo, TicketPeriodRepository $ticketPeriodRepo, TicketClassRepository $ticketClassRepo)
     {
         $this->eventRepo = $eventRepo;
+        $this->ticketPeriodRepo = $ticketPeriodRepo;
+        $this->ticketClassRepo = $ticketClassRepo;
         View::share( 'event_name', 'Smilemotion 2017' );
         View::share( 'logo', 'logo_smilemotion.png' );
         View::share( 'url_event', 'http://smilemotion.org' );
@@ -42,6 +51,8 @@ class TicketAppController extends Controller
         $event = $this->eventRepo->findWhere([
             'short_name'=> $event,
         ])->first();
+        $ticket_period = $this->ticketPeriodRepo->ticketPeriodNow($event->id);
+        $ticket_class = $this->ticketClassRepo->ticketPeriodNow($ticket_period->id);
         if ($event->short_name == "smilemotion"){
             $keys_seat_booked = Redis::keys("smilemotion:seat_booked:*");
             $seat_booked = array();
@@ -53,7 +64,6 @@ class TicketAppController extends Controller
                 RedisModel::cachingSeatData();
             }
             View::share( 'page_state', 'pick_seat' );
-            $ticket_class = TicketClass::all();
             $seat = array();
             $seat['VVIP'] = Redis::hgetall('smilemotion:seat:VVIP');
             $seat['VIP E'] = Redis::hgetall('smilemotion:seat:VIP E');
@@ -61,13 +71,20 @@ class TicketAppController extends Controller
             $seat['VIP I'] = Redis::hgetall('smilemotion:seat:VIP I');
             $seat['VIP H'] = Redis::hgetall('smilemotion:seat:VIP H');
             $event->count_ticket_class = 5;
-            $event->price_reguler = 125000;
+            if (count($ticket_class) > 1){
+                $event->price_reguler = $ticket_class->first()->price;
+            } else {
+                $event->price_reguler = $ticket_class->first()->price;
+            }
         } else {
-            $ticket_class = new \stdClass();
             $seat = new \stdClass();
             $seat_booked = new \stdClass();
             $event->count_ticket_class = 1;
-            $event->price_reguler = 45000;
+            if (count($ticket_class) > 1){
+                $event->price_reguler = $ticket_class->first()->price;
+            } else {
+                $event->price_reguler = $ticket_class->first()->price;
+            }
         }
 
         View::share( 'page_state', 'pick_seat' );
@@ -85,11 +102,14 @@ class TicketAppController extends Controller
                 'short_name'=> $event,
             ])->first();
             $ticket = json_decode($request->input('book'));
-            if ($event->short_name == 'smilemotion'){
-                $ticket = $this->getTicketPrice($ticket);
-            } else {
-                $ticket = $this->getTicketPriceFTB($ticket);
+            $ticket_period = $this->ticketPeriodRepo->ticketPeriodNow($event->id);
+            $ticket_class = $this->ticketClassRepo->ticketPeriodNowWithName($ticket_period->id, $ticket->ticket_type);
+            if (!isset($ticket_class)){
+                $request->session()->flash('alert-danger', '');
+                return back()->withInput();
             }
+            $ticket->price_item = $ticket_class->price;
+            $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
             if ($this->validateTicket($request, $ticket)){
                 $request->session()->put('book', $ticket);
                 return redirect()->route('app.event.ticket.pay', [$event->short_name]);
@@ -138,6 +158,13 @@ class TicketAppController extends Controller
             $ticket->contact_name = $request->input('contact_name');
             $ticket->contact_phone = $request->input('contact_phone');
             $ticket->contact_email = $request->input('contact_email');
+            $ticket->contact_birthday_month = $request->input('contact_birthday_month');
+            $ticket->contact_birthday_day = $request->input('contact_birthday_day');
+            $ticket->contact_birthday_year = $request->input('contact_birthday_year');
+            $ticket->contact_address = $request->input('contact_address');
+            $ticket->contact_country = $request->input('contact_country');
+            $ticket->contact_city = $request->input('contact_city');
+            $ticket->contact_postal_code = $request->input('contact_postal_code');
             $i = 0;
             $temp = [];
             if ($ticket->ticket_type != 'Reguler'){
@@ -202,7 +229,9 @@ class TicketAppController extends Controller
         $event = $this->eventRepo->findWhere([
             'short_name'=> $event,
         ])->first();
-        return view('app.ticket.ticket_pay')->with('ticket', $ticket)
+//        echo '<pre>'; print_r($ticket); exit;
+        return view('app.ticket.ticket_pay')
+            ->with('ticket', $ticket)
             ->with('event', $event);
     }
 
@@ -216,38 +245,59 @@ class TicketAppController extends Controller
             if (!isset($ticket)){
                 return redirect()->route('app.event.ticket.list', [$event->short_name]);
             }
-            if ($event->short_name == 'smilemotion'){
-                $ticket = $this->getTicketPrice($ticket);
-            } else {
-                $ticket = $this->getTicketPriceFTB($ticket);
+
+            $ticket_period = $this->ticketPeriodRepo->ticketPeriodNow($event->id);
+            $ticket_class = $this->ticketClassRepo->ticketPeriodNowWithName($ticket_period->id, $ticket->ticket_type);
+            if (!isset($ticket_class)){
+                $request->session()->flash('alert-danger', '');
+                return back()->withInput();
             }
-            $ticket->bankopt = $request->input('bankopt');
-            if ($this->validateTicket($request, $ticket)){
-                $uuid = Uuid::generate();
-                $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
-                $ticket->order_code = $event->initial.'O'.$code;
-                if($ticket->bankopt == 'BCA'){
-                    $ticket->bank_account = 'BCA 4381411669 a.n. Sandika Ichsan Arafat';
-                } else if($ticket->bankopt == 'Mandiri'){
-                    $ticket->bank_account = 'Mandiri 1320017379083 a.n Sandika Ichsan Arafat';
-                } else if($ticket->bankopt == 'BNI'){
-                    $ticket->bank_account = 'BNI 0602257953 a.n. Sandika Ichsan Arafat';
-                } else if($ticket->bankopt == 'CIMB Niaga'){
-                    $ticket->bank_account = 'CIMB Niaga 11290001012569 a.n. Sandika Ichsan Arafat';
+            $ticket->price_item = $ticket_class->price;
+            $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
+
+            $ticket->payment_method = $request->input('payment_method');
+            if ($ticket->payment_method == CC::PAYMENT_BANK_TRF){
+                $ticket->bankopt = $request->input('bankopt');
+                if ($this->validateTicket($request, $ticket)){
+                    $uuid = Uuid::generate();
+                    $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
+                    $ticket->order_code = $event->initial.'O'.$code;
+                    if($ticket->bankopt == 'BCA'){
+                        $ticket->bank_account = 'BCA 4381411669 a.n. Sandika Ichsan Arafat';
+                    } else if($ticket->bankopt == 'Mandiri'){
+                        $ticket->bank_account = 'Mandiri 1320017379083 a.n Sandika Ichsan Arafat';
+                    } else if($ticket->bankopt == 'BNI'){
+                        $ticket->bank_account = 'BNI 0602257953 a.n. Sandika Ichsan Arafat';
+                    } else if($ticket->bankopt == 'CIMB Niaga'){
+                        $ticket->bank_account = 'CIMB Niaga 704205525500 a.n. Sandika Ichsan Arafat';
+                    }
+                    $preorder = new Book();
+                    $preorder->submitPreorderWithTicketsEvent($ticket, $event);
+                    $preorder->grand_total = $ticket->grand_total;
+                    $preorder->bank_account = $ticket->bank_account;
+                    $preorder->event_name = $event->name;
+                    $preorder->short_name = $event->short_name;
+                    View::share( 'page_state', 'proceed' );
+                    Mail::to($preorder->email)->send(new OrderMail($preorder));
+                    RedisModel::cachingBookedSeat();
+                    $request->session()->put('book', $ticket);
+                    return redirect()->route('app.event.ticket.success', [$event->short_name]);
+                } else {
+                    return redirect()->route('app.event.ticket.list', [$event->short_name]);
                 }
-                $preorder = new Book();
-                $preorder->submitPreorderWithTicketsEvent($ticket, $event);
-                $preorder->grand_total = $ticket->grand_total;
-                $preorder->bank_account = $ticket->bank_account;
-                $preorder->event_name = $event->name;
-                $preorder->short_name = $event->short_name;
-                View::share( 'page_state', 'proceed' );
-                Mail::to($preorder->email)->send(new OrderMail($preorder));
-                RedisModel::cachingBookedSeat();
-                $request->session()->put('book', $ticket);
-                return redirect()->route('app.event.ticket.success', [$event->short_name]);
-            } else {
-                return redirect()->route('app.event.ticket.list', [$event->short_name]);
+            } else if ($ticket->payment_method == CC::PAYMENT_DOKU){
+                if ($this->validateTicket($request, $ticket)){
+                    $uuid = Uuid::generate();
+                    $code = strtoupper(array_slice(explode('-',$uuid), -1)[0]);
+                    $ticket->order_code = $event->initial.'O'.$code;
+                    $preorder = new Book();
+                    $preorder->submitPreorderWithTicketsEvent($ticket, $event);
+                    $request->session()->put('book', $ticket);
+                    return redirect()->route('app.event.ticket.payment.redirect', [$event->short_name]);
+                }
+            }else {
+                $request->session()->flash('alert-danger', '');
+                return back()->withInput();
             }
         } catch (Exception $e){
             $request->session()->flash('alert-danger', '');
@@ -438,7 +488,7 @@ class TicketAppController extends Controller
                 } else if($ticket->bankopt == 'BNI'){
                     $ticket->bank_account = 'BNI 0602257953 a.n. Sandika Ichsan Arafat';
                 } else if($ticket->bankopt == 'CIMB Niaga'){
-                    $ticket->bank_account = 'CIMB Niaga 11290001012569 a.n. Sandika Ichsan Arafat';
+                    $ticket->bank_account = 'CIMB Niaga 704205525500 a.n. Sandika Ichsan Arafat';
                 }
                 $preorder = new Book();
                 $preorder->submitPreorderWithTickets($ticket);
@@ -484,7 +534,7 @@ class TicketAppController extends Controller
     }
 
     private function getTicketPriceFTB($ticket){
-        $ticket->price_item = 45000;
+        $ticket->price_item = 55000;
         $ticket->grand_total = $ticket->price_item * $ticket->ticket_ammount;
         return $ticket;
     }
@@ -511,4 +561,45 @@ class TicketAppController extends Controller
             }
         }
     }
+
+    public function redirectPayment(Request $request, $event){
+        $event = $this->eventRepo->findWhere([
+            'short_name'=> $event,
+        ])->first();
+        $ticket = $request->session()->get('book');
+        if (!isset($ticket)){
+            return redirect()->route('app.event.ticket.list', [$event->short_name]);
+        }
+
+        $basket = $event->initial.','.$ticket->price_item.'.00'.','.$ticket->ticket_ammount.','.$ticket->grand_total.'.00;Administration fee,5000.00,1,5000.00';
+        $ammount = $ticket->grand_total + 5000;
+        $store_id = env("APP_ENV", CC::ENV_LOCAL) == CC::ENV_LOCAL ? CC::DOKU_STORE_ID_DEV : CC::DOKU_STORE_ID_PROD;
+        $shared_key = env("APP_ENV", CC::ENV_LOCAL) == CC::ENV_LOCAL ? CC::DOKU_SHARED_KEY_DEV : CC::DOKU_SHARED_KEY_PROD;
+        $url = 'https://apps.myshortcart.com/payment/request-payment/';
+        $fields = array(
+            'BASKET' => $basket,
+            'STOREID' => $store_id,
+            'TRANSIDMERCHANT' => $ticket->order_code,
+            'AMOUNT' => $ammount.'.00',
+            'URL' => 'nalar-ventex.com',
+            'WORDS' => sha1($ammount.'.00'.$shared_key.$ticket->order_code),
+            'CNAME' => $ticket->contact_name,
+            'CEMAIL' => $ticket->contact_email,
+            'CWPHONE' => $ticket->contact_phone,
+            'CHPHONE' => $ticket->contact_phone,
+            'CMPHONE' => $ticket->contact_phone,
+            'CCAPHONE' => $ticket->contact_phone,
+            'CADDRESS' => $ticket->contact_address,
+            'CZIPCODE' => $ticket->contact_postal_code,
+            'SADDRESS' => $ticket->contact_address,
+            'SZIPCODE' => $ticket->contact_postal_code,
+            'SCITY' => $ticket->contact_city,
+            'SCOUNTRY' => $ticket->contact_country,
+            'BIRTHDATE' => date('Y-m-d',strtotime($ticket->contact_birthday_year.'-'.$ticket->contact_birthday_month.'-'.$ticket->contact_birthday_day)),
+        );
+//        echo '<pre>'; print_r($fields); exit;
+        return view('app.payment.init_payment')
+            ->with('data', $fields);
+    }
+
 }

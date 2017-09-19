@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateEventTableWithEventCode extends Migration
+class UpdateOrderTableWithGrandTotal extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdateEventTableWithEventCode extends Migration
      */
     public function up()
     {
-        Schema::table('books', function (Blueprint $table) {
-            $table->string('short_name')->after('name');
+        Schema::table('orders', function (Blueprint $table) {
+            $table->string('grand_total')->after('ticket_ammount');
         });
     }
 
@@ -25,8 +25,8 @@ class UpdateEventTableWithEventCode extends Migration
      */
     public function down()
     {
-        Schema::table('events', function($table) {
-            $table->dropColumn('pattern_footer');
+        Schema::table('orders', function($table) {
+            $table->dropColumn('grand_total');
         });
     }
 }

@@ -22,8 +22,6 @@ class TicketDashboardController extends Controller
 
     public function listTicket(Request $request)
     {
-//        $dailyOrderStat = new DailyOrderStatistic();
-//        $dailyOrderStat->addDailyCounter(0);exit;
         $event_id = Auth::user()->event_id;
         $orders = Order::where('event_id', $event_id)->orderBy('created_at', 'desc')->get();
         return view('dashboard.tickets')->with('orders', $orders);
@@ -31,7 +29,6 @@ class TicketDashboardController extends Controller
 
     public function downloadTicket(Request $request, $id){
         $ticket = Ticket::find($id);
-//        return view('dashboard.tickets.download_ticket')->with('ticket', $ticket);
         if ($ticket->url_ticket != ""){
             $s3 = \Storage::disk('s3');
             return redirect()->to($s3->url($ticket->url_ticket));
@@ -42,9 +39,6 @@ class TicketDashboardController extends Controller
             $ticket_url = 'ventex/ticket/ticket_'.$ticket->ticket_code.'.pdf';
             $s3 = \Storage::disk('s3');
             $s3->put($ticket_url, $output, 'public');
-
-//            $ticket_url = 'uploads/ticket/ticket_'.$ticket->ticket_code.'.pdf';
-//            file_put_contents($ticket_url, $output);
             $ticket->url_ticket = $ticket_url;
             $ticket->save();
             return redirect()->to($s3->url($ticket->url_ticket));
