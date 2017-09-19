@@ -32,6 +32,10 @@
                         <h3 class="form-section">Contact Information</h3>
                         <div class="row">
                             <div class="col-md-3">
+                                <h4>Date</h4>
+                                <h4><strong>{{$order->created_at->toDateString()}}</strong></h4>
+                            </div>
+                            <div class="col-md-3">
                                 <h4>Order Code</h4>
                                 <h4><strong>{{$order->order_code}}</strong></h4>
                             </div>
@@ -52,6 +56,10 @@
                                 <h4><strong>{{$order->ticket_period}}</strong></h4>
                             </div>
                             <div class="col-md-3">
+                                <h4>Ticket Class</h4>
+                                <h4><strong>{{$order->ticket_class}}</strong></h4>
+                            </div>
+                            <div class="col-md-3">
                                 <h4>Grand Total</h4>
                                 <h4><strong>{{$order->grand_total}}</strong></h4>
                             </div>
@@ -65,11 +73,13 @@
                             <table class="table table-striped table-bordered table-hover" id="sample_1">
                                 <thead>
                                 <tr>
+                                    <th> Date </th>
                                     <th> Ticket Code </th>
                                     <th> Name </th>
                                     <th> Email </th>
                                     <th> Phone </th>
                                     <th> Ticket Period </th>
+                                    <th> Ticket Class </th>
                                     <th> Seat </th>
                                     <td>  </td>
                                 </tr>
@@ -77,11 +87,13 @@
                                 <tbody>
                                     @foreach($order->tickets as $ticket)
                                     <tr>
+                                        <td>{{$order->created_at->toDateString()}}</td>
                                         <td>{{$ticket->ticket_code}}</td>
                                         <td>{{$ticket->name}}</td>
                                         <td>{{$ticket->email}}</td>
                                         <td>{{$ticket->phonenumber}}</td>
                                         <td>{{$ticket->ticket_period}}</td>
+                                        <td>{{$ticket->ticket_class}}</td>
                                         <td><a target="_blank" href="{{route('ticket.download', ['id' => $ticket->id])}}" class="btn green">Download Ticket</a></td>
                                     </tr>
                                     @endforeach

@@ -50,11 +50,13 @@
                             <table class="table table-striped table-bordered table-hover" id="sample_1">
                                 <thead>
                                 <tr>
+                                    <th> Date </th>
                                     <th> Order Code </th>
                                     <th> Name </th>
                                     <th> Email </th>
                                     <th> Phone </th>
                                     <th> Ticket Period </th>
+                                    <th> Ticket Class </th>
                                     <th> Payment Status </th>
                                     <td>  </td>
                                 </tr>
@@ -62,11 +64,13 @@
                                 <tbody>
                                 @foreach ($orders as $order)
                                     <tr>
+                                        <td> {{$order->created_at->toDateString()}} </td>
                                         <td> {{$order->order_code}} </td>
                                         <td> {{$order->name}} </td>
                                         <td> {{$order->email}} </td>
                                         <td> {{$order->phonenumber}} </td>
                                         <td> {{$order->ticket_period}} </td>
+                                        <td> {{$order->ticket_class}} </td>
                                         <td> {{$order->payment_status}} </td>
                                         <td>
                                             <div class="clearfix">
