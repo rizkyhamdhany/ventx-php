@@ -60,9 +60,26 @@ class EventController extends Controller
 
     public function addEventPost(CreateEventRequest $request)
     {
-        $input = $request->input();
+        $input = $request->all();
         $input['date'] = date('Y-m-d', strtotime($request->input('date')));
         $input['initial'] = (new Initials)->name($input['name'])->generate();
+
+        if ($request->hasFile('logo_color')){
+          $color = $request->file('logo_color')->store('logos','public');
+        }
+        $input['logo_color'] = $color;
+        if ($request->hasFile('logo_white')){
+          $white = $request->file('logo_white')->store('logos','public');
+        }
+        $input['logo_white'] = $white;
+        if ($request->hasFile('background_pattern')){
+          $back = $request->file('background_pattern')->store('logos','public');
+        }
+        $input['background_pattern'] = $back;
+        if ($request->hasFile('pattern_footer')){
+          $foot = $request->file('pattern_footer')->store('logos','public');
+        }
+        $input['pattern_footer'] = $foot;
         if ($this->eventRepo->create($input)) {
             $request->session()->flash('alert-success', 'Event has been created !');
         } else {

@@ -43,18 +43,11 @@
                                             <span class="help-block"> Please Fill Event Name </span>
                                         </div>
                                     </div>
-                                    <div class="form-group {{$errors->has('name') ? 'has-error' : ' ' }}">
+                                    <div class="form-group {{$errors->has('short_name') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Short Name</label>
                                         <div class="col-md-4">
-                                            <input type="text" name="short_name" class="form-control" placeholder="Ex : Guns and Roses" value="{{ old('name') }}">
+                                            <input type="text" name="short_name" class="form-control" placeholder="Ex : Guns and Roses" value="{{ old('short_name') }}">
                                             <span class="help-block"> Please Fill Event Short Name </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group {{$errors->has('name') ? 'has-error' : ' ' }}">
-                                        <label class="col-md-3 control-label">Event Initial Name</label>
-                                        <div class="col-md-4">
-                                            <input type="text" name="initial_name" class="form-control" placeholder="Ex : GRC" value="{{ old('name') }}">
-                                            <span class="help-block"> Please Fill Event Initial Name </span>
                                         </div>
                                     </div>
                                     <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
@@ -64,52 +57,52 @@
                                             <span class="help-block"> Please Fill Event Organizer </span>
                                         </div>
                                     </div>
-                                    <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
+                                    <div class="form-group {{$errors->has('logo_white') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Logo (Color)</label>
                                         <div class="col-md-4">
                                             <input type="file" name="logo_white" class="form-control"/>
                                             <span class="help-block"> Please Fill Event Logo (Color)</span>
                                         </div>
                                     </div>
-                                    <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
+                                    <div class="form-group {{$errors->has('logo_white') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Logo (White)</label>
                                         <div class="col-md-4">
                                             <input type="file" name="logo_white" class="form-control"/>
                                             <span class="help-block"> Please Fill Event Logo (White)</span>
                                         </div>
                                     </div>
-                                    <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
+                                    <div class="form-group {{$errors->has('background_pattern') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Background Pattern</label>
                                         <div class="col-md-4">
                                             <input type="file" name="background_pattern" class="form-control"/>
                                             <span class="help-block"> Please Fill Event Background Pattern</span>
                                         </div>
                                     </div>
-                                    <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
+                                    <div class="form-group {{$errors->has('pattern_footer') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Pattern Footer</label>
                                         <div class="col-md-4">
                                             <input type="file" name="pattern_footer" class="form-control"/>
                                             <span class="help-block"> Please Fill Event Pattern Footer</span>
                                         </div>
                                     </div>
-                                    <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
+                                    <div class="form-group {{$errors->has('color_primary') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Color (Primary)</label>
                                         <div class="col-md-4">
-                                            <input type="text" name="color_primary" class="form-control" value="{{ old('organizer') }}">
+                                            <input type="text" name="color_primary" class="form-control" value="{{ old('color_primary') }}">
                                             <span class="help-block"> Please Fill Event Color (Primary)</span>
                                         </div>
                                     </div>
-                                    <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
+                                    <div class="form-group {{$errors->has('color_secondary') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Color (Secondary)</label>
                                         <div class="col-md-4">
-                                            <input type="text" name="color_secondary" class="form-control" value="{{ old('organizer') }}">
+                                            <input type="text" name="color_secondary" class="form-control" value="{{ old('color_secondary') }}">
                                             <span class="help-block"> Please Fill Event Color (Secondary)</span>
                                         </div>
                                     </div>
-                                    <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
+                                    <div class="form-group {{$errors->has('color_accent') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Color (Accent)</label>
                                         <div class="col-md-4">
-                                            <input type="text" name="color_accent" class="form-control" value="{{ old('organizer') }}">
+                                            <input type="text" name="color_accent" class="form-control" value="{{ old('color_accent') }}">
                                             <span class="help-block"> Please Fill Event Color (Accent)</span>
                                         </div>
                                     </div>

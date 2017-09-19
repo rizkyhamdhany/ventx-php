@@ -25,8 +25,15 @@ class CreateEventRequest extends FormRequest
     {
         $rules = [
             'name' => 'required|max:100',
+            'short_name' => 'required|max:100',
             'organizer' => 'required|max:100',
+            'logo_color' => 'image|mimes:jpeg,bmp,png|size:2000',
+            'logo_white' => 'image|mimes:jpeg,bmp,png|size:2000',
+            'background_pattern' => 'image|mimes:jpeg,bmp,png|size:2000',
+            'pattern_footer' => 'image|mimes:jpeg,bmp,png|size:2000',
             'date' => 'required',
+            'color_primary' => 'required',
+            'color_secondary' => 'required',
             'time' => 'required',
             'location' => 'required',
             'lat' => 'required',
