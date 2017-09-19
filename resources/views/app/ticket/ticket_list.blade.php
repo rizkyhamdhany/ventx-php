@@ -152,9 +152,9 @@
                 var seat = new Object();
                 var book = new Object();
                 book.step = 'book';
-                book.ticket_type = 'Reguler';
+                book.ticket_type = '{{$TC->name}}';
                 book.ticket_class = '{{$TC->id}}';
-                book.ticket_period = 'Presale 2';
+                book.ticket_period = '{{$ticket_period->name}}';
                 book.ticket_ammount = '0';
                 book.ticket = [];
                 $('#book').val(JSON.stringify(book));

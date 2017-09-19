@@ -258,33 +258,6 @@ class OrderController extends Controller
     }
 
     public function viewOrderDetail(Request $request, $id){
-//        $datajson = '[{"email":"saraswati@smilemotion.org","password":"smilemotion132"},{"email":"saraswati@smilemotion.org","password":"smilemotion132"}]';
-//        $data = json_decode($datajson);
-//        echo '<pre>';
-//        foreach ($data as $item){
-//            print_r($item->email);
-//        }
-//        exit;
-//        $event = new \stdClass();
-//        $event->email = 'saraswati@smilemotion.org';
-//        $event->password = 'smilemotion132';
-//        $ticket = new \stdClass();
-//        $ticket->ticket_period = 'Presale 1';
-//        $ticket->ticket_class = 'Reguler';
-//        $ticket->ammount = '1';
-//        $tickets = array($ticket);
-//        $ticket->ticket_period = 'Presale 1';
-//        $ticket->ticket_class = 'Reguler';
-//        $ticket->ammount = '2';
-//        array_push($tickets, $ticket);
-//        $event->tickets = $tickets;
-//        $events = array($event);
-//
-//        $event = new \stdClass();
-//        $event->email = 'naufal@festivalbudaya.org';
-//        $event->password = 'festivalbudaya132';
-//        array_push($events, $event);
-//        echo '<pre>'; print_r(json_encode($events)); exit;
         $order = Order::find($id);
         return view('dashboard.orders.order_detail')
                 ->with('order', $order);
