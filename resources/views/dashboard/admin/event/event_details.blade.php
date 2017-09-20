@@ -60,6 +60,50 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                <label class="control-label col-md-3">Logo:</label>
+                                                <div class="col-md-9">
+                                                    <p class="form-control-static"> {{$event->logo_color}} </p>
+                                                    <p class="form-control-static"> {{$event->logo_white}} </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Background Pattern :</label>
+                                                <div class="col-md-9">
+                                                    <p class="form-control-static"> {{$event->background_pattern}} </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                    </div>
+                                    <!--/row-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Pattern Footer:</label>
+                                                <div class="col-md-9">
+                                                    <p class="form-control-static"> {{$event->pattern_footer}} </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">Color Scheme :</label>
+                                                <div class="col-md-9">
+                                                    <p class="form-control-static"> {{$event->color_primary}} </p>
+                                                    <p class="form-control-static"> {{$event->color_secondary}} </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                    </div>
+                                    <!--/row-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
                                                 <label class="control-label col-md-3">Event Organizer:</label>
                                                 <div class="col-md-9">
                                                     <p class="form-control-static"> {{$event->organizer}} </p>

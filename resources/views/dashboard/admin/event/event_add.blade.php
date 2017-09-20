@@ -33,7 +33,7 @@
                         </div>
                         <div class="portlet-body form">
                             <!-- BEGIN FORM-->
-                            <form method="POST" action="{{route('dashboard.event.add.post')}}" class="form-horizontal">
+                            <form method="POST" action="{{route('dashboard.event.add.post')}}" class="form-horizontal" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="form-body">
                                     <div class="form-group {{$errors->has('name') ? 'has-error' : ' ' }}">
