@@ -187,7 +187,6 @@ class PaymentController extends Controller
 
                 $ticket->price_item = $ticket_class->price;
                 $ticket->grand_total = $ticket->price_item * $book->ticket_ammount;
-
                 if ($ticket->grand_total + 5000 == (int) $ammount){
                     if (sha1($ammount.$myshared_key.$book->order_code) == $words){
                         $this->dokuRepo->create([

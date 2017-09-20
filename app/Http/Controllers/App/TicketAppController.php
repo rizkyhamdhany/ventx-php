@@ -91,6 +91,7 @@ class TicketAppController extends Controller
         return view('app.ticket.ticket_list')
             ->with('event', $event)
             ->with('ticket_class', $ticket_class)
+            ->with('ticket_period', $ticket_period)
             ->with('seat', $seat)
             ->with('seat_booked', $seat_booked);
     }
