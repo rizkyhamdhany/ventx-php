@@ -68,16 +68,19 @@ class EventController extends Controller
           $color = $request->file('logo_color')->store('logos','public');
         }
         $input['logo_color'] = $color;
+
         if ($request->hasFile('logo_white')){
           $white = $request->file('logo_white')->store('logos','public');
         }
         $input['logo_white'] = $white;
+
         if ($request->hasFile('background_pattern')){
-          $back = $request->file('background_pattern')->store('logos','public');
+          $back = $request->file('background_pattern')->store('bg','public');
         }
         $input['background_pattern'] = $back;
+
         if ($request->hasFile('pattern_footer')){
-          $foot = $request->file('pattern_footer')->store('logos','public');
+          $foot = $request->file('pattern_footer')->store('bg','public');
         }
         $input['pattern_footer'] = $foot;
         if ($this->eventRepo->create($input)) {
