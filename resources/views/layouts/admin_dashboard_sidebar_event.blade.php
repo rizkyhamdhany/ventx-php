@@ -46,6 +46,12 @@
                     <span class="title">Ticket Category</span>
                 </a>
             </li>
+            <li class="nav-item start {{$page_state == 'Seat' ? 'active' : ''}}">
+                <a href="{{route('dashboard.event.seat',$id)}}" class="nav-link">
+                    <i class="icon-graph"></i>
+                    <span class="title">Seat</span>
+                </a>
+            </li>
             <li class="nav-item start">
                 <a href="#" class="nav-link nav-toggle">
                     <i class="icon-bag"></i>
