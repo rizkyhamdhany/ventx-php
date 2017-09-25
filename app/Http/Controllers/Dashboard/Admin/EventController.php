@@ -64,7 +64,7 @@ class EventController extends Controller
         $input['date'] = date('Y-m-d', strtotime($request->input('date')));
         $input['initial'] = (new Initials)->name($input['name'])->generate();
 
-        if ($request->hasFile('logo_color')){
+        /*if ($request->hasFile('logo_color')){
           $color = $request->file('logo_color')->store('logos','public');
         }
         $input['logo_color'] = $color;
@@ -83,6 +83,17 @@ class EventController extends Controller
           $foot = $request->file('pattern_footer')->store('bg','public');
         }
         $input['pattern_footer'] = $foot;
+
+        if ($request->hasFile('eticket_layout')){
+          $ticket = $request->file('eticket_layout')->store('layout_template','public');
+        }
+        $input['eticket_layout'] = $ticket;
+
+        if ($request->hasFile('invoice_layout')){
+          $foot = $request->file('invoice_layout')->store('layout_template','public');
+        }
+        $input['invoice_layout'] = $foot;*/
+
         if ($this->eventRepo->create($input)) {
             $request->session()->flash('alert-success', 'Event has been created !');
         } else {

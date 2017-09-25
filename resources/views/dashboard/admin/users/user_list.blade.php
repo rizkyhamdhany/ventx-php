@@ -59,7 +59,7 @@
                                         <td> {{$indexKey + 1}} </td>
                                         <td> {{$user->name}} </td>
                                         <td> {{$user->email}} </td>
-                                        <td> {{$user->event->name}} </td>
+                                        <td> {{$user->event['name']}} </td>
                                         <td>
                                             <span class="label label-sm label-success"> Active </span>
                                         </td>

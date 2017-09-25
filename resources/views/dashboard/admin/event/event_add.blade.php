@@ -57,7 +57,7 @@
                                             <span class="help-block"> Please Fill Event Organizer </span>
                                         </div>
                                     </div>
-                                    <div class="form-group {{$errors->has('logo_color') ? 'has-error' : ' ' }}">
+                                    <!--<div class="form-group {{$errors->has('logo_color') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Logo (Color)</label>
                                         <div class="col-md-4">
                                             <input type="file" name="logo_color" class="form-control"/>
@@ -85,6 +85,20 @@
                                             <span class="help-block"> Please Fill Event Pattern Footer</span>
                                         </div>
                                     </div>
+                                    <div class="form-group {{$errors->has('eticket_layout') ? 'has-error' : ' ' }}">
+                                        <label class="col-md-3 control-label">Event E-Ticket Layout</label>
+                                        <div class="col-md-4">
+                                            <input type="file" name="eticket_layout" class="form-control"/>
+                                            <span class="help-block"> Please Fill Event E-Ticket Layout</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group {{$errors->has('invoice_layout') ? 'has-error' : ' ' }}">
+                                        <label class="col-md-3 control-label">Event Invoice Layout</label>
+                                        <div class="col-md-4">
+                                            <input type="file" name="invoice_layout" class="form-control"/>
+                                            <span class="help-block"> Please Fill Event Invoice Layout</span>
+                                        </div>
+                                    </div>-->
                                     <div class="form-group {{$errors->has('color_primary') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Color (Primary)</label>
                                         <div class="col-md-4">
