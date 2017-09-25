@@ -175,6 +175,10 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
                         Route::get('/del/{class}','Dashboard\Admin\EventController@ticketClassDelete')->name('dashboard.event.ticketClass.delete');
                     });
                 });
+
+                Route::prefix('/seat')->group(function ($id){
+                    Route::get('/', 'Dashboard\Admin\SeatController@index')->name('dashboard.event.seat');
+                });
             });
         });
     });

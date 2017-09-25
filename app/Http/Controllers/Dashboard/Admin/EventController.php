@@ -34,7 +34,7 @@ class EventController extends Controller
     public function __construct(
         EventRepository $eventRepo,
         TicketPeriodRepository $ticketPeriodRepo,
-    TicketClassRepository $ticketClassRepo,
+        TicketClassRepository $ticketClassRepo,
         EventArtistRepository $eventArtistRepo,
         EventSponsorRepository $eventSponsorRepo
     ) {
