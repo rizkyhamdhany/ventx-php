@@ -17,7 +17,8 @@
         "predis/predis": "^1.1",
         "prettus/l5-repository": "^2.6",
         "webpatser/laravel-uuid": "2.*",
-        "zizaco/entrust": "5.2.x-dev"
+        "zizaco/entrust": "5.2.x-dev",
+        "tymon/jwt-auth": "0.5.*"
     },
     "require-dev": {
         "codeception/codeception": "^2.3",

@@ -17,6 +17,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::prefix('/auth')->group(function () {
+    Route::post('/login', 'Api\AuthController@login')->name('api.auth.login');
+    Route::post('/check_login', 'Api\AuthController@checkLogin')->name('api.auth.login.check');
+});
+
+Route::prefix('/ticket')->group(function () {
+    Route::post('/', 'Api\TicketController@ticketByEO')->name('api.ticket');
+});
+
 Route::prefix('/doku')->group(function () {
     Route::post('/verifyDokuForVentex', 'App\PaymentController@dokuVerify')->name('payment.doku.verify');
     Route::post('/notifyPaymentSuccessOrNot', 'App\PaymentController@dokuNotify')->name('payment.doku.notify');
