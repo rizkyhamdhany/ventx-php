@@ -31,10 +31,10 @@ class TicketController extends Controller
     public function ticketByEO(Request $request){
         $user = JWTAuth::parseToken()->authenticate();
         if (!$user) {
-            return response()->json(['user_not_found'], 404);
+            return response()->json(['status' => 'error', 'message' => 'invalid_credentials'], 404);
         }
         $event_id = $user->event_id;
         $tickets = $this->ticketRepo->findWhere(["event_id" => $event_id], ["ticket_code", "name", "phonenumber", "email"]);
-        return response()->json(compact('tickets'));
+        return response()->json(['status' => 'success', 'message' => 'login success','data' => compact('tickets')]);
     }
 }

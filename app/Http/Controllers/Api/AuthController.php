@@ -24,16 +24,11 @@ class AuthController extends Controller
 
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
+                return response()->json(['status' => 'error', 'message' => 'invalid_credentials'], 401);
             }
         } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return response()->json(['status' => 'error', 'message' => 'could_not_create_token'], 500);
         }
-        return response()->json(compact('token'));
-    }
-
-    public function checkLogin(Request $request){
-        $user = JWTAuth::parseToken()->authenticate();
-        echo '<pre>'; print_r($user->event_id);
+        return response()->json(['status' => 'success', 'message' => 'login success','data' => compact('token')]);
     }
 }
