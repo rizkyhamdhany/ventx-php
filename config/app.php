@@ -186,6 +186,7 @@ return [
 
         Zizaco\Entrust\EntrustServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
     ],
 
     /*
@@ -240,6 +241,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'CC' => \App\CC::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
     ],
 
 ];
