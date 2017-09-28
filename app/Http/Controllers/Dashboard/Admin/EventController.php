@@ -9,10 +9,14 @@ use App\Models\TicketPeriod;
 use App\Models\TicketClass;
 use App\Models\EventArtist;
 use App\Models\EventSponsor;
+use App\Models\Order;
+use App\Models\Ticket;
 use App\Models\TicketPeriodRepository;
 use App\Models\TicketClassRepository;
 use App\Models\EventArtistRepository;
 use App\Models\EventSponsorRepository;
+use App\Models\OrderRepository;
+use App\Models\TicketSponsorRepository;
 use Validator;
 use Illuminate\Http\Request;
 use Webpatser\Uuid\Uuid;
@@ -30,19 +34,25 @@ class EventController extends Controller
     protected $ticketClassRepo;
     protected $eventArtistRepo;
     protected $eventSponsorRepo;
+    protected $eventOrder;
+    protected $eventTicket;
 
     public function __construct(
         EventRepository $eventRepo,
         TicketPeriodRepository $ticketPeriodRepo,
         TicketClassRepository $ticketClassRepo,
         EventArtistRepository $eventArtistRepo,
-        EventSponsorRepository $eventSponsorRepo
+        EventSponsorRepository $eventSponsorRepo,
+        OrderRepository $orderRepo,
+        TicketRepository $ticketRepo
     ) {
         $this->eventRepo = $eventRepo;
         $this->ticketPeriodRepo = $ticketPeriodRepo;
         $this->ticketClassRepo = $ticketClassRepo;
         $this->eventArtistRepo = $eventArtistRepo;
         $this->eventSponsorRepo = $eventSponsorRepo;
+        $this->orderRepo = $orderRepo;
+        $this->ticketRepo = $ticketRepo;
         $this->middleware('auth');
         View::share('page_state', 'Event');
     }
@@ -64,12 +74,12 @@ class EventController extends Controller
         $input['date'] = date('Y-m-d', strtotime($request->input('date')));
         $input['initial'] = (new Initials)->name($input['name'])->generate();
 
-        /*if ($request->hasFile('logo_color')){
+        if ($request->hasFile('logo_color')){
           $color = $request->file('logo_color')->store('logos','public');
         }
         $input['logo_color'] = $color;
 
-        if ($request->hasFile('logo_white')){
+        /*if ($request->hasFile('logo_white')){
           $white = $request->file('logo_white')->store('logos','public');
         }
         $input['logo_white'] = $white;
@@ -505,5 +515,14 @@ class EventController extends Controller
         } else {
             session(['alert-warning' => 'Failed to Delete Sponsor']);
         }
+    }
+
+    public function eventOrders(){
+      View::share('page_title', $this->eventRepo->find($id)->name);
+      View::share('page_state','Order List');
+    }
+
+    public function eventTickets(){
+      View::share('page_state','Ticket List');
     }
 }

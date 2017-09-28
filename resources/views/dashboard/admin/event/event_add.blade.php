@@ -57,14 +57,14 @@
                                             <span class="help-block"> Please Fill Event Organizer </span>
                                         </div>
                                     </div>
-                                    <!--<div class="form-group {{$errors->has('logo_color') ? 'has-error' : ' ' }}">
+                                    <div class="form-group {{$errors->has('logo_color') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Logo (Color)</label>
                                         <div class="col-md-4">
                                             <input type="file" name="logo_color" class="form-control"/>
                                             <span class="help-block"> Please Fill Event Logo (Color)</span>
                                         </div>
                                     </div>
-                                    <div class="form-group {{$errors->has('logo_white') ? 'has-error' : ' ' }}">
+                                    <!--<div class="form-group {{$errors->has('logo_white') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Logo (White)</label>
                                         <div class="col-md-4">
                                             <input type="file" name="logo_white" class="form-control"/>

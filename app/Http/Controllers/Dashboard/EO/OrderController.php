@@ -21,6 +21,7 @@ use App\Mail\TicketMail;
 use App\Models\EmailSendStatus;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Event;
 
 class OrderController extends Controller
@@ -265,5 +266,16 @@ class OrderController extends Controller
 
     public function testInvoice(){
         return view('dashboard.test_invoice');
+    }
+
+    public function show($event_id){
+      $orders = Order::select(DB::raw('COUNT(ticket_ammount) as sold'),DB::raw('DATE(updated_at) as date'))->groupBy(DB::raw('DATE(updated_at)'))
+      //$orders =  Order::select(DB::raw('COUNT(ticket_ammount) as sold'),DB::raw('CONCAT(YEAR(updated_at),"-",MONTHNAME(updated_at)) as date'))->groupBy(DB::raw('MONTH(updated_at)'))->groupBy(DB::raw('YEAR(updated_at)'))
+      ->where('payment_status','COMPLETE')
+      ->where('event_id',$event_id)
+      ->get();
+      return $orders->toJSON();
+
+
     }
 }

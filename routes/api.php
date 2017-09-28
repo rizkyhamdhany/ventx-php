@@ -36,4 +36,3 @@ Route::get('/api/v1/products/{id?}', ['middleware' => 'auth.basic', function($id
         'status_code' => 200
     ));
 }]);
-
