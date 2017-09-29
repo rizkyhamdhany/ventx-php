@@ -24,6 +24,7 @@ Route::prefix('/auth')->group(function () {
 
 Route::prefix('/ticket')->group(function () {
     Route::post('/', 'Api\TicketController@ticketByEO')->name('api.ticket');
+    Route::post('/check', 'Api\TicketController@ticketChecking')->name('api.ticket.check');
 });
 
 Route::prefix('/doku')->group(function () {
