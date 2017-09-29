@@ -16,7 +16,7 @@ use App\Models\TicketClassRepository;
 use App\Models\EventArtistRepository;
 use App\Models\EventSponsorRepository;
 use App\Models\OrderRepository;
-use App\Models\TicketSponsorRepository;
+use App\Models\TicketRepository;
 use Validator;
 use Illuminate\Http\Request;
 use Webpatser\Uuid\Uuid;
@@ -396,8 +396,11 @@ class EventController extends Controller
               $filename="";
               if ($request->hasFile('photo')){
                 $file = $request->file('photo')->store('artists','public');
+                $input['url_img'] = $file;
+              }else{
+                $input['url_img'] = $request->photoEdit;
               }
-              $input['url_img'] = $file;
+
                 if ($this->eventArtistRepo->update($input, $artist)) {
                     $request->session()->flash('alert-success', 'Artist has been Edited !');
                     return redirect()->route('dashboard.event.eventArtist',$id);
@@ -517,12 +520,13 @@ class EventController extends Controller
         }
     }
 
-    public function eventOrders(){
-      View::share('page_title', $this->eventRepo->find($id)->name);
+    public function eventOrders($id){
+      $orders =  $this->eventRepo->find($id);
+      View::share('page_title', $orders->name->first());
       View::share('page_state','Order List');
     }
 
-    public function eventTickets(){
+    public function eventTickets($id){
       View::share('page_state','Ticket List');
     }
 }

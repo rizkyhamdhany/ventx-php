@@ -44,6 +44,7 @@
                                     <label class="col-md-3 control-label">Image Artist</label>
                                     <div class="col-md-4">
                                         <div class="input-group">
+                                            <input type="hidden" name="photoEdit" value="@php echo asset('storage/'.$artistRepo->url_img); @endphp">
                                             <input type="file" name="photo"/ value="<?php echo asset('storage/'.$artistRepo->url_img); ?>">
                                         </div>
                                         <span class="help-block"> Browse for image </span>

@@ -35,7 +35,7 @@
                     <div class="portlet-body">
                         <div class="table-container">
                             <div class="table-actions-wrapper">
-                                <span> </span>
+                                <div class="filters"></div>
                                 <select class="table-group-action-input form-control input-inline input-small input-sm">
                                     <option value="">Select...</option>
                                     <option value="Cancel">Cancel</option>
@@ -147,7 +147,11 @@
                     } );
 
                 column.data().unique().sort().each( function ( d, j ) {
+                  if(j==1){
                     select.append( '<option value="'+d+'">'+d+'</option>' )
+                  }else{
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                  }
                 } );
             } );
         }
