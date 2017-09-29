@@ -148,7 +148,7 @@
         var chart = AmCharts.makeChart("orderChart", {
           "type": "serial",
           "dataLoader": {
-            "url": "http://localhost:88/nalar-tms/public/organizer/orders/0"
+            "url": "{{URL('/')}}/organizer/orders/{{$event_id}}"
           },
           "valueAxes": [{
             "gridColor": "#FFFFFF",

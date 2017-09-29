@@ -29,6 +29,7 @@ class HomeController extends Controller
         $ticket_count = count(Ticket::where('event_id', $event_id)->get());
 
         return view('dashboard.home')
-            ->with('ticket_count', $ticket_count);
+            ->with('ticket_count', $ticket_count)
+            ->with('event_id',$event_id);
     }
 }
