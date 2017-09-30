@@ -30,7 +30,8 @@ class TicketDashboardController extends Controller
 
     public function downloadTicket(Request $request, $id){
         $ticket = Ticket::find($id);
-        if ($env = CC::ENV_OTS){
+        $env = env("APP_ENV", CC::ENV_LOCAL);
+        if ($env == CC::ENV_OTS){
             return redirect()->to(URL('/').'/'.$ticket->url_ticket);
         } else {
             if ($ticket->url_ticket != ""){
