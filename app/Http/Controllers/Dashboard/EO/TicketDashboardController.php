@@ -30,18 +30,22 @@ class TicketDashboardController extends Controller
     public function downloadTicket(Request $request, $id){
         $ticket = Ticket::find($id);
         if ($ticket->url_ticket != ""){
-            $s3 = \Storage::disk('s3');
-            return redirect()->to($s3->url($ticket->url_ticket));
+            //$s3 = \Storage::disk('s3');
+            $local = \Storage::disk('local');
+            //Storage::disk('local')->put($invoice_url, $output, 'public');
+            return redirect()->to($local->url($ticket->url_ticket));
         } else {
             $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
             $output = $pdf->output();
 
             $ticket_url = 'ventex/ticket/ticket_'.$ticket->ticket_code.'.pdf';
-            $s3 = \Storage::disk('s3');
-            $s3->put($ticket_url, $output, 'public');
+        //    $s3 = \Storage::disk('s3');
+              $local = \Storage::disk('local');
+        //    $s3->put($ticket_url, $output, 'public');
+            $local->put($ticket_url, $output, 'public');
             $ticket->url_ticket = $ticket_url;
             $ticket->save();
-            return redirect()->to($s3->url($ticket->url_ticket));
+            return redirect()->to($local->url($ticket->url_ticket));
         }
     }
 }
