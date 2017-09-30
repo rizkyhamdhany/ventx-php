@@ -30,6 +30,7 @@ class CC
     const DOKU_SHARED_KEY_PROD = 'J7h9X7i7F4D8';
     const ENV_LOCAL = 'local';
     const ENV_TESTING = 'testing';
+    const ENV_OTS = 'ots';
     const PAYMENT_BANK_TRF = 'BANK_TRANSFER';
     const PAYMENT_DOKU = 'DOKU';
 }

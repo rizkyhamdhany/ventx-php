@@ -135,15 +135,21 @@ class OrderController extends Controller
             }
             $ticket->save();
             $ticket->order()->attach($order);
-            if (env("APP_ENV", CC::ENV_LOCAL) != CC::ENV_TESTING){
+            $env = env("APP_ENV", CC::ENV_LOCAL);
+            if ($env != CC::ENV_TESTING){
                 /*
                  * generate ticket
                  */
                 $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
                 $output = $pdf->output();
                 $ticket_url = 'ventex/ticket/'.$event->name.'/ticket_'.$ticket->ticket_code.'.pdf';
-                $s3 = \Storage::disk('s3');
-                $s3->put($ticket_url, $output, 'public');
+                if ($env == CC::ENV_OTS){
+                    file_put_contents($ticket_url, $output);
+                } else {
+                    $s3 = \Storage::disk('s3');
+                    $s3->put($ticket_url, $output, 'public');
+                }
+
                 $ticket->url_ticket = $ticket_url;
                 $ticket->save();
             }
@@ -160,12 +166,14 @@ class OrderController extends Controller
         }
         $request->session()->flash('alert-success', 'Ticket was successful added!');
         if ($event->id == 0){
-            if (env("APP_ENV", CC::ENV_LOCAL) != CC::ENV_TESTING){
+            $env = env("APP_ENV", CC::ENV_LOCAL);
+            if ($env != CC::ENV_TESTING || $env = CC::ENV_OTS){
                 $this->createInvoice($order, $ticket_class);
             }
         }
 
-        if (env("APP_ENV", CC::ENV_LOCAL) != CC::ENV_TESTING){
+        $env = env("APP_ENV", CC::ENV_LOCAL);
+        if ($env != CC::ENV_TESTING || $env = CC::ENV_OTS){
             /*
              * send email ticket
              */
