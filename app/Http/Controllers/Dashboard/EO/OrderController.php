@@ -142,7 +142,7 @@ class OrderController extends Controller
                  */
                 $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
                 $output = $pdf->output();
-                $ticket_url = 'ventex/ticket/'.$event->name.'/ticket_'.$ticket->ticket_code.'.pdf';
+                $ticket_url = 'ventex/ticket/'.$event->short_name.'/ticket_'.$ticket->ticket_code.'.pdf';
                 if ($env == CC::ENV_OTS){
                     file_put_contents($ticket_url, $output);
                 } else {
@@ -173,7 +173,7 @@ class OrderController extends Controller
         }
 
         $env = env("APP_ENV", CC::ENV_LOCAL);
-        if ($env != CC::ENV_TESTING || $env = CC::ENV_OTS){
+        if ($env != CC::ENV_TESTING && $env != CC::ENV_OTS){
             /*
              * send email ticket
              */
