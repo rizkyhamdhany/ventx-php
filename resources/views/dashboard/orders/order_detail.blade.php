@@ -81,7 +81,8 @@
                                     <th> Ticket Period </th>
                                     <th> Ticket Class </th>
                                     <th> Seat </th>
-                                    <td>  </td>
+                                    <th> Ticket Checking </th>
+                                    <td> </td>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -94,6 +95,8 @@
                                         <td>{{$ticket->phonenumber}}</td>
                                         <td>{{$ticket->ticket_period}}</td>
                                         <td>{{$ticket->ticket_class}}</td>
+                                        <td>{{$ticket->seat_no}}</td>
+                                        <td>{{$ticket->ticket_checking}}</td>
                                         <td><a target="_blank" href="{{route('ticket.download', ['id' => $ticket->id])}}" class="btn green">Download Ticket</a></td>
                                     </tr>
                                     @endforeach
