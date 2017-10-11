@@ -75,34 +75,46 @@ class EventController extends Controller
         $input['initial'] = (new Initials)->name($input['name'])->generate();
 
         if ($request->hasFile('logo_color')){
-          $color = $request->file('logo_color')->store('logos','public');
+            $extension = $request->file('logo_color')->getClientOriginalExtension();
+            $filename = Uuid::generate().'.'.$extension;
+            $color = $request->file('logo_color')->move('uploads/logos', $filename);
+            $input['logo_color'] = $color;
         }
-        $input['logo_color'] = $color;
 
-        /*if ($request->hasFile('logo_white')){
-          $white = $request->file('logo_white')->store('logos','public');
+        if ($request->hasFile('logo_white')){
+            $extension = $request->file('logo_white')->getClientOriginalExtension();
+            $filename = Uuid::generate().'.'.$extension;
+            $white = $request->file('logo_white')->move('uploads/logos', $filename);
+            $input['logo_white'] = $white;
         }
-        $input['logo_white'] = $white;
 
         if ($request->hasFile('background_pattern')){
-          $back = $request->file('background_pattern')->store('bg','public');
+            $extension = $request->file('background_pattern')->getClientOriginalExtension();
+            $filename = Uuid::generate().'.'.$extension;
+            $back = $request->file('background_pattern')->move('uploads/bg', $filename);
+            $input['background_pattern'] = $back;
         }
-        $input['background_pattern'] = $back;
 
         if ($request->hasFile('pattern_footer')){
-          $foot = $request->file('pattern_footer')->store('bg','public');
+            $extension = $request->file('pattern_footer')->getClientOriginalExtension();
+            $filename = Uuid::generate().'.'.$extension;
+            $foot = $request->file('pattern_footer')->move('uploads/bg', $filename);
+            $input['pattern_footer'] = $foot;
         }
-        $input['pattern_footer'] = $foot;
 
         if ($request->hasFile('eticket_layout')){
-          $ticket = $request->file('eticket_layout')->store('layout_template','public');
+            $extension = $request->file('eticket_layout')->getClientOriginalExtension();
+            $filename = Uuid::generate().'.'.$extension;
+            $ticket = $request->file('eticket_layout')->move('uploads/layout_template', $filename);
+            $input['eticket_layout'] = $ticket;
         }
-        $input['eticket_layout'] = $ticket;
 
         if ($request->hasFile('invoice_layout')){
-          $foot = $request->file('invoice_layout')->store('layout_template','public');
+            $extension = $request->file('invoice_layout')->getClientOriginalExtension();
+            $filename = Uuid::generate().'.'.$extension;
+            $foot = $request->file('invoice_layout')->move('uploads/layout_template', $filename);
+            $input['invoice_layout'] = $foot;
         }
-        $input['invoice_layout'] = $foot;*/
 
         if ($this->eventRepo->create($input)) {
             $request->session()->flash('alert-success', 'Event has been created !');
@@ -358,7 +370,9 @@ class EventController extends Controller
                 $input['name'] = $request->name;
                 $filename="";
                 if ($request->hasFile('photo')){
-                  $file = $request->file('photo')->store('artists','public');
+                    $extension = $request->file('photo')->getClientOriginalExtension();
+                    $filename = Uuid::generate().'.'.$extension;
+                    $file = $request->file('photo')->move('uploads/logos', $filename);
                 }
                 $input['url_img'] = $file;
                 if ($this->eventArtistRepo->create($input)) {

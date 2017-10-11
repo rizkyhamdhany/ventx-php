@@ -11,6 +11,7 @@
     <link href="{{URL('/')}}/assets/global/plugins/bootstrap-summernote/summernote.css" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
+    {{print_r($errors->all())}}
     <div class="page-content-wrapper">
         <div class="page-content">
             <div class="page-bar">
