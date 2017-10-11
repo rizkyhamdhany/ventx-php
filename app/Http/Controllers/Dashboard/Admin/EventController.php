@@ -9,10 +9,14 @@ use App\Models\TicketPeriod;
 use App\Models\TicketClass;
 use App\Models\EventArtist;
 use App\Models\EventSponsor;
+use App\Models\Order;
+use App\Models\Ticket;
 use App\Models\TicketPeriodRepository;
 use App\Models\TicketClassRepository;
 use App\Models\EventArtistRepository;
 use App\Models\EventSponsorRepository;
+use App\Models\OrderRepository;
+use App\Models\TicketRepository;
 use Validator;
 use Illuminate\Http\Request;
 use Webpatser\Uuid\Uuid;
@@ -30,19 +34,25 @@ class EventController extends Controller
     protected $ticketClassRepo;
     protected $eventArtistRepo;
     protected $eventSponsorRepo;
+    protected $eventOrder;
+    protected $eventTicket;
 
     public function __construct(
         EventRepository $eventRepo,
         TicketPeriodRepository $ticketPeriodRepo,
         TicketClassRepository $ticketClassRepo,
         EventArtistRepository $eventArtistRepo,
-        EventSponsorRepository $eventSponsorRepo
+        EventSponsorRepository $eventSponsorRepo,
+        OrderRepository $orderRepo,
+        TicketRepository $ticketRepo
     ) {
         $this->eventRepo = $eventRepo;
         $this->ticketPeriodRepo = $ticketPeriodRepo;
         $this->ticketClassRepo = $ticketClassRepo;
         $this->eventArtistRepo = $eventArtistRepo;
         $this->eventSponsorRepo = $eventSponsorRepo;
+        $this->orderRepo = $orderRepo;
+        $this->ticketRepo = $ticketRepo;
         $this->middleware('auth');
         View::share('page_state', 'Event');
     }
@@ -68,18 +78,32 @@ class EventController extends Controller
           $color = $request->file('logo_color')->store('logos','public');
         }
         $input['logo_color'] = $color;
-        if ($request->hasFile('logo_white')){
+
+        /*if ($request->hasFile('logo_white')){
           $white = $request->file('logo_white')->store('logos','public');
         }
         $input['logo_white'] = $white;
+
         if ($request->hasFile('background_pattern')){
-          $back = $request->file('background_pattern')->store('logos','public');
+          $back = $request->file('background_pattern')->store('bg','public');
         }
         $input['background_pattern'] = $back;
+
         if ($request->hasFile('pattern_footer')){
-          $foot = $request->file('pattern_footer')->store('logos','public');
+          $foot = $request->file('pattern_footer')->store('bg','public');
         }
         $input['pattern_footer'] = $foot;
+
+        if ($request->hasFile('eticket_layout')){
+          $ticket = $request->file('eticket_layout')->store('layout_template','public');
+        }
+        $input['eticket_layout'] = $ticket;
+
+        if ($request->hasFile('invoice_layout')){
+          $foot = $request->file('invoice_layout')->store('layout_template','public');
+        }
+        $input['invoice_layout'] = $foot;*/
+
         if ($this->eventRepo->create($input)) {
             $request->session()->flash('alert-success', 'Event has been created !');
         } else {
@@ -372,8 +396,11 @@ class EventController extends Controller
               $filename="";
               if ($request->hasFile('photo')){
                 $file = $request->file('photo')->store('artists','public');
+                $input['url_img'] = $file;
+              }else{
+                $input['url_img'] = $request->photoEdit;
               }
-              $input['url_img'] = $file;
+
                 if ($this->eventArtistRepo->update($input, $artist)) {
                     $request->session()->flash('alert-success', 'Artist has been Edited !');
                     return redirect()->route('dashboard.event.eventArtist',$id);
@@ -491,5 +518,15 @@ class EventController extends Controller
         } else {
             session(['alert-warning' => 'Failed to Delete Sponsor']);
         }
+    }
+
+    public function eventOrders($id){
+      $orders =  $this->eventRepo->find($id);
+      View::share('page_title', $orders->name->first());
+      View::share('page_state','Order List');
+    }
+
+    public function eventTickets($id){
+      View::share('page_state','Ticket List');
     }
 }

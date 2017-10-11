@@ -93,6 +93,7 @@ Route::prefix('/festivalbudaya')->group(function () {
 
 Route::group(['prefix' => '/organizer', 'middleware' => ['auth', 'role:eo']], function () {
     Route::get('/', 'Dashboard\EO\HomeController@index')->name('organizer.home');
+    Route::get('/orders/{event_id}','Dashboard\EO\OrderController@show')->name('organizer.orders');
     Route::prefix('/tickets')->group(function () {
         Route::get('/', 'Dashboard\EO\TicketDashboardController@listTicket')->name('tickets');
         Route::get('/choose', 'Dashboard\EO\OrderController@chooseTicket')->name('ticket.choose');
@@ -174,6 +175,15 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
                         Route::post('/edit/{class}','Dashboard\Admin\EventController@ticketClassEdit')->name('dashboard.event.ticketClass.edit.post');
                         Route::get('/del/{class}','Dashboard\Admin\EventController@ticketClassDelete')->name('dashboard.event.ticketClass.delete');
                     });
+                });
+
+                Route::prefix('/ticketSold')->group(function($id){
+                  Route::prefix('/orders')->group(function(){
+                    Route::get('/','Dashboard\Admin\EventController@index')->name('dashboard.event.ticketSold.orders');
+                  });
+                  Route::prefix('/tickets')->group(function(){
+                    Route::get('/','Dashboard\Admin\EventController@tickets')->name('dashboard.event.ticketSold.tickets');
+                  });
                 });
 
                 Route::prefix('/seat')->group(function ($id){

@@ -35,7 +35,7 @@
                     <div class="portlet-body">
                         <div class="table-container">
                             <div class="table-actions-wrapper">
-                                <span> </span>
+                                <div class="filters"></div>
                                 <select class="table-group-action-input form-control input-inline input-small input-sm">
                                     <option value="">Select...</option>
                                     <option value="Cancel">Cancel</option>
@@ -47,19 +47,19 @@
                                     <i class="fa fa-check"></i> Submit
                                 </button>
                             </div>
-                            <table class="table table-striped table-bordered table-hover" id="sample_1">
+                            <table class="table table-striped table-bordered table-hover" id="ticketsList">
                                 <thead>
-                                <tr>
-                                    <th> Date </th>
-                                    <th> Order Code </th>
-                                    <th> Name </th>
-                                    <th> Email </th>
-                                    <th> Phone </th>
-                                    <th> Ticket Period </th>
-                                    <th> Ticket Class </th>
-                                    <th> Payment Status </th>
-                                    <td>  </td>
-                                </tr>
+                                  <tr>
+                                      <th> Date </th>
+                                      <th> Order Code </th>
+                                      <th> Name </th>
+                                      <th> Email </th>
+                                      <th> Phone </th>
+                                      <th> Ticket Period </th>
+                                      <th> Ticket Class </th>
+                                      <th> Payment Status </th>
+                                      <td>  </td>
+                                  </tr>
                                 </thead>
                                 <tbody>
                                 @foreach ($orders as $order)
@@ -82,6 +82,19 @@
                                     </tr>
                                 @endforeach
                                 </tbody>
+                                <tfoot>
+                                  <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                  </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -99,5 +112,49 @@
     <script src="{{URL('/')}}/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 @endsection
 @section('page_js')
-    <script src="{{URL('/')}}/assets/pages/scripts/table-datatables-colreorder.js" type="text/javascript"></script>
+    <!--<script src="{{URL('/')}}/assets/pages/scripts/table-datatables-colreorder.js" type="text/javascript"></script>
+    <script src="{{URL('/')}}/assets/pages/scripts/table-datatables-managed.js" type="text/javascript"></script>-->
+    <script>
+    $('#ticketsList').DataTable( {
+        responsive: true,
+        "columnDefs": [
+            {  // set default column settings
+                'orderable': false,
+                'targets': [3]
+            },
+            {
+                "searchable": false,
+                "targets": [0]
+            },
+            {
+                "className": "dt-right",
+                //"targets": [2]
+            }
+        ],
+        initComplete: function () {
+            this.api().columns([5,6,7]).every( function () {
+                var column = this;
+                var select = $('<select><option value="">-</option></select>')
+                    .appendTo($(column.header()).empty())
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+
+                column.data().unique().sort().each( function ( d, j ) {
+                  if(j==1){
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                  }else{
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                  }
+                } );
+            } );
+        }
+    } );
+    </script>
 @endsection

@@ -67,6 +67,16 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">User Type</label>
+                                        <div class="col-md-4">
+                                            <select class="form-control" name="role_id">
+                                                @foreach($roles as $role)
+                                                    <option value="{{$role->id}}">{{$role->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-actions">
                                     <div class="row">

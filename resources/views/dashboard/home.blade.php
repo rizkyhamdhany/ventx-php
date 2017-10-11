@@ -70,11 +70,13 @@
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <div id="site_statistics_loading">
-                            <img src="{{URL('/')}}/assets/global/img/loading.gif" alt="loading" /> </div>
+                        <!--<div id="site_statistics_loading">
+                            <img src="{{URL('/')}}/assets/global/img/loading.gif" alt="loading" />
+                        </div>
                         <div id="site_statistics_content" class="display-none">
                             <div id="site_statistics" class="chart dashboard-chart"> </div>
-                        </div>
+                        </div>-->
+                        <div id="orderChart" style="height: 300px;"></div>
                     </div>
                 </div>
                 <!-- END PORTLET-->
@@ -116,6 +118,7 @@
     <script src="{{URL('/')}}/assets/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
     <script src="{{URL('/')}}/assets/global/plugins/amcharts/amcharts/amcharts.js" type="text/javascript"></script>
     <script src="{{URL('/')}}/assets/global/plugins/amcharts/amcharts/serial.js" type="text/javascript"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
     <script src="{{URL('/')}}/assets/global/plugins/amcharts/amcharts/pie.js" type="text/javascript"></script>
     <script src="{{URL('/')}}/assets/global/plugins/amcharts/amcharts/radar.js" type="text/javascript"></script>
     <script src="{{URL('/')}}/assets/global/plugins/amcharts/amcharts/themes/light.js" type="text/javascript"></script>
@@ -140,4 +143,60 @@
 @endsection
 @section('page_js')
     <script src="{{URL('/')}}/assets/pages/scripts/dashboard.js" type="text/javascript"></script>
+    <script>
+      $(function(){
+        var chart = AmCharts.makeChart("orderChart", {
+          "type": "serial",
+          "dataLoader": {
+            "url": "{{URL('/')}}/organizer/orders/{{$event_id}}"
+          },
+          "valueAxes": [{
+            "gridColor": "#FFFFFF",
+            "gridAlpha": 0.2,
+            "dashLength": 0
+          }],
+          "gridAboveGraphs": true,
+          "startDuration": 1,
+          "graphs": [{
+            "balloonText": "[[category]]: <b>[[value]]</b>",
+            "bullet": "round",
+            "bulletSize": 8,
+            "lineThickness": 2,
+            "lineColor": "#d1655d",
+            "type": "smoothedLine",
+            "valueField": "sold"
+          }],
+          "chartScrollbar": {
+              "graph":"g1",
+              "gridAlpha":0,
+              "color":"#888888",
+              "scrollbarHeight":25,
+              "backgroundAlpha":0,
+              "selectedBackgroundAlpha":0.1,
+              "selectedBackgroundColor":"#888888",
+              "graphFillAlpha":0,
+              "autoGridCount":true,
+              "selectedGraphFillAlpha":0,
+              "graphLineAlpha":0.2,
+              "graphLineColor":"#c2c2c2"
+          },
+          "chartCursor": {
+            "categoryBalloonEnabled": false,
+            "valueLineEnabled":true,
+            "valueLineBalloonEnabled":true,
+            "cursorAlpha": 0,
+            "fullWidth":true
+          },
+          "categoryField": "date",
+          "categoryAxis": {
+            "parseDates": true,
+            "minorGridAlpha": 0.1,
+            "minorGridEnabled": true
+          },
+          "export": {
+              "enabled": true
+          }
+        });
+      });
+    </script>
 @endsection

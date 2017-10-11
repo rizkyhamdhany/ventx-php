@@ -15,7 +15,7 @@
                     </li>
                 </ul>
             </div>
-            <h1 class="page-title"> List User
+            <h1 class="page-title"> List Ticket Period
                 <small>statistics, charts, recent events and reports</small>
             </h1>
             <div class="row">
@@ -31,12 +31,12 @@
                         <div class="portlet-title">
                             <div class="caption">
                                 <i class="icon-settings font-red"></i>
-                                <span class="caption-subject font-red sbold uppercase">User Table</span>
+                                <span class="caption-subject font-red sbold uppercase">Event Table</span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group btn-group-devided">
-                                    <a href="{{route('dashboard.users.create')}}" class="btn btn-transparent red btn-outline btn-circle btn-sm active">
-                                        Add User
+                                    <a href="{{route('dashboard.event.add')}}" class="btn btn-transparent red btn-outline btn-circle btn-sm active">
+                                        Add Event
                                     </a>
                                 </div>
                             </div>
@@ -47,23 +47,24 @@
                                     <thead>
                                     <tr>
                                         <th> # </th>
-                                        <th> First Name </th>
-                                        <th> Last Name </th>
-                                        <th> Privilege </th>
-                                        <th> Status </th>
+                                        <th> Name </th>
+                                        <th> Event Organizer </th>
+                                        <th> Location </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($users as $indexKey => $user)
-                                    <tr>
-                                        <td> {{$indexKey + 1}} </td>
-                                        <td> {{$user->name}} </td>
-                                        <td> {{$user->email}} </td>
-                                        <td> {{$user->event['name']}} </td>
-                                        <td>
-                                            <span class="label label-sm label-success"> Active </span>
-                                        </td>
-                                    </tr>
+                                    @foreach($events as $indexKey => $event)
+                                            <tr>
+                                                <td> {{$indexKey + 1}} </td>
+                                                <td> {{$event->name}} </td>
+                                                <td> {{$event->organizer}} </td>
+                                                <td> {!! $event->location !!} </td>
+                                                <td>
+                                                    <a href="{{route('dashboard.event.details', [$event->id])}}" class="btn btn-success">
+                                                        Details
+                                                    </a>
+                                                </td>
+                                            </tr>
                                     @endforeach
 
                                     </tbody>
