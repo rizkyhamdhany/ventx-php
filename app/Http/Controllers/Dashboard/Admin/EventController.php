@@ -116,6 +116,13 @@ class EventController extends Controller
             $input['invoice_layout'] = $foot;
         }
 
+        if ($request->hasFile('thumbnail')){
+            $extension = $request->file('thumbnail')->getClientOriginalExtension();
+            $filename = Uuid::generate().'.'.$extension;
+            $thumbnail = $request->file('thumbnail')->move('uploads/thumbnail', $filename);
+            $input['thumbnail'] = $thumbnail;
+        }
+
         if ($this->eventRepo->create($input)) {
             $request->session()->flash('alert-success', 'Event has been created !');
         } else {

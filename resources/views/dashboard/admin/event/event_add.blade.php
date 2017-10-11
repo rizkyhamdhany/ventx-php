@@ -100,6 +100,13 @@
                                             <span class="help-block"> Please Fill Event Invoice Layout</span>
                                         </div>
                                     </div>
+                                    <div class="form-group {{$errors->has('thumbnail') ? 'has-error' : ' ' }}">
+                                        <label class="col-md-3 control-label">Event Thumbnail</label>
+                                        <div class="col-md-4">
+                                            <input type="file" name="thumbnail" class="form-control"/>
+                                            <span class="help-block"> Please Fill Event Thumbnail</span>
+                                        </div>
+                                    </div>
                                     <div class="form-group {{$errors->has('color_primary') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Color (Primary)</label>
                                         <div class="col-md-4">
