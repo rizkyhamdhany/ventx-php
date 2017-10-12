@@ -141,8 +141,11 @@ class OrderController extends Controller
                 /*
                  * generate ticket
                  */
+                $event = Event::find($ticket->event_id);
+                $ticket->eticket_layout = $event->eticket_layout;
                 $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
                 $output = $pdf->output();
+                unset($ticket->eticket_layout);
                 $ticket_url = 'ventex/ticket/'.$event->short_name.'/ticket_'.$ticket->ticket_code.'.pdf';
                 if ($env == CC::ENV_OTS){
                     file_put_contents($ticket_url, $output);
