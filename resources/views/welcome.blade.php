@@ -45,27 +45,18 @@
 
             <div class="row min-height-500">
                 <div class="grid">
+                    @foreach($events as $event)
                     <div class="grid-item music col-md-3 col-sm-6 col-xs-12">
-                        <a href="{{route('event.home', ['smilemotion'])}}">
-                            <img src="{{URL('/')}}/assets_landing/img/smo_thumb.jpg" alt=""/>
+                        <a href="{{route('event.home', [$event->short_name])}}">
+                            <img src="{{URL('/')}}/{{$event->thumbnail}}" alt=""/>
                             <div class="grid-item-hover">
                                 <span class="grid-item-hover-icon grid-buy"><button class="btn-buy">Buy Ticket</button></span>
-                                <span class="grid-item-hover-bottom">Smilemotion 2017</span>
+                                <span class="grid-item-hover-bottom">{{$event->name}}</span>
                                 <span class="grid-item-hover-bg boysband"></span>
                             </div>
                         </a>
                     </div>
-
-                    <div class="grid-item music col-md-3 col-sm-6 col-xs-12">
-                        <a href="{{route('event.home', ['festival_budaya'])}}">
-                            <img src="{{URL('/')}}/assets_landing/img/ftb_thumb.jpg" alt=""/>
-                            <div class="grid-item-hover">
-                                <span class="grid-item-hover-icon grid-buy"><button class="btn-buy">Buy Ticket</button></span>
-                                <span class="grid-item-hover-bottom">Festival Budaya 2017</span>
-                                <span class="grid-item-hover-bg agency"></span>
-                            </div>
-                        </a>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="clearfix"></div>
 

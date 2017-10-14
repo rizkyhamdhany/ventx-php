@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\EO;
 
 use App\CC;
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
@@ -38,9 +39,11 @@ class TicketDashboardController extends Controller
                 $s3 = \Storage::disk('s3');
                 return redirect()->to($s3->url($ticket->url_ticket));
             } else {
+                $event = Event::find($ticket->event_id);
+                $ticket->eticket_layout = $event->eticket_layout;
                 $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
                 $output = $pdf->output();
-
+                unset($ticket->eticket_layout);
                 $ticket_url = 'ventex/ticket/ticket_'.$ticket->ticket_code.'.pdf';
                 $s3 = \Storage::disk('s3');
                 $s3->put($ticket_url, $output, 'public');

@@ -85,7 +85,13 @@
 </head>
 <body>
 <div class="container">
-    <img class="bg_template" src="{{URL('/')}}/assets/pages/img/{{$ticket->event_id == 0 ? 'ticket_template.jpeg' : 'ticket_template_ftb.jpg'}}" style="height: 210mm; width: 148.5mm;">
+    @if ($ticket->event_id == 0)
+        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/ticket_template.jpeg" style="height: 210mm; width: 148.5mm;">
+    @elseif ($ticket->event_id == 2)
+        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/ticket_template_ftb.jpeg" style="height: 210mm; width: 148.5mm;">
+    @else
+        <img class="bg_template" src="{{URL('/')}}/{{$ticket->eticket_layout}}" style="height: 210mm; width: 148.5mm;">
+    @endif
     <img class="barcode" src="data:image/png;base64,{{DNS2D::getBarcodePNG($ticket->ticket_code, "QRCODE", 9, 9)}}" alt="barcode"   />
     <h3 class="scan_code_text">Scan The Code for Entry</h3>
     <div class="ticket_class_container">

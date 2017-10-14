@@ -11,6 +11,7 @@
     <link href="{{URL('/')}}/assets/global/plugins/bootstrap-summernote/summernote.css" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
+    {{print_r($errors->all())}}
     <div class="page-content-wrapper">
         <div class="page-content">
             <div class="page-bar">
@@ -64,7 +65,7 @@
                                             <span class="help-block"> Please Fill Event Logo (Color)</span>
                                         </div>
                                     </div>
-                                    <!--<div class="form-group {{$errors->has('logo_white') ? 'has-error' : ' ' }}">
+                                    <div class="form-group {{$errors->has('logo_white') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Logo (White)</label>
                                         <div class="col-md-4">
                                             <input type="file" name="logo_white" class="form-control"/>
@@ -98,7 +99,14 @@
                                             <input type="file" name="invoice_layout" class="form-control"/>
                                             <span class="help-block"> Please Fill Event Invoice Layout</span>
                                         </div>
-                                    </div>-->
+                                    </div>
+                                    <div class="form-group {{$errors->has('thumbnail') ? 'has-error' : ' ' }}">
+                                        <label class="col-md-3 control-label">Event Thumbnail</label>
+                                        <div class="col-md-4">
+                                            <input type="file" name="thumbnail" class="form-control"/>
+                                            <span class="help-block"> Please Fill Event Thumbnail</span>
+                                        </div>
+                                    </div>
                                     <div class="form-group {{$errors->has('color_primary') ? 'has-error' : ' ' }}">
                                         <label class="col-md-3 control-label">Event Color (Primary)</label>
                                         <div class="col-md-4">

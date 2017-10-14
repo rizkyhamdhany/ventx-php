@@ -77,6 +77,8 @@ class Order extends Model
             /*
              * generate ticket
              */
+            $event = Event::find($ticket->event_id);
+            $ticket->eticket_layout = $event->eticket_layout;
             $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
             $output = $pdf->output();
             $ticket_url = 'ventex/ticket/ticket_'.$ticket->ticket_code.'.pdf';
@@ -172,11 +174,14 @@ class Order extends Model
             /*
              * generate ticket
              */
+            $event = Event::find($ticket->event_id);
+            $ticket->eticket_layout = $event->eticket_layout;
             $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
             $output = $pdf->output();
             $ticket_url = 'ventex/ticket/ticket_'.$ticket->ticket_code.'.pdf';
             $s3 = \Storage::disk('s3');
             $s3->put($ticket_url, $output, 'public');
+            unset($ticket->eticket_layout);
             $ticket->url_ticket = $ticket_url;
             $ticket->save();
         }

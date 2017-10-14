@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
+use App\Models\EventRepository;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Ticket;
@@ -17,21 +18,26 @@ use Illuminate\Support\Facades\Mail;
 
 class LandingController extends Controller
 {
+
+    protected $eventRepo;
+
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * LandingController constructor.
+     * @param $eventRepo
      */
-    public function __construct()
+    public function __construct(EventRepository $eventRepo)
     {
+        $this->eventRepo = $eventRepo;
         View::share( 'event_name', 'Smilemotion 2017' );
         View::share( 'logo', 'logo_smilemotion.png' );
         View::share( 'url_event', 'http://smilemotion.org' );
         View::share( 'color_prime', '#236E89' );
     }
 
+
     public function index(){
-        return view('welcome');
+        return view('welcome')
+            ->with('events', $this->eventRepo->all());
     }
     public function event(){
         return redirect()->route('event.home', ['smilemotion']);
