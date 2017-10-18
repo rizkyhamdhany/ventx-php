@@ -61,7 +61,7 @@
                                     <div class="col-md-4">
                                       <div class="input-group">
                                         <span class="input-group-addon">IDR</span>
-                                        <input type="text" name="price" class="form-control" placeholder="Ex : 20.000" value="{{ old('name') }}">
+                                        <input type="text" name="price" class="form-control" placeholder="Ex : 20.000" value="{{ old('name') }}" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                         <span class="help-block"> Please Fill Ticket Price </span>
                                       </div>
                                     </div>
@@ -69,7 +69,7 @@
                                 <div class="form-group {{$errors->has('amount') ? 'has-error' : ' ' }}">
                                     <label class="col-md-3 control-label">Amount</label>
                                     <div class="col-md-4">
-                                        <input type="text" name="amount" class="form-control" placeholder="Ex : 1000" value="{{ old('name') }}">
+                                        <input type="text" name="amount" class="form-control" placeholder="Ex : 1000" value="{{ old('name') }}" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                         <span class="help-block"> Please Fill Ticket Amount </span>
                                     </div>
                                 </div>

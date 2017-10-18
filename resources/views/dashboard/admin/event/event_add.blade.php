@@ -63,6 +63,7 @@
                                         <div class="col-md-4">
                                             <input type="file" name="logo_color" class="form-control"/>
                                             <span class="help-block"> Please Fill Event Logo (Color)</span>
+                                            <span><small><small><i>* Logo Req</i></small></small></span>
                                         </div>
                                     </div>
                                     <div class="form-group {{$errors->has('logo_white') ? 'has-error' : ' ' }}">
@@ -70,6 +71,7 @@
                                         <div class="col-md-4">
                                             <input type="file" name="logo_white" class="form-control"/>
                                             <span class="help-block"> Please Fill Event Logo (White)</span>
+                                            <span><small><small><i>* Logo Req</i></small></small></span>
                                         </div>
                                     </div>
                                     <div class="form-group {{$errors->has('background_pattern') ? 'has-error' : ' ' }}">
@@ -77,6 +79,7 @@
                                         <div class="col-md-4">
                                             <input type="file" name="background_pattern" class="form-control"/>
                                             <span class="help-block"> Please Fill Event Background Pattern</span>
+                                            <span><small><small><i>* Logo Req</i></small></small></span>
                                         </div>
                                     </div>
                                     <div class="form-group {{$errors->has('pattern_footer') ? 'has-error' : ' ' }}">
@@ -84,6 +87,7 @@
                                         <div class="col-md-4">
                                             <input type="file" name="pattern_footer" class="form-control"/>
                                             <span class="help-block"> Please Fill Event Pattern Footer</span>
+                                            <span><small><small><i>* Logo Req</i></small></small></span>
                                         </div>
                                     </div>
                                     <div class="form-group {{$errors->has('eticket_layout') ? 'has-error' : ' ' }}">
@@ -91,6 +95,7 @@
                                         <div class="col-md-4">
                                             <input type="file" name="eticket_layout" class="form-control"/>
                                             <span class="help-block"> Please Fill Event E-Ticket Layout</span>
+                                            <span><small><small><i>* Logo Req</i></small></small></span>
                                         </div>
                                     </div>
                                     <div class="form-group {{$errors->has('invoice_layout') ? 'has-error' : ' ' }}">
@@ -98,6 +103,7 @@
                                         <div class="col-md-4">
                                             <input type="file" name="invoice_layout" class="form-control"/>
                                             <span class="help-block"> Please Fill Event Invoice Layout</span>
+                                            <span><small><small><i>* Logo Req</i></small></small></span>
                                         </div>
                                     </div>
                                     <div class="form-group {{$errors->has('thumbnail') ? 'has-error' : ' ' }}">
@@ -105,6 +111,7 @@
                                         <div class="col-md-4">
                                             <input type="file" name="thumbnail" class="form-control"/>
                                             <span class="help-block"> Please Fill Event Thumbnail</span>
+                                            <span><small><small><i>* Logo Req</i></small></small></span>
                                         </div>
                                     </div>
                                     <div class="form-group {{$errors->has('color_primary') ? 'has-error' : ' ' }}">
