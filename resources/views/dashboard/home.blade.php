@@ -99,7 +99,8 @@
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <div id="dashboard_amchart_4" class="CSSAnimationChart dashboard-chart"></div>
+                        <div id="presale" style="height: 300px;"></div>
+                        <!--<div id="dashboard_amchart_4" class="CSSAnimationChart dashboard-chart"></div>-->
                     </div>
                 </div>
             </div>

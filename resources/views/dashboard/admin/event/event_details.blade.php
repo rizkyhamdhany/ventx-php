@@ -33,7 +33,7 @@
                             </div>
                         </div>
                         <div class="portlet-body">
-                            <form class="form-horizontal" role="form">
+                            <form class="form-horizontal" role="form" action="{{route('dashboard.event.edit',$event->id)}}">
                                 <div class="form-body">
                                     <h3 class="form-section">About Event</h3>
                                     <div class="row">

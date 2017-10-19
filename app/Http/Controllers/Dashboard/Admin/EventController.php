@@ -131,6 +131,74 @@ class EventController extends Controller
         return redirect()->route('dashboard.event');
     }
 
+    public function editEvent($id){
+      $event = $this->eventRepo->find($id);
+      return view('dashboard.admin.event.event_edit')
+      ->with('event',$event);
+    }
+
+    public function editEventPost($id, Request $request){
+      $input = $request->all();
+      $input['date'] = date('Y-m-d', strtotime($request->input('date')));
+      $input['initial'] = (new Initials)->name($input['name'])->generate();
+
+      if ($request->hasFile('logo_color')){
+          $extension = $request->file('logo_color')->getClientOriginalExtension();
+          $filename = Uuid::generate().'.'.$extension;
+          $color = $request->file('logo_color')->move('uploads/logos', $filename);
+          $input['logo_color'] = $color;
+      }
+
+      if ($request->hasFile('logo_white')){
+          $extension = $request->file('logo_white')->getClientOriginalExtension();
+          $filename = Uuid::generate().'.'.$extension;
+          $white = $request->file('logo_white')->move('uploads/logos', $filename);
+          $input['logo_white'] = $white;
+      }
+
+      if ($request->hasFile('background_pattern')){
+          $extension = $request->file('background_pattern')->getClientOriginalExtension();
+          $filename = Uuid::generate().'.'.$extension;
+          $back = $request->file('background_pattern')->move('uploads/bg', $filename);
+          $input['background_pattern'] = $back;
+      }
+
+      if ($request->hasFile('pattern_footer')){
+          $extension = $request->file('pattern_footer')->getClientOriginalExtension();
+          $filename = Uuid::generate().'.'.$extension;
+          $foot = $request->file('pattern_footer')->move('uploads/bg', $filename);
+          $input['pattern_footer'] = $foot;
+      }
+
+      if ($request->hasFile('eticket_layout')){
+          $extension = $request->file('eticket_layout')->getClientOriginalExtension();
+          $filename = Uuid::generate().'.'.$extension;
+          $ticket = $request->file('eticket_layout')->move('uploads/layout_template', $filename);
+          $input['eticket_layout'] = $ticket;
+      }
+
+      if ($request->hasFile('invoice_layout')){
+          $extension = $request->file('invoice_layout')->getClientOriginalExtension();
+          $filename = Uuid::generate().'.'.$extension;
+          $foot = $request->file('invoice_layout')->move('uploads/layout_template', $filename);
+          $input['invoice_layout'] = $foot;
+      }
+
+      if ($request->hasFile('thumbnail')){
+          $extension = $request->file('thumbnail')->getClientOriginalExtension();
+          $filename = Uuid::generate().'.'.$extension;
+          $thumbnail = $request->file('thumbnail')->move('uploads/thumbnail', $filename);
+          $input['thumbnail'] = $thumbnail;
+      }
+
+      if ($this->eventRepo->update($input,$id)) {
+          $request->session()->flash('alert-success', 'Event has been updated !');
+      } else {
+          $request->session()->flash('alert-warning', 'Failed to edit Event !');
+      }
+      return redirect()->route('dashboard.event');
+    }
+
     public function detailEvent($id)
     {
         $event = $this->eventRepo->find($id);
