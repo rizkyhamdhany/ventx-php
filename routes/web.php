@@ -231,7 +231,9 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
     Route::post('event/{id}/buy/', 'Dashboard\Partner\PartnerController@buyTicketPost')->name('partner.home.ticket.buy.post');
 });*/
 //ENDPARTNERGOTIX
-Route::group(['prefix' => '/partner', 'middleware' => ['auth', 'role:partner']], function () {
+
+//Route::group(['prefix' => '/partner', 'middleware' => ['auth', 'role:partner']], function () {
+Route::prefix('/partner')->middleware(['auth', 'role:partner'])->group(function(){
     Route::get('/', 'Dashboard\Partner\PartnerController@index')->name('partner.home');
     Route::prefix('/event')->group(function(){
       Route::get('/{id}/buy/', 'Dashboard\Partner\PartnerController@buyTicket')->name('partner.ticket.buy');

@@ -12,7 +12,9 @@
                             <a href="{{route('home')}}">Dashboard</a>
                         </li>
                         <li>
+                          @role('partner')
                             <a href="{{route('report')}}">Reports</a>
+                          @endrole
                         </li>
                         <!--<li>
                             <a href="#">Templates</a>
