@@ -60,9 +60,11 @@
                                                 <td> {{$event->organizer}} </td>
                                                 <td> {!! $event->location !!} </td>
                                                 <td>
+                                                    @if($event->status=="active")
                                                     <a href="{{route('dashboard.event.details', [$event->id])}}" class="btn btn-success">
                                                         Details
                                                     </a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                     @endforeach

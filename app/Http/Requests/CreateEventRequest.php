@@ -24,6 +24,7 @@ class CreateEventRequest extends FormRequest
     public function rules()
     {
         $rules = [
+          //|dimensions:ratio=4/3,max-width=100,max-height=100
             'name' => 'required|max:100',
             'short_name' => 'required|max:100',
             'organizer' => 'required|max:100',

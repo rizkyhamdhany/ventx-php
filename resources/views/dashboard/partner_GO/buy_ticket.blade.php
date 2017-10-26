@@ -22,43 +22,48 @@
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <h3 class="form-section">{{$event->name}}</h3>
+                        <h3 class="form-section">Smilemotion 2017</h3>
                         <div class="row">
                             <div class="col-md-3">
                                 <h4>Ticket Period</h4>
-                                <h4><strong>{{$ticketPeriod->name}}</strong></h4>
+                                <h4><strong>Presale 2</strong></h4>
                             </div>
                             <div class="col-md-3">
                                 <h4>Price</h4>
-                                <h4><strong>Rp{{number_format($ticketClass->price, 0 , '' , '.' )}}</strong></h4>
+                                <h4><strong>Rp. 125.000</strong></h4>
                             </div>
                             <div class="col-md-3">
                                 <h4>Ticket Class</h4>
-                                <h4><strong>{{$ticketClass->name}}</strong></h4>
+                                <h4><strong>Reguler</strong></h4>
                             </div>
                         </div>
                         <br>
                         <br>
-                        <form class="horizontal-form"  action="{{route('partner.ticket.buy.post', $event->id)}}" method="POST">
+                        <form class="horizontal-form"  action="{{route('partner.home.ticket.buy.post', [0])}}" method="POST">
                             {{ csrf_field() }}
-                            <input type="hidden" name="ticket_period" value="{{$ticketPeriod->id}}">
-                            <input type="hidden" name="ticket_class" value="{{$ticketClass->id}}">
                             <div class="form-body">
                                 <h3 class="form-section">Customer Information</h3>
                                 <div class="row">
-                                    <div class="col-md-1">
-                                        <div class="form-group">
-                                            <label class="control-label">Title</label>
-                                            <select name="ticket_title" class="form-control">
-                                                <option>Mr.</option>
-                                                <option>Mrs.</option>
-                                                <option>Ms.</option>
-                                            </select>
+                                    <div class="col-md-3">
+                                        <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
+                                            <label for="single-append-text" class="control-label">Ticket Code</label>
+                                            <div class="input-group select2-bootstrap-append">
+                                                <select id="single-append-text" class="form-control select2-allow-clear" name="id">
+                                                    @foreach($tickets as $ticket)
+                                                    <option value="{{$ticket->id}}">{{$ticket->book_code}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button" data-select2-open="single-append-text">
+                                                        <span class="glyphicon glyphicon-search"></span>
+                                                    </button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
-                                            <label class="control-label" for="firstName">Full Name</label>
+                                            <label class="control-label">Full Name</label>
                                             <input value="{{old('name')}}" name="name" type="text" id="firstName" class="form-control" placeholder="Fullname" required>
                                         </div>
                                     </div>
@@ -73,7 +78,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
                                             <label class="control-label">Email</label>
                                             <div class="input-group">
@@ -87,7 +92,7 @@
                             </div>
                             <div class="form-actions">
                                 <div class="row">
-                                    <div class="col-md-offset-1 col-md-3">
+                                    <div class="col-md-offset-3 col-md-3">
                                         <a href="{{route('partner.home')}}" class="btn btn-outline red"> Cancel
                                         </a>
                                         <button type="submit" class="btn btn-outline green"> Continue

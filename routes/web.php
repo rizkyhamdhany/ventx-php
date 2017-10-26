@@ -94,6 +94,7 @@ Route::prefix('/festivalbudaya')->group(function () {
 Route::group(['prefix' => '/organizer', 'middleware' => ['auth', 'role:eo']], function () {
     Route::get('/', 'Dashboard\EO\HomeController@index')->name('organizer.home');
     Route::get('/orders/{event_id}','Dashboard\EO\OrderController@show')->name('organizer.orders');
+    Route::get('/presale/{event_id}','Dashboard\EO\OrderController@presale')->name('organizer.presale');
     Route::prefix('/tickets')->group(function () {
         Route::get('/', 'Dashboard\EO\TicketDashboardController@listTicket')->name('tickets');
         Route::get('/choose', 'Dashboard\EO\OrderController@chooseTicket')->name('ticket.choose');
@@ -125,7 +126,6 @@ Route::group(['prefix' => '/organizer', 'middleware' => ['auth', 'role:eo']], fu
         Route::post('/testInsert', 'TestInsertController@testInsert')->name('payment.testInsert');
     });
 
-
     Route::prefix('/complains')->group(function () {
         Route::get('/', 'Dashboard\EO\ComplainController@listComplain')->name('complains');//viewList
         Route::prefix('/followUp')->group(function () {
@@ -139,8 +139,10 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
         Route::get('/', 'Dashboard\Admin\EventController@index')->name('dashboard.event');
         Route::get('/add', 'Dashboard\Admin\EventController@addEvent')->name('dashboard.event.add');
         Route::post('/add', 'Dashboard\Admin\EventController@addEventPost')->name('dashboard.event.add.post');
-        Route::get('/edit/{id}', 'Dashboard\Admin\EventController@editEvent')->name('dashboard.event.edit');
-        Route::post('/edit/{id}', 'Dashboard\Admin\EventController@editEventPost')->name('dashboard.event.edit.post');
+        Route::prefix('/edit')->group(function(){
+          Route::get('/{id}', 'Dashboard\Admin\EventController@editEvent')->name('dashboard.event.edit');
+          Route::post('/{id}', 'Dashboard\Admin\EventController@editEventPost')->name('dashboard.event.edit.post');
+        });
         Route::prefix('/details')->group(function () {
             Route::prefix('/{id}')->group(function ($id) {
                 Route::get('/', 'Dashboard\Admin\EventController@detailEvent')->name('dashboard.event.details');
@@ -222,9 +224,31 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
         Route::post('/verify', 'Dashboard\EO\TransactionsController@verifyPayment')->name('payment.verify');
     });
 });
-
-Route::group(['prefix' => '/partner', 'middleware' => ['auth', 'role:partner']], function () {
+//PARTNER GOTIX
+/*Route::group(['prefix' => '/partner', 'middleware' => ['auth', 'role:partner']], function () {
     Route::get('/', 'Dashboard\Partner\PartnerController@index')->name('partner.home');
     Route::get('event/{id}/buy/', 'Dashboard\Partner\PartnerController@buyTicket')->name('partner.home.ticket.buy');
     Route::post('event/{id}/buy/', 'Dashboard\Partner\PartnerController@buyTicketPost')->name('partner.home.ticket.buy.post');
+});*/
+//ENDPARTNERGOTIX
+Route::group(['prefix' => '/partner', 'middleware' => ['auth', 'role:partner']], function () {
+    Route::get('/', 'Dashboard\Partner\PartnerController@index')->name('partner.home');
+    Route::prefix('/event')->group(function(){
+      Route::get('/{id}/buy/', 'Dashboard\Partner\PartnerController@buyTicket')->name('partner.ticket.buy');
+      Route::post('/{id}/buy/', 'Dashboard\Partner\PartnerController@buyTicketPost')->name('partner.ticket.buy.post');
+    });
+    Route::get('order/detail/{id}', 'Dashboard\Partner\PartnerController@viewOrderDetail')->name('partner.order.detail');
+    Route::prefix('/ticket')->group(function(){
+      Route::get('/download/{id}', 'Dashboard\Partner\TicketDashboardController@downloadTicket')->name('partner.ticket.download');
+      Route::get('/invoice/{id}', 'Dashboard\Partner\OrderController@viewInvoice')->name('partner.ticket.invoice');
+      Route::get('/send_email/{id}', 'Dashboard\Partner\OrderController@sendEmail')->name('partner.ticket.email');
+    });
+    Route::get('/report','Dashboard\Partner\PartnerController@viewReport')->name('report');
+});
+
+Route::prefix('/stakeholder')->group(function(){
+  Route::get('/','Dashboard\Stakeholder\HomeController@index')->name('stakeholder.home');
+  Route::prefix('/report')->group(function(){
+    Route::get('/','Dashboard\Stakeholder\OrderController@report')->name('stakeholder.report');
+  });
 });

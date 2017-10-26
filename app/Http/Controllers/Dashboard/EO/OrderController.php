@@ -51,10 +51,8 @@ class OrderController extends Controller
             ->with('ticket_classes', $ticket_classes);
     }
 
-    public function orderTicket(Request $request)
-    {
-        if ($request->isMethod('post')) {
-
+    public function orderTicket(Request $request){
+        if ($request->isMethod('post')){
             $validator = Validator::make($request->all(), [
                 'ticket_period' => 'required',
                 'ticket_class' => 'required',
@@ -75,7 +73,6 @@ class OrderController extends Controller
                     ->with('seat_available', $seat_available);
             }
         }
-
     }
 
     public function orderTicketSubmit(Request $request){
@@ -294,7 +291,13 @@ class OrderController extends Controller
       ->where('event_id',$event_id)
       ->get();
       return $orders->toJSON();
+    }
 
-
+    public function presale($event_id){
+      $orders = Order::select(DB::raw('COUNT(ticket_ammount) as sold'),DB::raw('ticket_period as period'))->groupBy(DB::raw('ticket_period'))
+      ->where('payment_status','COMPLETE')
+      ->where('event_id',$event_id)
+      ->get();
+      return $orders->toJSON();
     }
 }

@@ -12,7 +12,7 @@
                             <a href="{{route('home')}}">Dashboard</a>
                         </li>
                         <li>
-                            <a href="#">Reports</a>
+                            <a href="{{route('report')}}">Reports</a>
                         </li>
                         <!--<li>
                             <a href="#">Templates</a>

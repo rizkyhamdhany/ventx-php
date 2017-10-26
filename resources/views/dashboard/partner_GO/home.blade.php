@@ -17,9 +17,6 @@
                         </div>
                     @endif
                 @endforeach
-                @if(isset($valid))
-                  <div class="">{{$valid}}</div>
-                @endif
                 <div class="portlet light portlet-fit portlet-datatable bordered">
                     <div class="portlet-title">
                         <div class="caption">
@@ -64,18 +61,19 @@
                                         <td>
                                             <div class="clearfix">
                                                 <div class="btn-group btn-group-solid">
-                                                    <a href="{{route('partner.ticket.buy', [0])}}" class="btn red">Buy Ticket</a>
+                                                    <a href="{{route('partner.home.ticket.buy', [0])}}" class="btn red">Buy Ticket</a>
                                                 </div>
                                             </div>
                                         </td>
-                                    </tr>
                                     <tr>
                                         <td> 2 </td>
                                         <td> Festival Budaya </td>
                                         <td> Sept 30, 2017 </td>
                                         <td> Lapangan Jalan Bali </td>
                                         <td> </td>
-                                        <td> </td>
+                                        <td>
+
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

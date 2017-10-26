@@ -198,6 +198,55 @@
               "enabled": true
           }
         });
+
+        AmCharts.addInitHandler(function(chart) {
+          // check if there are graphs with autoColor: true set
+          for(var i = 0; i < chart.graphs.length; i++) {
+            var graph = chart.graphs[i];
+            if (graph.autoColor !== true)
+              continue;
+            var colorKey = "autoColor-"+i;
+            graph.lineColorField = colorKey;
+            graph.fillColorsField = colorKey;
+            for(var x = 0; x < chart.dataProvider.length; x++) {
+              var color = chart.colors[x]
+              chart.dataProvider[x][colorKey] = color;
+            }
+          }
+
+        }, ["serial"]);
+
+        var chart2 = AmCharts.makeChart("presale", {
+          "type": "serial",
+          "dataLoader": {
+            "url": "{{URL('/')}}/organizer/presale/{{$event_id}}"
+          },
+            "valueAxes": [{
+            "gridColor": "#FFFFFF",
+            "gridAlpha": 0.2,
+            "dashLength": 0
+          }],
+          "startDuration": 1,
+          "graphs": [{
+            "balloonText": "[[category]]: <b>[[value]]</b>",
+            "fillAlphas": 0.8,
+            "type": "column",
+            "valueField": "sold",
+            "colorField": "color"
+          }],
+          "chartCursor": {
+            "categoryBalloonEnabled": false,
+            "cursorAlpha": 0,
+            "zoomable": false
+          },
+          "categoryField": "period",
+          "categoryAxis": {
+            "gridPosition": "start",
+            "gridAlpha": 0,
+            "tickPosition": "start",
+            "tickLength": 20
+          }
+        });
       });
     </script>
 @endsection
