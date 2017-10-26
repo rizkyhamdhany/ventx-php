@@ -113,7 +113,7 @@ class PartnerController extends Controller
             if (in_array($seatupdate->id, $seat_booked)){
                 $request->session()->flash('alert-danger', 'Sorry, selected seat no longer available !');
                 Order::destroy($order->id);
-                return redirect()->route('tickets');
+                return redirect()->route('partner.ticket.buy');
             }
             /*
              * check redis book waiting payment (time 3 days)
