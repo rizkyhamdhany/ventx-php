@@ -14,9 +14,9 @@ class PartnerBuyTicketRequest extends FormRequest
 
     public function rules(){
         $rules = [
-            'name' => 'required|max:50',
-            'email' => 'required',
-            'phone' => 'required',
+            'contact_fullname' => 'required|max:50',
+            'contact_email' => 'required',
+            'contact_phone' => 'required',
         ];
         return $rules;
     }

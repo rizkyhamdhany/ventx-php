@@ -43,6 +43,7 @@
                             {{ csrf_field() }}
                             <input type="hidden" name="ticket_period" value="{{$ticketPeriod->id}}">
                             <input type="hidden" name="ticket_class" value="{{$ticketClass->id}}">
+                            <input type="hidden" name="ammount" value="1">
                             <div class="form-body">
                                 <h3 class="form-section">Customer Information</h3>
                                 <div class="row">
@@ -59,7 +60,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group {{$errors->has('organizer') ? 'has-error' : ' ' }}">
                                             <label class="control-label" for="firstName">Full Name</label>
-                                            <input value="{{old('name')}}" name="name" type="text" id="firstName" class="form-control" placeholder="Fullname" required>
+                                            <input value="{{old('name')}}" name="contact_fullname" type="text" id="firstName" class="form-control" placeholder="Fullname" required>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -69,7 +70,7 @@
                                                 <span class="input-group-addon">
                                                     +62
                                                 </span>
-                                                <input value="{{old('phone')}}" name="phone" type="phone" class="form-control" placeholder="Phone Number" required>
+                                                <input value="{{old('phone')}}" name="contact_phone" type="phone" class="form-control" placeholder="Phone Number" required>
                                             </div>
                                         </div>
                                     </div>
@@ -80,7 +81,7 @@
                                                 <span class="input-group-addon">
                                                     <i class="fa fa-envelope"></i>
                                                 </span>
-                                                <input value="{{old('email')}}" name="email" type="email" class="form-control" placeholder="Email Address" required> </div>
+                                                <input value="{{old('email')}}" name="contact_email" type="email" class="form-control" placeholder="Email Address" required> </div>
                                         </div>
                                     </div>
                                 </div>

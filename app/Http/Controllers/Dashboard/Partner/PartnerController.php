@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Dashboard\Partner;
 use App\Http\Requests\PartnerBuyTicketRequest;
 use App\Models\Order;
 use App\Models\Event;
+use App\Models\Ticket;
+use App\CC;
+use Webpatser\Uuid\Uuid;
 use App\Models\EventRepository;
 use App\Models\OrderRepository;
 use App\Models\TicketPeriodRepository;
@@ -86,9 +89,9 @@ class PartnerController extends Controller
         $ticket->event_id = $event->id;
         $ticket->ticket_code = $event->initial.'T'.$code;
         $ticket->title = $request->input('ticket_title');
-        $ticket->name = $request->input('ticket_name');
-        $ticket->phonenumber = $request->input('ticket_phone');
-        $ticket->email = $request->input('ticket_email');
+        $ticket->name = $request->input('contact_fullname');
+        $ticket->phonenumber = $request->input('contact_phone');
+        $ticket->email = $request->input('contact_email');
         $ticket->ticket_period = $ticket_period->name;
         $ticket->ticket_class = $ticket_class->name;
 
