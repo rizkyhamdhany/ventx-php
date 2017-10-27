@@ -116,7 +116,7 @@ class PartnerController extends Controller
             if (in_array($seatupdate->id, $seat_booked)){
                 $request->session()->flash('alert-danger', 'Sorry, selected seat no longer available !');
                 Order::destroy($order->id);
-                return redirect()->route('partner.ticket.buy');
+                return redirect()->route('partner.ticket.buy',[$event_id]);
             }
             /*
              * check redis book waiting payment (time 3 days)
@@ -128,7 +128,7 @@ class PartnerController extends Controller
             }
             if (in_array($seatupdate->id, $seat_booked)){
                 $request->session()->flash('alert-danger', 'Sorry, selected seat no longer available !');
-                return redirect()->route('partner.ticket.buy');
+                return redirect()->route('partner.ticket.buy',[$event_id]);
             }
         }
         $ticket->save();
@@ -147,10 +147,9 @@ class PartnerController extends Controller
             if ($env == CC::ENV_OTS){
                 file_put_contents($ticket_url, $output);
             } else {
-                $s3 = \Storage::disk('s3');
+                $s3 = \Storage::disk('local');
                 $s3->put($ticket_url, $output, 'public');
             }
-
             $ticket->url_ticket = $ticket_url;
             $ticket->save();
         }
@@ -197,7 +196,7 @@ class PartnerController extends Controller
         }
         $request->session()->flash('alert-success', 'Ticket has been purchased !');
         return redirect()->route('partner.home', [$event_id]);
-      //  return redirect()->route("ticket.order.detail", ['id' => $order->id]);
+        //  return redirect()->route("ticket.order.detail", ['id' => $order->id]);
 
         ///////////////////////////////////////////////////////////////////////
         /*$id = $request->input("id");
