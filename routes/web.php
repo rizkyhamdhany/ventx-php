@@ -239,11 +239,11 @@ Route::prefix('/partner')->middleware(['auth', 'role:partner'])->group(function(
       Route::get('/{id}/buy/', 'Dashboard\Partner\PartnerController@buyTicket')->name('partner.ticket.buy');
       Route::post('/{id}/buy/', 'Dashboard\Partner\PartnerController@buyTicketPost')->name('partner.ticket.buy.post');
     });
-    Route::get('order/detail/{id}', 'Dashboard\Partner\PartnerController@viewOrderDetail')->name('partner.order.detail');
+    Route::get('/order/detail/{id}', 'Dashboard\Partner\PartnerController@viewOrderDetail')->name('partner.order.detail');
     Route::prefix('/ticket')->group(function(){
       Route::get('/download/{id}', 'Dashboard\Partner\TicketDashboardController@downloadTicket')->name('partner.ticket.download');
-      Route::get('/invoice/{id}', 'Dashboard\Partner\OrderController@viewInvoice')->name('partner.ticket.invoice');
-      Route::get('/send_email/{id}', 'Dashboard\Partner\OrderController@sendEmail')->name('partner.ticket.email');
+      Route::get('/invoice/{id}', 'Dashboard\Partner\PartnerController@viewInvoice')->name('partner.ticket.invoice');
+      Route::get('/send_email/{id}', 'Dashboard\Partner\PartnerController@sendEmail')->name('partner.ticket.email');
     });
     Route::get('/report','Dashboard\Partner\PartnerController@viewReport')->name('report');
 });

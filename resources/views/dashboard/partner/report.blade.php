@@ -68,7 +68,7 @@
                                         <td>
                                             <div class="clearfix">
                                                 <div class="btn-group btn-group-solid">
-                                                    <a href="{{route("ticket.order.detail", ['id' => $order->id])}}" class="btn green">View Details</a>
+                                                    <a href="{{route("partner.order.detail", ['id' => $order->id])}}" class="btn green">View Details</a>
                                                 </div>
                                             </div>
                                         </td>

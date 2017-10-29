@@ -52,6 +52,5 @@ class TicketDashboardController extends Controller
                 return redirect()->to($s3->url($ticket->url_ticket));
             }
         }
-
     }
 }

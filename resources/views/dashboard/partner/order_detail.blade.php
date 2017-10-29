@@ -19,10 +19,10 @@
                         </div>
                         <div class="actions">
                             <div class="btn-group btn-group-devided">
-                                <a target="_blank" href="{{route('ticket.order.invoice', ['id' => $order->id])}}" class="btn green">
+                                <a target="_blank" href="{{route('partner.ticket.invoice', ['id' => $order->id])}}" class="btn green">
                                     Download Invoice
                                 </a>
-                                <a href="{{route('ticket.order.email', ['id' => $order->id])}}" class="btn red">
+                                <a href="{{route('partner.ticket.email', ['id' => $order->id])}}" class="btn red">
                                     Send Ticket to Email
                                 </a>
                             </div>
@@ -61,47 +61,8 @@
                             </div>
                             <div class="col-md-3">
                                 <h4>Grand Total</h4>
-                                <h4><strong>{{$order->grand_total}}</strong></h4>
+                                <h4><strong>Rp{{number_format($order->grand_total,0,',','.')}}</strong></h4>
                             </div>
-                        </div>
-                        <br>
-                        <br>
-                        <h3 class="form-section">Ticket Details</h3>
-                        <div class="table-container">
-                            <div class="table-actions-wrapper">
-                            </div>
-                            <table class="table table-striped table-bordered table-hover" id="sample_1">
-                                <thead>
-                                <tr>
-                                    <th> Date </th>
-                                    <th> Ticket Code </th>
-                                    <th> Name </th>
-                                    <th> Email </th>
-                                    <th> Phone </th>
-                                    <th> Ticket Period </th>
-                                    <th> Ticket Class </th>
-                                    <th> Seat </th>
-                                    <th> Ticket Checking </th>
-                                    <td> </td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($order->tickets as $ticket)
-                                    <tr>
-                                        <td>{{$order->created_at->toDateString()}}</td>
-                                        <td>{{$ticket->ticket_code}}</td>
-                                        <td>{{$ticket->name}}</td>
-                                        <td>{{$ticket->email}}</td>
-                                        <td>{{$ticket->phonenumber}}</td>
-                                        <td>{{$ticket->ticket_period}}</td>
-                                        <td>{{$ticket->ticket_class}}</td>
-                                        <td>{{$ticket->seat_no}}</td>
-                                        <td>{{$ticket->ticket_checking}}</td>
-                                        <td><a target="_blank" href="{{route('ticket.download', ['id' => $ticket->id])}}" class="btn green">Download Ticket</a></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>

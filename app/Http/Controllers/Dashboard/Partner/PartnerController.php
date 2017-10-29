@@ -27,7 +27,8 @@ class PartnerController extends Controller
 {
     protected $tbRepo, $tbTicketRepo, $orderRepo, $ticketPeriodRepo, $ticketClassRepo;
 
-    public function __construct(EventRepository $eventRepo, OrderRepository $orderRepo, TicketPeriodRepository $ticketPeriodRepo, TicketClassRepository $ticketClassRepo)
+    public function __construct(EventRepository $eventRepo, OrderRepository $orderRepo, TicketPeriodRepository $ticketPeriodRepo,
+    TicketClassRepository $ticketClassRepo)
     {
         //$this->tbRepo = $tbRepo;
         //$this->tbTicketRepo = $tbTicketRepo;
@@ -41,7 +42,7 @@ class PartnerController extends Controller
 
     public function index(){
         $user = Auth::user();
-        $count = Order::where('user','=',$user)->count();
+        $count = Order::where('user','=',$user->email)->count();
         return view('dashboard.partner.home')->with('count', $count);
     }
 
@@ -150,7 +151,7 @@ class PartnerController extends Controller
             if ($env == CC::ENV_OTS){
                 file_put_contents($ticket_url, $output);
             } else {
-                $s3 = \Storage::disk('local');
+                $s3 = \Storage::disk('s3');
                 $s3->put($ticket_url, $output, 'public');
             }
             $ticket->url_ticket = $ticket_url;
@@ -222,7 +223,7 @@ class PartnerController extends Controller
         $order = Order::find($id);
         if ($order->url_invoice != ""){
             //$s3 = \Storage::disk('s3');
-            $local = \Storage::disk('local');
+            $local = \Storage::disk('s3');
             //Storage::disk('local')->put($invoice_url, $output, 'public');
             //return redirect()->to($s3->url($order->url_invoice));
             return redirect()->to($local->url($order->url_invoice));
@@ -238,7 +239,7 @@ class PartnerController extends Controller
             $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
       //      $s3 = \Storage::disk('s3');
       //      $s3->put($invoice_url, $output, 'public');
-            $local = \Storage::disk('local');
+            $local = \Storage::disk('s3');
             $local->put($invoice_url, $output, 'public');
             $order->url_invoice = $invoice_url;
             $order->save();
@@ -269,7 +270,7 @@ class PartnerController extends Controller
         return redirect()->route("partner.order.detail", ['id' => $order->id]);
     }
 
-    public function viewOrderDetail(Request $request, $id){
+    public function viewOrderDetail($id){
         $order = Order::find($id);
         return view('dashboard.partner.order_detail')
                 ->with('order', $order);
@@ -277,7 +278,7 @@ class PartnerController extends Controller
 
     public function viewReport(){
       $user = Auth::user();
-      $order = Order::where('user','=',$user)->get();
+      $order = Order::where('user','=',$user->email)->get();
       return view('dashboard.partner.report')
       ->with('orders',$order);
     }
@@ -293,9 +294,34 @@ class PartnerController extends Controller
         $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
         //$s3 = \Storage::disk('s3');
         //$s3->put($invoice_url, $output, 'public');
-        \Storage::disk('local')->put($invoice_url, $output, 'public');
+        \Storage::disk('s3')->put($invoice_url, $output, 'public');
         $order->url_invoice = $invoice_url;
         $order->save();
         return;
+    }
+
+    public function downloadTicket(Request $request, $id){
+        $ticket = Ticket::find($id);
+        $env = env("APP_ENV", CC::ENV_LOCAL);
+        if ($env == CC::ENV_OTS){
+            return redirect()->to(URL('/').'/'.$ticket->url_ticket);
+        } else {
+            if ($ticket->url_ticket != ""){
+                $s3 = \Storage::disk('s3');
+                return redirect()->to($s3->url($ticket->url_ticket));
+            } else {
+                $event = Event::find($ticket->event_id);
+                $ticket->eticket_layout = $event->eticket_layout;
+                $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
+                $output = $pdf->output();
+                unset($ticket->eticket_layout);
+                $ticket_url = 'ventex/ticket/ticket_'.$ticket->ticket_code.'.pdf';
+                $s3 = \Storage::disk('s3');
+                $s3->put($ticket_url, $output, 'public');
+                $ticket->url_ticket = $ticket_url;
+                $ticket->save();
+                return redirect()->to($s3->url($ticket->url_ticket));
+            }
+        }
     }
 }
