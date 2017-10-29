@@ -18,6 +18,9 @@ use App\Models\TicketBoxTicketRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TicketMail;
+use App\Models\EmailSendStatus;
 use View;
 
 class PartnerController extends Controller
@@ -277,5 +280,22 @@ class PartnerController extends Controller
       $order = Order::where('user','=',$user)->get();
       return view('dashboard.partner.report')
       ->with('orders',$order);
+    }
+
+    public function createInvoice(Order $order, $ticket_class){
+        $ticket_price = $ticket_class->price;
+        $data = array();
+        $data['order'] = $order;
+        $data['ticket_price'] = $ticket_price;
+        $pdf = \PDF::loadView('dashboard.view_invoice', compact('data'));
+        $output = $pdf->output();
+
+        $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
+        //$s3 = \Storage::disk('s3');
+        //$s3->put($invoice_url, $output, 'public');
+        \Storage::disk('local')->put($invoice_url, $output, 'public');
+        $order->url_invoice = $invoice_url;
+        $order->save();
+        return;
     }
 }
