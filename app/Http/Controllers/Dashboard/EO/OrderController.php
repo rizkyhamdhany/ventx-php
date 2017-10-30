@@ -46,8 +46,8 @@ class OrderController extends Controller
         $ticket_periods = $this->ticketPeriodRepo->ticketPeriodByEvent($event_id);
         $ticket_classes = $this->ticketClassRepo->ticketClassByEvent($event_id);
         return view('dashboard.eo.choose_ticket')
-            ->with('ticket_periods', $ticket_periods)
-            ->with('ticket_classes', $ticket_classes);
+            ->with('ticket_periods', $ticket_periods);
+          //  ->with('ticket_classes', $ticket_classes);
     }
 
     public function orderTicket(Request $request){

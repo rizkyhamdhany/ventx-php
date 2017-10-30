@@ -42,15 +42,39 @@ class PartnerController extends Controller
 
     public function index(){
         $user = Auth::user();
+        $events = Event::all()->where('status','=','active');
         $count = Order::where('user','=',$user->email)->count();
-        return view('dashboard.partner.home')->with('count', $count);
+        return view('dashboard.partner.home')
+        ->with('events', $events)
+        ->with('count', $count);
+    }
+
+    public function chooseTicket($event_id){
+      $ticketPeriodRepo = $this->ticketPeriodRepo->findByField('event_id',$event_id);
+      $eventRepo = $this->eventRepo->find($event_id);
+      $todayDate = date('Y-m-d');
+      $todayDate = date('Y-m-d', strtotime($todayDate));
+      $ktp = NULL;
+      foreach($ticketPeriodRepo as $key=>$ticketPeriod){
+        $periodBegin = date('Y-m-d', strtotime($ticketPeriod->start_date));
+        $periodEnd  = date('Y-m-d', strtotime($ticketPeriod->end_date));
+        if (($todayDate >= $periodBegin) && ($todayDate <= $periodEnd)){
+          $ktp = $key;break;
+        }
+      }
+      if($ktp!=NULL){
+        $ticketClassRepo = $this->ticketClassRepo->findByField('ticket_period_id',$ticketPeriodRepo[$ktp]['id']);
+        return view('dashboard.partner.choose_ticket')
+        ->with('ticketPeriod',$ticketPeriodRepo[$ktp])
+        ->with('ticketClasses',$ticketClassRepo);
+      }
     }
 
     public function buyTicket($id){
         $ticketPeriodRepo = $this->ticketPeriodRepo->findByField('event_id',$id);
         $eventRepo = $this->eventRepo->find($id);
-        $todayDate = date('Y-m-d',strtotime('2017-09-14'));
-        //$todayDate = date('Y-m-d', strtotime($todayDate));
+        $todayDate = date('Y-m-d');
+        $todayDate = date('Y-m-d', strtotime($todayDate));
         $ktp = NULL;
         foreach($ticketPeriodRepo as $key=>$ticketPeriod){
           $periodBegin = date('Y-m-d', strtotime($ticketPeriod->start_date));
@@ -272,8 +296,10 @@ class PartnerController extends Controller
 
     public function viewOrderDetail($id){
         $order = Order::find($id);
+        $ticket = $order->tickets()->first();
         return view('dashboard.partner.order_detail')
-                ->with('order', $order);
+                ->with('order', $order)
+                ->with('ticket',$ticket);
     }
 
     public function viewReport(){

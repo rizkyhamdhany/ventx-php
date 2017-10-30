@@ -18,7 +18,7 @@
                     @endif
                 @endforeach
                 @if(isset($valid))
-                  <div class="">{{$valid}}</div>
+                  <div class="note note-info">{{$valid}}</div>
                 @endif
                 <div class="portlet light portlet-fit portlet-datatable bordered">
                     <div class="portlet-title">
@@ -50,12 +50,27 @@
                                     <th> Name </th>
                                     <th> Date </th>
                                     <th> Location </th>
-                                    <th> Total Ticket Sold </th>
+                                    <!--<th> Total Ticket Sold </th>-->
                                     <th>  </th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                    @forelse($events as $keyIndex=>$event)
                                     <tr>
+                                      <td>{{$keyIndex+1}}</td>
+                                      <td>{{$event->name}}</td>
+                                      <td>{{date('M d, Y', strtotime($event->date))}}</td>
+                                      <td>{{$event->location}}</td>
+                                      <td>
+                                        <div class="clearfix">
+                                            <div class="btn-group btn-group-solid">
+                                                <a href="{{route('partner.ticket.buy', $event->id)}}" class="btn red">Buy Ticket</a>
+                                            </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    @empty
+                                    <!--<tr>
                                         <td> 1 </td>
                                         <td> Smilemotion </td>
                                         <td> Dec 9, 2017 </td>
@@ -76,7 +91,8 @@
                                         <td> Lapangan Jalan Bali </td>
                                         <td> </td>
                                         <td> </td>
-                                    </tr>
+                                    </tr>-->
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

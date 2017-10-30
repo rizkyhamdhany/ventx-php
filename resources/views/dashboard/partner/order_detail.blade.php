@@ -12,13 +12,16 @@
                 <div class="portlet light portlet-fit portlet-datatable bordered">
                     <div class="portlet-title">
                         <div class="caption">
-                            <a href="{{route('tickets')}}">
+                            <a href="{{route('report')}}">
                                 <i class="fa fa-chevron-left font-dark"></i>
-                                <span class="caption-subject font-dark sbold uppercase">Order Details</span>
+                                <span class="caption-subject font-dark sbold uppercase">Order List</span>
                             </a>
                         </div>
                         <div class="actions">
                             <div class="btn-group btn-group-devided">
+                                <a target="_blank" href="{{route('partner.ticket.download', $ticket->id)}}" class="btn blue">
+                                    Download Ticket
+                                </a>
                                 <a target="_blank" href="{{route('partner.ticket.invoice', ['id' => $order->id])}}" class="btn green">
                                     Download Invoice
                                 </a>
