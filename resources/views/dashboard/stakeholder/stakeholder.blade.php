@@ -75,6 +75,81 @@
                 </div>
             </div>
             <div class="clearfix"></div>
+            <div class="portlet light portlet-fit portlet-datatable bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <a href="#">
+                            <span class="caption-subject font-dark sbold uppercase">List Event</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-container">
+                        <div class="table-actions-wrapper">
+                            <span> </span>
+                            <select class="table-group-action-input form-control input-inline input-small input-sm">
+                                <option value="">Select...</option>
+                                <option value="Cancel">Cancel</option>
+                                <option value="Cancel">Hold</option>
+                                <option value="Cancel">On Hold</option>
+                                <option value="Close">Close</option>
+                            </select>
+                            <button class="btn btn-sm green table-group-action-submit">
+                                <i class="fa fa-check"></i> Submit
+                            </button>
+                        </div>
+                        <table class="table table-striped table-bordered table-hover" id="sample_1">
+                            <thead>
+                            <tr>
+                                <th> No </th>
+                                <th> Name </th>
+                                <th> Date </th>
+                                <th> Location </th>
+                                <!--<th> Total Ticket Sold </th>-->
+                                <th>  </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td>
+                                    <div class="clearfix">
+                                        <div class="btn-group btn-group-solid">
+                                            <a href="" class="btn red">Buy Ticket</a>
+                                        </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <!--<tr>
+                                    <td> 1 </td>
+                                    <td> Smilemotion </td>
+                                    <td> Dec 9, 2017 </td>
+                                    <td> Sasana Budaya Ganesha </td>
+                                    <td></td>
+                                    <td>
+                                        <div class="clearfix">
+                                            <div class="btn-group btn-group-solid">
+                                                <a href="{{route('partner.ticket.buy', [0])}}" class="btn red">Buy Ticket</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td> 2 </td>
+                                    <td> Festival Budaya </td>
+                                    <td> Sept 30, 2017 </td>
+                                    <td> Lapangan Jalan Bali </td>
+                                    <td> </td>
+                                    <td> </td>
+                                </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

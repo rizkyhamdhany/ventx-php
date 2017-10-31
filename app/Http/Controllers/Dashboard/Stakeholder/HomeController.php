@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Webpatser\Uuid\Uuid;
 use Milon\Barcode\DNS2D;
 use App\Models\RedisModel;
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\DB;
 use View;
 
 class HomeController extends Controller
@@ -21,6 +23,9 @@ class HomeController extends Controller
 
     public function index()
     {
-      return view('dashboard.stakeholder.stakeholder');
+      //$tickets = Ticket::all();
+      $tickets = DB::table('tickets')->select(DB::raw('count(id) as totalTicket, event_id'))->groupBy('event_id')->get();
+      return view('dashboard.stakeholder.stakeholder')
+      ->with('eventTotal',$tickets);
     }
 }
