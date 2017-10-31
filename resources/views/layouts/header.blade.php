@@ -158,7 +158,7 @@
                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <div class="dropdown-user-inner">
                             <span class="username username-hide-on-mobile"> {{ Auth::user()->name }} </span>
-                            <img alt="" src="{{URL('/')}}/assets/layouts/layout/img/avatar.jpg" /> </div>
+                            <img alt="" src="http://i.pravatar.cc/100" /> </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-default">
                         {{--<li>--}}
