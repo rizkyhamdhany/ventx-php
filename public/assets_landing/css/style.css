@@ -133,7 +133,7 @@
 
   .filter-button-group {
     padding: 29px 15px;
-    background-color: #343440;
+    background-color: #ffffff;
     font-size: 14px;
     cursor: pointer;
   }
@@ -152,10 +152,10 @@
     border: 2px solid transparent!important;
     border-radius: 24px;
     /*color: rgba(54, 54, 54, 0.9);*/
-    color: rgba(255, 255, 255, 0.9)!important;
+    color: rgba(36, 110, 133, 0.9)!important;
     text-decoration: none !important;
     text-transform: uppercase;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 4;
 
     font-size: 14px;
@@ -171,7 +171,7 @@
 
   .filter-button-group a.current {
     background: #236E89;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.9)!important;
   }
 
   .filter-button-group a.current:not(:only-child):hover {
@@ -191,7 +191,7 @@
   .filter-button-group a:not(:only-child):hover {
     border: 2px solid #236E89 !important;
 
-    color: rgba(255, 255, 255, 1) !important;
+    color: rgba(36, 110, 133, 1) !important;
   }
 
   main img {
