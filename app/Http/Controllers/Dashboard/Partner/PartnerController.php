@@ -42,7 +42,7 @@ class PartnerController extends Controller
 
     public function index(){
         $user = Auth::user();
-        $events = Event::all()->where('status','=','active');
+        $events = Event::all()->where('status','=','active')->where('id','=',$user->event_id);
         $count = Order::where('user','=',$user->email)->count();
         return view('dashboard.partner.home')
         ->with('events', $events)

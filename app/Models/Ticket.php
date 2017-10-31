@@ -16,5 +16,10 @@ class Ticket extends Model
             ->belongsToMany('App\Models\Order')
             ->withTimestamps();
     }
+    public function event(){
+      return $this
+          ->belongsTo('App\Models\Event')
+          ->withTimestamps();
+    }
 
 }

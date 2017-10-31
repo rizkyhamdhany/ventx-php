@@ -9,7 +9,15 @@
                 <div class="menu-overlay-content">
                     <ul class="menu-overlay-nav text-uppercase">
                         <li>
-                            <a href="{{route('home')}}">Dashboard</a>
+                            @role('superadmin')
+                            <a href="{{route('dashboard.home')}}">Dashboard</a>
+                            @endrole
+                            @role('eo')
+                            <a href="{{route('organizer.home')}}">Dashboard</a>
+                            @endrole
+                            @role('partner')
+                            <a href="{{route('partner.home')}}">Dashboard</a>
+                            @endrole
                         </li>
                         <li>
                           @role('partner')

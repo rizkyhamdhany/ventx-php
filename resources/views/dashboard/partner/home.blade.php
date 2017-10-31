@@ -60,7 +60,7 @@
                                       <td>{{$keyIndex+1}}</td>
                                       <td>{{$event->name}}</td>
                                       <td>{{date('M d, Y', strtotime($event->date))}}</td>
-                                      <td>{{$event->location}}</td>
+                                      <td>{!! $event->location !!}</td>
                                       <td>
                                         <div class="clearfix">
                                             <div class="btn-group btn-group-solid">

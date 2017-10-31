@@ -808,16 +808,16 @@
         },
         {
             "name": "lasserafn/php-initials",
-            "version": "v2.16",
+            "version": "v2.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LasseRafn/php-initials.git",
-                "reference": "9c895d15693d9d66b58a17e3336dec6f7eea2456"
+                "reference": "ba4669e77552986998a9d1b34515a4e0c0f7acd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LasseRafn/php-initials/zipball/9c895d15693d9d66b58a17e3336dec6f7eea2456",
-                "reference": "9c895d15693d9d66b58a17e3336dec6f7eea2456",
+                "url": "https://api.github.com/repos/LasseRafn/php-initials/zipball/ba4669e77552986998a9d1b34515a4e0c0f7acd2",
+                "reference": "ba4669e77552986998a9d1b34515a4e0c0f7acd2",
                 "shasum": ""
             },
             "require": {
@@ -1375,16 +1375,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.10",
+            "version": "v2.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d"
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/634bae8e911eefa89c1abfbf1b66da679ac8f54d",
-                "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
+                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
                 "shasum": ""
             },
             "require": {
@@ -1580,6 +1580,11 @@
             "extra": {
                 "branch-alias": {
                     "dev-develop": "2.2-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Prettus\\Repository\\Providers\\RepositoryServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -1747,16 +1752,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.8.11",
+            "version": "v0.8.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "b193cd020e8c6b66cea6457826ae005e94e6d2c0"
+                "reference": "cdb5593c3684bab74e10fcfffe4a0c8d1c39695d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/b193cd020e8c6b66cea6457826ae005e94e6d2c0",
-                "reference": "b193cd020e8c6b66cea6457826ae005e94e6d2c0",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/cdb5593c3684bab74e10fcfffe4a0c8d1c39695d",
+                "reference": "cdb5593c3684bab74e10fcfffe4a0c8d1c39695d",
                 "shasum": ""
             },
             "require": {
@@ -2428,16 +2433,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803"
+                "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
-                "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
+                "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
                 "shasum": ""
             },
             "require": {
@@ -2449,7 +2454,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5-dev"
+                    "dev-master": "1.6-dev"
                 }
             },
             "autoload": {
@@ -3198,16 +3203,16 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "2.3.5",
+            "version": "2.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "e807cd458eb9f7ae7464f33ad835a2f54aa73194"
+                "reference": "c3dd3b5d9e0b1ea6c2fcca52457736dc756716f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/e807cd458eb9f7ae7464f33ad835a2f54aa73194",
-                "reference": "e807cd458eb9f7ae7464f33ad835a2f54aa73194",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/c3dd3b5d9e0b1ea6c2fcca52457736dc756716f8",
+                "reference": "c3dd3b5d9e0b1ea6c2fcca52457736dc756716f8",
                 "shasum": ""
             },
             "require": {
@@ -3222,7 +3227,7 @@
                 "phpunit/phpunit": ">4.8.20 <7.0",
                 "phpunit/phpunit-mock-objects": ">2.3 <5.0",
                 "sebastian/comparator": ">1.1 <3.0",
-                "sebastian/diff": "^1.4",
+                "sebastian/diff": ">=1.4 <3.0",
                 "stecman/symfony-console-completion": "^0.7.0",
                 "symfony/browser-kit": ">=2.7 <4.0",
                 "symfony/console": ">=2.7 <4.0",
@@ -3238,7 +3243,6 @@
                 "flow/jsonpath": "~0.2",
                 "league/factory-muffin": "^3.0",
                 "league/factory-muffin-faker": "^1.0",
-                "mongodb/mongodb": "^1.0",
                 "monolog/monolog": "~1.8",
                 "pda/pheanstalk": "~3.0",
                 "php-amqplib/php-amqplib": "~2.4",
@@ -3559,37 +3563,40 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.6.1",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "8e6e04167378abf1ddb4d3522d8755c5fd90d102"
+                "reference": "3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/8e6e04167378abf1ddb4d3522d8755c5fd90d102",
-                "reference": "8e6e04167378abf1ddb4d3522d8755c5fd90d102",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e",
+                "reference": "3b8a3a99ba1f6a3952ac2747d989303cbd6b7a3e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0"
+                "php": "^5.6 || ^7.0"
             },
             "require-dev": {
-                "doctrine/collections": "1.*",
-                "phpunit/phpunit": "~4.1"
+                "doctrine/collections": "^1.0",
+                "doctrine/common": "^2.6",
+                "phpunit/phpunit": "^4.1"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "DeepCopy\\": "src/DeepCopy/"
-                }
+                },
+                "files": [
+                    "src/DeepCopy/deep_copy.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Create deep copies (clones) of your objects",
-            "homepage": "https://github.com/myclabs/DeepCopy",
             "keywords": [
                 "clone",
                 "copy",

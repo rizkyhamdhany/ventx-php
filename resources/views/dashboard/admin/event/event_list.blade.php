@@ -15,7 +15,7 @@
                     </li>
                 </ul>
             </div>
-            <h1 class="page-title"> List Ticket Period
+            <h1 class="page-title"> List Event
                 <small>statistics, charts, recent events and reports</small>
             </h1>
             <div class="row">
@@ -63,6 +63,9 @@
                                                     @if($event->status=="active")
                                                     <a href="{{route('dashboard.event.details', [$event->id])}}" class="btn btn-success">
                                                         Details
+                                                    </a>
+                                                    <a href="{{route('dashboard.event.delete', [$event->id])}}" class="btn btn-danger disabled">
+                                                        Delete
                                                     </a>
                                                     @endif
                                                 </td>

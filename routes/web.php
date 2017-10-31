@@ -143,6 +143,7 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
           Route::get('/{id}', 'Dashboard\Admin\EventController@editEvent')->name('dashboard.event.edit');
           Route::post('/{id}', 'Dashboard\Admin\EventController@editEventPost')->name('dashboard.event.edit.post');
         });
+        Route::get('/delete/{id}', 'Dashboard\Admin\EventController@deleteEvent')->name('dashboard.event.delete');
         Route::prefix('/details')->group(function () {
             Route::prefix('/{id}')->group(function ($id) {
                 Route::get('/', 'Dashboard\Admin\EventController@detailEvent')->name('dashboard.event.details');

@@ -105,16 +105,18 @@
                                 <th> Name </th>
                                 <th> Date </th>
                                 <th> Location </th>
-                                <!--<th> Total Ticket Sold </th>-->
+                                <th> Total Ticket Sold </th>
                                 <th>  </th>
                             </tr>
                             </thead>
                             <tbody>
+                                @foreach($eventTotal as $indexKey=>$ev)
                                 <tr>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
-                                  <td></td>
+                                  <td>{{$indexKey+1}}</td>
+                                  <td>{{$ev->event->name}}</td>
+                                  <td>{{$ev->event->date}}</td>
+                                  <td>{{$ev->event->location}}</td>
+                                  <td>{{$ev->totalTicket}}</td>
                                   <td>
                                     <div class="clearfix">
                                         <div class="btn-group btn-group-solid">
@@ -123,6 +125,7 @@
                                     </div>
                                   </td>
                                 </tr>
+                                @endforeach
                                 <!--<tr>
                                     <td> 1 </td>
                                     <td> Smilemotion </td>

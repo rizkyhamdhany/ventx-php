@@ -32,4 +32,9 @@ class Event extends Model
     {
         return $this->hasMany('App\Models\EventSponsor');
     }
+
+    public function ticket()
+    {
+        return $this->hasMany('App\Models\Ticket');
+    }
 }

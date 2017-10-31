@@ -199,6 +199,11 @@ class EventController extends Controller
       return redirect()->route('dashboard.event');
     }
 
+    public function deleteEvent($id){
+      $this->eventRepo->delete($id);
+      return redirect()->route('dashboard.event');
+    }
+
     public function detailEvent($id)
     {
         $event = $this->eventRepo->find($id);
