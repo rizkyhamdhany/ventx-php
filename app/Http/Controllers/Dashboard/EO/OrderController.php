@@ -213,9 +213,9 @@ class OrderController extends Controller
         $output = $pdf->output();
 
         $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
-        //$s3 = \Storage::disk('s3');
-        //$s3->put($invoice_url, $output, 'public');
-        \Storage::disk('local')->put($invoice_url, $output, 'public');
+        $s3 = \Storage::disk('s3');
+        $s3->put($invoice_url, $output, 'public');
+//        \Storage::disk('local')->put($invoice_url, $output, 'public');
         $order->url_invoice = $invoice_url;
         $order->save();
         return;
