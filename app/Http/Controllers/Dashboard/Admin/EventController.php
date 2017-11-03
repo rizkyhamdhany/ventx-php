@@ -289,14 +289,14 @@ class EventController extends Controller
                 $input['end_date'] = date('Y-m-d', strtotime($request->endDate));
                 $dataPeriod = $this->ticketPeriodRepo->update($input, $period);
                 if ($dataPeriod) {
-                    $request->session()->flash('alert-success', 'Ticket Period has been created !');
+                    $request->session()->flash('alert-success', 'Ticket Period has been Edit !');
                     $periodByEvent = TicketPeriod::where('event_id', $id)->get();
                     View::share('page_state', 'Ticket Category');
                     return view('dashboard.admin.event.event_ticketCategory')
                         ->with('periods', $periodByEvent->all())
                         ->with('id', $id);
                 } else {
-                    $request->session()->flash('alert-warning', 'Failed to create Ticket Period !');
+                    $request->session()->flash('alert-warning', 'Failed to Edit Ticket Period !');
                 }
             }
         } else {

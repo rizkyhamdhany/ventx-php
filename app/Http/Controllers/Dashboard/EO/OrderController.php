@@ -215,7 +215,7 @@ class OrderController extends Controller
         $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
         //$s3 = \Storage::disk('s3');
         //$s3->put($invoice_url, $output, 'public');
-        \Storage::disk('local')->put($invoice_url, $output, 'public');
+        \Storage::disk('s3')->put($invoice_url, $output, 'public');
         $order->url_invoice = $invoice_url;
         $order->save();
         return;
@@ -226,7 +226,7 @@ class OrderController extends Controller
         $order = Order::find($id);
         if ($order->url_invoice != ""){
             //$s3 = \Storage::disk('s3');
-            $local = \Storage::disk('local');
+            $local = \Storage::disk('s3');
             //Storage::disk('local')->put($invoice_url, $output, 'public');
             //return redirect()->to($s3->url($order->url_invoice));
             return redirect()->to($local->url($order->url_invoice));
@@ -242,7 +242,7 @@ class OrderController extends Controller
             $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
       //      $s3 = \Storage::disk('s3');
       //      $s3->put($invoice_url, $output, 'public');
-            $local = \Storage::disk('local');
+            $local = \Storage::disk('s3');
             $local->put($invoice_url, $output, 'public');
             $order->url_invoice = $invoice_url;
             $order->save();

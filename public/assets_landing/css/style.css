@@ -16,6 +16,32 @@
     }*/
   }
 
+  .foot{
+    background-color: #246E85;
+    width: 100%;
+    height: auto;
+    padding-top: 20px;
+  }
+
+  .foot p{
+    font-size: 10pt;
+    color: white;
+    border-bottom: none;
+  }
+
+  .foot a{
+    font-size: 10pt;
+    color: white;
+    border-bottom: none;
+  }
+
+  @media only screen and (max-width:768px){
+    .foot{
+      position: absolute;
+      bottom: 0;
+    }
+  }
+
   h1 {
     color: #fff !important;
     font-weight: 300;

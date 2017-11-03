@@ -23,7 +23,7 @@ class HomeController extends Controller
 
     public function index()
     {
-      //$tickets = Ticket::all();
+      $tickets = Ticket::all();
       $tickets = DB::table('tickets')->select(DB::raw('count(id) as totalTicket, event_id'))->groupBy('event_id')->get();
       return view('dashboard.stakeholder.stakeholder')
       ->with('eventTotal',$tickets);

@@ -43,6 +43,7 @@
                                     <i class="fa fa-check"></i> Submit
                                 </button>
                             </div>
+                            @if(!empty($period))
                             <table class="table table-striped table-bordered table-hover" id="sample_1">
                                 <thead>
                                 <tr>
@@ -55,16 +56,16 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($events as $keyIndex=>$event)
+                                    @forelse($period as $keyIndex=>$perEvent)
                                     <tr>
                                       <td>{{$keyIndex+1}}</td>
-                                      <td>{{$event->name}}</td>
-                                      <td>{{date('M d, Y', strtotime($event->date))}}</td>
-                                      <td>{!! $event->location !!}</td>
+                                      <td>{{$perEvent->event->name}}</td>
+                                      <td>{{date('M d, Y', strtotime($perEvent->event->date))}}</td>
+                                      <td>{!! $perEvent->event->location !!}</td>
                                       <td>
                                         <div class="clearfix">
                                             <div class="btn-group btn-group-solid">
-                                                <a href="{{route('partner.ticket.buy', $event->id)}}" class="btn red">Buy Ticket</a>
+                                                <a href="{{route('partner.ticket.buy', $perEvent->event->id)}}" class="btn red">Buy Ticket</a>
                                             </div>
                                         </div>
                                       </td>
@@ -95,6 +96,7 @@
                                     @endforelse
                                 </tbody>
                             </table>
+                            @endif
                         </div>
                     </div>
                 </div>

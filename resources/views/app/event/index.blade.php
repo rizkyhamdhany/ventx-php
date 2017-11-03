@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="login-footer event-bg-color" style="position:absolute;right:0;bottom:0;">
+                <div class="login-footer event-bg-color" style="position:absolute;right:0;bottom:0;width:100%;">
                     <img src="{{asset($event->pattern_footer)}}" class="pattern-bottom" style="margin-top : 40px">
                     <div class="row bs-reset">
                         <div class="col-xs-12 bs-reset buy-button">

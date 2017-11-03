@@ -26,7 +26,7 @@
                     </a>
                 </div>
                 <div class="col-xs-12 col-sm-6 buy">
-                    <a class="button">Available Tickets</a>
+                    <a class="button" href="{{URL('/')}}/login">Login</a>
                 </div>
             </div>
             <!-- </div> -->
@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="navbar navbar-default navbar-fixed-bottom">
-            <div class="container">
+            <div class="container foot">
                 <p class="navbar-text pull-left">© 2017 - Nalar Ventex by
                     <a href="http://nalar.id" target="_blank" >Nalar</a>
                 </p>
@@ -77,12 +77,12 @@
                 <a href="{{route('contact')}}" class="navbar-btn btn-danger btn pull-right">
                     Contact Us
                 </a>
-                <a class="navbar-btn btn-danger btn pull-right border-none">
+                <!--<a class="navbar-btn btn-danger btn pull-right border-none">
                     <span class="glyphicon glyphicon-star"></span>  | &nbsp;
                 </a>
                 <a href="{{URL('/')}}/login" class="navbar-btn btn-danger btn pull-right">
                     Login
-                </a>
+                </a>-->
             </div>
         </div>
 

@@ -6,6 +6,7 @@ use App\Http\Requests\PartnerBuyTicketRequest;
 use App\Models\Order;
 use App\Models\Event;
 use App\Models\Ticket;
+use App\Models\TicketPeriod;
 use App\CC;
 use Webpatser\Uuid\Uuid;
 use App\Models\EventRepository;
@@ -41,12 +42,13 @@ class PartnerController extends Controller
     }
 
     public function index(){
+        $todayDate = date('Y-m-d');
         $user = Auth::user();
-        $events = Event::all()->where('status','=','active')->where('id','=',$user->event_id);
+        $period = TicketPeriod::where('start_date','<=',$todayDate)->where('end_date','>=',$todayDate)->where('event_id','=',$user->event_id)->get();
         $count = Order::where('user','=',$user->email)->count();
         return view('dashboard.partner.home')
-        ->with('events', $events)
-        ->with('count', $count);
+        ->with('count', $count)
+        ->with('period',$period);
     }
 
     public function chooseTicket($event_id){
