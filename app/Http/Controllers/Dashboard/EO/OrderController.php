@@ -225,11 +225,11 @@ class OrderController extends Controller
 
         $order = Order::find($id);
         if ($order->url_invoice != ""){
-            //$s3 = \Storage::disk('s3');
-            $local = \Storage::disk('local');
-            //Storage::disk('local')->put($invoice_url, $output, 'public');
-            //return redirect()->to($s3->url($order->url_invoice));
-            return redirect()->to($local->url($order->url_invoice));
+            $s3 = \Storage::disk('s3');
+//            $local = \Storage::disk('local');
+//            Storage::disk('local')->put($invoice_url, $output, 'public');
+            return redirect()->to($s3->url($order->url_invoice));
+//            return redirect()->to($local->url($order->url_invoice));
         } else {
             $ticket_period = $this->ticketPeriodRepo->findWhere([ 'event_id' => $order->event_id,'name' => $order->ticket_period])->first();
             $ticket_class = $this->ticketClassRepo->findWhere(['event_id' => $order->event_id, 'ticket_period_id' => $ticket_period->id, 'name' => $order->ticket_class])->first();
@@ -240,13 +240,14 @@ class OrderController extends Controller
             $pdf = \PDF::loadView('dashboard.view_invoice', compact('data'))->setPaper('A4', 'portrait');
             $output = $pdf->output();
             $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
-      //      $s3 = \Storage::disk('s3');
-      //      $s3->put($invoice_url, $output, 'public');
-            $local = \Storage::disk('local');
-            $local->put($invoice_url, $output, 'public');
+            $s3 = \Storage::disk('s3');
+            $s3->put($invoice_url, $output, 'public');
+//            $local = \Storage::disk('local');
+//            $local->put($invoice_url, $output, 'public');
             $order->url_invoice = $invoice_url;
             $order->save();
-            return redirect()->to($local->url($order->url_invoice));
+//            return redirect()->to($local->url($order->url_invoice));
+            return redirect()->to($s3->url($order->url_invoice));
         }
     }
 
