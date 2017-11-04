@@ -229,7 +229,7 @@
             else{e.value="no";location.reload();}
         }
         $(document).ready(function() {
-            book.ticket_ammount = 0;
+            book.ticket_ammount = 1;
             $('#book').val(JSON.stringify(book));
         });
     </script>
