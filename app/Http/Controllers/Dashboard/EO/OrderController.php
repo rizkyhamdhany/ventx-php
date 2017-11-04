@@ -65,11 +65,18 @@ class OrderController extends Controller
                 $ticket_period = $this->ticketPeriodRepo->find($request->input('ticket_period'));
                 $ticket_class = $this->ticketClassRepo->find($request->input('ticket_class'));
                 $seat_available = Seat::where('ticket_class', $ticket_class->name)->where('status', 'active')->get();
+
+                $keys_seat_booked = Redis::keys("smilemotion:seat_booked:*");
+                $seat_booked = array();
+                if (!empty($keys_seat_booked)){
+                    $seat_booked = Redis::mget($keys_seat_booked);
+                }
                 return view('dashboard.order_ticket')
                     ->with('ticket_period', $ticket_period)
                     ->with('ticket_class', $ticket_class)
                     ->with('ammount', $request->input('amount'))
-                    ->with('seat_available', $seat_available);
+                    ->with('seat_available', $seat_available)
+                    ->with('seat_booked', $seat_booked);
             }
         }
     }
