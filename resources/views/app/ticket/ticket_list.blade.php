@@ -228,5 +228,9 @@
             if(e.value=="no")e.value="yes";
             else{e.value="no";location.reload();}
         }
+        $(document).ready(function() {
+            book.ticket_ammount = 0;
+            $('#book').val(JSON.stringify(book));
+        });
     </script>
 @endsection
