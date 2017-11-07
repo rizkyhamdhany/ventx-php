@@ -65,11 +65,18 @@ class OrderController extends Controller
                 $ticket_period = $this->ticketPeriodRepo->find($request->input('ticket_period'));
                 $ticket_class = $this->ticketClassRepo->find($request->input('ticket_class'));
                 $seat_available = Seat::where('ticket_class', $ticket_class->name)->where('status', 'active')->get();
+
+                $keys_seat_booked = Redis::keys("smilemotion:seat_booked:*");
+                $seat_booked = array();
+                if (!empty($keys_seat_booked)){
+                    $seat_booked = Redis::mget($keys_seat_booked);
+                }
                 return view('dashboard.order_ticket')
                     ->with('ticket_period', $ticket_period)
                     ->with('ticket_class', $ticket_class)
                     ->with('ammount', $request->input('amount'))
-                    ->with('seat_available', $seat_available);
+                    ->with('seat_available', $seat_available)
+                    ->with('seat_booked', $seat_booked);
             }
         }
     }
@@ -213,9 +220,9 @@ class OrderController extends Controller
         $output = $pdf->output();
 
         $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
-        //$s3 = \Storage::disk('s3');
-        //$s3->put($invoice_url, $output, 'public');
-        \Storage::disk('s3')->put($invoice_url, $output, 'public');
+        $s3 = \Storage::disk('s3');
+        $s3->put($invoice_url, $output, 'public');
+//        \Storage::disk('local')->put($invoice_url, $output, 'public');
         $order->url_invoice = $invoice_url;
         $order->save();
         return;
@@ -225,11 +232,11 @@ class OrderController extends Controller
 
         $order = Order::find($id);
         if ($order->url_invoice != ""){
-            //$s3 = \Storage::disk('s3');
-            $local = \Storage::disk('s3');
-            //Storage::disk('local')->put($invoice_url, $output, 'public');
-            //return redirect()->to($s3->url($order->url_invoice));
-            return redirect()->to($local->url($order->url_invoice));
+            $s3 = \Storage::disk('s3');
+//            $local = \Storage::disk('local');
+//            Storage::disk('local')->put($invoice_url, $output, 'public');
+            return redirect()->to($s3->url($order->url_invoice));
+//            return redirect()->to($local->url($order->url_invoice));
         } else {
             $ticket_period = $this->ticketPeriodRepo->findWhere([ 'event_id' => $order->event_id,'name' => $order->ticket_period])->first();
             $ticket_class = $this->ticketClassRepo->findWhere(['event_id' => $order->event_id, 'ticket_period_id' => $ticket_period->id, 'name' => $order->ticket_class])->first();
@@ -240,13 +247,14 @@ class OrderController extends Controller
             $pdf = \PDF::loadView('dashboard.view_invoice', compact('data'))->setPaper('A4', 'portrait');
             $output = $pdf->output();
             $invoice_url = 'ventex/invoice/invoice_'.$order->order_code.'.pdf';
-      //      $s3 = \Storage::disk('s3');
-      //      $s3->put($invoice_url, $output, 'public');
-            $local = \Storage::disk('s3');
-            $local->put($invoice_url, $output, 'public');
+            $s3 = \Storage::disk('s3');
+            $s3->put($invoice_url, $output, 'public');
+//            $local = \Storage::disk('local');
+//            $local->put($invoice_url, $output, 'public');
             $order->url_invoice = $invoice_url;
             $order->save();
-            return redirect()->to($local->url($order->url_invoice));
+//            return redirect()->to($local->url($order->url_invoice));
+            return redirect()->to($s3->url($order->url_invoice));
         }
     }
 

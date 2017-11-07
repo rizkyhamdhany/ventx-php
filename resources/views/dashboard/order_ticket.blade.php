@@ -103,7 +103,9 @@
                                             <label class="control-label">Seat</label>
                                             <select class="form-control" name="seat[]">
                                                 @foreach($seat_available as $seat)
-                                                <option value="{{$seat->id}}">{{$seat->no}}</option>
+                                                    @if(!in_array($seat->id, $seat_booked))
+                                                        <option value="{{$seat->id}}">{{$seat->no}}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
