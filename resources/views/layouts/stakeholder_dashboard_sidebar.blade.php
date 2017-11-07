@@ -16,8 +16,8 @@
                     {!! $page_state == 'home' ? '<span class="selected"></span>' : '' !!}
                 </a>
             </li>
-            <li class="nav-item start {{$page_state == 'Event' ? 'active' : ''}}">
-                <a href="{{route('stakeholder.report')}}" class="nav-link">
+            <li class="nav-item start {{$page_state == 'report' ? 'active' : ''}}">
+                <a href="{{route('stakeholder.report.all')}}" class="nav-link">
                     <i class="icon-calendar"></i>
                     <span class="title">Report</span>
                     {!! $page_state == 'Event' ? '<span class="selected"></span>' : '' !!}

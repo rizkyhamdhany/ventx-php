@@ -23,7 +23,9 @@ class SeatController extends Controller
 
     public function index($id){
         View::share('page_state', 'Seat');
+        $seats = $this->repository->findByField('event_id',$id);
         return view('dashboard.admin.event.seat.index')
+            ->with('seats',$seats)
             ->with('id', $id);
     }
 }

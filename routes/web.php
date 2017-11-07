@@ -183,12 +183,7 @@ Route::group(['prefix' => '/dashboard', 'middleware' => ['auth', 'role:superadmi
                 });
 
                 Route::prefix('/ticketSold')->group(function($id){
-                  Route::prefix('/orders')->group(function(){
-                    Route::get('/','Dashboard\Admin\EventController@index')->name('dashboard.event.ticketSold.orders');
-                  });
-                  Route::prefix('/tickets')->group(function(){
-                    Route::get('/','Dashboard\Admin\EventController@tickets')->name('dashboard.event.ticketSold.tickets');
-                  });
+                    Route::get('/','Dashboard\Admin\TicketController@sold')->name('dashboard.event.tickets.sold');
                 });
 
                 Route::prefix('/seat')->group(function ($id){
@@ -251,9 +246,11 @@ Route::prefix('/partner')->middleware(['auth', 'role:partner'])->group(function(
     Route::get('/report','Dashboard\Partner\PartnerController@viewReport')->name('report');
 });
 
-Route::prefix('/stakeholder')->group(function(){
+Route::prefix('/stakeholder')->middleware(['auth', 'role:stakeholder'])->group(function(){
   Route::get('/','Dashboard\Stakeholder\HomeController@index')->name('stakeholder.home');
   Route::prefix('/report')->group(function(){
-    Route::get('/','Dashboard\Stakeholder\OrderController@report')->name('stakeholder.report');
+    Route::get('/','Dashboard\Stakeholder\OrderController@report')->name('stakeholder.report.all');
+    Route::get('/event/{id}','Dashboard\Stakeholder\OrderController@report')->name('stakeholder.report');
+    Route::get('/presale/{id}','Dashboard\Stakeholder\OrderController@presale')->name('stakeholder.presale');
   });
 });

@@ -79,56 +79,13 @@
                 <div class="portlet-title">
                     <div class="caption">
                         <a href="#">
-                            <span class="caption-subject font-dark sbold uppercase">List Event</span>
+                            <span class="caption-subject font-dark sbold uppercase">
+                            </span>
                         </a>
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <div class="table-container">
-                        <div class="table-actions-wrapper">
-                            <span> </span>
-                            <select class="table-group-action-input form-control input-inline input-small input-sm">
-                                <option value="">Select...</option>
-                                <option value="Cancel">Cancel</option>
-                                <option value="Cancel">Hold</option>
-                                <option value="Cancel">On Hold</option>
-                                <option value="Close">Close</option>
-                            </select>
-                            <button class="btn btn-sm green table-group-action-submit">
-                                <i class="fa fa-check"></i> Submit
-                            </button>
-                        </div>
-                        <table class="table table-striped table-bordered table-hover" id="sample_1">
-                            <thead>
-                            <tr>
-                                <th> No </th>
-                                <th> Name </th>
-                                <th> Date </th>
-                                <th> Location </th>
-                                <th> Ticket Sold </th>
-                                <th>  </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($eventTotal as $indexKey=>$ev)
-                                <tr>
-                                  <td> {{$indexKey+1}} </td>
-                                  <td> {{$ev->name}} </td>
-                                  <td> {{date("d M Y",strtotime($ev->date))}} </td>
-                                  <td> {!!$ev->location!!} </td>
-                                  <td> {{$ev->totalTicket}} </td>
-                                  <td>
-                                    <div class="clearfix">
-                                        <div class="btn-group btn-group-solid">
-                                            <a href="{{route('stakeholder.report',$ev->id)}}" class="btn red">View Report</a>
-                                        </div>
-                                    </div>
-                                  </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                  <div id="presale" style="height: 400px;"></div>
                 </div>
             </div>
         </div>
@@ -144,5 +101,56 @@
     <script src="{{URL('/')}}/assets/global/plugins/amcharts/amcharts/themes/chalk.js" type="text/javascript"></script>
 @endsection
 @section('page_js')
+<script>
+  $(function(){
+    AmCharts.addInitHandler(function(chart) {
+      // check if there are graphs with autoColor: true set
+      for(var i = 0; i < chart.graphs.length; i++) {
+        var graph = chart.graphs[i];
+        if (graph.autoColor !== true)
+          continue;
+        var colorKey = "autoColor-"+i;
+        graph.lineColorField = colorKey;
+        graph.fillColorsField = colorKey;
+        for(var x = 0; x < chart.dataProvider.length; x++) {
+          var color = chart.colors[x]
+          chart.dataProvider[x][colorKey] = color;
+        }
+      }
 
+    }, ["serial"]);
+
+    var chart2 = AmCharts.makeChart("presale", {
+      "type": "serial",
+      "dataLoader": {
+        "url": "{{URL('/')}}/stakeholder/report/presale/{{$event_id}}"
+      },
+        "valueAxes": [{
+        "gridColor": "#FFFFFF",
+        "gridAlpha": 0.2,
+        "dashLength": 0
+      }],
+      "startDuration": 1,
+      "graphs": [{
+        "balloonText": "[[category]]: <b>[[value]]</b>",
+        "fillAlphas": 0.8,
+        "type": "column",
+        "valueField": "sold",
+        "colorField": "color"
+      }],
+      "chartCursor": {
+        "categoryBalloonEnabled": false,
+        "cursorAlpha": 0,
+        "zoomable": false
+      },
+      "categoryField": "period",
+      "categoryAxis": {
+        "gridPosition": "start",
+        "gridAlpha": 0,
+        "tickPosition": "start",
+        "tickLength": 20
+      }
+    });
+  });
+</script>
 @endsection

@@ -35,7 +35,7 @@ class EventController extends Controller
     protected $eventArtistRepo;
     protected $eventSponsorRepo;
     protected $eventOrder;
-    protected $eventTicket;
+    protected $ticketRepo;
 
     public function __construct(
         EventRepository $eventRepo,

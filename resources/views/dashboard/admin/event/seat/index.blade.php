@@ -34,9 +34,34 @@
                             </div>
                         </div>
                         <div class="portlet-body">
-                            <div class="row">
-
-                            </div>
+                          <div class="table-scrollable">
+                              <table class="table table-hover table-light">
+                                  <thead>
+                                  <tr>
+                                      <th> # </th>
+                                      <th> Seat Number </th>
+                                      <th> Ticket Class </th>
+                                      <th> Status </th>
+                                      <th> </th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                      @foreach($seats as $indexKey=>$seat)
+                                      <tr>
+                                        <td>{{++$indexKey}}</td>
+                                        <td>{{$seat->no}}</td>
+                                        <td>{{$seat->ticket_class}}</td>
+                                        <td>{{$seat->status}}</td>
+                                        <td>
+                                          <a href="" class="btn btn-success">
+                                              Button
+                                          </a>
+                                        </td>
+                                      </tr>
+                                      @endforeach
+                                  </tbody>
+                              </table>
+                          </div>
                         </div>
                     </div>
                 </div>

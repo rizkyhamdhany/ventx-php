@@ -59,18 +59,12 @@
                 </a>
             </li>
             <li class="heading">
-                <h3 class="uppercase">Order Ticket</h3>
+                <h3 class="uppercase">Report</h3>
             </li>
-            <li class="nav-item start {{$page_state == 'Ticket List' ? 'active' : ''}}">
-                <a href="{{route('dashboard.event.ticketSold.tickets',$id)}}" class="nav-link">
+            <li class="nav-item start {{$page_state == 'Ticket Sold' ? 'active' : ''}}">
+                <a href="{{route('dashboard.event.tickets.sold',$id)}}" class="nav-link">
                     <i class="icon-graph"></i>
-                    <span class="title">Ticket List</span>
-                </a>
-            </li>
-            <li class="nav-item start {{$page_state == 'Order List' ? 'active' : ''}}">
-                <a href="{{route('dashboard.event.ticketSold.orders',$id)}}" class="nav-link">
-                    <i class="icon-graph"></i>
-                    <span class="title">Order List</span>
+                    <span class="title">Ticket Sold</span>
                 </a>
             </li>
             <li class="heading">

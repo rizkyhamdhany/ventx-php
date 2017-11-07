@@ -17,14 +17,15 @@ class HomeController extends Controller
 
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
         View::share( 'page_state', 'home' );
     }
 
     public function index()
     {
       $tickets = Ticket::all();
-      $tickets = DB::table('tickets')->select(DB::raw('count(id) as totalTicket, event_id'))->groupBy('event_id')->get();
+      $tickets = DB::table('tickets')->join('events', 'tickets.event_id', '=', 'events.id')
+      ->select(DB::raw('count(tickets.id) as totalTicket, events.*'))->groupBy('event_id')->get();
       return view('dashboard.stakeholder.stakeholder')
       ->with('eventTotal',$tickets);
     }
