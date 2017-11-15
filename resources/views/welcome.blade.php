@@ -43,10 +43,14 @@
                 </div>
             </div>
 
-            <div class="row min-height-500">
+            <div class="row min-height-500" style="padding-left:35px;padding-right:35px;">
                 <div class="grid">
                     @foreach($events as $event)
+                      @php
+                      $todayDate = date('Y-m-d');
+                      @endphp
                     <div class="grid-item music col-md-3 col-sm-6 col-xs-12">
+                      @if($todayDate >= date('Y-m-d', strtotime($event->date)))
                         <a href="{{route('event.home', [$event->short_name])}}">
                             <img src="{{URL('/')}}/{{$event->thumbnail}}" alt=""/>
                             <div class="grid-item-hover">
@@ -54,7 +58,16 @@
                                 <span class="grid-item-hover-bottom">{{$event->name}}</span>
                                 <span class="grid-item-hover-bg boysband"></span>
                             </div>
+                      @else
+                        <a>
+                            <img src="{{URL('/')}}/{{$event->thumbnail}}" alt=""/>
+                            <div class="grid-item-hover">
+                                <span class="grid-item-hover-icon grid-buy"><button class="btn-buy" style="cursor:not-allowed!important;">Expired</button></span>
+                                <span class="grid-item-hover-bottom">{{$event->name}}</span>
+                                <span class="grid-item-hover-bg boysband"></span>
+                            </div>
                         </a>
+                      @endif
                     </div>
                     @endforeach
                 </div>
