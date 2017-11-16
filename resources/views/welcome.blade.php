@@ -50,7 +50,7 @@
                       $todayDate = date('Y-m-d');
                       @endphp
                     <div class="grid-item music col-md-3 col-sm-6 col-xs-12">
-                      @if($todayDate >= date('Y-m-d', strtotime($event->date)))
+                      @if($todayDate <= date('Y-m-d', strtotime($event->date)))
                         <a href="{{route('event.home', [$event->short_name])}}">
                             <img src="{{URL('/')}}/{{$event->thumbnail}}" alt=""/>
                             <div class="grid-item-hover">
