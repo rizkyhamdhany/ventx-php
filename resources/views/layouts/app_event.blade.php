@@ -171,7 +171,7 @@
                 // init background slide images
                 $('.login-bg').backstretch([
                         @foreach($event->artists as $artist)
-                            '{{asset($artist->url_img)}}',
+                            '{{asset(('storage/'.$artist->url_img))}}',
                         @endforeach
                     ], {
                         fade: 1000,
