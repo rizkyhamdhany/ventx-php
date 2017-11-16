@@ -43,11 +43,11 @@ class GenerateInvoice extends Command
             if ($order->url_invoice == ""){
                 $ticket_price = 0;
                 if ($order->ticket_class == 'Reguler'){
-                    $ticket_price = 125000;
+                    $ticket_price = 135000;
                 } else if ($order->ticket_class == 'VVIP'){
-                    $ticket_price = 450000;
+                    $ticket_price = 300000;
                 } else {
-                    $ticket_price = 250000;
+                    $ticket_price = 500000;
                 }
                 $data = array();
                 $data['order'] = $order;
