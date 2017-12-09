@@ -54,7 +54,16 @@ class TicketController extends Controller
                 $status = "Used";
             }
         } else {
-            $status = "Not Found";
+            $event_id = 2;
+            $ticket = $this->ticketRepo->findWhere(["event_id" => $event_id, "ticket_code" => $request->input('ticket_code')])->first();
+            if (isset($ticket)){
+                $status = "Valid";
+                $ticket->ticket_checking = "Used";
+                $ticket->save();
+            } else {
+                $status = "Not Found";
+            }
+
         }
         return response()->json(['status' => 'success', 'message' => 'check success','data' => compact('status')]);
     }
