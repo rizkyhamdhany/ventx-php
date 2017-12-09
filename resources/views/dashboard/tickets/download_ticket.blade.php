@@ -88,7 +88,7 @@
     @if ($ticket->event_id == 0)
         <img class="bg_template" src="{{URL('/')}}/assets/pages/img/ticket_template.jpeg" style="height: 210mm; width: 148.5mm;">
     @elseif ($ticket->event_id == 2)
-        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/ticket_template_ftb.jpeg" style="height: 210mm; width: 148.5mm;">
+        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/ticket_template.jpeg" style="height: 210mm; width: 148.5mm;">
     @else
         <img class="bg_template" src="{{URL('/')}}/{{$ticket->eticket_layout}}" style="height: 210mm; width: 148.5mm;">
     @endif
