@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\CC;
 use App\Models\OrderRepository;
 use App\Models\TicketRepository;
 use App\Models\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Milon\Barcode\DNS2D;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TicketMail;
 
 class TicketController extends Controller
 {
@@ -28,43 +33,33 @@ class TicketController extends Controller
         $this->orderRepo = $orderRepo;
     }
 
-    public function ticketByEO(Request $request){
-        $user = JWTAuth::parseToken()->authenticate();
-        if (!$user) {
-            return response()->json(['status' => 'error', 'message' => 'invalid_credentials'], 404);
-        }
-        $event_id = $user->event_id;
-        $tickets = $this->ticketRepo->findWhere(["event_id" => $event_id], ["ticket_code", "name", "phonenumber", "email"]);
-        return response()->json(['status' => 'success', 'message' => 'login success','data' => compact('tickets')]);
-    }
+    public function index(Request $request){
+        $order = new \stdClass();
+        $order->name = $request->input('ticket_name');
+        $order->email = $request->input('email');
+        $order->tickets = array();
 
-    public function ticketChecking(Request $request){
-        $user = JWTAuth::parseToken()->authenticate();
-        if (!$user) {
-            return response()->json(['status' => 'error', 'message' => 'invalid_credentials'], 404);
-        }
-        $event_id = $user->event_id;
-        $ticket = $this->ticketRepo->findWhere(["event_id" => $event_id, "ticket_code" => $request->input('ticket_code')])->first();
-        if (isset($ticket)){
-            if ($ticket->ticket_checking == ""){
-                $status = "Valid";
-                $ticket->ticket_checking = "Used";
-                $ticket->save();
-            } else{
-                $status = "Used";
-            }
-        } else {
-            $event_id = 2;
-            $ticket = $this->ticketRepo->findWhere(["event_id" => $event_id, "ticket_code" => $request->input('ticket_code')])->first();
-            if (isset($ticket)){
-                $status = "Valid";
-                $ticket->ticket_checking = "Used";
-                $ticket->save();
-            } else {
-                $status = "Not Found";
-            }
+        $codes = $request->input('ticket_code');
+        $code = explode(",", $codes);
+        foreach ($code as $ticket_code) {
+            $ticket = new \stdClass();
 
+            $ticket->ticket_code = $ticket_code;
+            $ticket->ticket_name = $request->input('ticket_name');
+            $ticket->name = $request->input('name');
+            $ticket->phone = $request->input('phone');
+            $ticket->email = $request->input('email');
+
+            $pdf = \PDF::loadView('dashboard.tickets.download_ticket', compact('ticket'))->setPaper('A5', 'portrait');
+            $output = $pdf->output();
+            $ticket->ticket_url = 'ventex/ticket/ticket_'.$ticket->ticket_code.'.pdf';
+            array_push($order->tickets, $ticket);
+            $s3 = \Storage::disk('s3');
+            $s3->put($ticket->ticket_url , $output, 'public');
         }
-        return response()->json(['status' => 'success', 'message' => 'check success','data' => compact('status')]);
+
+
+        Mail::to($order->email)->send(new TicketMail($order));
+        return response()->json(['status' => 'success', 'message' => 'check success']);
     }
 }

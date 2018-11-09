@@ -25,13 +25,13 @@
         .scan_code_text{
             position: absolute;
             font-family: 'Work Sans', sans-serif;
-            color:{{$ticket->event_id == 0 ? '#514F9D' : '#BC413E'}};
+            color:#514F9D;
             top: 500px;
             left: 180px;
         }
         .ticket_class{
             font-family: 'Work Sans', sans-serif;
-            color:{{$ticket->event_id == 0 ? '#514F9D' : '#BC413E'}};
+            color:#514F9D;
             font-size: 20px;
             font-weight: bold;
         }
@@ -42,9 +42,9 @@
             color:#94D3BE;
         }
         .ticket_class_container{
-            top: 580px;
+            top: 603px;
             position: absolute;
-            right: 0;
+            right: -20px;
             margin: 0 auto;
             text-align: center;
         }
@@ -56,10 +56,10 @@
         }
         table{
             font-family: 'Work Sans', sans-serif;
-            color:{{$ticket->event_id == 0 ? '#514F9D' : '#BC413E'}};
+            color:#514F9D;
         }
         .ticket_info{
-            top: 683px;
+            top: 660px;
             position:absolute;
             left: 0px;
             margin: 0 auto;
@@ -71,12 +71,12 @@
         }
         .seat_no{
             font-family: 'Work Sans', sans-serif;
-            color:{{$ticket->event_id == 0 ? '#514F9D' : '#BC413E'}};
+            color:#514F9D;
             font-size: 30px;
         }
         .ticket_info_text{
             font-family: 'Work Sans', sans-serif;
-            color:{{$ticket->event_id == 0 ? '#514F9D' : '#BC413E'}};
+            color:#514F9D;
             text-align: right;
             padding-right: 85px;
             line-height: 95%;
@@ -85,26 +85,16 @@
 </head>
 <body>
 <div class="container">
-    @if ($ticket->event_id == 0)
-        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/ticket_template.jpeg" style="height: 210mm; width: 148.5mm;">
-    @elseif ($ticket->event_id == 2)
-        <img class="bg_template" src="{{URL('/')}}/assets/pages/img/ticket_template.jpeg" style="height: 210mm; width: 148.5mm;">
-    @else
-        <img class="bg_template" src="{{URL('/')}}/{{$ticket->eticket_layout}}" style="height: 210mm; width: 148.5mm;">
-    @endif
+    <img class="bg_template" src="{{URL('/')}}/assets/pages/img/dbl_ticket_template.jpeg" style="height: 210mm; width: 148.5mm;">
     <img class="barcode" src="data:image/png;base64,{{DNS2D::getBarcodePNG($ticket->ticket_code, "QRCODE", 9, 9)}}" alt="barcode"   />
-    <h3 class="scan_code_text">Scan The Code for Entry</h3>
+    <h3 class="scan_code_text"> </h3>
     <div class="ticket_class_container">
         <table class="table-center">
             <tr>
                 <td style="padding-right: 10px">
-                    @if($ticket->ticket_class === 'Reguler')
-                        <img style="margin-top: 0px; margin-right: 40px" src="{{URL('/')}}/assets/pages/img/circle_vip.png">
-                    @else
-                        <img style="margin-top: 5px; margin-right: 40px" src="{{URL('/')}}/assets/pages/img/circle_reguler.png">
-                    @endif
+                    
                 </td>
-                <td style="vertical-align: middle" class="ticket_class">{{$ticket->ticket_class}}{{$ticket->seat_no != '' ? ' Seat '.$ticket->seat_no : ' Ticket'}}</td>
+                <td style="vertical-align: middle" class="ticket_class">{{$ticket->ticket_name}}</td>
             </tr>
         </table>
     </div>
@@ -114,7 +104,7 @@
             <br>
             {{$ticket->name}}
             <br>
-            (+62){{$ticket->phonenumber}}
+            {{$ticket->phone}}
             <br>
             {{$ticket->email}}
         </p>
