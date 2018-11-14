@@ -87,7 +87,6 @@ class TicketController extends Controller
     }
 
     public function viewTicket($url){
-        print_r($url);
         return redirect('https://s3-ap-southeast-1.amazonaws.com/ventx-prod/ventex/ticket/ticket_'.$url.'.pdf');
     }
 }
