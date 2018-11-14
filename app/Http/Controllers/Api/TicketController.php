@@ -78,7 +78,7 @@ class TicketController extends Controller
             "SenderID" => "VENTX",
             "SMSType" => "Transactional",
             "Message" => "Your DBL VENTX e-Ticket http://the-assets-dev.jobagency.id/api/ticket/41144e55d2",
-            "PhoneNumber" => "+6281910381028"
+            "PhoneNumber" => "+628112032606"
         );
 
         $result = $sns->publish($args);
