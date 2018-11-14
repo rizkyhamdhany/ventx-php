@@ -82,7 +82,6 @@ class TicketController extends Controller
         );
 
         $result = $sns->publish($args);
-        print_r($result);
         return response()->json(['status' => 'success', 'message' => 'check success', 'data' => $result]);
     }
 
