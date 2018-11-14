@@ -62,4 +62,31 @@ class TicketController extends Controller
         Mail::to($order->email)->send(new TicketMail($order));
         return response()->json(['status' => 'success', 'message' => 'check success']);
     }
+
+    public function sendTicketSMS(Request $request){
+        $params = array(
+            'credentials' => array(
+                'key' => 'AKIAI4A7VVYOJBALWJUA',
+                'secret' => 'qOxjWzL5PQC8qKYz10dbgRh6E78tcuN3tGKN8AvR',
+            ),
+            'region' => 'eu-west-1', // < your aws from SNS Topic region
+            'version' => 'latest'
+        );
+        $sns = new \Aws\Sns\SnsClient($params);
+
+        $args = array(
+            "SenderID" => "VENTX",
+            "SMSType" => "Transactional",
+            "Message" => "Your DBL VENTX e-Ticket http://the-assets-dev.jobagency.id/api/ticket/41144e55d2",
+            "PhoneNumber" => "+6281910381028"
+        );
+
+        $result = $sns->publish($args);
+        print_r($result);
+        return response()->json(['status' => 'success', 'message' => 'check success', 'data' => $result]);
+    }
+
+    public function viewTicket($url){
+        print_r($url);
+    }
 }

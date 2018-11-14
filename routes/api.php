@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 // });
 
 Route::post('/ticket/generate', 'Api\TicketController@index')->name('api.ticket.generate');
+Route::post('/ticket/send/sms', 'Api\TicketController@sendTicketSMS')->name('api.ticket.send.sms');
+Route::get('/ticket/{id}', 'Api\TicketController@viewTicket')->name('home');
 
 // Route::prefix('/auth')->group(function () {
 //     Route::post('/login', 'Api\AuthController@login')->name('api.auth.login');
