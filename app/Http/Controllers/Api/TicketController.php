@@ -35,6 +35,10 @@ class TicketController extends Controller
     }
 
     public function index(Request $request){
+        $sms = false;
+        if ($request->input('sms') == "yes"){
+            $sms = true;
+        }
 //        return response()->json(['status' => 'success', 'message' => $request->input('sms')]);
         $order = new \stdClass();
         $order->name = $request->input('ticket_name');
@@ -58,6 +62,11 @@ class TicketController extends Controller
             array_push($order->tickets, $ticket);
             $s3 = \Storage::disk('s3');
             $s3->put($ticket->ticket_url , $output, 'public');
+
+            if ($sms){
+                $this->sendTicketSMS($ticket->ticket_code, $ticket->phone);
+
+            }
         }
 
 
@@ -88,7 +97,8 @@ class TicketController extends Controller
             "PhoneNumber" => $phone
         );
         $result = $sns->publish($args);
-        return response()->json(['status' => 'success', 'message' => 'check success', 'data' => $result]);
+        return $result;
+//        return response()->json(['status' => 'success', 'message' => 'check success', 'data' => $result]);
     }
 
     public function viewTicket($url){
