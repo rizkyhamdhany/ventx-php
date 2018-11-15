@@ -13,6 +13,7 @@ use Milon\Barcode\DNS2D;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TicketMail;
+use Twilio\Rest\Client;
 
 class TicketController extends Controller
 {
@@ -34,6 +35,7 @@ class TicketController extends Controller
     }
 
     public function index(Request $request){
+        return response()->json(['status' => 'success', 'message' => $request->input('sms')]);
         $order = new \stdClass();
         $order->name = $request->input('ticket_name');
         $order->email = $request->input('email');
@@ -63,13 +65,18 @@ class TicketController extends Controller
         return response()->json(['status' => 'success', 'message' => 'check success']);
     }
 
-    public function sendTicketSMS(Request $request){
+    public function sendTicketSMS($ticketCode, $phone){
+
+        if (substr($phone, 0, 1) === '0') {
+            $phone = '+62' . substr($phone, 1);
+        }
+
         $params = array(
             'credentials' => array(
-                'key' => 'AKIAI4A7VVYOJBALWJUA',
-                'secret' => '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',
+                'key' => env('SES_KEY'),
+                'secret' => env('SES_SECRET'),
             ),
-            'region' => 'eu-west-1', // < your aws from SNS Topic region
+            'region' => 'ap-southeast-1', // < your aws from SNS Topic region
             'version' => 'latest'
         );
         $sns = new \Aws\Sns\SnsClient($params);
@@ -77,10 +84,9 @@ class TicketController extends Controller
         $args = array(
             "SenderID" => "VENTX",
             "SMSType" => "Transactional",
-            "Message" => "Your DBL VENTX e-Ticket http://the-assets-dev.jobagency.id/api/ticket/41144e55d2",
-            "PhoneNumber" => "+628112032606"
+            "Message" => "Your DBL VENTX e-Ticket http://the-assets-dev.jobagency.id/ticket/".$ticketCode,
+            "PhoneNumber" => $phone
         );
-
         $result = $sns->publish($args);
         return response()->json(['status' => 'success', 'message' => 'check success', 'data' => $result]);
     }

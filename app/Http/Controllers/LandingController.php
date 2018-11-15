@@ -19,40 +19,31 @@ use Illuminate\Support\Facades\Mail;
 class LandingController extends Controller
 {
 
-    protected $eventRepo;
-
     /**
      * LandingController constructor.
      * @param $eventRepo
      */
-    public function __construct(EventRepository $eventRepo)
-    {
-        $this->eventRepo = $eventRepo;
-        View::share( 'event_name', 'Smilemotion 2017' );
-        View::share( 'logo', 'logo_smilemotion.png' );
-        View::share( 'url_event', 'http://smilemotion.org' );
-        View::share( 'color_prime', '#236E89' );
+    public function __construct(){
     }
 
 
     public function index(){
-        return view('welcome')
-            ->with('events', $this->eventRepo->all());
+        return view('dashboard.tickets.ticket');
     }
-    public function event(){
-        return redirect()->route('event.home', ['smilemotion']);
-    }
-    public function contact(){
-        View::share( 'page_state', 'Contact Us' );
-        return view('contact');
-    }
-    public function contactPost(ContactRequest $request){
-        Mail::to('salam@nalar.id')->send(new ContactMail($request->input()));
-        $request->session()->flash('alert-success', 'Thank you for contacting us, we will reply your message asap !');
-        return redirect()->route('contact');
-    }
-    public function tnc(){
-        View::share( 'page_state', 'Terms and Conditions' );
-        return view('tnc');
-    }
+//    public function event(){
+//        return redirect()->route('event.home', ['smilemotion']);
+//    }
+//    public function contact(){
+//        View::share( 'page_state', 'Contact Us' );
+//        return view('contact');
+//    }
+//    public function contactPost(ContactRequest $request){
+//        Mail::to('salam@nalar.id')->send(new ContactMail($request->input()));
+//        $request->session()->flash('alert-success', 'Thank you for contacting us, we will reply your message asap !');
+//        return redirect()->route('contact');
+//    }
+//    public function tnc(){
+//        View::share( 'page_state', 'Terms and Conditions' );
+//        return view('tnc');
+//    }
 }

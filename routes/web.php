@@ -11,7 +11,7 @@
 */
 
 // Auth::routes();
-// Route::get('/contact', 'LandingController@contact')->name('contact');
+ Route::get('/ticket/{id}', 'LandingController@index')->name('index');
 // Route::post('/contact_post', 'LandingController@contactPost')->name('contact.post');
 // Route::get('/tnc', 'LandingController@tnc')->name('tnc');
 
