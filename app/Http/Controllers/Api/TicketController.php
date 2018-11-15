@@ -35,7 +35,7 @@ class TicketController extends Controller
     }
 
     public function index(Request $request){
-        return response()->json(['status' => 'success', 'message' => $request->input('sms')]);
+//        return response()->json(['status' => 'success', 'message' => $request->input('sms')]);
         $order = new \stdClass();
         $order->name = $request->input('ticket_name');
         $order->email = $request->input('email');
