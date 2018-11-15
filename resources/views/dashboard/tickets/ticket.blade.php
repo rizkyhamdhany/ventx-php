@@ -228,7 +228,7 @@
         <tr class="guide row2">
             <td class="col-4" colspan="4"></td>
             <td class="col-4" colspan="4">
-                <img class="barcode" src="data:image/png;base64,{{DNS2D::getBarcodePNG("123123123", "QRCODE", 9, 9)}}" alt="barcode"   />
+                <img class="barcode" src="data:image/png;base64,{{DNS2D::getBarcodePNG($res->data->TicketID, "QRCODE", 9, 9)}}" alt="barcode"   />
             </td>
             <td class="col-4" colspan="4"></td>
         </tr>
@@ -247,13 +247,13 @@
             <td class="col-4" colspan="4"></td>
             <td class="col-4" colspan="4" valign="top">
 					<span class="ticket_info">
-						41144e55d2
+						{{$res->data->TicketID}}
 						<br>
-						Rizky Hamdhany
+						{{$res->data->Order->Name}}
 						<br>
-						(+62) 08112032606
+						{{$res->data->Order->Phone}}
 						<br>
-						hamdhanywijaya@gmail.com
+						{{$res->data->Order->Email}}
 						</span>
             </td>
             <td class="col-2" colspan="2"></td>

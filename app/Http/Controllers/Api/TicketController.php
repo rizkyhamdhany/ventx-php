@@ -63,10 +63,10 @@ class TicketController extends Controller
             $s3 = \Storage::disk('s3');
             $s3->put($ticket->ticket_url , $output, 'public');
 
-            if ($sms){
-                $this->sendTicketSMS($ticket->ticket_code, $ticket->phone);
-
-            }
+//            if ($sms){
+//                print_r($this->sendTicketSMS($ticket->ticket_code, $ticket->phone));
+//
+//            }
         }
 
 
@@ -75,29 +75,43 @@ class TicketController extends Controller
     }
 
     public function sendTicketSMS($ticketCode, $phone){
+        //// Your Account SID and Auth Token from twilio.com/console
+//        $sid = 'AC6db401107a8aa695408a13380b37384c';
+//        $token = '356ebc45b441780882ff66d71bdaa96c';
+//        $client = new Client($sid, $token);
+//        if (substr($phone, 0, 1) === '0') {
+//            $phone = '+62' . substr($phone, 1);
+//        }
+//
+//        $result = $client->messages->create(
+//        // the number you'd like to send the message to
+//            '+628112032606',
+//            array(
+//                // A Twilio phone number you purchased at twilio.com/console
+//                'from' => '+60162991775',
+//                // the body of the text message you'd like to send
+//                'body' => "Your DBL VENTX e-Ticket http://the-assets-dev.jobagency.id/ticket/".$ticketCode
+//            )
+//        );
 
-        if (substr($phone, 0, 1) === '0') {
-            $phone = '+62' . substr($phone, 1);
-        }
-
-        $params = array(
-            'credentials' => array(
-                'key' => env('SES_KEY'),
-                'secret' => env('SES_SECRET'),
-            ),
-            'region' => 'ap-southeast-1', // < your aws from SNS Topic region
-            'version' => 'latest'
-        );
-        $sns = new \Aws\Sns\SnsClient($params);
-
-        $args = array(
-            "SenderID" => "VENTX",
-            "SMSType" => "Transactional",
-            "Message" => "Your DBL VENTX e-Ticket http://the-assets-dev.jobagency.id/ticket/".$ticketCode,
-            "PhoneNumber" => $phone
-        );
-        $result = $sns->publish($args);
-        return $result;
+//        $params = array(
+//            'credentials' => array(
+//                'key' => env('AWS_KEY'),
+//                'secret' => env('AWS_SECRET'),
+//            ),
+//            'region' => 'ap-southeast-1', // < your aws from SNS Topic region
+//            'version' => 'latest'
+//        );
+//        $sns = new \Aws\Sns\SnsClient($params);
+//
+//        $args = array(
+//            "SenderID" => "VENTX",
+//            "SMSType" => "Transactional",
+//            "Message" => "Your DBL VENTX e-Ticket http://the-assets-dev.jobagency.id/ticket/".$ticketCode,
+//            "PhoneNumber" => $phone
+//        );
+//        $result = $sns->publish($args);
+        return "";
 //        return response()->json(['status' => 'success', 'message' => 'check success', 'data' => $result]);
     }
 

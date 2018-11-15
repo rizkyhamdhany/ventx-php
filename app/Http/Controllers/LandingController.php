@@ -27,8 +27,27 @@ class LandingController extends Controller
     }
 
 
-    public function index(){
-        return view('dashboard.tickets.ticket');
+    public function index($id){
+        $endpoint = "http://ventx-api.jobagency.id/v1/ticket/".$id;
+        $client = new \GuzzleHttp\Client();
+
+        $client = new \GuzzleHttp\Client;
+        try {
+            $res = json_decode($client->get($endpoint)->getBody());
+            return view('dashboard.tickets.ticket')->with('res', $res);
+        }
+        catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody()->getContents();
+            $res_data = json_decode($responseBodyAsString);
+            print_r($res_data->msg);
+        }
+
+
+
+// url will be: http://my.domain.com/test.php?key1=5&key2=ABC;
+
+
     }
 //    public function event(){
 //        return redirect()->route('event.home', ['smilemotion']);
